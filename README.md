@@ -1,4 +1,4 @@
-# Social Networking [Tech stack Zend Framework, JSXC WEBRTC, jQuery, MSSQL 2012, Lucene, Doctrine 2]
+# Social Networking [Tech Stack: Zend Framework, JSXC WEBRTC, jQuery, MSSQL 2012, Lucene, Doctrine 2]
 A socail networking site sample code.
 
 ##CONFIGURATION
