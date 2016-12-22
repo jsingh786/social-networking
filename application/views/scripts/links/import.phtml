@@ -1,0 +1,106 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Import Contacts');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/import_contacts.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links_menu.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/import_contacts.css" );
+echo $this->partial('partials/link_menu.phtml');
+?>
+<style type="text/css">
+.link-invite-connect h3 
+{
+    margin-bottom: 10px;
+ }
+.add-new-event 
+{
+   	min-height: 700px !important;
+}
+div.sdmenu div a:last-child
+{
+	 padding: 5px 25px;    
+}
+
+</style>
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<div class="photoalbum-outer">
+			<div class="photoalbum-hdr">
+				<h2 class="">Add New Links</h2>
+			</div>
+	
+			<div class="add-new-event">
+	
+				<div class="link-invite-connect">
+				<h3>Have you found everyone on iLook ? Search your email contacts
+							to see.</h3>
+					<div class="box1" id = "gmail">
+						<div class="box1-img">
+							<img src="<?php echo IMAGE_PATH; ?>/gmail-icon.png" width="65" height="47"/>
+						</div>
+						<p>
+							<a class="text-purple2-link" href="javascript:;">Gmail</a>
+						</p>
+					</div>
+<!-- 					<div class="box1"> -->
+<!-- 						<div class="box1-img"> -->
+<!--							<img style="opacity :0.2" src="<?php //echo IMAGE_PATH; ?>/hotmail-icon.png" width="76" height="53" /> -->
+<!-- 						</div> -->
+<!-- 						<p> -->
+<!-- 							<a class="text-purple2-link" href="javascript:;">Hotmail</a> -->
+<!-- 						</p> -->
+<!-- 					</div> -->
+					<!--div class="box1" id = "yahoo">
+						<div class="box1-img">
+							<img src="<?php //echo IMAGE_PATH; ?>/yahoo-icon.png" width="54" height="54" />
+						</div>
+						<p>
+							<a class="text-purple2-link" href="javascript:;">Yahoo!</a>
+						</p>
+					</div-->
+					<!--  div class="box1 mr-none">
+						<div class="box1-img">
+							<img style="opacity :0.2" src="<?php echo IMAGE_PATH; ?>/outlook-icon.png" width="52" height="56" />
+						</div>
+						<p>
+							<a class="text-purple2-link" href="javascript:;">Outlook</a>
+						</p>
+					</div-->
+					<!-- Col1 Starts -->
+					<div class="col1">
+	
+						<h3>More ways to Connect</h3>
+	
+						<div class="col1-bot">
+							<p>Invite by individual email</p>
+							<p>
+								<form action="#" id = "more_ways_to_connect_frm" onsubmit="return false">
+									<div class="more-ways-textbox" >
+										<input id = "more_ways_to_connect" name="more_ways_to_connect" type="text" value="" placeholder="Type email addresses, separated by semi-colons.." style="font-weight: bold;"/>
+									</div>
+									<div class="more-ways-btn">
+										<input name="more_ways_to_connect_btn" id = "more_ways_to_connect_btn" type="button" class="btn-purple" value="Send Invitations" alt="Send Invitations" title="Send Invitations" style = "float:left;" />
+									</div>
+								</form>
+							</p>
+						</div>
+					</div>
+					<!-- Col1 Ends -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Content Right Right Ends -->
+
+<?php 
+echo $this->partial('partials/import_gmail_contacts_popup.phtml');
+echo $this->partial('partials/yahoo_login_popup.phtml');
+?>

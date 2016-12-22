@@ -1,0 +1,179 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Compose Message');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/mails.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/mail_compose.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/tokenInput/token-input-facebook.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/mail.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/mail_compose.css" );
+
+
+//==========================================
+// Start Blueimp jQuery-File-Upload includes
+//==========================================
+
+//$this->headLink()->appendStylesheet( PUBLIC_PATH."/temp/blueimp-gallery.min.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload.css" );
+//$this->headLink()->appendStylesheet( PUBLIC_PATH."/temp/jquery.fileupload-ui.css" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/tmpl.min.js" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-process.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-image.js" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-validate.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-ui.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-jquery-ui.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/main.js" );
+
+//========================================
+// End Blueimp jQuery-File-Upload includes
+echo $this->partial('partials/mail_menu.phtml');
+echo $this->render("partials/add_contacts_popup.phtml");
+?>
+<style>
+.mail-hdr 
+{
+    border-bottom: none !important;
+}
+</style>
+
+			<!-- Content Right Right Starts -->
+        	<div class="content-right-right">
+            	<!-- Bookmarks Header Starts -->
+			 		 <div class="mail-hdr">
+                    	<h2>Compose Mail</h2>
+                        <div class="need-help"></div>
+                     <div class="bookmarks-hdr-text1"></div>
+                    </div>
+                <!-- Bookmarks Header Ends -->
+                
+                <!-- Mail Send Message Starts -->
+                	<div class="mail-sendmsg-outer">
+                	
+                		<!-- The file upload form used as target for the file upload widget -->
+<div class = "multi-photo-upload">
+	<form id="fileattach" action="" method="POST" enctype="multipart/form-data">
+	    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+	    <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+	    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+	    <div class="fileupload-buttonbar">
+	        <div class="fileupload-buttons">
+	            <!-- The fileinput-button span is used to style the file input field as button -->
+	            <span class="fileinput-button">
+	                <span>Attach files...</span>
+	                <input type="file" name="files[]" multiple id = "add_attachment"  title="Add attachment">
+	            </span>
+	          
+	            <!-- The global file processing state -->
+	            <span class="fileupload-process"></span>
+	        </div>
+	        <div class="fileupload-progress fade" style="display:none">
+	            <!-- The global progress bar -->
+	            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+	            <!-- The extended global progress state -->
+	            <div class="progress-extended">&nbsp;</div>
+	        </div>
+	    </div>
+	   
+	    <!-- The table listing the files available for upload/download -->
+	    <div class="presentation-outer">
+	    <table style="width:100%;" role="presentation"><tbody class="files"></tbody></table>
+	    </div>
+	</form>
+</div>
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <div class="template-download fade">
+			{% if(file.name) { %}
+	 				<label class="attachment-lalbel">{%=file.name%}</label>
+			{% } %}
+
+			<button class="delete remove_thumb" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}><img src="<?php echo IMAGE_PATH; ?>/cross-white2.png" alt="X" title="Remove"  width="10px" height="10px" /></button>
+			<span class="file_attachments" ts_file_size="{%=file.size%}" ts_file_name="{%=file.name%}"></span>
+            {% if (file.error) { %}
+                <div><span class="error">Error</span> {%=file.error%}</div>
+            {% } %}
+
+             
+		</div>
+		
+    {% } %}
+
+</script>
+		
+		
+<!-- End Blueimp jQuery-File-Upload -->
+	                	<form name="send_message_form" id="send_message_form" action="" method="post" >
+	                    <!-- Col 1 Starts-->
+	                   		<input type="hidden" name="msg_type" value="<?php echo @$this->param['type']?@$this->param['type']:\Extended\message::MSG_TYPE_GENERAL; ?>" >
+	                    <div style="display:none;" id="receiver_ids_holder">
+	                    	
+	                    </div>
+	                   	  <div class="mail-sendmsg-col2">
+<!-- 	                        <label>TO</label> -->
+	                          <span class="mail-span">
+	                          	<input name="receiver_id" id="receiver_id" type="text" />
+	                          	<a id="mail_contacts_popup" href="javascript:;"><img src="<?php echo IMAGE_PATH; ?>/search-user-icon.png" title = "Add recipients"/></a>
+	                          </span>
+	                       
+<!-- 	                            <label>SUBJECT</label> -->
+	                            <span class="mail-span">
+<?php 
+								if( @$this->param['type']==\Extended\message::MSG_TYPE_FEEDBACK_REQ )
+								{	
+?>	                    
+	                            <input class="font-arial" name="subject" id="subject" type="text" value="Request Feedback" readonly/>
+<?php 
+								}
+	                            else
+	                            {
+?>
+	                            <input class="font-arial" placeholder="subject" name="subject" id="subject" type="text" maxlength="255"/>
+<?php 
+	                            } 
+?>
+	                          <!--   <a href="javascript:;"><img src="<?php //echo IMAGE_PATH; ?>/icon-reload.png" width="16" height="16" /></a>--> 
+	                            </span>
+								<script type="text/javascript">
+
+								</script>
+	                        </div>
+	                        
+<!-- 	                        <div class="mail-sendmsg-col2-msg">MESSAGE</div> -->
+	                             <div class="mail-sendmsg-col2-content">
+	                      <textarea class="font-arial"  placeholder="Your message here" name="message_body" id="message_body" class="textarea" ></textarea>
+	                         </div>
+	                      <div class="btm_btns mail-save-draft">
+	                         	<div class="fr fr_cancel"><a id="cancel" class="text-purple-link" href="javascript:;">Clear</a></div>
+	                         	<div class="fr fr_btn"><input name="send_message" id = "send_message" class="mail_button" value="Send" title="Send Mail" type="button"></div>
+	                          <!-- <div class="fr"><a class="text-purple-link"  href="javascript:;">Delete</a> <img src="<?php echo IMAGE_PATH; ?>/icon-trash-hover.png" width="14" height="16" align="absmiddle" /></div>  -->  
+	                      </div>
+	                    <!-- Col 2 Ends-->
+	                    </form>
+                    </div>
+                <!-- Mail Send Message Ends -->
+              </div>
+        <!-- Content Right Right Ends -->
+<div id="dialog_confirm" title="Alert">
+  <p>
+    Please enter Receiver name!
+  </p>
+</div>

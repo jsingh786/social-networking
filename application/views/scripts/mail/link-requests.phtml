@@ -1,0 +1,188 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend( 'Inbox' );
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/mails.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/mail_link_requests.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/mail.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/easy_pagination_jquery_ajax.css" );
+
+echo $this->partial('partials/mail_menu.phtml');
+?>
+<!-- ========  Listing message ======== -->
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right" id = "msg_listing" >
+	
+		<!-- Bookmarks Header Starts -->
+		<div class="mail-hdr">
+<!-- 			<h2> -->
+<!-- 				<font class="text-purple2 inbox_link_req_uread_count"></font> unread messages -->
+<!-- 			</h2> -->
+					<h2>
+ 				Link Requests
+			</h2>
+		
+			<div class="bookmarks-add-new">
+				<div class="fl">
+					<h4 class="text-purple2">Inbox</h4>
+				</div>
+				<div class="fr">
+					<a class="text-purple-link" href="<?php echo "/".PROJECT_NAME."mail/compose"; ?>">Compose Mail</a>&nbsp;
+					<img src="<?php echo IMAGE_PATH; ?>/mail-icon-mobile.png" width="16" height="19" align="absmiddle" /> 
+				</div>
+
+			</div>
+
+			<div class="bookmarks-hdr-text1 controls">
+				<div class="manage"><a href="javascript:;" class="text-purple-link" id = "manage_mails">Manage</a>&nbsp;
+				 <!-- <img width="16" height="13" align="absmiddle" src="<?php //echo IMAGE_PATH;?>/folder-hover.png"> -->
+                      
+						   <!-- Manage Pop 2 Outer Starts -->
+					<div class="manage-pop-outer" style="margin-top:5px;">
+						<div class="manage-pop2" id = "manage_pop_1" style = "display:none;">
+							<ul>
+<!-- 								 <li><a href="javascript:;" class = "multi_archive" id = "multi_archive" >Archive</a></li> -->
+								 <li><a href="javascript:;" class = "multi_read_unread" id = "multi_read">Mark as Read</a></li>
+								 <li><a href="javascript:;" class = "multi_read_unread" id = "multi_unread">Mark as Unread</a></li>
+								 <!-- Ankita, delete 8aug  <li><a href="#">Bookmarks</a></li>--> 
+<!-- 								 <li><a href="#">Report as Spam</a></li> -->
+								 <li><a href="javascript:;" class = "multi_inbox_trash" id = "multi_trash">Delete</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- Manage Pop 2 Outer Ends -->
+					</div>
+	                <div  class="mail-hdr-search">
+                        <input name="link_reqs_search" id="link_reqs_search" type="text" placeholder="Search" /> 
+                        <a id="search_link_reqs" href="javascript:;"><img src="<?php echo IMAGE_PATH;?>/search-icon.png" alt="Search"  title="Search" width="25" height="25" align="absmiddle" /></a>
+                    </div>
+			</div>
+
+			<!-- Manage Pop 2 Outer Starts -->
+			<div class="manage-pop2-outer controls">
+				<div class="manage-pop2" id = "manage_pop2" style = "display:none;">
+				<img src="<?php echo IMAGE_PATH;?>/notok-icon.png" alt="Close" title="Close"  id="hide" align="absmiddle" style="float: right; margin: -20px -5px; height: 13px; width: 13px;"/></a>
+				
+					<div class="link2">
+						<ul>
+							<li><a href="#"><img width="16" height="13" align="absmiddle"
+									src="<?php echo IMAGE_PATH; ?>/folder-hover.png">Archive</a></li>
+						</ul>
+					</div>
+					<div class="link1">
+						<ul>
+							<li><a href="#"><img width="16" height="10" align="absmiddle"
+									src="<?php echo IMAGE_PATH; ?>/icon-eye-purple.png">Mark Unread</a></li>
+							<li><a href="#"><img width="16" height="15" align="absmiddle"
+									src="<?php echo IMAGE_PATH; ?>/icon-read-purple.png">Mark as Read</a></li>
+						</ul>
+					</div>
+
+					<div class="link1">
+						<ul>
+							<li><a href="#"><img width="16" height="16" align="absmiddle"
+									src="<?php echo IMAGE_PATH; ?>/icon-star-purple.png">Bookmarks</a></li>
+						</ul>
+					</div>
+
+					<div class="link1">
+						<ul>
+							<li><a href="#"><img width="14" height="16" align="absmiddle"
+									src="<?php echo IMAGE_PATH; ?>/icon-fire-purple.png">Report as Spam</a></li>
+
+						</ul>
+					</div>
+
+					<div class="link1">
+						<ul>
+							<li><a href="#"><img width="14" height="16" align="absmiddle"
+									src="<?php echo IMAGE_PATH; ?>/icon-trash-hover.png">Delete</a></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<!-- Manage Pop 2 Outer Ends -->
+		</div>
+		<!-- Bookmarks Header Ends -->
+
+
+
+		<!-- Mail All Starts -->
+		<div class="mail-all-hdr controls">
+			<div class="fl">
+				<a class="text-purple-link" href="javascript:;">All</a>&nbsp;&nbsp;
+				<a class="text-grey3-link" href="javascript:;">UNREAD</a>
+	
+			</div>
+			<div class="fr ">
+				<div class="col1">
+					<a class="text-purple-link" href="javascript:;">BY DATE</a><img
+						src="<?php echo IMAGE_PATH; ?>/arrow-double.png" width="15" height="15"
+						align="absmiddle" />
+				</div>
+				<div class="col1">
+					<a class="text-purple-link" href="javascript:;">NEWEST</a> <img
+						src="<?php echo IMAGE_PATH; ?>/arrow-double.png" width="15" height="15"
+						align="absmiddle" />
+				</div>
+			</div>
+		</div>
+		<!-- Mail All Ends -->
+		
+		<!-- Mail All Starts -->
+		<div class = "pagination_nav controls">
+		</div>
+		<!-- Mail All Ends -->
+		
+		<!-- Mail Header Starts -->
+		<!-- Mail Header Ends -->
+		<div id = "mail_holder">
+<?php 
+?>
+		</div>
+		<!-- Mail All Starts -->
+		<div class = "pagination_nav controls">
+		</div>
+		<!-- Mail All Ends -->
+	</div>
+	<!-- Content Right Right Ends -->
+	
+<!-- ========  Detailed message ======== -->
+        <!-- Content Right Right Starts -->
+        
+        
+<!--         	@TODO NOT IN USE, PLEASE REMOVE AFTER CHECKING -->
+<!-- 	    <input type="hidden" name="is_forward" id="is_forward" > -->
+<!-- 	    <input type="hidden" name="is_reply" id="is_reply" > -->
+	
+        	<div class="content-right-right" id = "detailed_msg" style = "display: none;">
+            
+            	<!-- Bookmarks Header Starts -->
+			 		 <div class="mail-hdr">
+                    	<h2 id="mail_detail_subject">Subject</h2>
+                        <div class="bookmarks-add-new">
+                        <div class="fl">
+                          
+                          <h4 class="text-purple2"><a id = "back_to_mail_list" class="text-purple-link" href="javascript:;">
+                          	<img src="<?php echo IMAGE_PATH; ?>/back-arrow.png" width="16" height="17" align="absmiddle" />
+                          </a>Inbox</h4>
+                        </div>
+                        <div class="fr"><a class="text-purple-link" href="<?php echo "/".PROJECT_NAME."mail/compose"; ?>">Compose Mail</a>&nbsp;<img src="<?php echo IMAGE_PATH; ?>/mail-icon-mobile.png" width="16" height="19" align="absmiddle" /></div>
+                   	   
+                       </div>
+         
+                    </div>
+                <!-- Bookmarks Header Ends -->
+					<div id = "detial_msg_holder">
+				<!--Mail detail contents append here with jQuery ajax.   -->
+					</div>	
+          	</div>
+        <!-- Content Right Right Ends -->

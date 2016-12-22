@@ -1,0 +1,360 @@
+<?php 
+$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+$actionn = $params ['action'];
+$controllerr = $params ['controller'];
+$current_user = Auth_UserAdapter::getIdentity()->getId();
+$current_user_username = Auth_UserAdapter::getIdentity()->getUsername();
+
+// Showing up hidden menu items conditionally.
+if( $controllerr == "mail" )
+{
+	echo "<style>";
+	echo "li#mail_menu_item{ display : block; }";
+	echo "</style>";
+}	
+else
+{
+	echo "<style>";
+	echo "li#mail_menu_item{ display : none; }";
+	echo "</style>";
+	
+}
+
+if( $controllerr == "profile" || $controllerr == "bookmarks" )
+{
+	echo "<style>";
+	echo "li#profile_menu_item{ display : block; }";
+	echo "</style>";
+}else{
+	echo "<style>";
+	echo "li#profile_menu_item{ display : none; }";
+	echo "</style>";
+}
+
+if( $controllerr == "links" )
+{
+	echo "<style>";
+	echo "li#link_menu_item{ display : block; }";
+	echo "</style>";
+}else{
+	echo "<style>";
+	echo "li#link_menu_item{ display : none; }";
+	echo "</style>";
+}
+
+?>
+ 
+<script type = "text/javascript">
+$(document).ready(function(){
+	$('#save_thumb').click(function() {
+		var x1 = $('#x1').val();
+		var y1 = $('#y1').val();
+		var x2 = $('#x2').val();
+		var y2 = $('#y2').val();
+		var w = $('#w').val();
+		var h = $('#h').val();
+		if(x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h==""){
+			alert("You must make a selection first");
+			return false;
+		}else{
+			return true;
+		}
+	});
+	
+	$("li.only_in_more_view a.selected").parent().show();
+	
+	$("li#show_less_view").click(function(){
+		$("li#show_less_view").hide();
+		$("li#show_more_view").show();
+		$("li.only_in_more_view").slideUp();
+		$("li.only_in_more_view a.selected").parent().slideDown();
+		setMenuMoreOrLess( 0 );
+	});
+	
+	$("li#show_more_view").click(function(){
+		$("li#show_more_view").hide();
+		$("li#show_less_view").show();
+		$("li.only_in_more_view").slideDown();
+		setMenuMoreOrLess( 1 );
+	});
+	
+});
+
+/**
+ * ???????????????????????
+ * 
+ * @author spatial
+ */
+function preview(img, selection) { 
+	var current_large_image_width ="<?php echo IMAGE_PATH?>/sunshine.JPG".width;
+	var current_large_image_height ="<?php echo IMAGE_PATH?>/sunshine.JPG".height;
+	var scaleX = 100 / selection.width; 
+	var scaleY = 100 / selection.height; 
+	
+	$('#thumbnail + div > img').css({ 
+		width: Math.round(scaleX * current_large_image_width) + 'px', 
+		height: Math.round(scaleY * current_large_image_height) + 'px',
+		marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px', 
+		marginTop: '-' + Math.round(scaleY * selection.y1) + 'px' 
+	});
+	$('#x1').val(selection.x1);
+	$('#y1').val(selection.y1);
+	$('#x2').val(selection.x2);
+	$('#y2').val(selection.y2);
+	$('#w').val(selection.width);
+	$('#h').val(selection.height);
+} 
+
+$(window).load(function () { 
+	$('#thumbnail').imgAreaSelect({ aspectRatio: '1:1', onSelectChange: preview }); 
+});
+
+function setMenuMoreOrLess( isMore )
+{
+	jQuery.ajax({
+        url: "/" + PROJECT_NAME + "dashboard/set-main-menu-more-or-less",
+        type: "POST",
+        dataType: "json",
+        data: { "is_more" : isMore },
+        timeout: 50000,
+        success: function(jsonData) {
+            // add code.
+        }
+	});
+}
+</script>
+
+<?php 
+	$menu_session = new Zend_Session_Namespace ( 'main_menu' );
+?>
+<!-- Content Left Starts -->
+<div class="content-left" id = "maximised_menu">
+	<!-- Hide Menu Starts -->
+	<div class="hide-menu" id = "minimise_menu">
+		<img width="14" height="11" src="<?php echo IMAGE_PATH; ?>/hide-icon.png">&nbsp; 
+		<a class="text-white-link" href="javascript:;" >Hide Menu</a>
+	</div>
+	<!-- Hide Menu Ends -->
+	<div id = "profile-img-outer">
+<?php 
+			@$filename=REL_IMAGE_PATH."/profile/big_thumbnails/thumbnail_".Auth_UserAdapter::getIdentity()->getProfessional_image();
+			if(Auth_UserAdapter::getIdentity()->getProfessional_image()!="" && file_exists($filename))
+			{
+				$img_name=IMAGE_PATH."/profile/big_thumbnails/thumbnail_".Auth_UserAdapter::getIdentity()->getProfessional_image();
+				$image="thumbnail_".Auth_UserAdapter::getIdentity()->getProfessional_image();
+				$uploadtxt="Edit";
+				$remtxt="";
+				$previewClass="profileImg";
+			}
+			else
+			{
+				if(Auth_UserAdapter::getIdentity()->getGender()==Extended\ilook_user::USER_GENDER_MALE){
+					$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+				}
+				else if( Auth_UserAdapter::getIdentity()->getGender()==Extended\ilook_user::USER_GENDER_FEMALE )
+				{
+					$img_name=IMAGE_PATH."/profile/default_profile_image_female_big.png";
+				}
+				else 
+				{
+					$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+				}
+				$image="";
+				$uploadtxt="Upload";
+				$remtxt="display:none";
+				$previewClass="";
+			}
+?>
+		<div class="profilePic profile-img <?php echo $previewClass;?>" rel="<?php echo Auth_UserAdapter::getIdentity()->getId();?>">
+				<!-- <div id="dvLoading"><img src="<?php // echo IMAGE_PATH?>/loading_medium_purple.gif"></div> -->
+			<img id="profileLogo" src="<?php echo $img_name?>" />
+		</div>
+	</div>
+	<div class="edit-changes">
+		<form id="uploadProfileImg" name="uploadProfileImg" method="post" enctype="multipart/form-data" action=''>
+			<input type="hidden" name="remImg" id="remImg" value="<?php echo $image;?>" />
+			<img src="<?php echo IMAGE_PATH?>/icon-cam.png" width="15" height="12" />&nbsp;&nbsp;
+			<font class="text-grey">
+				<a id="profileimg" class="text-grey-link" href="javascript:;"><?php echo $uploadtxt;?></a>
+				<span id="sremid" style="<?php echo $remtxt;?>">/<a href="javascript:;" id="removeImage" class="text-grey-link">Remove</a></span>
+			</font>
+		</form>
+	</div>
+	
+<?php
+	$links_count = Helper_common::getLinksCount();
+	if( $links_count )
+	{	
+?>	
+	<div style ="font-size: 25px; margin-top: 50px; padding-right: 12px; text-align: right;" >
+		<a title = "<?php echo $links_count?> Link(s)" style ="font-family:oswaldlight;text-decoration: none; color : #B084E9;" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>links/index"><?php echo $links_count;?></a>
+	</div>
+<?php 
+	}
+	else
+	{
+?>
+	<div style ="font-size: 25px; margin-top: 50px; padding-right: 12px; text-align: right;" >
+		<a title = "<?php echo $links_count?> Link(s)" style ="text-decoration: none; color : #B084E9;" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>links/index"><?php echo $links_count;?></a>
+	</div>
+<?php		
+	}	
+?>	
+	
+
+	<!-- magnifying images -->
+	<div class="left-menu">
+		<ul>
+		
+<!-- 			DASHBOARD -->
+			<li class = "always_show">
+			<a <?php if( $controllerr == "dashboard" ) echo "class='selected'"; ?>			 
+			href="/<?php echo PROJECT_NAME; ?>dashboard/index"><span class = "main_menu_text">HOME</span>
+			<div class="img">
+				<img src="<?php echo IMAGE_PATH?>/home-icon.png" alt="Home" title="Home"
+					width="15" height="14" />
+			</div>
+			</a>
+			</li>
+			
+			
+<!-- 			PROFILE -->
+			<li class = "always_show" id = "profile_menu_item"><a 
+<?php 
+			if( $controllerr == "profile" || $controllerr == "bookmarks")
+				echo "class='selected'";
+?>			
+			href="/
+<?php 	
+			echo PROJECT_NAME.$current_user_username; ?>"><span class = "main_menu_text">PROFILE</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/icon-industries.png" alt="Profile"
+							title="Profile" width="12" height="15" />
+					</div>
+			</a></li>
+			
+			
+<!-- 			SOCIALISE -->
+			<li class = "always_show"><a
+<?php 
+			if( $controllerr == "socialise" )
+				echo "class='selected'";		
+?>			 
+			href="/
+<?php 
+			echo PROJECT_NAME;
+?>
+			socialise/photo-feed"><span class = "main_menu_text">DISPLAY</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/icon-photo.png" alt="Display" title="Display"
+							width="15" height="14" />
+					</div>
+				</a>
+			</li>
+			
+<!-- 			MAILS -->
+	<!-- 		<li class = "only_in_more_view" id = "mail_menu_item" style = "display:none;"-->
+			<li class = "always_show" id = "mail_menu_item"	><a 
+<?php 
+			if( $controllerr == "mail" )
+			echo "class='selected'";
+?>			
+			href="/
+<?php 
+			echo PROJECT_NAME;
+?>
+			mail/inbox"><span class = "main_menu_text" >MAIL</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/mail.png" alt="Mail" title="Mail" width="16"
+							height="13" />
+					</div>
+			</a></li>
+			
+			
+<!-- 			LINKS -->
+		
+			<li class = "always_show" id = "link_menu_item"
+			><a
+<?php 
+			if( $controllerr == "links" )
+			echo "class='selected'";
+?>			
+			href="/
+<?php 		
+			echo PROJECT_NAME;
+?>			
+			links"><span class = "main_menu_text">LINKS</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/icon-connection.png" alt="Links" title="Links"
+							width="16" height="15" />
+					</div>
+			</a>
+			</li>
+<!-- 			JOBS -->
+			<li class = "always_show"><a
+<?php 
+			if( $controllerr == "job" )
+				echo "class='selected'";		
+?>			 
+			href="/
+<?php 
+			echo PROJECT_NAME;
+?>
+			job"><span class = "main_menu_text">JOBS</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/icon-reference.png" alt="Jobs" title="Jobs"
+							width="15" height="14" />
+					</div>
+				</a>
+			</li>
+<!-- 	End JOBS -->
+<!-- 	Skills -->
+			<li class = "always_show">
+			<a <?php if( $controllerr == "skills" ) echo "class='selected'"; ?>			 
+			href="/<?php echo PROJECT_NAME; ?>skills/my-skills"><span class = "main_menu_text">SKILLS</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/icon-skills.png" alt="Skills" title="Skills"
+							width="12" height="16" />
+					</div>
+			</a>
+			</li>  
+<!-- End Skills -->
+<!-- News -->
+			<li class = "always_show">
+			<?php $default_news_set = Extended\default_news::getDefaultNewsSetForUser(Auth_UserAdapter::getIdentity()->getId());
+			if($default_news_set)
+			{
+    	 		if($default_news_set->getNews_type() == 1) { ?>
+			<a <?php if( $controllerr == "news" ) echo "class='selected'"; ?>			 
+			href="/<?php echo PROJECT_NAME; ?>news"><span class = "main_menu_text">NEWS</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/news-icon.png" alt="News" title="News"
+							width="12" height="16" />
+					</div>
+			</a>
+			<?php } else if($default_news_set->getNews_type() == 2) { ?>
+				<a <?php if( $controllerr == "news" ) echo "class='selected'"; ?>			 
+			href="/<?php echo PROJECT_NAME; ?>news/ibn"><span class = "main_menu_text">NEWS</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/news-icon.png" alt="News" title="News"
+							width="12" height="16" />
+					</div>
+			</a>
+			<?php }
+				} 
+				else {  ?>
+		
+			<a <?php if( $controllerr == "news" ) echo "class='selected'"; ?>			 
+			href="/<?php echo PROJECT_NAME; ?>news"><span class = "main_menu_text">NEWS</span>
+					<div class="img">
+						<img src="<?php echo IMAGE_PATH?>/news-icon.png" alt="News" title="News"
+							width="12" height="16" />
+					</div>
+			</a>
+			<?php }?>
+			</li>  
+<!-- End News -->
+		</ul>
+	</div>
+</div>
+<!-- Content Left Ends -->

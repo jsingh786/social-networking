@@ -1,0 +1,339 @@
+<?php
+//JS
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.stylish-select.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links_menu.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/people.js" );
+
+//CSS
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/search-results.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+$menu_size = Auth_UserAdapter::getIdentity()->getMain_menu_size();
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+
+?>
+
+<script type = "text/javascript">
+
+$(document).ready(function(){
+
+//Advanced search country change.
+$("#country_list").change(function(){
+	fillUpAdvancedSearchStateDD();
+});
+//Advanced search city change.
+$("#state_list").change(function(){
+	fillUpAdvancedSearchCityDD();
+});
+/**
+ * Manages state dropdown acording to country selected,
+ * If country selected has no states but cities, it fillup cities
+ * in city dropdown.
+ *
+ * @author jsingh7
+ * @vesion 1.0
+ */
+function fillUpAdvancedSearchStateDD()
+{
+	var country_id = $('#country_list').val();
+	$.ajax({
+		url : "/" + PROJECT_NAME + "job/get-response-for-country-selected",
+		method : "POST",
+		data : {
+			"country_id": country_id},
+			type : "post",
+			dataType : "json",
+			success : function(jsonData) {
+			$("#state").html('<option value = "">Select</option>');
+			$("#advanced_city").html('<option value = "">Select</option>');
+			$("#state_div").fadeIn();
+			var optionsForStates = "";
+			var optionsForCities = "";
+			if( jsonData.count > 0 )
+			{
+				if( jsonData.have_states == 1 )
+				{
+					optionsForStates += '<option value = "">Select</option>';
+					for( i in jsonData.options )
+					{
+						optionsForStates += '<option value = "'+jsonData.options[i]['id']+'"';
+						if(parseInt(jsonData.options[i]['id']) == parseInt(<?php $_GET['state_list']?>))
+						{
+							optionsForStates += 'selected="selected"';
+						}
+					optionsForStates += '>'+jsonData.options[i]['name']+'</option>';
+					}
+					$("#state_list").html(optionsForStates);
+					$("#state_div").fadeIn();
+
+				}
+				if( jsonData.have_states == 0 )
+				{
+					optionsForCities += '<option value = "">Select</option>';
+					for( j in jsonData.options )
+					{
+						optionsForCities += '<option value = "'+jsonData.options[j]['id']+'"';
+						if(parseInt(jsonData.options[j]['id']) == parseInt(<?php $_GET['city_list']?>))
+						{ 
+							optionsForCities += 'selected="selected"';
+						}
+						optionsForCities += '>'+jsonData.options[j]['name']+'</option>';
+					}
+					$("#city_list").html(optionsForCities);
+					$("#state_div").hide();
+				}
+			}
+				
+		}
+	});
+}
+/**
+ * Manages city dropdown acording to state selected,
+ *
+ * @author jsingh7
+ * @vesion 1.0
+ */
+function fillUpAdvancedSearchCityDD()
+{
+	var state_id = $('#state_list').val();
+	$.ajax({
+		url : "/" + PROJECT_NAME + "job/get-response-for-state-selected",
+		method : "POST",
+		data : {
+			"state_id": state_id},
+			type : "post",
+			dataType : "json",
+			success : function(jsonData) {
+			var optionsForCities = "";
+
+			optionsForCities += '<option value = "">Select</option>';
+			for( i in jsonData.options )
+			{
+				optionsForCities += '<option value = "'+jsonData.options[i]['id']+'"';
+				if(parseInt(jsonData.options[i]['id']) == parseInt(<?php $_GET['city_list']?>))
+				{ 
+					optionsForCities += 'selected="selected"';
+				}
+				optionsForCities += '>'+jsonData.options[i]['name']+'</option>';
+			}
+			$("#city_list").html(optionsForCities);
+		}
+	});
+}
+
+});
+</script>
+
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+<!-- WORK IN PROGRESS -->
+<!-- <div id="wip" style="background: none repeat scroll 0 0 #FFFEFF;border: 4px outset #D3B700;display: block;margin: 0 auto;">
+	<img src= "<?php  //echo IMAGE_PATH; ?>/WIP.jpg"/><p style="color: #FF0000;display: inline-block;float: right;font-size: 20px;margin-right: 280px;margin-top: 35px;">WORK IN PROGRESS!</p>
+</div> -->
+	<!-- Photo Album Starts -->
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2 style="width: auto; border:none;">
+				SEARCH PEOPLE
+				<div class="addnew-links">
+					<a class="text-purple-link" href="/<?php echo PROJECT_NAME?>links/import">
+						Add New Links
+					</a>
+					<img src="<?php echo IMAGE_PATH;?>/icon-connection-hover.png" width="16" height="15" align="absmiddle" />
+				</div>
+			</h2>
+		</div>
+	</div>
+	<div class="hdr-bdr-outer">
+	<div class="hdr-bdr search-results">
+		<div class="pd10-white">
+	<!-- Jobs Right Header Starts -->
+	<div class="jobs-rt-hdr links-profile-img1">
+		<div class="slide-down" >
+			<h3>Advanced Search</h3>
+		</div>
+		<input type = "hidden" name = "search_id" value = "<?php echo $this->search_id;?>" id = "search_id">
+	</div>
+	<!-- Jobs Right Header Ends -->
+	</div>
+		<div class="summary-outer" id="edit-basic-info" >
+		<form name="advance_search_people" id="advance_search_people" method="get" action="/<?php echo PROJECT_NAME; ?>search/people">
+			<!-- Summary Edit Ends -->
+			<!-- Contact Details Starts -->
+			<div class="contact-details">
+			<div class="contact-label-span2">
+					<label>Name </label>
+						<span> 
+							<input value="<?php echo @$_GET['name']; ?>" type="text" name="name" id="name" class="search-one-textbox ">
+						</span>
+				</div>
+				<div class="contact-label-span2">
+					<label>Country</label> 
+					<span> 
+						<select class="dropdown dd-new" name="country_list" id="country_list" value="<?php echo $_GET['country_list']; ?>">
+							<option value="">SELECT</option>
+							<?php 
+								foreach ( $this->allCountriesObj as $country )
+								{
+									echo '<option value="'.$country->getId().'">'.$country->getName().'</option>';
+								}	
+?>
+					</select>
+					</span>
+				</div>
+				<div class="contact-label-span2" id="state_div">
+					<label>State</label> 
+					<span> 
+						<select class="dropdown dd-new" name="state_list" id="state_list">
+							<option value="">SELECT</option>
+					</select>
+					</span>
+				</div>
+				<div class="contact-label-span2" id="city_div">
+					<label>City</label> 
+					<span> 
+						<select class="dropdown dd-new" name="city_list" id="city_list">
+							<option value="">SELECT</option>
+					</select>
+					</span>
+				</div>
+				<div class="contact-label-span2">
+					<label>Company</label> 
+						<span> 
+							<input value="<?php echo @$_GET['company_name'];?>"  type="text" name="company_name" id="company_name" class="search-one-textbox ">
+						</span>
+				</div>
+				<div class="contact-label-span2">
+					<label>Skills</label> 
+						<span> 
+							<input type="text" name="skill" id="skill" class="search-one-textbox" value="<?php echo @$_GET['skill'];?>">
+						</span>
+				</div>
+				<div class="contact-label-span2">
+					<label>Industry</label> 
+					<span> 
+						<select name="industry" id="industry" class = "dd-new dropdown" >
+<?php
+							echo '<option value="">SELECT</option>';
+						
+							foreach ( $this->allIndustriesObj as $industry )
+							{
+								echo '<option value="'.$industry->getId().'">'.$industry->getTitle().'</option>';
+								
+							}	
+?>						
+						</select>
+					</span>
+				</div>
+				<div class="contact-label-span2" style = "display:none;">
+					<label>Experience</label> 
+					<span> 
+						<select class="dropdown" name="experience" id="experience" class = "dd-new">
+							<option value="">SELECT</option>
+					</select>
+					</span>
+				</div>
+				<div class="contact-label-span2">
+					<label>Language</label> 
+						<span> 
+							<input type="text" name="language" id="language" class="search-one-textbox " value="<?php echo @$_GET['language'];?>">
+							
+						</span>
+				</div>
+
+
+
+			</div>
+			<!-- Contact Details Ends -->
+			<div class="summary-btn-outer">
+				<input name="search-people" id="search-people" type="submit"alt="Search" title="Search" class="new-save-btn" value="Search" /> 
+			</div>
+		</form>
+		</div>
+	</div>
+		
+	</div>
+	
+	<div class="bsr-box">
+	<!-- Col3 Starts -->
+	<?php 
+	if( $this->paginator )
+	{	
+		if( $this->paginator->getTotalItemCount() )
+		{
+	?>	
+		<div class="bookmark-search-right">	
+		<div class="col3">
+			<div class="fl text-grey3">
+				<?php 
+				$query_str = "";
+				foreach( $this->prms as $key=>$p )
+				{
+					if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+					{
+						continue;
+					}
+					$query_str .= $key."=".$p."&amp;";
+				}
+				?>
+				VIEWS 
+				<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."dashboard/search-results?".$query_str."list_len=20";?>">
+					<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."dashboard/search-results?".$query_str."list_len=50";?>">
+					<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."dashboard/search-results?".$query_str."list_len=100";?>">
+					<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."dashboard/search-results?".$query_str."list_len=all";?>">
+					<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+				</a>
+			</div>
+			<div class="fr  text-grey3">
+			<?php
+				echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+			?>							
+			</div>
+		</div>
+		</div>
+		<?php
+			}
+		}
+		?>					
+	</div>
+	</div>
+	
+	<div class="linkprofile-container">
+			<!-- Link Profile Outer Starts -->
+			<form name="link-form" id="link-form" method="post" action="">
+				<div class="linkoutercols">
+				<div class="linkprofile-outer">
+				<?php 
+				if( $this->paginator )
+				{	
+					if( $this->paginator->getTotalItemCount() )
+					{
+						$i=0;
+						foreach ( $this->paginator as $v )
+						{
+							$listArr [] = $v->getId();
+						}
+					}
+					echo '<input type="hidden" name="usersCount" id="usersCount" value="'.$this->paginator->getTotalItemCount().'" />';
+				}
+				else
+				{
+					echo '<input type="hidden" name="usersCount" id="usersCount" value="0" />';
+					echo "<div class='no-rec-msg text-grey3'>No results found!</div>";
+				}
+				if(isset($listArr) && count($listArr)>0){
+					echo Helper_common::displayUsersGridView( Auth_UserAdapter::getIdentity()->getId(), $listArr );
+				}
+				?>
+				</div>
+				</div>
+		</form>
+	</div>

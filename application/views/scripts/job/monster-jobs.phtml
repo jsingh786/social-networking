@@ -1,0 +1,54 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Monster-Jobs' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+//$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/jobs_recommended.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/recommended_jobs.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+
+?>
+
+<div class="content-right-right">
+<input type="hidden" name="offset" id="offset" value="0" />
+<input type="hidden" name="recordLimit" id="recordLimit" value="10" />
+<input type="hidden" name="myLat" id="myLat" value="" />
+<input type="hidden" name="myLong" id="myLong" value="" />
+
+<!-- Bookmarks Header Starts -->
+	<div style="padding-bottom:10px !important;" class="job-hdr">
+     	<div class="job-hdr-top">
+        	<h2>Monster Jobs</h2>
+           <!--  <div class="need-help">
+            	<div class="need-help-text"><a href="javascript:;" class="text-grey3-link">Need Help?</a> <img width="20" height="20" align="absmiddle" src="<?php //echo IMAGE_PATH; ?>/help-icon.png">
+            	</div>
+             </div>-->
+		</div>
+	</div>
+<!-- Bookmarks Header Ends -->
+<div id="jobslisting" style="float:left; width: 100%;">
+<div class="jobslisting_UK"	style="float:left; width: 100%;">
+<div id="MonsterJobSearchResultPlaceHoldervH0AAA_e_e" class="xmns_distroph">
+
+</div>
+<script type="text/javascript">
+(function() {
+  var oScript = document.createElement('script');
+  oScript.type = 'text/javascript';
+  oScript.async = true;
+  oScript.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'publisher.monster.com/Services/WidgetHandler.ashx?WidgetID=EAAQ90oj8qL9h9B46LTLDighxefOHH64gFKGhT1KbCFKwew-&Verb=Initialize';
+  var oParent = document.getElementsByTagName('script')[0];
+  oParent.parentNode.insertBefore(oScript, oParent);
+})();
+</script>
+<a id="monsterBrowseLinkvH0AAA_e_e" class="monsterBrowseLink fnt4" href="http://jobsearch.monster.co.uk/jobs/">View More Job Search Results</a>
+</div>
+
+
+
+
+</div>

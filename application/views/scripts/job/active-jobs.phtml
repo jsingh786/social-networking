@@ -1,0 +1,250 @@
+<?php 
+// Title
+$this->headTitle ()->prepend ( 'Jobs posted - Active' );
+// Javascript
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/active_expire_closed_jobs.css" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->appendFile ( PUBLIC_PATH . "/js/frontend/jobs_active.js" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+echo $this->partial("partials/add_contacts_popup.phtml");
+?>
+<style type="text/css">
+.commentsclmn{
+	background:none !important;
+	border-top:0px !important;
+	border-right:0px !important;
+	border-bottom:0px !important;
+	text-align:center !important; 
+	width:25px;
+}
+.grid-outer{
+	margin:20px 0 0 0px !important;
+}
+.commentBtns{
+	cursor:pointer !important;
+}
+.job-content{
+	padding: 0 0 0 2% !important;
+    width: 98% !important;
+}
+</style>
+<div class="content-right-right">
+
+	<!-- Bookmarks Header Starts -->
+	<div class="mail-hdr">
+		<h2>Jobs Posted</h2>
+	<!-- 	<div class="need-help">
+			<div class="need-help-text">
+				<a class="text-purple-link" href="/<?php  //echo PROJECT_NAME?>job/create-job">Post a Job</a><img
+					align="bottom" width="16" height="13"
+					src="<?php //echo IMAGE_PATH; ?>/icon-reference-hover.png">
+			</div>
+		</div>-->
+
+		<div class="bookmarks-add-new bdr-btm-none">
+		<?php 
+				if( $this->paginator )
+				{	
+					if( $this->paginator->getTotalItemCount() )
+					{
+?>				
+					<div class="col3" style="float:left;margin:8px;">
+						<div class="fr  text-grey3">
+<?php
+							echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+						</div>
+					</div>
+<?php
+					}
+				}
+?>
+			<div class="jobs-text1 text-grey2">
+                <h3 class="sub-heading-arial-narrow" style=""> 
+                	<font title ="Active jobs" class="text-purple" style="color:#6C518F !important;"> <b><?php echo $this->countActiveJobs;?></b> <a href="/<?php echo PROJECT_NAME?>job/active-jobs" class="text-purple" style="color:#6C518F !important;text-decoration:none;">Active</a></font> &nbsp;  | &nbsp; <font title = "Expired jobs" style="color:black;"> <?php echo $this->countExpiredJobs;?> <a href="/<?php echo PROJECT_NAME?>job/expired-jobs" style="text-decoration:none;color:black;">Expired</a></font>  &nbsp; | &nbsp;   <font title = "Closed jobs" style="color:black;"> <?php echo $this->countClosedJobs;?> <a href="/<?php echo PROJECT_NAME?>job/closed-jobs" style="text-decoration:none;color:black">Closed</a>
+                	</font>
+                </h3>
+             </div>
+
+		</div>
+
+
+
+
+	</div>
+	<!-- Bookmarks Header Ends -->
+
+	<div class="jobs-rt-hdr ">
+		<div class="slide-down">
+			
+				<h3>Summary</h3>
+			
+		</div>
+
+	</div>
+
+
+	<div class="job-content" style=" min-height: 675px !important;">
+
+		<div class="grid-outer">
+			<!-- <div style="margin-bottom:10px; width:80px; padding:0;" class="fr"><input  type="button" class="btn-blue deleteMultipleJobs" value="Delete"></div> -->
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<th style="width:20%;">Job Title</th>
+						<th style="width:9%;">Applicants</th>
+						<th style="width:9%;">Shortlisted</th>
+						<th style="width:20%;">Company</th>
+						<th style="width:15%;">Location</th>
+						<th style="width:10%;">Expires On</th>
+						<th style="width:11%;">Actions</th>
+						<th class="commentsclmn"></th>
+					</tr>
+					<?php 
+					if( $this->paginator )
+					{
+						if( $this->paginator->getTotalItemCount() )
+							{
+								foreach ( $this->paginator as $v ){
+						?>
+					<tr id = "<?php echo $v->getId();?>">
+					   <!-- <td><input type="checkbox" class="chkbox" name="deleteJob[]" id="deleteJob_<?php //echo $v->getId();?>" value="<?php //echo $v->getId();?>" /></td> -->
+						<td><a title = "<?php echo $v->getJob_title();?>" href="./received-applications/id/<?php echo $v->getId();?>" class="text-purple2-link"><?php if(strlen($v->getJob_title())>16){echo substr($v->getJob_title(),0,16)."...";} else { echo $v->getJob_title();}?></a></td>
+						<!-- <td><input id="commentBtn_<?php //echo $v->getId();?>" type="button" class="btn-grey commentBtns"
+							value="<?php //if(strlen($v->getComments())>16){echo substr($v->getComments(),0,16)."...";} else { echo $v->getComments();}?>" rel="<?php echo $v->getId();?>">
+							<div class="commentUpdateBox" id="commentUpdateBox_<?php ///echo $v->getId();?>" style="margin:-13px 0 0 -3px;position:absolute;width:303px;font-size:11px;float:left;background:#FFFFFF;padding:0 3px 0 0;display:none;">	
+								<textarea id="jobComment_<?php //echo $v->getId();?>" maxlength="220" name="jobComment_<?php //echo $v->getId();?>"><?php //echo $v->getComments();?></textarea>
+								<input type="hidden" name="orignalCmnt_<?php //echo $v->getId();?>" value="<?php //echo $v->getComments();?>" id="orignalCmnt_<?php //echo $v->getId();?>" />
+								<a href="javascript:;" style="float:left;padding-left:2px;color:#654C87;" class="discardLink" rel="<?php //echo $v->getId();?>">Discard</a>
+								<a href="javascript:;" style="float:right;padding-right:2px;color:#654C87;" class="updateLink" rel="<?php //echo $v->getId();?>">Save</a>
+								<img src="" style="display:none;float:right;margin-right:5px;margin-top:4px;" id="imgsave_<?php //echo $v->getId();?>" />
+							</div>	
+						</td>-->
+						<td><?php echo \Extended\job_applications::countApplicants($v->getId());?></td>
+						<td><?php echo \Extended\job_applications::countCandidates($v->getId());?></td>
+						<td title="<?php echo $v->getCompany()->getName();?>"><?php if(strlen($v->getCompany()->getName())>16){ echo substr($v->getCompany()->getName(),0,16)."...";}else {echo $v->getCompany()->getName();}?></td>
+						<td title="<?php echo $v->getCountryRef()->getName();?>"><?php if(strlen($v->getCountryRef()->getName())>12){ echo substr($v->getCountryRef()->getName(),0,12)."...";}else {echo $v->getCountryRef()->getName();}?></td>
+						<td id = "td_<?php echo $v->getId();?>" ><?php if( $v->getExpiry_date()){ echo $v->getExpiry_date()->format("d-M");} ?></td>
+						<td>
+							<select style="font-size: 12px;" name="select" onChange = "performAction(this)" id = "<?php echo $v->getId();?>">
+								<option value = "0">Select</option>
+								<option value = "4">Close</option>
+								<option value = "5">Renew</option>
+								<option value = "6">Share</option>
+							</select>
+						</td>
+						<td class="commentsclmn">
+						<?php 
+							$commentImg = "comments-icon-grey.png";
+							if( $v->getComments()!="" )
+							{
+								$commentImg = "comments-icon-purple.png";
+							}
+						?>
+							<img title="Add comments" id="commentBtn_<?php echo $v->getId();?>"  rel="<?php echo $v->getId();?>" class="commentBtns" width="16" height="13" src="<?php echo PUBLIC_PATH;?>/images/<?php echo $commentImg;?>">
+							<div class="commentUpdateBox" id="commentUpdateBox_<?php echo $v->getId();?>" style="border:1px solid #48545E;margin:-13px 0 0 -141px;position:absolute;width:303px;font-size:11px;float:left;background:#6C518F;padding:0 3px 0 0;display:none;height:78px;">	
+								<textarea style="background:#FFFFFF !important;margin:0 0 5px;height:50px;" id="jobComment_<?php echo $v->getId();?>" maxlength="220" name="jobComment_<?php echo $v->getId();?>"><?php echo $v->getComments();?></textarea>
+								<input type="hidden" name="orignalCmnt_<?php echo $v->getId();?>" value="<?php echo $v->getComments();?>" id="orignalCmnt_<?php echo $v->getId();?>" />
+								<a href="javascript:;" style="float:left;padding-left:5px;color:#FFFFFF;font-weight:bold;text-decoration:none;" class="discardLink" rel="<?php echo $v->getId();?>">Discard</a>
+								<a href="javascript:;" style="float:right;padding-right:5px;color:#FFFFFF;font-weight:bold;text-decoration:none;" class="updateLink" rel="<?php echo $v->getId();?>">Save</a>
+								<img src="" style="display:none;float:right;margin-right:5px;margin-top:4px;" id="imgsave_<?php echo $v->getId();?>" />
+							</div>	
+						</td>
+					</tr>
+					<?php 
+							}
+						}
+						else{
+							?>
+									<tr>
+										<td colspan="8"><div style="width:100%;text-align:center;">No Record Found!</div></td>
+									<tr>	
+									<?php 
+								}
+					}
+					else{
+						?>
+							<tr>
+								<td colspan="8"><div style="width:100%;text-align:center;">No Record Found!</div></td>
+							<tr>	
+						<?php 
+					}
+					?>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+
+	<!-- Jobs Right Content Starts -->
+
+	<!-- Col1 -->
+
+	<!-- Jobs Right Content Ends -->
+	<!-- <div id="updateComments" class="popup" style = "display: none;">
+		<div class="updateComment-outer_1">
+			
+			<div class="updateComment-hdr_1">
+				<div id="updateComment_2" class="left text-white">
+					<h2>Update comment</h2>
+					<img class="close_photo_popup"
+							src="<?php //echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+							title="Close" width="21" height="20" />
+				</div>
+	
+			</div>
+			
+				<div class="updateComment-content_1">
+					<div class= "upper_container">
+					<span id="jobTittleCmnt">Update "Job Title" comment.</span>
+					<input type="hidden" name="comment_jobId" id="comment_jobId" value="" />
+						<textarea id="jobComment" name="jobComment" maxlength="220" ></textarea>
+					</div>
+					<div id  = "lower_container">
+										<input class="btn-purple2 close_photo_popup" style="float:right;" type="button" name="cancel" id="cancel" value="Cancel" />
+						<input class="btn-purple2" style="float:right;margin-right:5px;" type="button" name="updateComment" id="updateComment" value="Save" />
+				
+					</div>
+				</div>
+				
+		</div>
+	</div>-->
+	
+</div>
+<!-- Content Right Right Ends -->
+<div id="delete_job_dialog_confirm" title="Delete Job" style = "display:none;">
+  <p>
+    <span class="ui-icon ui-icon-info" style="float: left; margin: 0 7px 50px 0;"></span>
+  	Please confirm that you want to delete the selected job(s)?
+  	<br>
+  	<br>
+	Your confirmation will remove the job from your profile and  &quot;delete &quot; the job completely and you will not be able to view the details of this job anymore.
+	<br>
+  	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Do you want to remove this job from your profile?
+  </p>
+</div>
+<div id="close_job_dialog_confirm" title="Close Job" style = "display:none;">
+	<p>
+		Please confirm that you want to close the selected job(s)?
+	  	<br>
+		<br>
+		Your confirmation will remove the job from iLook database. Job Candidates will no longer be able to view and apply for the jobs. But you will still be able to review your job status and any applications you have received.
+		<br>	
+		<br>
+		Do you want to close this job listing?
+	</p>
+</div>
+<div id="renew_job_dialog_box" title="Select a new expiry date" style = "display:none;height:300px">
+	<p style="text-align: center;">
+		<input id="job_expiry_date" class="job_expiry_date" type="text" readonly="" style="width:97%; margin-left:1px;" name="job_expiry_date">
+	</p>
+	<div></div>
+</div>

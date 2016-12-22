@@ -1,0 +1,242 @@
+<?php 
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/education.js" );
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/education.css" );
+	
+	if( !$this->eduInfoList ){
+		?>
+<style type="text/css">
+	input[name=add-more]{
+		display:none;
+	}
+	#education-form{
+		display:block;
+	}
+	input[name=save-eduinfo]{
+		display:block;
+		float:right;
+	}
+	input[name=cancel-education]{
+		display:none;
+	}
+</style>
+		<?php 
+	}
+	else{
+		?>
+		<style type="text/css">
+			#education-form{
+				display:none;
+			}
+		</style>
+		<?php 
+	}
+?>
+	<!-- Content Right Left Starts -->
+<?php
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<!-- Content Right Left Ends -->
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+			<form name="edu-form" id="edu-form" method="post" action="">
+			<input type="hidden" name="school_id" id="school_id" value="" />
+			<input type="hidden" name="degree_id" id="degree_id" value="" />
+			<input type="hidden" name="field_stud_id" id="field_stud_id" value="" />
+			<input type="hidden" name="educ_id" id="educ_id" value="" />
+			<!-- Summary Edit Starts -->
+                <div class="summary-edit text-grey2">
+                	<h3 style="width:100%; text-align:left;" class="text-purple2"> 
+	                	Education
+	                	<input name="add-more"  type="button" class="btn-to-link fr" value="+ Add more Education" alt="+ Add more Education" title="+ Add more Education" />
+                	</h3>
+   	    	    </div>
+           		<!-- Summary Edit Ends -->
+            
+            
+            
+           		<!-- Contact Details Starts -->
+	   	    	    <div class="contact-details" id="education-form">
+	   	    	    
+	   	    	    <div class="contact-label-span2">
+							<label>Institution name</label> 
+							<span> 
+								<input type="text" name="school_name" id="school_name" class="search-one-textbox" value="">
+							</span> 
+					</div>
+					<div class="contact-label-span2">		
+							<label>Location</label> 
+							<span> 
+								<input type="text" name="institute_location" id="institute_location" class="search-one-textbox" value="">
+							</span> 
+						</div>
+						<div class="contact-label-span2">	
+							<label>Education Level</label>
+							<span> 
+							<select name="degree" id="degree" class="dropdown" >
+							  <option value = "">Select</option>
+							  <option value="Not Specified">Not Specified</option>
+							  <option value="High School">High School</option>
+							  <option value="Certificate/Diploma">Certificate/Diploma</option>
+							  <option value="Bachelor Degree">Bachelor Degree</option>
+							  <option value="Masters Degree">Masters Degree</option>
+							  <option value="Doctorate">Doctorate</option>
+							  <option value="Professional">Professional</option>
+							  <option value="Others">Others</option>
+							  
+							</select>
+<!-- 								<input type="text" name="degree" id="degree" class="search-one-textbox" value=""> -->
+							
+							
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Degree</label> 
+							<span> 
+								<input type="text" name="degree_name" id="degree_name" class="search-one-textbox" value="">
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Field of Study </label> 
+							<span> 
+								<input type="text" name="study_field" id="study_field" class="search-one-textbox" value="">
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Dates Attended</label> 
+							<span class="text-grey2" style = "width: 250px;">
+								<span> 
+									<label>
+										From
+									</label>
+									<input type="text" name="from" id="from" class="search-one-textbox" value="" style="width:100px;">
+								</span> 
+								<br />
+								<span>
+									<label>
+									To
+									</label>
+									<input type="text" name="to" id="to" class="search-one-textbox" value="" style="width:100px;">
+								</span>
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Grade</label> 
+							<span> 
+								<input type="text" name="grade" id="grade" class="search-one-textbox" value="">
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>
+							Activities and Societies
+							</label> 
+							<span style="min-height: 115px;"> 
+								<textarea maxlength="1500" name="activities" id="activities" class="textarea2" style="width: 91%;" cols="" rows="20"></textarea>
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>&nbsp;</label> 
+							<span> 
+								<font style="font-size: 11px; margin-top: 5px; float: left; width: 100%;">
+									Tip : Use commas to separate multiple activities
+								</font>
+								<br /> 
+								<font style="font-size: 11px; margin-top: 5px; margin-bottom: 20px; float: left; width: 100%;">
+									Example : Alpha Phi Omega, Chamber Chorale, Debate Team
+								</font>
+							</span>
+							</div>
+							<div class="contact-label-span2"> 
+							<label>Additional Notes</label> 
+							<span style="min-height: 115px;">
+								<textarea maxlength="1500" name="additional_notes" id="additional_notes" class="textarea2" style="width: 91%;" cols="" rows="20"></textarea>
+							</span> 
+							</div>
+							
+							<label>&nbsp;</label>
+							<div class=" summary-btn-outer bdr-grey2">
+							<p>
+							<span style="min-height: 24px; width: 300px;">
+								<a  id="remove-educ" class="remove-link fl" href="javascript:;" style="display:none; margin-top:5px;">
+								Remove this Education
+								</a>
+								</span>
+							</p>
+							<input name="update-eduinfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" style="display:none;" />
+							<input name="save-eduinfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+							<a href="javascript:;" id="cancel-education" class="new-cancel-btn">Cancel</a>
+							</div>
+					</div>
+					
+			
+				
+			<?php 
+			$ids=array();
+			$educationListing=$this->eduInfoList;
+			$listing_number=count($educationListing);
+				if($listing_number>0){
+					for($i=0;$i<$listing_number;$i++){
+						$ids[]=$educationListing[$i]['educ_id'];
+
+			?>	
+			<!-- Un Editable Outer Starts -->
+			<div class="un-editable-outer" id="education<?php echo $educationListing[$i]['educ_id'];?>">
+				<h3 >
+					<?php echo $educationListing[$i]['school_title'];?>
+					<a id="<?php echo $educationListing[$i]['educ_id'];?>" href="javascript:;" onclick="editEducation(this)" style="text-decoration:none;">
+						<img class="edit-new-icon" src="<?php echo IMAGE_PATH;?>/edit-pencil.png"  />
+					</a>
+				</h3>
+<?php 
+			if($educationListing[$i]['location']!= "")
+			{
+?>
+				<p class = 'exp_company' ><?php echo $educationListing[$i]['location'];?></p>
+<?php 
+			}
+			else if($educationListing[$i]['degreetitle']== "" && $educationListing[$i]['fieldofstudy_title']!="")
+			{
+?>
+				<p class = 'fnt12 exp_location' >(<?php echo $educationListing[$i]['fieldofstudy_title'];?>)</p>
+<?php 
+			}
+			else if($educationListing[$i]['fieldofstudy_title']== "" && $educationListing[$i]['degreetitle']!="")
+			{
+?>
+				<p class='fnt12 exp_dates' ><?php echo $educationListing[$i]['degreetitle'];?> </p>
+<?php
+			}
+			else if($educationListing[$i]['degreetitle']== "" &&  $educationListing[$i]['fieldofstudy_title']== "")
+			{
+?>
+				<p class='fnt12 exp_notes' >None</p>
+<?php 	
+			}
+?>
+				
+				<p class='fnt12 ' ><?php echo $educationListing[$i]['degree_name'];?></p>
+				<p class='fnt12 exp_dates'><?php echo date("j F, Y", strtotime($educationListing[$i]['duration_from']))." - ".date("j F, Y", strtotime($educationListing[$i]['duration_to']));?></p>
+				<p class='fnt12 '><?php if($educationListing[$i]['grade']) {?>Grade-<?php echo nl2br( $educationListing[$i]['grade'] ); } ?></p>
+				<p class='fnt12 '><?php if($educationListing[$i]['acitivities']) {?>Activities-<?php echo nl2br( $educationListing[$i]['acitivities'] ); } ?></p>
+				<p class='fnt12 exp_notes'><?php if($educationListing[$i]['notes']) {?>Notes- </br><?php echo nl2br( $educationListing[$i]['notes'] ); } ?></p>
+				
+			</div>
+<!-- Dialog Box for prompting user that only one education is left -->
+<div id="dialog_education" title="Delete Education" style="display:none;">
+  <p>
+  	You require minimum one education detail.
+  </p>
+</div>
+			<!-- Un Editable Outer Ends -->
+			<?php 
+					}
+				}
+			?>
+			<input type="hidden" name="edu_ids" id="edu_ids" value="<?php echo implode(",",$ids);?>" />
+			</form>
+			<!-- Un Editable Outer Starts -->			
+		</div>
+		<!-- Content Right Right Ends -->
+	</div>
+	<!-- Content Right Ends -->

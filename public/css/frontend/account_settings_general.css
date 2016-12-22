@@ -1,0 +1,369 @@
+div.innner_gen_settings
+{
+	border-bottom:1px solid #dedede;
+	 border-bottom: 1px solid #dedede;
+    float: left;
+    margin: 0 0 5px 4%;
+    padding: 1% 0;
+    width: 96%;
+	cursor:pointer;
+}
+.new-save-btn {
+	margin-right:9px !important;
+}
+div.job-hdr 
+{
+    height: 788px;
+}
+div.general_settings
+{
+    float: left;
+    margin: 15px 0;
+    padding: 0 0 5px;
+    width: 100%;
+}
+a.edit_icon_pencile
+{
+	float:right;
+}
+img.edit-new-icon
+{
+	width:20px;
+}
+div.change_setting
+{
+	display:none;
+}
+div.change_setting div.select_type
+{
+ 	margin:0 0 0 30px;
+	float:left;
+}
+div.change_setting div.select_type select{
+	width:190px;
+	border: 1px solid #dedede;
+	height:30px;	
+}
+div.change_setting span{
+	float:left; 
+ 	line-height:28px; 
+ 	font-weight:bold;
+}
+div.change_setting div.set_new_type
+{
+	float: right;
+    margin: 1px 0 0;
+    position: relative;
+}
+
+div.change_user_type
+{
+    display: none;
+	float: left;
+	width:95%;
+	padding:20px 0 20px 5%;
+}
+a.cancel_edit_user_type 
+{
+	cursor:pointer;
+	text-decoration:none;
+}
+/** save button under dropdown**/
+span.span_save_user_type
+{
+	 position: absolute;
+    right: 141px;
+    top: 6px;
+}
+/*******************************/
+/***Add experience popup***/
+
+.contact-details {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.close_bpopup {
+    cursor: pointer;
+    float: right;
+    height: 12px;
+    margin: 14px 0 0;
+    width: 12px;
+}
+div#add_experience_box {
+    background: none repeat scroll 0 0 #ffffff;
+    float: left;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 491px;
+}
+
+
+div.add_experience_hdr_inner .close_popup, div.add_experience_hdr_inner .close_popup_2, div.add_experience_hdr_inner .close_popup_3 {
+    cursor: pointer;
+    float: right;
+    margin-top: 4px;
+}
+div.add_experience_hdr_inner h2 
+{
+    color: #000;
+    float: left;
+    font-weight: bold;
+    text-transform: inherit !important;
+    width: 243px;
+	font-size: 17px !important;
+}
+.contact-label-span2 label {
+	 padding: 5px 0 0 10px !important;
+    width: 25% !important;
+}
+
+.contact-label-span2 span input[type="text"] 
+{
+	 width: 97% !important;
+	 margin: 3px 0 0 !important;
+}
+/**Add note textarea**/
+.textarea2 
+{
+	 margin-left: 12px !important;
+    resize: none;
+    width: 93.5% !important;
+}
+/**********************/
+div.add_experience_hdr_inner
+{
+	background: none repeat scroll 0 0 #f5f6f7;
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	margin: 0;
+	padding: 0 15px;
+	width: 94%;
+}
+div.add_or_edit input..new-save-btn
+{
+	margin-right:9px !important;
+}
+/***Add experience popup ends***/
+
+
+/***Add education popup***/
+
+div.edu-form-save-btn
+{
+	width:95% !important;
+}
+#edu-form {
+    display: block;
+}
+div#add_education_box {
+    background: none repeat scroll 0 0 #ffffff;
+    float: left;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 491px;
+}
+
+
+div.add_education_hdr_inner .close_popup, div.add_education_hdr_inner .close_popup_2, div.add_education_hdr_inner .close_popup_3 {
+    cursor: pointer;
+    float: right;
+    margin-top: 4px;
+}
+img.close_bpopup
+{
+	float:right;
+	cursor: pointer;
+}
+div.add_education_hdr_inner h2 {
+     color: #000;
+    float: left;
+    font-weight: bold;
+    text-transform: inherit !important;
+    width: 243px;
+	 font-size: 16px !important;
+}
+
+.contact-label-span2-edu {
+    float: left;
+    margin: 0;
+    min-height: 50px;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.contact-label-span2-edu label {
+	 padding: 5px 0 0 10px !important;
+    width: 25% !important;
+ 	color: #48545e;
+    float: left;
+    margin: 0;
+    min-height: 20px;
+    padding: 5px 0;
+    width: 30%;
+}
+.contact-label-span2-edu span
+{
+	color: #000 !important;
+    float: left;
+    margin: 0 0 10px 1%;
+    min-height: 20px;
+    padding: 0;
+    width: 68%;
+}
+.contact-label-span2-edu span input[type="text"] 
+{
+	width: 81.5% !important;
+   	background: none repeat scroll 0 0 #f2f2f2;
+    border: 1px solid #f2f2f2;
+    color: #000;
+    float: left;
+    font-size: 14px;
+    margin: -5px 0 0;
+    padding: 6px 5px 7px;
+}
+.contact-label-span2-edu span input.edu-input
+{
+	width: 97% !important;
+}
+
+div.add_education_hdr_inner
+{
+	float: left;
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    padding: 0 15px;
+    width: 94%;
+	 background: none repeat scroll 0 0 #f5f6f7;
+}
+div.add_or_edit input..new-save-btn
+{
+	margin-right:9px !important;
+}
+textarea.textarea-education
+{
+	 background: none repeat scroll 0 0 #f2f2f2;
+    color: #48545e;
+    font-family: opensansregular;
+    font-size: 13px;
+    margin-left: 0 !important;
+    resize: none;
+    width: 98% !important;
+}
+div.bdr-grey2 {
+    width: 98% !important ;
+}
+div.save_education_dialog
+{
+}
+/***Add education popup ends***/
+
+
+
+/*** Change password inner form ***/
+div#chg_pswd
+{
+    float: left;
+    padding: 25px 0 25px 5%;
+    width: 95%;
+}
+div#chg_pswd span#crnt_pswd_span 
+{
+    line-height: 28px;
+}
+div#chg_pswd span#new_pswd_span 
+{
+    line-height: 28px;
+}
+div#chg_pswd span#cnfrm_pswd_span{
+    line-height: 28px;
+}
+div#chg_pswd span.pswd_details_span{
+   	width: 30%;
+	display: inline-block;
+}
+
+div#chg_pswd div#crnt_pswd_div {
+    line-height: 28px;
+}
+div#chg_pswd div#new_pswd_div {
+    line-height: 28px;
+}
+div#chg_pswd div#cnfrm_pswd_div{
+    line-height: 28px;
+}
+
+div#chg_pswd input#current_pswd {
+}
+div#chg_pswd input#new_pswd {
+}
+div#chg_pswd input#cnfrm_pswd {
+}
+div#chg_pswd input.pswd_details_inpt{
+	border: 1px solid #dedede;
+    height: 20px;
+    padding: 1.5px 7px;
+     width: 51%;
+	display: inline-block;
+}
+div.pswd_div
+{
+	padding: 0 0 5px;
+}
+input.btn_change_pswd 
+{
+    border-top-width: 1px !important;
+	border: 1px solid #dedede;
+    font-size: 13px !important;
+    font-weight: bold;
+    height: 28px !important;
+    width: 61px !important;
+ 	background-color: #6c518f !important;
+	margin: 0 0 0 0px !important;
+    color: #fff;
+    cursor: pointer;
+    font-family: arial;
+    height: 22px;
+    padding: 0 0 2px;
+    text-align: center;
+	display:inline-block;
+}
+a.cancel_chg_pswd
+{
+	cursor:pointer;
+	text-decoration:none;
+}
+div.wrong_pswd_dialog_message
+{
+	 max-height: 50px !important;
+}
+div.pswd_chgd_dialog_message
+{
+	 max-height: 40px !important;
+}
+
+/*** Change password inner form ends ***/
+
+div.set_new_pswd {
+    margin: 2% 0 0 31%;
+    text-align: center;
+    width: 54%;
+	position:relative;
+}
+
+/**loading span on save password**/
+span.span_save_password
+{
+ 	position: absolute;
+    right: 233px;
+    top: 6px;
+}
+/**loading span on save password ends**/
+
+
+
+
+

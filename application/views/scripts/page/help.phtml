@@ -1,0 +1,53 @@
+<?php 
+$this->headTitle()->prepend('Help');
+
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/pages.css" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/home_search.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/registeration.js" );
+?>
+<script type="text/javascript">
+
+$(document).ready(function() {		
+	
+	//Execute the slideShow
+	slideShow();
+
+});
+
+</script>
+<style>
+h2 {
+    color: #6c518f !important;
+    font-size: 24px;
+    font-weight: 400 !important;
+	font-family: "ArialNarrowRegular";
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>iLook</title>
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+<!--Feednack Popup -->
+
+<div class="help-content">
+<h2>Help</h2> 
+<div class="help-data">
+    <ul>
+       <li><a class="help-icon1" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-search">Search</a></li>
+       <li><a class="help-icon2" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-links">Links</a></li>
+       <li><a class="help-icon3" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-settings">Settings</a></li>
+       <li><a class="help-icon4" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-profile">Profile</a></li>
+       <li><a class="help-icon5" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-dashboard">Dashboard</a></li>
+       <li><a class="help-icon6" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-display">Display</a></li>
+       <li><a class="help-icon7" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-jobs">Jobs</a></li>
+       <li><a class="help-icon8" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-skills">Skills</a></li>
+       <li><a class="help-icon9" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help-notifications">Notifications</a></li>
+    </ul>
+
+</div>  
+</div>	
+
+
+

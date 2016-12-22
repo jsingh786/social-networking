@@ -1,0 +1,51 @@
+
+.content-right-right > div#jobslisting {
+	background: white none repeat scroll 0 0;
+    margin-left: 0;
+    padding: 10px 10px 10px 25px;
+    width: 94.9%;
+	float : left;
+	 min-height: 747px;
+}
+
+.job-hdr {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    float: left !important;
+    margin: 0 0 0 0px !important;
+    padding: 30px 4% 0 !important;
+    width: 92.1% !important;
+}
+
+.form {
+    background-color: #6c518f !important;
+	margin: 5px 0 20px !important;
+}
+
+.xmns_distroph .fnt11{
+	 color: #6c518f !important;
+	 font-weight: bold !important;
+}
+
+.xmns_distroph .fnt16{
+	color: #000 !important;
+    /*float: left !important;*/
+    font-weight: 600 !important;
+    margin: 4px 0 !important;
+}
+
+
+.xmns_distroph .fnt4 a, .xmns_distroph a.fnt4, #monsterBrowseLink.fnt4, .monsterBrowseLink.fnt4
+{
+	 color: #6c518f !important;
+    float: left !important;
+    margin: 5px 0 0 !important;
+    width: 100% !important;
+}
+
+
+.jobSearchResultRow{ border-bottom: 1px solid #ddd;
+    float: left;
+    margin-bottom: 20px !important;
+    padding-bottom: 10px !important;
+	 line-height: 18px;}
+

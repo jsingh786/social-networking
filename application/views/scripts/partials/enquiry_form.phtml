@@ -1,0 +1,80 @@
+<div id="enquiry_form" class = "popup transparent_border" style = "display: none;">
+	<div class="enquiry-pop-outer">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1 enquiry-pop-hdr">
+			<div id="forgot-password" class="left ">
+				<h2>Enquiry</h2>
+			<img class="close_bpopup"
+			src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+			title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		
+		<div class = "content" >
+		<form id="enquiry_form_content" name="enquiry_form_content" >
+		
+			
+				<div class="enquiry-labelspan-outer">
+					<label>Enquiry Type</label>
+					<span class="inputfield">
+						<select name = 'enquiry_type' class = 'enquiry'>
+							<option value="">Select</option>
+							<option value = '<?php echo \Extended\Enquiry::TYPE_ADVERTISEMENT ?>'>Advertisement</option>
+							<option value = '<?php echo \Extended\Enquiry::TYPE_ENQUIRY ?>'>Enquiry</option>
+							<option value = '<?php echo \Extended\Enquiry::TYPE_FEEDBACK ?>'>Feedback</option>
+						</select>
+						<input value="Send" type="button" class = 'new-save-btn' id = 'send_enquiry'/>
+					</span>
+				</div>
+				
+				<div class="enquiry-labelspan-outer">
+					<label>Email ID</label>
+					<?php if(Auth_UserAdapter::getIdentity()) 
+					{
+						$email = Auth_UserAdapter::getIdentity()->getEmail();
+					}
+					else
+					{
+						$email = "";
+					}?>
+					<span class="inputfield"><input value=''  name = 'email_id' type="text" class = 'enquiry' maxlength="250"/></span>
+				</div>
+				
+				<div class="enquiry-labelspan-outer">
+					<label>Phone Number</label>
+					<span class="inputfield"><input name = 'phone_number' type="text" class = 'enquiry'/></span>
+				</div>
+				
+				<div class="enquiry-labelspan-outer">
+					<label>Subject</label>
+					<span class="inputfield"><input name = 'subject' type="text" class = 'enquiry'/></span>
+				</div>
+				
+				<div class="enquiry-labelspan-outer ">
+					<label>Description</label>
+					<span class="inputfield pb20">
+						<textarea name = 'body' id='enquiry_editor' class = 'enquiry'></textarea>
+			
+					</span>
+				</div>
+			
+				
+				</form>
+				<div class="enquiry-labelspan-outer">
+					<label>&nbsp;</label>
+					<span class="inputfield">
+						<div id = 'temp_uploads_info' ></div>
+						<div style="width:450px; float:left; height:150px; margin-bottom:20px; overflow-x:auto;">
+							<form class = "dropzone" action="/<?php echo PROJECT_NAME ?>enquiry/move-uploaded-files-to-temp-location">
+							
+							</form>	
+						</div>
+					</span>
+				</div>
+		</div>
+	</div>
+</div>
+<div style="display:none;" id="dialog_file_size_enq" title="File Size">
+	Total Attachment size should not exceed 20 MB
+</div>

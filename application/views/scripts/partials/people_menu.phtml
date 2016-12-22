@@ -1,0 +1,27 @@
+<?php
+$params = Zend_Controller_Front::getInstance()->getRequest()->getParams(); 
+?><!-- Content Right Left Starts -->
+<div class="content-right-left">
+	<div class="heading">
+		<h1>PEOPLE</h1>
+	</div>
+	<!-- Slide Nav Starts -->
+	<div style="float: left; margin-top: 80px;" id="my_menu" class="sdmenu">
+		<div class="mail-message"></div>
+		<div class="collapsed">
+<?php 
+		if($params['controller']=='search' && $params['action']=='people')
+		{
+			echo "<span class='selected'> Search people </span>";
+		}
+		else 
+		{
+			echo "<span> Search people </span>";
+		}
+?>
+
+		</div>
+	</div>
+	<!-- Slide Nav Starts -->
+</div>
+<!-- Content Right Left Ends -->

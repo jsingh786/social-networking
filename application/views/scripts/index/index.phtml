@@ -1,0 +1,200 @@
+<?php 
+$this->headTitle()->prepend('Professional Site for Employee, Job Seekers and Recruiters');
+
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/login.css" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/home_search.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/index.js" );
+?>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	//Execute the slideShow
+	slideShow();
+
+});
+
+</script>
+<!-- Content Starts -->
+
+<div class="common-div">
+	<!-- Login Starts -->
+	<form id="login" name="login" method="POST" action="<?php echo PROJECT_URL.'/'.PROJECT_NAME?>authenticate/login">
+		<div class="login-outer">
+			<!-- Login Top Starts -->
+			<div class="login-top">
+				<div class="textbox">
+					<label for="email"></label>
+					<input type="text" placeholder="Enter email" value="<?php //if (isset($_COOKIE['cust_email'])) { echo $_COOKIE['cust_email'];}?>"
+						class="search-one-textbox" name="email" style="font-family:arial !immportant;">
+				</div>
+				<div class="textbox">
+					<label for="password"></label>
+					<input type="password" placeholder="Enter password" value="<?php //if (isset($_COOKIE['cust_password'])) { echo $_COOKIE['cust_password'];}?>"
+						class="search-one-textbox"  style="font-family:arial !immportant;" name="password">
+				</div>
+				<div class="common-div">
+					<div class="separator-div">
+						<label for="rememberMe">
+						<input name="rememberMe" id="rememberMe" type="checkbox" value="1" <?php //if (isset($_COOKIE['cust_email'])){ echo 'checked';}?> /><span class="text-grey">Keep me Logged in</span></label>
+					</div>
+					<div class=".popup_box"></div>
+					<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME; ?>authenticate/forgot-password" id="forgot" class="forgot-password text-purple" style="text-decoration:none;">Forgot your password</a>
+				</div>
+			</div>
+			<!-- Login Top Ends -->
+
+			<div class="login-bot">
+<!-- 				<div class="separator-div"> -->
+<!-- 					<div class="fb-img"> 
+						<a href="<?php //echo PROJECT_URL.'/'.PROJECT_NAME;?>authenticate/login-with-facebook">
+							<img src="<?php //echo PUBLIC_PATH;?>/images/fb.png" alt="Facebook" title="Facebook" width="151" height="28" />
+<!-- 						</a> -->
+<!-- 					</div> -->
+<!-- 					<div class="fb-img"> 
+						<a href="<?php //echo PROJECT_URL.'/'.PROJECT_NAME;?>authenticate/login-with-twitter">
+							<img src="<?php //echo PUBLIC_PATH;?>/images/twitter.png" alt="Twitter" title="Twitter" width="151" height="28" />
+<!-- 						</a> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+			
+				<div class="login-btn-new ">
+					<input name="login_submit" type="submit" alt="LOGIN" title="LOGIN"
+						value="LOGIN" />
+				</div>
+			</div>
+			<div class="login-nav">
+				<ul>
+					<li class="none"><a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/privacy-policy';?>">PRIVACY POLICY</a></li>
+					<li><a href="/<?php echo PROJECT_NAME ?>page/cookies">COOKIES</a></li>
+					<li><a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/terms';?>">TERMS</a></li>
+					<li><a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help">HELP</a></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+	<!-- Login Ends -->
+	<!-- Banner Slider Starts -->
+    <div id="gallery">
+
+	<a style="opacity: 0;" href="javascript:" class="show">
+		<img src="<?php echo IMAGE_PATH; ?>/slider1.jpg" alt="Professional Linking and Growing your Network" title="Professional Linking and Growing your Network" rel="&lt;h3&gt;Professional Linking and Growing your Network&lt;/h3&gt;">
+	</a>
+	
+	<a class="" style="opacity: 0;" href="javascript:">
+		<img src="<?php echo IMAGE_PATH; ?>/slider2.jpg" alt="Promote your products & Business development" title="Promote your products & Business development" rel="&lt;h3&gt;Promote your products & Business development&lt;/h3&gt;" >
+	</a>
+	
+	<a class="" style="opacity: 0;" href="javascript:">
+		<img src="<?php echo IMAGE_PATH; ?>/slider3.jpg" alt="Finding Talents & Skilled People" title="Finding Talents & Skilled People" rel="&lt;h3&gt;Finding Talents & Skilled People&lt;/h3&gt;" >
+	</a>
+
+	<a class="" style="opacity: 0.00024672;" href="javascript:">
+		<img src="<?php echo IMAGE_PATH; ?>/slider4.jpg" alt="Finding jobs and building career" title="Finding jobs and building career" rel="&lt;h3&gt;Finding jobs and building career&lt;/h3&gt;" >
+	</a>
+    
+    <a class="" style="opacity: 0.00024672;" href="javascript:">
+		<img src="<?php echo IMAGE_PATH; ?>/slider5.jpg" alt="Exchange Information, Ideas And Opportunities" title="Exchange Information, Ideas And Opportunities" rel="&lt;h3&gt;Exchange Information, Ideas And Opportunities&lt;/h3&gt;" >
+	</a>
+
+	<div style="width: 580px;  display: block;" class="caption"><div class="slider_content"><h3></h3></div></div>
+</div>
+        <!-- Banner Slider Starts -->
+</div>
+<div class="common-div">
+	<!-- Search Someone Starts -->
+	<div class="search-someone">
+		<div class="search-someone-top">
+		
+		<div style = "width: 315px; height: 154px;">
+			<iframe src="//fast.wistia.net/embed/iframe/a0mg80q2ua?videoFoam=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="315" height="154"></iframe>
+			<script src="//fast.wistia.net/assets/external/E-v1.js"></script>
+		</div>
+		 
+<!-- 			<img src="<?php //echo IMAGE_PATH; ?>/home-search-group.png" width="315"
+<!-- 				height="154" /> -->
+<!-- 			<div class="grey-arrow"> -->
+<!-- 				<img src="<?php //echo IMAGE_PATH; ?>/arrow-grey.png" width="51"
+<!-- 					height="28" /> -->
+<!-- 			</div> -->
+		</div>
+		<div class="search-someone-bot">
+			<form method="GET" action="/<?php echo PROJECT_NAME; ?>index/home-search" id = "home_search">
+				<h3 class="text-purple2">SEARCH FOR SOMEONE BY NAME</h3>
+				<div class="textbox">
+					<input type="hidden" name="list_len" value="20"/>
+					<label for="search_by_fname">
+					<input type="text" placeholder = "First Name" value="" class="search-one-textbox" name="first_name" id = "search_by_fname">
+				</div>
+				<div class="textbox">
+					<label for="search_by_lname">
+					<input type="text" placeholder="Last Name" value="" class="search-one-textbox" name="last_name" id = "search_by_lname">
+				</div>
+				<div class="search-someone-btn" >
+					<a href="javascript:" id = "home_search_btn"> 
+						<strong>SEARCH</strong>
+						<img src="<?php echo IMAGE_PATH; ?>/search-icon.png" alt="Search" title="Search" width="25" height="25" align="absmiddle" />
+					</a>
+				</div>
+			</form>	
+		</div>
+	</div>
+	<!-- Search Someone Starts -->
+
+	<!-- Create Account Starts -->
+	<div class="create-account">
+		<h3>CREATE YOUR ACCOUNT</h3>
+		<form name="registeration_step1" id="registeration_step1"
+			method="POST" action="/<?php echo PROJECT_NAME?>registration">
+			<div class="create-account-col1">
+				<label for="first_name" class="create-account-col1-left">First Name:</label>
+				<div class="create-account-col1-right">
+					<input id="first_name" name="first_name" type="text" value="" />
+				</div>
+			</div>
+			<div class="create-account-col1">
+				<label class="create-account-col1-left" for="last_name">Last Name:</label>
+				<div class="create-account-col1-right">
+					<input id="last_name" name="last_name" type="text" />
+				</div>
+			</div>
+			<div class="create-account-col1">
+				<label class="create-account-col1-left" for="email">Email:</label>
+				<div class="create-account-col1-right">
+					<input id="email" name="email" type="text" /> 
+				</div>
+				<div class="tick-box" id="tick-box-image">
+				</div>
+			</div>
+			<div class="create-account-col1">
+				<label class="create-account-col1-left" for="password">Password:</label>
+				<div class="create-account-col1-right">
+					<input id="password" name="password" type="password" />
+				</div>
+			</div>
+			<div class="join-now">			
+				<div class="join-now-left">
+					By clicking Join Now, you agree to our <a class="text-purple-link"
+						href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/terms';?>">Terms</a> and that you have read our <a
+						class="text-purple-link" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/privacy-policy';?>">Data Use Policy</a>,
+					including our <a class="text-purple-link" href="/<?php echo PROJECT_NAME ?>page/cookies">Cookie
+						Use</a>.
+				</div>
+				<div class="join-now-right">
+					<input type="hidden" name="created_from" value="ilook"
+						id="created_from"> <input name="signup_submit" type="submit"
+						value="JOIN NOW" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Create Account Ends -->
+</div>
+
+<!-- Content Ends -->
+
+<?php 
+//echo $this->partial('partials/forgot_password_popup.phtml');
+?>

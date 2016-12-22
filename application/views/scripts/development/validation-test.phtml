@@ -1,0 +1,36 @@
+<script>
+$(document).ready(function(){
+    
+		$("form#testForm").validate();
+        $(".validate_input").each(function (item) {
+            $(this).rules("add", {
+                required: true,
+                minlength:3
+            });
+        });
+
+    
+	
+	//End validations------------
+	
+	$("input#addNewField").click(function(){
+		$("div#inputHolder").append('<input name = "input'+($('.validate_input').length+1)+'" class = "validate_input" value = ""/>');
+		$("form#testForm").validate();
+        $(".validate_input").each(function (item) {
+            $(this).rules("add", {
+                required: true,
+                minlength:3
+            });
+        });
+	});
+	
+});
+</script>
+
+<form id = "testForm">
+	<div id = "inputHolder">
+		<input name = "input1" class = "validate_input" value = ""/>
+	</div>
+	<input type = "button" id = "addNewField" value = "Add new field">
+	<input type = "submit" value = "Save">
+</form>

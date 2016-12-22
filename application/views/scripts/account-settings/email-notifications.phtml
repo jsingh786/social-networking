@@ -1,0 +1,164 @@
+<?php
+$this->headTitle()->prepend('Email notification settings');
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+//$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/account_settings_notifications.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/account_settings_notifications.css" );
+echo $this->render("partials/settings_menu.phtml");
+echo $this->render("partials/add_experience_popup.phtml");
+echo $this->render("partials/add_education_popup.phtml");
+?>
+<!-- Content Right Right Starts -->
+     <div class="content-right-right">
+          
+          <!-- Jobs Header Starts -->
+          <div class="job-hdr">
+        	<div class=" bdr-btm-none job-hdr-top">
+               <h2>Email Notification Settings <!--Settings--></h2>
+            </div>
+          </div>
+          <!-- Jobs Header Ends -->
+               
+          <!-- Settings Content Starts -->
+        <div class="settings-content email-ns">
+       
+          <!-- Settings col1 Outer Starts -->
+          <div class="settings-content-col1-outer">
+             <div class="settings-content-col1">
+                 <h3>Link Request</h3>
+                 <div class="setting-email-notification-row">
+                 <select name="" id="" class="sen-option">
+	                 <option value="">Select</option>
+		             <option value="<?php echo \Extended\notifications::SEND_GENERAL_NOTIFICATION;?>">Send general notification</option>
+	                 <option value="<?php echo \Extended\notifications::DONT_SEND_GENERAL_NOTIFICATION;?>">Don&#39;t send general Notification</option>
+                 </select>			
+                 </div>
+            </div>
+         </div>
+         <!-- Settings col1 Outer Endss -->
+                            
+          <div class="settings-content-col1-outer">
+               <div class="settings-content-col1">
+                 <h3>Feedback Request</h3>
+                     <div class="setting-email-notification-row">
+                     <select name="feedback_request" id="feedback_request" class="sen-option">
+	                     <option value="">Select</option>
+	                     <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>">Send email notification</option>
+	                     <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>">Don&#39;t send Email Notification</option>
+                     </select>
+					 </div>
+			  </div>
+         </div>
+       	<!-- Settings col1 Outer Endss -->
+	       <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Reference Request</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="reference_request" id="reference_request" class="sen-option">
+		                 <option value="">Select</option>
+		                 
+		                 <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>">Send email notification</option>
+	                     <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>">Don&#39;t send Email Notification</option>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	         <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Job Invite</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="job_invite" id="job_invite" class="sen-option">
+		                 <option value="">Select</option>
+		                 <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>">Send email notification</option>
+	                     <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>">Don&#39;t send Email Notification</option>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	          <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Support Request</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="support_request" id="support_request" class="sen-option">
+		                 <option value="">Select</option>
+		                 <option value="<?php echo \Extended\notifications::SEND_GENERAL_NOTIFICATION;?>">Send general notification</option>
+	                 <option value="<?php echo \Extended\notifications::DONT_SEND_GENERAL_NOTIFICATION;?>">Don&#39;t send general Notification</option>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	         <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Someone Provides Support To Your Skills</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="support_to_skill" id="support_to_skill" class="sen-option">
+		                 <option value="">Select</option>
+		                 <option value="<?php echo \Extended\notifications::SEND_GENERAL_NOTIFICATION;?>">Send general notification</option>
+	                 	 <option value="<?php echo \Extended\notifications::DONT_SEND_GENERAL_NOTIFICATION;?>">Don&#39;t send general Notification</option>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	          <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Comments On Your Posts</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="comment_on_post" id="comment_on_post" class="sen-option">
+		                 <option value="">Select</option>
+		                 <option value="<?php echo \Extended\notifications::SEND_GENERAL_NOTIFICATION;?>">Send general notification</option>
+	                 	 <option value="<?php echo \Extended\notifications::DONT_SEND_GENERAL_NOTIFICATION;?>">Don&#39;t send general Notification</option>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	         <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Who Viewed Your Profile</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="view_profile" id="view_profile" class="sen-option">
+		                 <option value="">Select</option>
+		                 <option value="<?php echo \Extended\notifications::SEND_GENERAL_NOTIFICATION;?>">Send general notification</option>
+	                 	 <option value="<?php echo \Extended\notifications::DONT_SEND_GENERAL_NOTIFICATION;?>">Don&#39;t send general Notification</option>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	         
+    		 <div class="settings-content-col1-outer">
+                <div class="settings-content-col1">
+                       <div class="setting-email-notification-row">
+                            <input type="button" title="Save Changes" alt="Save Changes" value="Save Changes" class="btn-purple-lt" name="">
+					   </div>
+			    </div>
+             </div>
+            <!-- Settings col1 Outer Endss -->
+                            
+                         
+         </div>
+         <!-- Settings Content Ends -->
+            
+  		</div>
+        <!-- Content Right Right Ends -->
+         
+      </div>
+        <!-- Content Right Ends -->
+        
+    </div>
+    <!-- Content Ends -->

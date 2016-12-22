@@ -1,0 +1,318 @@
+<!-- Title -->
+<?php
+$this->headTitle ()->prepend ( 'Received References' );
+?>
+<?php 
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/received_reference.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH ."/css/frontend/received_reference.css" );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+        <!-- Content Right Right Starts -->
+        	<div class="content-right-right">
+            	<!-- Photo Album Starts -->
+           	  <div class="photoalbum-outer">
+              	<div class="photoalbum-hdr">
+                	<h2>Received Reference</h2>
+                </div>
+<?php 
+if( $this->paginator )
+{
+	if( $this->paginator->getTotalItemCount() )
+	{
+?>                
+                
+                <div class="feedback-hdr-bot">
+                	<div class="fr">
+                    	<h3 style="font-size:16px !important;"class="sub-heading-arial-narrow" >
+                    	<font class="text-dark-purple my-received-references"><?php echo $this->unaccepted_references;?></font> 
+                    	Reference Received
+                    	</h3>
+                	</div>
+                    <div class="fr">
+                    	
+                    </div>
+                </div>
+   
+              						<!-- Col3 Starts -->				
+					<div class="col3">
+					<div class="new-border-space"></div>
+						<div class="fl text-grey3">
+<?php 
+						$query_str = "";
+						foreach( $this->prms as $key=>$p )
+						{
+							if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+							{
+								continue;
+							}
+							
+							
+							 $query_str .= $key."=".$p."&amp;"; 
+							
+						}
+?>
+						VIEWS <a class="text-grey3-link" style="margin-left: 5px"
+							href="<?php echo "/".PROJECT_NAME."reference-request/received?".$query_str."list_len=10";?>"><?php echo $this->prms["list_len"] == 10 ? "<b>10</b>" : '10'?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."reference-request/received?".$query_str."list_len=20";?>"><?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."reference-request/received?".$query_str."list_len=30";?>"><?php echo $this->prms["list_len"] == 30 ? "<b>30 </b>" : '30 '?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."reference-request/received?".$query_str."list_len=all";?>"><?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?></a>
+						</div>
+						<div class="fr  text-grey3">
+<?php
+							echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+						</div>
+					</div>
+<?php
+					}
+				}
+?>					
+				<!-- Col3 Ends -->
+<?php 
+		if( $this->reference_received == true )
+		{ 
+?>
+          <!-- Mail Hdr  -->       
+    		<div class="mail-all-hdr">
+                        	<div class="fl"><a href="javascript:;" class="text-purple-link">&nbsp;</a></div>
+                            <div class="fr ">
+                            	<div class="col1"><?php 
+							  	if(isset($this->prms["id"]) && isset($this->prms["list_len"])){
+                            		$pagingParameters="?id=".$this->prms["id"]."&list_len=".$this->prms["list_len"];
+                            	}
+                            	else{
+                            		$pagingParameters="";
+                            	}
+								if( $this->order == 'asc' )
+								{
+?>				
+									<a  class="text-purple-link" style="color:white !important;" href="<?php echo "/".PROJECT_NAME."reference-request/received/order/desc".$pagingParameters; ?>">BY DATE <img width="15" height="15" align="absmiddle" src="<?php echo PUBLIC_PATH;?>/images/arrow1.png"></a>
+<?php
+								}
+								else
+								{
+?>				 
+									<a  class="text-purple-link" style="color:white !important;" href="<?php echo "/".PROJECT_NAME."reference-request/received/order/asc".$pagingParameters; ?>">BY DATE <img width="15" height="15" align="absmiddle" src="<?php echo PUBLIC_PATH;?>/images/arrow2.png"></a>
+<?php				
+								}
+?>
+                            	
+                            	</div>
+                             
+                            </div>
+                        </div>
+                        <?php 
+if( $this->paginator )
+{					
+	if( $this->paginator->getTotalItemCount() )
+	{
+		$i=0;
+		foreach ( $this->paginator as $ref_rcvd )
+		{
+			$i++;
+			$mod_clas=$i%3;
+		
+			if($mod_clas==1)
+			{
+				$arrow_class="arrow-first";
+				$quickview_class="quickview-outer";
+			}
+			else if($mod_clas==2)
+			{
+				$arrow_class="arrow-second";
+				$quickview_class="quickview-outer-second";
+			}
+			else if($mod_clas==0)
+			{
+				$arrow_class="arrow-third";
+				$quickview_class="quickview-outer-third";
+			}
+			
+			
+?>			
+          <!-- Mail Hdr -->
+          
+         
+             <!-- Reference col1 -->
+             <div class="feedback-received-col1">
+             	<div class="feedback-received-col1-left">
+                	<div class = "prof-img" >
+                	
+						<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_rcvd->getReference_requestProvider_user()->getId();?>">
+						<img style="max-width:50px; max-height:50px;" src = "<?php echo Helper_common::getUserProfessionalPhoto($ref_rcvd->getReference_requestProvider_user()->getId(), 3 );?>" /></a>
+					</div>	
+                </div>
+                <div class="feedback-received-col1-mid">
+                	<div class="top">
+                    	<div class="top-left"><h4 class="font-arial"><a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_rcvd->getReference_requestProvider_user()->getId();?>" class="text-purple" style="color:#6C518F!important;text-decoration: none;"><?php echo $ref_rcvd->getReference_requestProvider_user()->getFirstName();?>&nbsp;<?php echo $ref_rcvd->getReference_requestProvider_user()->getLastName();?></a></h4></div>
+                     
+                       
+                    </div>
+                    <div class="bot">
+					
+                   
+                    	<div class="bot-left">
+<?php 
+						if($ref_rcvd->getProvided_as())
+						{
+							echo"<p class='ref_as'>";
+							echo $ref_rcvd->getProvided_as();
+							echo"</p>";
+						}
+						else
+						{
+							//Nothing.
+						}
+						if($ref_rcvd->getProvide_for_the_position())
+						{
+// 							echo"<p class='for_position'>";
+// 							echo $ref_rcvd->getProvide_for_the_position();
+// 							echo"</p>";
+						}
+						else
+						{
+							//Nothing.
+						}
+			
+?>
+
+                    	</div>
+<?php 
+						if( $ref_rcvd->getIs_accepted() == 0 && $ref_rcvd->getVisibility_criteria() == 0 )
+						{
+?>		
+                        <div class="bot-right">
+							<span name="accept_display" class = "text-dark-purple accept_display" rel = "<?php echo $ref_rcvd->getId();?>">Accept & Display</span> 
+							<span name="" class="text-dark-purple display_ref" style="margin-right:2px;display:none" rel = "<?php echo $ref_rcvd->getId();?>">Display</span>
+		                	<span name="" class="text-dark-purple hide_ref" style="margin-right:2px;display:none;" id = "hide" rel = "<?php echo $ref_rcvd->getId();?>">Hide</span> 
+		                	<span name="" class="text-dark-purple delete_ref" id = "delete" style="display:none;" rel = "<?php echo $ref_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+                        </div>
+<?php 
+                        }
+                        else
+							if($ref_rcvd->getIs_accepted() == 0 && $ref_rcvd->getVisibility_criteria() == 1)
+						{
+?>
+							<div class="bot-right">
+								<span name="accept_display" class = "text-dark-purple accept_display"  rel = "<?php echo $ref_rcvd->getId();?>">Accept & Display </span>
+								<span name="" class="text-dark-purple display_ref"  id = "display" style = "display:none;" rel = "<?php echo $ref_rcvd->getId();?>">Display</span>
+								<span name="" class="text-dark-purple hide_ref" style="margin-right:2px; display: none;" id = "hide" rel = "<?php echo $ref_rcvd->getId();?>">Hide</span>
+								<span name="" class="text-dark-purple delete_ref" id = "delete"  style = "display: none;" rel = "<?php echo $ref_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+							</div>
+<?php 
+						}
+						else if($ref_rcvd->getIs_accepted()== 1 && $ref_rcvd->getVisibility_criteria()== 1)
+							{
+?>
+							<div class="bot-right" >	
+			                	<span name="" class="text-dark-purple display_ref" style="margin-right:2px;display:none" rel = "<?php echo $ref_rcvd->getId();?>">Display</span> 
+			                	<span name="" class="text-dark-purple hide_ref" style="margin-right:2px;" rel = "<?php echo $ref_rcvd->getId();?>">Hide</span> 
+			                	<span name="" class="text-dark-purple delete_ref" rel = "<?php echo $ref_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+							</div>
+<?php 
+							}
+						else if($ref_rcvd->getIs_accepted()== 1 && $ref_rcvd->getVisibility_criteria()== 0)
+						{
+?>
+							<div class="bot-right">
+								<span name="" class="text-dark-purple display_ref" style="margin-right:2px;" rel = "<?php echo $ref_rcvd->getId();?>">Display</span>
+								<span name="" class="text-dark-purple hide_ref" style="margin-right:2px;display:none" rel = "<?php echo $ref_rcvd->getId();?>">Hide</span>
+								<span name="" class="text-dark-purple delete_ref" rel = "<?php echo $ref_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+							</div>
+<?php 
+						}
+?>
+          			</div>
+                </div>
+                
+                <div class="feedback-received-col1-right">
+                <?php echo $ref_rcvd->getProvided_at()->format('F j, Y'); ?>
+                </div>
+                
+				<div class="quotes-outer">
+					<div class="quotes-lt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-start.jpg"/>
+					</div>
+					<div class="quotes-mid">
+<?php 
+						
+						if( strlen( $ref_rcvd->getProvider_msg()) <= 300 )
+						{
+?>
+							<p  class="p_all_text">	
+<?php 
+								echo nl2br($ref_rcvd->getProvider_msg());
+?>
+							</p>
+<?php 
+						}
+						else
+						{
+?>
+							<div id="full_text_<?php echo $ref_rcvd->getId(); ?>" class="full_text">
+								<p id = "p_all_text_<?php echo $ref_rcvd->getId(); ?>" class = "full_text">
+<?php 
+										echo nl2br($ref_rcvd->getProvider_msg());
+?>
+								</p>
+								<span title="show less" rel ="<?php echo $ref_rcvd->getId(); ?>" class="show_less">less</span>
+							</div>
+							<div id="clickable_text_div_<?php echo $ref_rcvd->getId(); ?>" class="clickable_text">
+				
+								<p class = "clickable_text" rel = "<?php echo $ref_rcvd->getId(); ?>">
+<?php 
+									echo Helper_common::showCroppedText( $ref_rcvd->getProvider_msg(), 300 );
+?>
+								</p>
+								<span title="show more" rel ="<?php echo $ref_rcvd->getId(); ?>" class="show_more">more</span>
+							</div>
+			
+<?php 
+						}
+?>
+					</div>
+					<!--  <div class="quotes-rt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-end.jpg"/></div>-->
+				</div>
+				<div class="ref_postion">- Reference for 
+<?php 
+					if($ref_rcvd->getProvide_for_the_position())
+					{
+						echo $ref_rcvd->getProvide_for_the_position();
+					}
+					else
+					{
+						//Nothing.
+					}
+?>
+				</div>	
+			</div>
+             <!-- Reference col1 -->
+<?php 
+                   
+                
+                   }
+
+			}
+		}
+	}
+		else
+		{
+			
+?>		
+			<div class="mail-grey-hdr-col1-new">
+			<div class="no_messages"><div class="no_messages-img"><img src="<?php echo IMAGE_PATH; ?>/folder-empty.png"></div><div class="no_messages-data">This folder is empty.</div></div>
+			</div>
+<?php 			
+		}
+?>   
+                    
+                      
+              </div>
+                <!-- Photo Album Ends -->
+                
+               
+            
+          </div>
+        <!-- Content Right Right Ends -->

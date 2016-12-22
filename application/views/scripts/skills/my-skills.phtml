@@ -1,0 +1,215 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'My Skills' );
+// Javascript
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/skills_my_skills.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/skills_my_skills.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/links-common.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/skills_menu.phtml' );
+if ($this->skills_info) {
+?>
+<style>
+div#skills-form {
+	display: none;
+}
+</style>
+<?php
+} 
+else
+{
+?>
+<style>
+div#skills-form 
+{
+	display: block;
+}
+</style>
+<?php
+}
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Summary Outer Starts -->
+	<div class="summary-outer">
+
+		<form id="skill-form" action="" method="post" name="skill-form"
+			onsubmit="return false;">
+			<div class="summary-edit text-grey3">
+				<h3 class="text-purple2">Skills that I follow</h3>
+				<input type="button" id="add" name="add" class="btn-to-link"
+					value="+ Add more Skills to follow" alt="+ Add another Skill"
+					title="+ Add another Skill" style="float: right;">
+			</div>
+
+			<div class="contact-details" id="skills-form">
+				<div class="contact-label-span2">
+					<label>Add Skill</label> <span> <input type="text"
+						name="skill_name" id="skill_name" class="search-one-textbox"
+						value="">
+					</span>
+				</div>
+				<div class="summary-btn-outer bdr-grey2">
+					<input name="save-skillinfo" type="button" alt="Save" title="Save"
+						class="new-save-btn" value="Save" /> <a class="new-cancel-btn"
+						id="cancel" href="javascript:;">Cancel</a>
+				</div>
+			</div>
+		</form>
+
+		<div class="accord-content">
+<?php
+		foreach ( $this->skills_info as $key => $skill_info ) {
+?>			
+			<div class="slide-down-content">
+				<div style="" class="slide-down-content-left">
+					<span
+						title="Supported by <?php if( $skill_info['is_supported']){echo count( $skill_info['skill_support'] );}else{echo 0;} ?> link"
+						style="cursor: pointer;"><?php if( $skill_info['is_supported']) { echo count( $skill_info['skill_support'] );}else{echo 0;} ?></span>
+					<span>   
+<?php
+			if (!$skill_info['is_supported'])
+			{
+?>
+					<img title="" alt="thumb" src="<?php echo IMAGE_PATH; ?>/icon-support.png"
+					onclick="javascript:alert('You cant support your own skill.')">
+<?php
+			} 
+			else 
+			{
+?>					
+					<img title="" alt="thumb" src="<?php echo IMAGE_PATH; ?>/icon-support-hover.png"
+					onclick="javascript:alert('You cant support your own skill.')">
+<?php
+			}
+?>					
+					</span>
+				</div>
+				<div class="slide-down-content-right">
+					<!-- Slide Down Inner Starts -->
+					<div skill="<?php echo $skill_info['skill_id']; ?>"
+						class="font-arial slide-down-inner showskills">
+						<label title="<?php echo $skill_info['skill_ref_name']; ?>"><?php echo Helper_common::showCroppedText($skill_info['skill_ref_name'], 70); ?></label>
+						<img src="<?php echo IMAGE_PATH; ?>/plus_grey.png"
+							style="float: right;" class="plus_minus"
+							id="img_<?php echo $skill_info['skill_id']; ?>">
+					</div>
+
+					<div class="delete-icon">
+						<img src="<?php echo IMAGE_PATH; ?>/remove.png"
+							style="float: right; width: 16px; display: none;"
+							class="remove_skill"
+							id="img_<?php echo $skill_info['skill_id']; ?>"
+							rel="<?php echo $skill_info['skill_id'];?>">
+					</div>
+
+
+					<!-- Slide Down Inner Ends -->
+					<div style="display: none;" class="slide-down-inner-container"
+						id="skill_<?php echo $skill_info['skill_id']; ?>">
+						<div class="linkprofile-container">
+							<div class="linkprofile-outer">
+<?php
+			if ($skill_info['is_supported']) {
+				$count_skill_supporters = 0;
+				foreach ( $skill_info ['skill_support'] as $skill_support ) 
+				{
+				 // show only 3 supporters under skills heading
+				 if ($count_skill_supporters > 2)
+				  {
+						break;
+				  }
+			
+?>
+			<div class="col4" id="grid_<?php echo $skill_support['supporter_id']; ?>">
+				<div class="col4-img-outer">
+					<div class="col4-img">
+		
+					<div class="img-around-div">
+						 <img class="userProfileImage" height="50" src=<?php echo $skill_support['supporter_small_image']; ?>
+						 width="50">
+		
+					 <div class="quickview-outer short-view-profile-popup" id="view-outer_1" style="display: none;">
+					 <div class="arrow-first">
+						 <img height="22" src="<?php echo IMAGE_PATH; ?>'/arrow-purple2.png'"
+						  width="36">
+					 </div>
+		
+					<div class="quickview" id="view_1" style="height: auto !important;"></div>
+					</div>
+					</div>
+					</div>
+			   </div>
+
+				<div class="col4-text1">
+				<font class="text-purple2"> 
+					<a class="text-purple2-link" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/id/'.$skill_support['supporter_id'] ?>"
+					title="click to view Profile"><?php echo ucwords(Helper_common::showCroppedText($skill_support['supporter_name'], 20)) ; ?>
+					</a>
+				</font>
+				</br>
+				<font style="font-size: 11px; font-weight: bold; color: #A0A0A0;">
+                    <?php echo  ucwords(Helper_common::showCroppedText($skill_support['supporter_job_title'], 20)); ?><br>
+                    <?php echo ucwords(Helper_common::showCroppedText($skill_support['supporter_company'], 20)); ?><br>
+				</font>
+				</div>
+
+				<div class="linkprofile-outer-bot">
+					<div class="linkprofile-outer-bot-left">
+                        <?php echo $skill_support['supporter_links']; ?>
+                    </div>
+					<div class="linkprofile-outer-bot-right" id="user-status_1">
+						<a class="cursor-style compose-mail"
+							href="<?php echo PROJECT_URL.'/'.PROJECT_NAME; ?>/mail/compose#to_user:<?php echo $skill_support['supporter_id']; ?>"
+							title="Send Mail"></a>
+					</div>
+				</div>
+			</div>
+							
+<?php
+			
+				$count_skill_supporters ++;
+				}
+				if (count ( $skill_info ['skill_support'] ) >= 4)
+				{
+?>
+				<div class="more_skill_supporter">
+					<a class="" id=""
+						href="/<?php echo PROJECT_NAME; ?>skills/skill-supporters/skillId/<?php echo $skill_info['skill_ref_id'];?>">View
+						more supporters</a>
+				</div>
+<?php
+				}
+			}
+			else
+			{
+?>
+			<span id="no_skills">No supports for your skill</span>
+<?php
+			}
+?>						
+			</div>
+			</div>
+		    </div>
+			</div>
+			</div>
+
+<?php
+}
+?>
+		</div>
+		<div id="edit_controls"
+			<?php echo !$this->skills_info ? "style='display: none;'":""; ?>>
+			<img id="edit" src="<?php echo IMAGE_PATH; ?>/edit-pencil.png" /> <label
+				id="done_edit">Done</label>
+		</div>
+	</div>
+	<!-- Content Right Right Ends -->
+</div>
+<!-- Content Right Ends -->
+<!-- confirmation dialog box -->
+<div id="dialog-confirm" title="Remove skill"
+	style="display: none; z-index: 9999 !important;">
+	<p>Do you really want to remove this skill ?</p>
+</div>

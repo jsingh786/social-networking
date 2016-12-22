@@ -1,0 +1,45 @@
+@CHARSET "ISO-8859-1";
+a
+{
+	text-decoration: none;
+}
+span.delete_span
+{
+	display: inline-block;
+	float: left;
+}
+.un-editable-outer h3 {
+    color: #000000 !important;
+    font-family: 'ArialNarrowRegular';
+    text-transform: none !important;
+	font-weight:bold;
+}
+.un-editable-outer h3 a{
+	float:right;
+}
+img.edit-new-icon {
+    width: 20px;
+}
+.datee{
+	color:#BEBEBE !important;
+	font-size:12px !important;
+}
+.activites{
+	color:#787878 !important;
+	margin-top:6px !important;
+	font-size:12px !important;
+}
+.publisher{
+	font-size:14px !important;
+	color:#000 !important;
+}
+.author{
+	font-size:12px !important;
+ margin: 0 !important;
+}
+
+span.loading {
+    float: right !important;
+    margin: 4px 0 0 !important;
+  
+}

@@ -1,0 +1,175 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('publications');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/publications.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/publications.css" );
+?>
+<?php
+	if ( !$this->mypublications )
+	{
+?>
+	<style>
+		input[name=add]
+		{	
+	 		display : none;
+		}
+		.add_or_edit
+		{
+			display: block;
+		}
+		span.delete_span
+		{
+			display: none;	
+		}
+		input[name=cancel]
+		{
+			display: none;	
+		}
+	</style>
+<?php
+	}
+	else 
+	{
+?>
+	<style>
+	.add_or_edit
+		{
+			display: none;
+		}
+	</style>	
+<?php	
+	}		
+	echo $this->partial('partials/profile_menu.phtml');
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Summary Outer Starts -->
+	<div class="summary-outer">
+		<!-- Summary Edit Starts -->
+		<div class="summary-edit text-grey3">
+			<h3 class="text-purple2">publications</h3>
+			<input name="add" type="button" class="btn-purple" alt="Add New Publication" title="Add New Publication" value="+ Add New Publication" />
+		</div>
+		<!-- Summary Edit Ends -->
+
+		<!-- Contact Details Starts -->
+		<form id = "publications" action="">
+			<div class="contact-details add_or_edit">
+				<input type = "hidden" name = "identity" value = "" id = "identity"/>
+				<div class="contact-label-span2">
+				<label>Title</label> 
+				<span> 
+					<input type="text" name="title" class="search-one-textbox">
+				</span> 
+				</div>
+				<div class="contact-label-span2">
+				<label>Publication/Publisher</label>
+				<span> 
+					<input type="text" name="publication_or_publisher" class="search-one-textbox">
+				</span> 
+				</div>
+				<div class="contact-label-span2">
+				<label>Publication Date</label>
+				<span class="text-grey3">
+					<input type="text" name="publication_date" class="search-one-textbox" readonly>
+				</span> 
+				</div>
+				<div class="contact-label-span2">
+				<label>Publication URL</label> 
+				<span> 
+					<input type="text" name="publication_url" class="search-one-textbox ">
+				 <sub style="float: left; margin: 3px 0px;"><strong>Tip:</strong>There should be http:// before url</sub>
+				</span> 
+				</div>
+<!-- 					<span> 
+						<font style="font-size: 11px; margin-top: 5px; float: left; width: 100%;"> -->
+<!-- 							Tip:There should be http:// before url -->
+<!-- 						</font> -->
+<!-- 					</span>  -->
+				<div class="contact-label-span2">
+				<label>Author(s)</label>
+				<span>
+					<input type="text" name="author" class="search-one-textbox ">
+					<sub  style="margin: 0px 0px 0px 0;">Comma separation is required</sub>
+				</span> 
+				</div>
+				<div class="contact-label-span2">
+				<label>Activities and Socities</label> 
+				<span style="min-height: 135px;"> 
+					<textarea name="activities_n_socities" class="textarea2" cols="" rows="5"></textarea>
+				</span>
+				</div>
+			</div>
+		
+			<!-- Contact Details Ends -->
+			<div class=" summary-btn-outer bdr-grey2 add_or_edit">
+				<span class = "delete_span">
+					<a class="text-purple-link fl delete" href="javascript:;">Remove this Publication</a>
+				</span>
+				<input name="save" type="button" alt="Save" title="Save" class="new-save-btn" value="Save" />
+				<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+			</div>
+		</form>
+		<!-- Un Editable Outer Starts -->
+		<div id = "un-editable-outer-wrapper">
+<?php 
+		if( @$this->mypublications )
+		{
+			foreach ( $this->mypublications as $mypubs )
+			{
+?>				
+			<div class="un-editable-outer" id = "<?php echo $mypubs->getId(); ?>">
+				<h3><span class = "title">
+<?php 
+					echo $mypubs->getTitle();
+?>					
+					</span>
+					<a href="javascript:;" onclick="editClick(this)" class = "edit_pub" id = "<?php echo $mypubs->getId(); ?>">
+						<img src="<?php echo IMAGE_PATH; ?>/edit-pencil.png" alt="Edit" title="Edit" class="edit-new-icon" />
+					</a>
+					
+				</h3>
+				<p class = "publisher">
+<?php 
+					echo $mypubs->getPublisher();
+?>	
+				</p>
+				<p class = "datee">
+<?php 
+					echo $mypubs->getPublish_date()->format("Y - m");
+?>	
+				</p>
+				<p class = "url">
+<?php 
+					echo $mypubs->getUrl();
+?>
+				</p>
+				<p class = "author">
+					Author : 
+<?php 
+					echo $mypubs->getAuthor();
+?>
+				</p>
+				<p class = "activites">
+					Activites : 
+<?php 
+					echo $mypubs->getActivites_and_socities();
+?>
+				</p>
+			</div>
+<?php			
+			}	
+		}	
+?>		
+		</div>
+		<!-- Un Editable Outer Ends -->
+	</div>
+	<!-- Summary Outer Ends -->
+</div>
+<!-- Content Right Right Ends -->

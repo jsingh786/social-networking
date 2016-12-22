@@ -1,0 +1,37 @@
+@CHARSET "ISO-8859-1";
+a
+{
+	text-decoration: none;
+}
+span.delete_span
+{
+	display: inline-block;
+	float: left;
+}
+.un-editable-outer h3 a{
+	float:right;
+}
+.un-editable-outer h3{
+	text-transform:none !important;
+	font-family: 'ArialNarrowRegular' ;
+	color:#000 !important;
+}
+.exp_dates{
+	color:#BEBEBE !important;
+	font-size:12px !important;
+}
+.exp_notes{
+	color:#787878 !important;
+	margin-top:6px !important;
+	font-size:12px !important;
+}
+.exp_company{
+	font-size:14px !important;
+	color:#000 !important;
+}
+.exp_location{
+	font-size:12px !important;
+}
+img.edit-new-icon{
+	width:20px;
+}

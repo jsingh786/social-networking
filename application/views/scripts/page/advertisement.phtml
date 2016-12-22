@@ -1,0 +1,218 @@
+<?php 
+$this->headTitle()->prepend('Advertisement');
+
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/pages.css" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/home_search.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/registeration.js" );
+?>
+<script type="text/javascript">
+
+$(document).ready(function() {		
+	
+	//Execute the slideShow
+	slideShow();
+
+});
+
+</script>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>iLook</title>
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+<!--Feednack Popup -->
+<script type="text/javascript">
+
+$(document).ready(function(){
+//open popup
+$("#pop").click(function(){
+  $("#overlay_form").fadeIn(1000);
+  $(".background_overlay").fadeIn(500);
+  positionPopup();
+});
+
+//close popup
+$("#close, .background_overlay").click(function(){
+	$("#overlay_form").fadeOut(500);
+	$(".background_overlay").fadeOut(500);
+});
+});
+
+//position the popup at the center of the page
+function positionPopup(){
+  if(!$("#overlay_form").is(':visible')){
+    return;
+  } 
+  $("#overlay_form").css({
+      left: ($(window).width() - $('#overlay_form').width()) / 2,
+      top: ($(window).width() - $('#overlay_form').width()) / 7,
+      position:'absolute'
+  });
+}
+
+//maintain the popup at center of the page when browser resized
+$(window).bind('resize',positionPopup);
+
+</script>
+
+
+<!--Feednack Popup -->
+
+
+<script type="text/javascript" src="js/sdmenu.js"></script>
+
+<script src="js/jquery.stylish-select.js" type="text/javascript"></script>
+<script type="text/javascript">
+            $(document).ready(function(){
+	
+                $('#my-dropdown, #my-dropdown2, #my-dropdown3, #my-dropdown4, #my-dropdown5, #my-dropdown6').sSelect();
+		
+                //set max height
+                $('#my-dropdownCountries').sSelect({ddMaxHeight: '300px'});
+		
+                //set value on click
+                $('#setVal').click(function(){
+                    $('#my-dropdown5').getSetSSValue('4');
+                });
+
+                //get value on click
+                $('#getVal').click(function(){
+                    alert('The value is: '+$('#my-dropdown5').getSetSSValue());
+                });
+
+                //alert change event
+                $('#my-dropdownChange').sSelect().change(function(){alert('changed')});
+
+                //add options to select and update
+                $('#addOptions').click(function(){
+                    $('#my-dropdown6').append('<option value="newOpt">New Option</option>').resetSS();
+                    return false;
+                });
+		
+            });
+        </script>
+<script type="text/javascript">
+// <![CDATA[
+	var myMenu;
+	window.onload = function() {
+		myMenu = new SDMenu("my_menu");
+		myMenu.init();
+	};
+	// ]]>
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>     
+
+</head>
+
+<body>
+
+
+<div style="display: none;" class="background_overlay"></div>
+
+<form id="overlay_form" style="display:none; top:50%">
+<div class="feedback-pop-hdr">
+<h2>Send Feedback</h2>
+<div class="fr"><img src="images/cross-white2.png" width="16" height="16" /></div>
+</div>
+<div class="feedback-pop-data">
+	<p class="text-grey2">Select Option</p>
+    <div id="win-xp2">
+       	<select style="display: none;" id="my-dropdown3" name="my-dropdown">
+                                        <option value="1">Option-1</option>
+                                        <option value="3" selected="selected">Option-2</option>
+                                        <option value="4">Option-3</option>
+                                        <option value="5">Option-4</option>
+                                        <option value="6">Option-5</option>
+                                    
+       </select>                         
+      </div>
+     <p></p>
+     <p><textarea rows="4" cols="" style="width:97%;" name=""></textarea></p>
+     <div class="btn"><input name="" class="btn-purple" value="Send" alt="Send" title="Send" type="button" /></div>
+     
+     <div class="needhelp-outer">
+     	<div class="needhelp-lt"><img src="images/help-icon.png" width="20" height="20" /></div>
+        <div class="needhelp-rt text-grey2">
+        	<h3>need help?</h3>
+            <p>Visit the Help Center at <a class="text-purple-link" href="javascript:;">help.ilook.com</a> to request assistance and get answers to all your ilook questions.</p>
+        </div>
+     </div>
+</div>
+
+</form>
+
+
+    <!-- Content Starts -->
+    <div class="bot-link-content">
+
+    <div class="bot-link-content-data">
+    	<div class="bot-link-content-data-left text-purple2"><img src="<?php echo IMAGE_PATH?>/advertisement-img.png" width="24" height="183" /></div>
+        <div class="bot-link-content-data-right">
+        
+        	<div class="bot-link-content-hdr"><img src="<?php echo IMAGE_PATH?>/ilook-2.png" width="45" height="72" /></div>
+        	<!-- Col 1 -->
+        	<div class="col1">
+            	<div class="hdr text-purple2"></div>
+                <p class="text-purple2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+            <!-- Col 1 -->
+            
+            <!-- Col 1 -->
+        	<div class="col1">
+            	<div class="hdr text-purple2"></div>
+                <p class="text-purple2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+            <!-- Col 1 -->
+            
+              <!-- Col 1 -->
+        	<div class="col1">
+            	<div class="hdr text-purple2"></div>
+                <p class="text-purple2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+            <!-- Col 1 -->
+            
+              <!-- Col 1 -->
+        	<div class="col1">
+            	<div class="hdr text-purple2"></div>
+                <p class="text-purple2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+            <!-- Col 1 -->
+       
+        </div>
+    	
+    </div>
+  </div>
+    <!-- Content Ends -->
+ 
+
+  
+</body>
+</html>
+
+
+

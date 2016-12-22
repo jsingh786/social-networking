@@ -1,0 +1,125 @@
+.linkprofile-outer 
+{
+   background: none repeat scroll 0 0 #EFF1F0 !important;
+    border: 10px solid #FFFFFF !important;
+    float: left !important;
+    margin: 0 !important;
+    min-height: 470px;
+    padding: 0 0 20px !important;
+    width: 96% !important;
+}
+.linkprofile-outer.text-grey3
+{
+   background: none repeat scroll 0 0 #EFF1F0 !important;
+    border: 10px solid #FFFFFF !important;
+    float: left !important;
+    margin: 0 !important;
+    min-height: 100px !important;
+    padding: 0 0 20px !important;
+    width: 96% !important;
+}
+.view-anchor
+{
+	background: none repeat scroll 0 0 transparent !important;
+    color: #FFFFFF !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.col3
+{
+	width: 92%;
+	margin: 3px 0 3px 0;
+	padding: 10px 4%;
+	float: left;
+	background: #fff;
+}
+.no-rec-msg.text-grey3 
+{
+	border: 1px solid #E5E5E5;
+	padding: 5px;
+	text-align: center;
+	min-height:800px;
+}
+.no-rec-msg.text-grey3
+{
+	background:white;
+}
+.img-align-center
+{
+	display: table-cell;
+    height: 83px;
+    text-align: center;
+    vertical-align: middle;
+    width: 83px;
+    border:2px solid white;
+}
+.img-align-center:hover
+{
+	border:2px solid #6C518F;
+}
+/* .content-right-left { */
+/*     min-height: 776px !important; */
+/* } */
+.content-right-right .col4 
+{
+/*     min-height: 818px !important; */
+	background:white;
+}
+.content-right-right .col3 
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 3px 0 0;
+    padding: 10px 4%;
+    width: 92%;
+}
+div.mail-sendmsg-col2
+{
+	margin: 2px 0 0 0 !important;
+	background: none repeat scroll 0 0 #FFFFFF !important;
+	padding: 1% 4% !important;
+	width: 92% !important;
+}
+.cke_1 .cke_top
+{
+    background-image: -moz-linear-gradient(center top , #F0EDF3, #6C518F) !important;
+    border-bottom-color: #614880 !important;
+    width: 96% !important;
+}
+.notes-popup-outer
+{
+	left: 28px !important;
+	top: 170px !important;
+}
+/** short profile popup starts**/ 
+div.img-align-center div.quickview-outer
+{
+	top:84px !important;
+}
+/** short profile popup ends **/
+
+
+.new-style-photoalbum-addnew .text-purple2 {
+    color: #6C518F;
+    float: left;
+}
+.linkprofile-outer.text-grey3 > p{
+	padding: 50px 0;
+    text-align: center;
+}
+
+/**30th april**/
+
+.link-invite-connect h3{
+	margin-bottom : 10px !important;
+}
+
+/** load more for people you may know section **/
+div.see_more_you_may_know {
+    border: 1px solid #6c518f;
+    margin: 2px 0 0;
+    padding: 6px 4%;
+    text-align: center;
+    width: 92% !important;
+}
+/** End load more for people you may know section **/

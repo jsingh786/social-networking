@@ -1,0 +1,78 @@
+<style>
+
+div.move-photo-hdr_1 h2 {
+    font-size: 17px !important;
+    margin-top: 0 !important;
+}
+div.move-photo-hdr_1 h2 {
+    color: #000;
+    float: left;
+    font-weight: bold;
+    text-transform: inherit !important;
+    width: 243px;
+	font-size: 17px;
+    text-transform: inherit 
+}
+.move-photo-content_1 { 
+    background: #ffffff none repeat scroll 0 0;
+    border: 5px solid #ffffff;
+    float: left;
+    margin: 0;
+    max-height: 400px;
+    min-height: 70px;
+    overflow-y: auto;
+    padding: 13px 20px;
+    width: 508px; 
+ } 
+ .move-photo-outer_1{ 
+ 	width:560px; 
+ }   
+ .move-photo-hdr_1{ 
+ 	background: none repeat scroll 0 0 #141C23; 
+     float: left; 
+     margin: 0; 
+     padding: 0px 27px; 
+     width: 90%; 
+    height: 40px;
+    line-height: 40px;
+    background: #f5f6f7 none repeat scroll 0 0;
+ }   
+div#lower_container .btn-purple
+ {
+ 	margin: 15px 0 0 7px;
+}
+select#otherAlbums
+{
+	width:200px
+}
+</style>
+<div id="movePhoto" class="popup transparent_border" style = "display: none;">
+	<div class="move-photo-outer_1">
+		<!-- Move Photo Header -->
+		<div class="move-photo-hdr_1">
+			<div id="move-photo_2" class="left text-white">
+				<h2>Move photo to another album?</h2>
+				<img style="cursor:pointer"class="close_bpopup" width="20" height="18" title="Close"		src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+						title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		<!-- Move Photo Header -->
+			<!-- Move Photo Content -->
+			<div class="move-photo-content_1">
+				<div class= "upper_container">
+				<input type="hidden" name="photoID" id="photoID" value="" />
+					Select another album for this photo:
+					<select name="otherAlbums" id="otherAlbums">
+						
+					</select>
+				</div>
+				<div id  = "lower_container">
+					<input class="btn-purple close_photo_popup" style="float:right;" type="button" name="cancel" id="cancel" value="Cancel" />
+					<input class="btn-purple" style="float:right;" type="button" name="movePicture" id="movePicture" value="Move Photo" />
+			
+				</div>
+			</div>
+			<!-- Move Photo Content -->
+	</div>
+</div>

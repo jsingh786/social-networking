@@ -1,0 +1,548 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Create a Job' );
+// Javascript
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/additional-methods.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/jobs_post.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/create_job.css" );
+
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+$jobArr=$this->jobArray;
+?>
+<script>
+$(document).ready(function(){
+//Applying ckeditor on provider msg textarea.
+CKEDITOR.replace( 'responsibilities', 
+	{
+	uiColor: '#6C518F',
+	toolbar: [
+				{ name: 'basicstyles' , items : [ 'Bold','Italic','TextColor',"BGColor", 'NumberedList','BulletedList'  ] },
+				{ name: 'tools', items : [ 'Maximize','-' ] },
+			],
+	removePlugins : 'elementspath'
+});
+CKEDITOR.addCss(".cke_editable{background-color: #F2F2F2}");
+CKEDITOR.replace( 'companyDesc', 
+	{
+	uiColor: '#6C518F',
+	toolbar: [
+				{ name: 'basicstyles', items : [ 'Bold','Italic','TextColor',"BGColor",'NumberedList','BulletedList' ] },
+				{ name: 'tools', items : [ 'Maximize','-' ] }
+			],
+	removePlugins : 'elementspath'
+});
+CKEDITOR.addCss(".cke_editable{background-color: #F2F2F2}");
+CKEDITOR.replace( 'skills', 
+	{
+	uiColor: '#6C518F',
+	toolbar: [
+				{ name: 'basicstyles', items : [ 'Bold','Italic','TextColor',"BGColor",'NumberedList','BulletedList' ] },
+				{ name: 'tools', items : [ 'Maximize','-' ] }
+			],
+	removePlugins : 'elementspath'
+});
+CKEDITOR.addCss(".cke_editable{background-color: #F2F2F2}");
+CKEDITOR.replace( 'jobDesc', 
+	{
+	uiColor: '#6C518F',
+	toolbar: [
+				{ name: 'basicstyles', items : [ 'Bold','Italic','TextColor',"BGColor",'NumberedList','BulletedList' ] },
+				{ name: 'tools', items : [ 'Maximize','-'] }
+			],
+	removePlugins : 'elementspath'
+});
+CKEDITOR.addCss(".cke_editable{background-color: #F2F2F2}");
+});
+</script>
+<style type="text/css">
+.ddCls
+{
+	width:99.5%;
+	padding:3px;
+	text-transform:lowercase;
+}
+.dd-capitalize
+{
+	text-transform: capitalize !important;
+}
+.jobs-rt-content{
+	padding:0 4% 4%;
+}
+.jobs-text1 {
+    float: right;   
+}
+.jobs-rt-content .col1 input[type="text"]{
+	color:black;
+	font-size:13px;
+}
+.job-description{
+	width:97%;
+}
+.jobs-rt-content .col1 label{
+	text-transform:none;
+	font-size:12px;
+}
+.text-purple {
+    color: #8D79A8;
+}
+select {
+  text-transform: none !important;
+}
+</style>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+
+	<!-- Bookmarks Header Starts -->
+	<div class="mail-hdr">
+		<h2>Post A Job</h2>
+	
+		<div class="bookmarks-add-new bdr-btm-none">
+			<div class="jobs-text1 text-grey2">
+				<h3 style="">
+				<font title ="Active jobs" style="color:black;"><?php echo $this->countActiveJobs;?> <a href="/<?php echo PROJECT_NAME?>job/active-jobs" style="text-decoration:none;color:black;">Active</a></font> &nbsp;  | &nbsp; <font title = "Expired jobs" style="color:black;"><?php echo $this->countExpiredJobs;?> <a href="/<?php echo PROJECT_NAME?>job/expired-jobs" style="text-decoration:none;color:black;">Expired</a></font>  &nbsp; | &nbsp;   <font title = "Closed jobs" style="color:black;"> <?php echo $this->countClosedJobs;?> <a href="/<?php echo PROJECT_NAME?>job/closed-jobs" style="text-decoration:none;color:black;"   >Closed</a></font>
+				</h3>
+			</div>
+        </div>
+	</div>
+	<!-- Bookmarks Header Ends -->
+	<!-- Jobs Right Content Starts -->
+	<div class="jobs-rt-content">
+		<form name="createJob" id="createJob" method="post" action="" enctype="multipart/form-data" autocomplete="off">
+		<input type="hidden" name="jobCreation" id="jobCreation" value="post" />
+		
+		<!-- Col1 Starts -->
+		<div class="col1 country_list">
+			<label>Country</label> <span><div id="win-xp8">
+					<select name="dd_location" id="dd_location" class="ddCls">
+					<option value="">Select</option>
+					<?php 
+					$countries=$this->countryListing;
+					for($i=0;$i<count($countries);$i++)
+					{
+						$cValues=$countries[$i]['id'].",".$countries[$i]['have_states'];
+					?>
+						<option value="<?php echo $cValues;?>" <?php if(isset($this->countryValue) && $this->countryValue==$cValues){ echo "selected";}?>><?php echo $countries[$i]['name'];?></option>
+					<?php } ?>	
+					</select>
+				</div></span>
+		</div>
+		
+		
+			<?php 
+				if(isset($this->stateListing)){
+			?>
+			<div class="col1 state_list">
+			<label>State</label> <span><div id="win-xp8">
+				<select name="dd_state" id="dd_state" class="ddCls">
+				<option value="">Select</option>
+				<?php 
+				$state=$this->stateListing;
+				for($i=0;$i<count($state);$i++){
+				?>
+					<option value="<?php echo $state[$i]['id'];?>" <?php if($this->stateValue==$state[$i]['id']){ echo "selected";}?>><?php echo $state[$i]['name'];?></option>
+				<?php } ?>	
+				</select>
+			</div></span>
+			</div>
+			<?php 
+				}
+				else{
+					?>
+					<div class="col1 state_list" style="display:none;">
+					</div>
+					<?php 
+				}
+			?>	
+		
+		
+		
+			<?php 
+				if(isset($this->cityListing) && isset($this->cityValue)){
+					$city=$this->cityListing;
+			?>
+			<div class="col1 city_list">
+			<label>City</label> <span><div id="win-xp8">
+				<select name="dd_city" id="dd_city" class="ddCls">
+				<option value="">Select</option>
+				<?php 
+
+				for($i=0;$i<count($city);$i++){
+				?>
+					<option value="<?php echo $city[$i]['id'];?>" <?php if($this->cityValue==$city[$i]['id']){ echo "selected";}?>><?php echo $city[$i]['name'];?></option>
+
+				<?php } ?>
+
+				</select>
+			</div></span>
+			</div>
+			<?php 
+				}
+				else{
+					?>
+					<div class="col1 city_list" style="display:none;">
+					</div>
+					<?php 
+				}
+			?>
+		
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Company</label> <span><input  name="company" type="text" id="company" value="<?php if($jobArr && $jobArr["company"]!=""){echo $jobArr["company"];} ?>" maxlength="200" /></span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Industry</label> <span><div id="win-xp8">
+					<select name="dd_industry" id="dd_industry" class="ddCls">
+					<option value="">Select</option>
+					<?php 
+						$industries=$this->industryListing;
+						for($i=0;$i<count($industries);$i++){
+							if($industries[$i]['title']!="Others"){
+					?>
+						<option value="<?php echo $industries[$i]['id'];?>" <?php if(isset($jobArr["dd_industry"]) && $jobArr["dd_industry"]==$industries[$i]['id']){ echo "selected";}?>><?php echo $industries[$i]['title'];?></option>
+					<?php 
+							}
+							else{
+								$industryId= $industries[$i]['id'];
+								$industryTitle=	$industries[$i]['title'];
+							}
+						} 
+						?>
+						<option value="<?php echo $industryId;?>" <?php if(isset($jobArr["dd_industry"]) && $jobArr["dd_industry"]==$industryId){ echo "selected";}?>><?php echo $industryTitle;?></option>	
+					</select>
+				</div></span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<?php 
+				if(isset($this->salaryListing)){
+			?>
+			<div class="col1 salary_list">
+			<label>Salary</label> <span><div id="win-xp8">
+				<select name="dd_salary" id="dd_salary" class="ddCls">
+				<option value="">Select</option>
+				<?php 
+				$salary=$this->salaryListing;
+				for($i=0;$i<count($salary);$i++){
+				?>
+					<option value="<?php echo $salary[$i]['id'];?>" <?php if(isset($jobArr["dd_salary"]) && $jobArr["dd_salary"]==$industries[$i]['id']){ echo "selected";}?>><?php echo $salary[$i]['min_salary']." - ".$salary[$i]['max_salary'];?></option>
+				<?php } ?>	
+				</select>
+			</div></span>
+			</div>
+			<?php 
+				}
+				else{
+					?>
+					<div class="col1 salary_list" style="display:none;">
+					</div>
+					<?php 
+				}
+			?>	
+			
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Job type</label> <span><div id="win-xp8">
+					<select name="dd_job_type" id="dd_job_type" class="ddCls">
+					<option value="">Select</option>
+					<?php 
+						$jobType=$this->job_type;
+						for($i=0;$i<count($jobType);$i++){
+					?>
+						<option value="<?php echo $jobType[$i]['id'];?>" <?php if(isset($jobArr["dd_job_type"]) && $jobArr["dd_job_type"]==$jobType[$i]['id']){ echo "selected";}?>><?php echo $jobType[$i]['name'];?></option>
+					<?php 
+						}
+					?>	
+					</select>
+				</div></span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Experience level</label> <span><div id="win-xp8">
+					<select name="dd_exp_lvl" id="dd_exp_lvl" class="dd-capitalize ddCls">
+					<option value="">Select</option>
+<?php 
+						$experienceLevel = $this->experience_level;
+						for($i=0;$i<count($experienceLevel);$i++){
+?>
+						<option  value="<?php echo $experienceLevel[$i]['id'];?>" <?php if(isset($jobArr["dd_exp_lvl"]) && $jobArr["dd_exp_lvl"]==$experienceLevel[$i]['id']){ echo "selected";}?>><?php echo $experienceLevel[$i]['description']; ?></option>
+<?php 
+						}
+?>	
+					</select>
+				</div></span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Job title</label> <span><input maxlength="100" name="jobTitle" id="jobTitle" value="<?php if($jobArr && $jobArr["jobTitle"]!=""){echo $jobArr["jobTitle"];} ?>" type="text" /></span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label style="text-transform:none;">Company url</label> <span><input maxlength="200" name="urlFields" id="urlFields" value="<?php if($jobArr && $jobArr["urlFields"]!=""){echo $jobArr["urlFields"];} else{echo 'http://www';} ?>" type="text" /></span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col2">
+			<label>Responsibilities</label> 
+			<!-- <span><input maxlength="2000" name="responsibilities" id="responsibilities" value="<?php //if($jobArr && $jobArr["responsibilities"]!=""){echo $jobArr["responsibilities"];} ?>" type="text" /></span>-->
+			<div class="job-description-bot ckeditor_fields" >
+				<textarea  maxlength="800" style="width: 100%;" name="responsibilities" id="responsibilities" cols="" rows="5"><?php if($jobArr && $jobArr["responsibilities"]!=""){echo $jobArr["responsibilities"];} ?></textarea>
+			</div>
+		</div>
+		<!-- Col1 Ends -->
+		<!-- Col1 Starts -->
+		<div class="col2">
+			<label>Skills & expertise</label> 
+			<!-- <span><input maxlength="2000" name="skills" id="skills" value="<?php //if($jobArr && $jobArr["skills"]!=""){echo $jobArr["skills"];} ?>" type="text" /></span>-->
+			<div class="job-description-bot ckeditor_fields">
+				<textarea  maxlength="800" style="width: 100%;" name="skills" id="skills" cols="" rows="5"><?php if($jobArr && $jobArr["skills"]!=""){echo $jobArr["skills"];} ?></textarea>
+			</div>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col2">
+			<label>Company description</label> 
+			<!-- <span><input maxlength="2000" name="companyDesc" id="companyDesc" value="<?php //if($jobArr && $jobArr["companyDesc"]!=""){echo $jobArr["companyDesc"];} ?>" type="text" /></span>-->
+			<div class="job-description-bot ckeditor_fields">
+				<textarea  maxlength="800" style="width: 100%;" name="companyDesc" id="companyDesc" cols="" rows="5"><?php if($jobArr && $jobArr["companyDesc"]!=""){echo $jobArr["companyDesc"];} ?></textarea>
+			</div>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Job posted by</label> <span><input maxlength="200" name="postedBy" id="postedBy" value="<?php if($jobArr && $jobArr["postedBy"]!=""){echo $jobArr["postedBy"];} ?>" type="text" /></span>
+		</div>
+		<!-- Col1 Ends -->
+			
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Job expires</label> <span><input style="width: 40%;margin-right:5px;" readonly="readonly" name="expireDate" id="expireDate" value="<?php if($jobArr && $jobArr["expireDate"]!=""){   \DateTime::createFromFormat("D, j M Y H:i:s T", (string)$jobArr["expireDate"]);} ?>"
+				type="text" /> </span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Upload Image</label> <span><input type="file" name="jobImage" id="jobImage" style="float: left; overflow: hidden; width: auto; max-width: 101%;" />
+			</span>
+		</div>
+		<!-- Col1 Ends -->
+
+		
+
+		<!-- Col1 Starts -->
+		<div class="col1 mt10"  style="margin-top: 60px;">
+			<h4 class="applying_option_text text-dark-purple font-arial" style="text-transform: none;">Applying options</h4>
+
+			<span> </span>
+		</div>
+		<!-- Col1 Ends -->
+
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label>Companies Website</label> <span> 
+			<input style="bottom: -2px;margin-top:6px;float:left;" type="radio" value="<?php echo \Extended\job::APPLIED_FROM_COMPANY;?>" name="applyfrm" id="applyfrm"  />
+			<div id="cWebUrl" style="width:92%;float:left;padding-left:5px;display:none;">
+				<div style="float:left;width:100%;">
+					<input type="text" placeholder="Enter job URL http://www...." value="" id="webJobUrl" name="webJobUrl" style="width: 100%;">
+				</div>
+			</div>
+			</span>
+		</div>
+		<!-- Col1 Ends -->
+
+		<!-- Col1 Starts -->
+		<div class="col1">
+			<label style="text-transform: none !important;">Ilook portal</label> <span> <input style="bottom: -2px;margin-top:5px;"
+				type="radio" value="<?php echo \Extended\job::APPLIED_FROM_ILOOK_PORTAL;?>" name="applyfrm" id="applyfrm" checked="checked" />
+
+			</span>
+		</div>
+		<!-- Col1 Ends -->
+
+
+
+		<!-- Job Description Starts -->
+		<div class="job-description">
+			<div class="job-description-top ckeditor_fields">
+				<h3 style="text-transform: none;margin: 0 0 10px -150px;">Job description</h3>
+			</div>
+			<div class="job-description-bot">
+				<textarea  maxlength="800" style="width: 100%;" name="jobDesc" id="jobDesc" cols="" rows="10"><?php if($jobArr && $jobArr["jobDesc"]!=""){echo $jobArr["jobDesc"];} ?></textarea>
+			</div>
+		</div>
+		<!-- Job Description Ends -->
+
+		<div class="btn-save-post">
+			<input name="preview" id="preview" type="button" class="btn-purple-lt" alt="Preview" title="Preview" value="Preview" />
+			<input onclick="addLeavePopupOnTheBasisOfFormValidate()" name="post" id="post" type="submit" class="btn-purple-lt" alt="Post" title="Post" value="Post" /> 
+		</div>
+
+</form>
+
+	</div>
+	<style type="text/css">
+		.pop-img-heading{
+		    float: left;
+   		    margin: 0 0 0 15px;
+    		width: 365px;
+}
+.gap{
+	padding:10px 0;
+	width:100%;
+	float:left;
+}
+.job-detail-col1 p{
+margin-top:5px;
+}
+
+.job-detail-col1 p label {
+    clear: both;
+    float: left !important;
+    margin: 10px 0 0 !important;
+    padding: 0 !important;
+    width: 200px !important;
+}
+
+.job-detail-col1 p span#previewCompany,
+.job-detail-col1 p span#previewCntry,
+.job-detail-col1 p span#previewPostedBy,
+.job-detail-col1 p span#previewJobType,
+.job-detail-col1 p span#previewJobType,
+.job-detail-col1 p span#previewIndustry
+{
+    float: left;
+    padding: 0;
+/*     width: 200px; */
+    margin: 10px 0 0;
+}
+.job-detail-btn-outer{
+	float:left;
+	text-align:right;
+	width:105%;
+}
+.job_detail_img_inner{
+	font-size:11px;
+}
+	</style>
+	<!-- Jobs Right Content Ends -->
+	<div id="jobPreview" style="border:5px solid #6C518F ; border-radius:5px;display:none;width: 500px; position: absolute; top: 34px; z-index: 3; opacity: 1; left: 390px; text-align: left; margin: 0px; padding: 0px 20px 0px 0px; background: none repeat scroll 0px 0px rgb(255, 255, 255); height: 700px; overflow: auto;">
+			<!-- Pop up data -->
+	<div style="margin:0;" class="content-right-right">
+	<!-- Bookmarks Header Starts -->
+		<div style="padding-top:10px;"  class="job-hdr">
+			<div style="border-bottom:none;" class="job-hdr-top">
+				<h2>Job Details</h2>
+							</div>
+			<div style="width: 105%;" class="new-border-space"></div>
+		</div>
+	<!-- Bookmarks Header Ends -->
+		<div style="padding-top: 20px; padding-bottom:10px;" class="photoalbum-hdr">
+			<div style="margin: 0px !important;" class="job-detail-col1">
+				<div style="margin:0;" class="job_detail_img_outer">
+					<div class="job_detail_img_inner">
+						Your image here
+					</div>
+				</div>
+				<div class="pop-img-heading">
+					<h4 title="" style="cursor: default;line-height:16px !important;" class="text-bold" id="previewJobTitle"></h4>
+					<p style="width:100%; float:left; margin:0;">
+					<span style="width:100%;" title="" id="previewCompany">
+					</span>
+					<span style="width:100%;text-transform:lowercase;" id="previewCntry">
+					</span>
+					</p>
+					<p class="p_previewUrlFields" style="margin-top:3px; float:left;">
+					<a class="text-purple-link" href="javascript:;" target="_blank" title="" id="previewUrlFields"></a>
+					</p>
+				</div>
+			</div>
+				<div style="width: 105%; margin-top:20px;" class="new-border-space"></div>
+		</div>
+		
+		<div style="padding-top: 10px;" class="photoalbum-hdr">	
+			<div class="job-detail-col1 ">
+				<h4 class="text-bold"><strong>job description</strong></h4>
+				<p id="previewJobDesc"></p>
+			</div>
+			<div class="gap"></div>
+			<div class="job-detail-col1 ">
+				<h4 class="text-bold"><strong>responsibilities</strong></h4>
+				<p id="previewResponsibilities"></p>
+			</div>
+			<div class="gap"></div>
+			<div style="margin: 0px !important;" class="job-detail-col1 ">
+				<h4 class="text-bold"><strong>skills &amp; expertise</strong></h4>
+				<p id="previewSkills"></p>
+			</div>
+			<div class="gap"></div>
+			<div style="width: 105%;" class="new-border-space"></div>
+		</div>
+		<div style="padding-top: 10px;" class="photoalbum-hdr">	
+			<div style="margin: 0px !important;" class="job-detail-col1 ">
+				<h4 class="text-bold"><strong>Company description</strong></h4>
+				<p id="previewCompanyDesc"></p>
+			</div>
+			
+			<div class="gap"></div>
+			<div style="width: 105%;" class="new-border-space"></div>
+		</div>
+		<div style="padding-top: 10px; margin-bottom: 2px;" class="photoalbum-hdr">		
+			<div class="job-detail-col1">
+				<h4 class="text-bold"><strong>Additional information</strong></h4>
+				<p>
+					<label>Job Posted by</label>
+					<span id="previewPostedBy"></span>
+				</p>
+				<p>
+					<label>Posted</label>
+					<span><?php echo date('M d, Y')?></span>
+				</p>
+				<p>
+					<label>Type of work</label>
+					<span id="previewJobType"></span>
+				</p>
+								<p>
+					<label>Experience</label>
+					<span id="previewExperience"></span>
+				</p>
+
+				<p>
+					<label>Industries</label>
+					<span id="previewIndustry"></span>
+				</p>
+				<p>
+				<label>Job Id</label>
+				<span>XXXXXX</span>
+				</p>
+				<div class="gap"></div>
+			<div class="job-detail-btn-outer">
+				<input type="button" rel="2167" id="close_prev" title="Close" alt="Close" value="Close" class="btn-purple-lt" name="close_prev">
+			</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Pop up data -->
+	</div>
+</div>
+<!-- Content Right Right Ends -->

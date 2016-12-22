@@ -1,0 +1,191 @@
+<?php 
+$this->headTitle()->prepend('Analytics');
+
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/analytics.css" );
+
+?>
+<!-- Step 1: Load the library. -->
+
+<script>
+(function(w,d,s,g,js,fs){
+  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
+  js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
+  js.src='https://apis.google.com/js/platform.js';
+  fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
+}(window,document,'script'));
+</script>
+
+<!-- Step 2: Create the containing elements. -->
+<div class="google_analytics">
+<div class="google_analytics_countries">
+<div id="embed-api-auth-container"></div>
+<div id="chart-1-container"></div>
+<div id="view-selector-1-container" class="pie_chart_users"></div>
+</div>
+
+<div class="google_analytics_users" style="display :none;">
+<div id="embed-api-auth-container"></div>
+<div id="chart-container"></div>
+<div id="view-selector-container" class="line_chart_users"></div>
+</div>
+
+<div class="google_analytics_avg_session" style="display :none;">
+<div id="embed-api-auth-container"></div>
+<div id="chart-2-container"></div>
+<div id="view-selector-2-container" class="line_chart_average_session"></div>
+</div>
+</div>
+
+<script>
+
+gapi.analytics.ready(function() {
+
+  /**
+   * Authorize the user immediately if the user has already granted access.
+   * If no access has been created, render an authorize button inside the
+   * element with the ID "embed-api-auth-container".
+   */
+	 gapi.analytics.auth.authorize({
+		    container: 'embed-api-auth-container',
+		    clientid: '82779891550-kvhuofe6k7qedjdvuv3o9m0dfhi5993u.apps.googleusercontent.com'
+		  });
+
+
+  /**
+   * Create a ViewSelector for the first view to be rendered inside of an
+   * element with the id "view-selector-1-container".
+   */
+  var viewSelector1 = new gapi.analytics.ViewSelector({
+    container: 'view-selector-1-container'
+  });
+
+  /**
+   * Create a new ViewSelector instance to be rendered inside of an
+   * element with the id "view-selector-container".
+   */
+  var viewSelector = new gapi.analytics.ViewSelector({
+    container: 'view-selector-container'
+  });
+
+  /**
+   * Create a new ViewSelector instance to be rendered inside of an
+   * element with the id "view-selector-container".
+   */
+  var viewSelector2 = new gapi.analytics.ViewSelector({
+    container: 'view-selector-2-container'
+  });
+
+  // Render the view selector to the page.
+  viewSelector.execute();
+  // Render both view selectors to the page.
+  viewSelector1.execute();
+  viewSelector2.execute();
+
+
+  /**
+   * Create the first DataChart for top countries over the past 30 days.
+   * It will be rendered inside an element with the id "chart-1-container".
+   */
+  var dataChart1 = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:sessions',
+      dimensions: 'ga:country',
+      'start-date': '60daysAgo',
+      'end-date': 'today',
+      'max-results': 15,
+      sort: '-ga:sessions'
+    },
+    chart: {
+      container: 'chart-1-container',
+      type: 'PIE',
+      options: {
+        'width':700,
+        'height':300,
+        pieHole: 4/9,
+        title : 'Country wise users'
+      }
+    }
+  });
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "chart-container".
+   */
+  var dataChart = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:users',
+      dimensions: 'ga:date',
+      'start-date': '14daysAgo',
+      'end-date': 'today'
+    },
+    chart: {
+      container: 'chart-container',
+      type: 'LINE',
+      options: {
+        width: 1000,
+       'title': 'Total users',
+       'height' : 300
+      }
+    }
+  });
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "chart-2-container".
+   */
+  var dataChart2 = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:avgSessionDuration',
+      dimensions: 'ga:date',
+      'start-date': '14daysAgo',
+      'end-date': 'today'
+    },
+    chart: {
+      container: 'chart-2-container',
+      type: 'LINE',
+      options: {
+        width: 1000,
+       'title': 'Average Session Duration',
+       'height' : 300
+      }
+    }
+  });
+
+  
+
+
+  /**
+   * Update the first dataChart when the first view selecter is changed.
+   */
+  viewSelector1.on('change', function(ids) {
+    dataChart1.set({query: {ids: ids}}).execute();
+  });
+
+  /**
+   * Render the dataChart on the page whenever a new view is selected.
+   */
+  viewSelector.on('change', function(ids) {
+	  $("div.google_analytics_users").css("display", "block"); 
+    dataChart.set({query: {ids: ids}}).execute();
+  });
+
+  /**
+   * Render the dataChart on the page whenever a new view is selected.
+   */
+  viewSelector2.on('change', function(ids) {
+	  $("div.google_analytics_avg_session").css("display", "block"); 
+    dataChart2.set({query: {ids: ids}}).execute();
+  });
+
+});
+</script>
+
+
+
+
+
+

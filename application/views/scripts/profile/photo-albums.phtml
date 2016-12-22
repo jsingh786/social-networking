@@ -1,0 +1,185 @@
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_album.css" );
+
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/photo_albums.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.addphotos.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+
+echo $this->partial ( 'partials/profile_menu.phtml' );
+echo $this->render("partials/add_contacts_popup.phtml");
+
+$menu_size = Auth_UserAdapter::getIdentity()->getMain_menu_size();
+?>
+
+<style type="text/css">
+.photo-slider-bot .col1 {
+	     margin: 10px 0 10px 33px;
+	     position:relative;
+	}
+	
+.whitebox {
+	border: none !important;
+}
+.whitebox .caption {
+	bottom: 0 !important;
+    width: 170px !important;
+}
+.photo-slider-bot .col1-img {
+	width: 180px !important;
+	height: 180px !important;
+}
+.photo-slider-bot .col1 {
+    margin: 10px 0 10px 33px;
+    position: relative;
+	width: 180px;
+	height: 180px;
+}
+
+.photo-slider-bot .col1-title{
+	width:98%;
+	background:none;
+	color:#860080;
+	font-weight:bold;
+}
+.photo-slider-bot .col1-title3{
+	width:98%;
+	background:none;
+	color:#808080;
+}
+.imageContainer {
+	width: 176px; 
+	height: 178px; 
+	overflow:hidden;
+}
+.containerImg {
+	
+   margin-left:-34px;
+   margin-top:-8px;
+}
+
+
+.whitebox:hover .caption{ visibility:visible;
+  opacity:1;
+  transition-delay:0s; color:#fff}
+
+
+.whitebox .caption .lt{
+	float:left;
+	line-height:30px;
+}
+.whitebox .caption .rt{
+	float:right;
+	line-height:30px;
+}
+
+.photo-slider-bot .col1-img {
+     background: none;
+     border: none;
+}
+
+.text-grey {
+     color: #000000 !important;
+}
+.edit_pencile {
+    background: none;
+    margin: 0;
+    padding: 3px;
+    position: absolute;
+    right:3px;
+    top:2px;
+    width: auto;
+}
+div.editPhoto .edit-popup-col1 h5{
+  	color: #000;
+    font-size: 15px;
+    margin: 0 0 0;
+    padding: 3px 5px;
+    text-transform: none;
+    position:relative;
+}
+div.editPhoto .edit-popup-col1 h5:hover{
+  	background-color:#4D356F !important;
+  	text-decoration:none;
+}
+.edit-popup-col1 h5 a{
+  display:block !important;
+}
+.edit-popup-col1 h5:hover a{
+  color:#fff !important;
+}
+.text-grey2-link.privacy_custom:hover {
+text-decoration:none;
+}
+
+.edit-popup{
+	padding: 0;
+    width: 100px;
+    float:right;
+}
+.edit-popup-col1{
+margin:0;
+width:100%;
+}
+.text-grey2-link:hover{
+	color:#fff !important;
+}
+.prvcy_set_loader{
+	position:absolute;	right:-12px; top:2px;
+}
+</style>
+
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+     <!-- Photo Album Starts -->
+     <div class="photoalbum-outer">
+          <div class="photoalbum-hdr">
+                <h2 style="text-transform: none;">Photos & Portfolios</h2>
+                <input type = "hidden" id = 'page' value = "1" />
+<?php 
+              if($this->loginUserAlbum)
+              {
+?>
+				<div class="photoalbum-addnew">
+				<div style="position: relative; float: right; width: 130px;">
+					<a class="text-purple2-link new-album" href="javascript:;" >Add New Album    </a>
+					<!-- Quickview Outer Starts -->
+					<div class="quickview-outer" style="top: 20px; left: -410px; display: none;">
+						<div style="margin: 0 0 1px 424px;" class="arrow">
+							<img width="36" height="22" src="<?php echo IMAGE_PATH;?>/arrow-purple2.png">
+						</div>
+						<div style="width: 432px;" class="quickview">
+						</div>
+                        <!-- Quick-View-Starts -->
+					</div>
+                   <!-- Quickview Outer Ends -->                    
+					
+					<img src="<?php echo IMAGE_PATH;?>/icon-new-album.png" width="23" height="17" />
+					</div>
+				</div>
+<?php 
+              }
+?>
+			</div>
+			<div class="photo-slider">
+              	<div class="photo-slider-bot">              			
+
+              </div>
+<?php 
+              echo '<div class="loading_albums" style = "display:none;">';
+              echo '<div><img src = "'.IMAGE_PATH.'/loading_medium_purple.gif"><label>Loading...</label></div>';
+              echo '</div>';
+                   
+?>
+          </div>
+     </div>
+     <!-- Photo Album Ends -->
+</div>
+<!-- Content Right Right Ends -->
+<!-- Dialog Box -->
+<div id="dialog_success_share" style="display:none;">
+  <p>
+    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+ 	Photo shared successfully.
+  </p>
+</div>

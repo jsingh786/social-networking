@@ -1,0 +1,104 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Contact Details');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/contact_details.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/contact_details.css" );
+?>
+
+<?php
+	echo $this->partial('partials/profile_menu.phtml'); 
+?>
+
+<script type = "text/javascript">
+
+//Clients Requirement that sdmenu should be open by default on this page.
+$(document).ready(function(){
+	var myMenu = new SDMenu("my_menu"); // ID of the menu element
+	var secondSubmenu = myMenu.submenus[1];
+	myMenu.expandMenu(secondSubmenu);      // Expand a submenu	
+});
+</script>
+
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+			<!-- Summary Edit Starts -->
+			<div class="summary-edit text-grey2">
+				<h3 class="text-purple2">Contact Details</h3>
+				<font style="float: right;">
+					<span id = "edit_contact_dtls_btn">
+						<img id="edit_image" src="<?php echo IMAGE_PATH ?>/edit-pencil.png" class="edit-new-icon" /> 
+					</span>	 
+				</font>
+			</div>
+			<!-- Summary Edit Ends -->
+
+			<!-- Contact Details Starts -->
+			<div id = "show_contact_details" class="contact-details">
+			 <div class="contact-label-span">
+				<label>Telephone 1</label> 
+				<span class="text-grey2" id = "tel_1"><?php echo Auth_UserAdapter::getIdentity()->getPhone(); ?></span> 
+				</div>
+				 <div class="contact-label-span">
+				<label>Telephone 2</label> 
+				<span class="text-grey2" id = "tel_2"><?php echo Auth_UserAdapter::getIdentity()->getPhone_second(); ?></span> 
+				</div>
+				 <div class="contact-label-span">
+				<label>Email</label> 
+				<span class="text-grey2"><?php echo Auth_UserAdapter::getIdentity()->getEmail(); ?></span> 
+				</div>
+				 <div class="contact-label-span">
+				<label>Profile</label>
+				<span class="text-grey2"  id = "username" title="<?php echo Auth_UserAdapter::getIdentity()->getUsername()? PROJECT_URL."/".PROJECT_NAME.Auth_UserAdapter::getIdentity()->getUsername():"";?>"><?php echo Helper_common::showCroppedText(Auth_UserAdapter::getIdentity()->getUsername()? PROJECT_URL."/".PROJECT_NAME.Auth_UserAdapter::getIdentity()->getUsername():"",54); ?></span>
+				</div>
+			</div>
+			<div id = "edit_contact_details">
+				<form action = "#"  id = "edit_contact_details">
+					<!-- Contact Details Starts -->
+					<div class="contact-details">
+					 <div class="contact-label-span2">
+						<label>Telephone 1</label>
+						<span>
+							<input type="text" name="tel_1" maxlength = "16" class="search-one-textbox group-required " value="<?php echo Auth_UserAdapter::getIdentity()->getPhone(); ?>">
+						</span>
+						</div>
+						<div class="contact-label-span2">
+						<label>Telephone 2</label>
+						<span>
+							<input type="text" name="tel_2" maxlength = "16" class="search-one-textbox group-required" value="<?php echo Auth_UserAdapter::getIdentity()->getPhone_second(); ?>">
+						</span>
+						</div>
+						<div class="contact-label-span2">
+						<label>Email</label>
+						<span>
+							<input disabled type="text" name="email" class="search-one-textbox " value="<?php echo Auth_UserAdapter::getIdentity()->getEmail(); ?>">
+						</span>
+						</div>
+						<div class="contact-label-span2">
+						<label>Profile</label>
+						<span>
+							<input type="text" name="profile" class="search-one-textbox group-required" value="<?php echo Auth_UserAdapter::getIdentity()->getUsername(); ?>">
+							<div class="tick-box" id = "profile-validate">
+								
+							</div>
+						</span>
+						</div>
+					</div>
+					<!-- Contact Details Ends -->
+					<div class=" summary-btn-outer">
+						<input name="save_contact_dtls" id="save_contact_dtls" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+						<a href="javascript:;" id="cancel_edit_contact_dtls" class="new-cancel-btn">Cancel</a>
+					</div>
+				</form>	
+			</div>	
+		</div>
+		<!-- Content Right Right Ends -->
+	</div>
+	<!-- Content Right Ends -->

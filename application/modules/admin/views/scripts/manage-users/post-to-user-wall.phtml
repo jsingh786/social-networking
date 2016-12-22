@@ -1,0 +1,215 @@
+<?php
+$this->headTitle()->prepend('Post To User Wall');
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/post_to_user_wall.css" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->appendFile(PUBLIC_PATH . "/js/admin/post_to_user_wall.js");
+
+echo $this->partial ( 'partials/user_selection_popup.phtml' );
+echo $this->partial ( 'partials/country_selection_popup.phtml' );
+
+//==========================================
+// Start Blueimp jQuery-File-Upload includes
+//==========================================
+
+//$this->headLink()->appendStylesheet( PUBLIC_PATH."/temp/blueimp-gallery.min.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload.css" );
+//$this->headLink()->appendStylesheet( PUBLIC_PATH."/temp/jquery.fileupload-ui.css" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/tmpl.min.js" );
+
+
+// $this->headScript()->appendFile( PUBLIC_PATH."/temp/load-image.all.min.js" );
+// $this->headScript()->appendFile( PUBLIC_PATH."/temp/canvas-to-blob.min.js" );
+// $this->headScript()->appendFile( PUBLIC_PATH."/temp/jquery.blueimp-gallery.min.js" );
+// $this->headScript()->appendFile( PUBLIC_PATH."/temp/jquery.iframe-transport.js" );
+
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-process.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-image.js" );
+
+
+// $this->headScript()->appendFile( PUBLIC_PATH."/temp/jquery.fileupload-audio.js" );
+// $this->headScript()->appendFile( PUBLIC_PATH."/temp/jquery.fileupload-video.js" );
+
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-validate.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-ui.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-jquery-ui.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/main.js" );
+
+//========================================
+// End Blueimp jQuery-File-Upload includes
+//========================================
+
+?>
+
+<div id='heading' class="userpost-header">
+	<div class="top-links"><a class="selected_underlined" href="javascript:;" id="dashboard_post" >Dashboard</a> | <a href="javascript:;" id="display_post" >Display</a></div>
+	<h2><a href = '/<?php echo PROJECT_NAME?>admin/manage-users/index'>User Management</a> -> Post to user wall
+		<span style = 'float:right; margin-right: 5px;' title = 'Total Users according to current criteria' id = 'num_of_users'></span>
+	</h2>
+</div>
+
+<div class="post-box-dashboard">
+	<div class="post-box-dashboard-lt">	<img width="" height="" src="<?php echo IMAGE_PATH;?>/footer-logo-big.png" alt=""></div>
+	<div class="post-box-dashboard-rt">
+	<div class="post-box-dashboard-rt-top">	
+	<textarea id="post-box-dashboard-textarea" style="float:right; min-height:150px;"></textarea>
+	</div>
+	<div class="post-box-dashboard-rt-bot">
+	<input onclick="postUpdateOnDashboardFromAdmin(this);" value="share" class="btn btn-large" type="button"/>
+	<select class="share_users" onChange="openUserPopup()">
+	<option value="1">All Users</option>
+	<option value="2">Specific Users</option>
+	<option value="3">Country</option>
+	</select> 
+	<span>Share with</span> 
+	</div>
+	</div>
+	
+	<input type="hidden" id = "is_dashboard" value="1" name="is_dashboard"/>
+	<input type="hidden" name="offsettt" value="0" id="offsettt"/>
+	<input type = "hidden" name= "hidden_url_title" id = "hidden_url_title" value = ""/>
+	<input type = "hidden" name="hidden_url_content" id = "hidden_url_content" value = ""/>
+	<input type = "hidden" name="hidden_is_url" id = "hidden_is_url" value = "0"/>
+	<input type = "hidden" name="hidden_url" id = "hidden_url" value = ""/>
+	<input type = "hidden" name="selected_user_ids" id = "selected_user_ids" value = ""/>
+	<input type = "hidden" name="selected_country_ids" id = "selected_country_ids" value = ""/>
+	<div class="url-loader clr ">
+	<img id="loading_indicator" src="<?php echo IMAGE_PATH?>/loading_small_purple.gif">
+	</div>
+						
+	<div class="urlResult" id="results">
+				 	
+	</div>
+	
+	
+</div>
+
+
+<!-- ---------------------------------------------------------------------------------- -->
+<!-- ------------------------------DISPLAY WALL---------------------------------------- -->
+<!-- ---------------------------------------------------------------------------------- -->
+<div class="post-box-display">
+	<div class="socialise-share-photo2">
+
+	<!-- The file upload form used as target for the file upload widget -->
+	<div class = "multi-photo-upload">
+		<form id="fileupload_admin" action="/<?php PROJECT_NAME ?>development/upload-file" method="POST" enctype="multipart/form-data">
+	   
+	    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+	    <noscript>
+	    	<input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/">
+	    </noscript>
+	    
+	   
+	    <div class="post-box-display-inner">
+	    	<div class="post-box-display-inner-lt">
+	    		
+	    	</div>
+	    	<div class="post-box-display-inner-rt">
+	    	
+	    	 <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+	    <div class="fileupload-buttonbar">
+	        <div class="fileupload-buttons">
+	            
+	            <!-- The fileinput-button span is used to style the file input field as button -->
+	            <span class="fileinput-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+	                <span>Add Photos...</span>
+	                <input type="file" name="files[]" multiple id = "add_photos">
+	            </span>
+	            <span class="fileinput-button">
+	                <span>Create Photo Album...</span>
+	                <input type="file" name="files[]" multiple id = "create_album">
+	            </span>
+	            <span>
+	               <input maxlength = "100" style="display:none;" class="album-title" type = "text" name = "Album_title" value = "" placeholder = "Untitled Album" id = "album_title">
+	               
+	               <!-- '1' for just photos and '2' for photo album -->
+	               <input type = "hidden" name = "just_photos_or_photo_album" value = "1" id = "just_photos_or_photo_album">
+	            </span>
+	           
+	            <!-- The global file processing state -->
+	            <span class="fileupload-process"></span>
+	        </div>
+	        
+	        <!-- The global progress state -->
+	        <div class="fileupload-progress fade" style="display:none">
+	            <!-- The global progress bar -->
+	            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+	            <!-- The extended global progress state -->
+	            <div class="progress-extended">&nbsp;</div>
+	        </div>
+	    </div>
+			</div>
+			
+	    </div>
+	    
+	    
+	    
+	      <div class="post-box-display-inner">
+	    	<div class="post-box-display-inner-lt">
+	    		<img width="" height="" alt="" src="<?php echo IMAGE_PATH;?>/footer-logo-big.png">
+	    	</div>
+	    	<div class="post-box-display-inner-rt">
+	    	
+				<textarea name="photo_text" maxlength="255" id="photo_text"
+				style="width: 100% !important; min-height: 150px; margin:0; border: 1px solid #e6e5e6; padding: 3px; font-family: arial; z-index: 115;"
+				cols="" rows="" placeholder="Say something about this..."></textarea>
+				
+				 <!-- The table listing the files available for upload/download -->
+	    <div class="presentation-outer">
+	    <table style="width:100%;" role="presentation"><tbody class="files"></tbody></table>
+	    </div>
+					
+			</div>
+			
+	    </div>
+	   
+	</form>
+</div>
+<div class="post-box-dashboard-rt-bot">
+<form action="/<?php echo PROJECT_NAME ?>admin/manage-users/post-photos" method="POST" id="photo_feed" enctype="multipart/form-data">
+	<div class="share_photo_btn_loader">
+		<input id="share"  onclick = "" rel="socialise" value="share" class="btn btn-large" type="button"/>
+	</div>
+		<select class="share_users_display" onChange="openUserPopup(this)">
+			<option value="1">All Users</option>
+			<option value="2">Specific Users</option>
+			<option value="3">Country</option>
+		</select> 
+		
+		<span>Share with</span>
+		<input type = "hidden" name="selected_user_ids_display" id = "selected_user_ids" value = ""/>
+		<input type = "hidden" name="selected_country_ids_display" id = "selected_country_ids" value = ""/>
+		<input type = "hidden" name="users_option" id = "users_option" value = "1"/>
+</form>
+</div>
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <div class="template-download">
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+            {% if (file.error) { %}
+                <div><span class="error">Error</span> {%=file.error%}</div>
+            {% } %}
+
+               <button class="delete remove_thumb" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}><img src="<?php echo IMAGE_PATH; ?>/cross-white2.png" alt="X" title="Remove"  width="10px" height="10px" /></button>
+        </div>
+    {% } %}
+
+</script>
+<!-- End Blueimp jQuery-File-Upload -->
+	</div>
+
+</div>

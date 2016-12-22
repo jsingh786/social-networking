@@ -1,0 +1,140 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Search Indeed Jobs' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/indeed_jobs.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/jquery.cookie.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/indeed_job.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+?>
+
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Bookmarks Header Starts -->
+	<div class="job-hdr">
+		<div class="job-hdr-top">
+			<h2>Search Indeed jobs</h2>
+		</div>
+	</div>
+	<!-- Bookmarks Header Ends -->
+
+	<!-- Jobs Right Content Starts -->
+	<div class="jobs-rt-content">
+		<div id = "advanceSearchPanel">
+			<form action="" method="POST" id = "advance_search">
+				<input type="hidden" value="advance" name="search_type" />
+				<h3 class="text-grey2">JOB DETAILS</h3>
+
+				<!-- Col1 Starts -->
+				<div class="col1">
+					<label>Job Title</label>
+				<span>
+					<input id="job_title"  name="job_title" type="text" placeholder= "Job Title" value="<?php echo ISSET($_COOKIE['advance_search_job_title'])? $_COOKIE['advance_search_job_title'] : "";?>"/>
+				</span>
+				</div>
+				<!-- Col1 Ends -->
+				<div class="col1">
+					<label>Job Type</label>
+				<span>
+					<div id="win-xp8">
+						<select class="dd-new" id="job_type" name="job_type">
+							<option value="">Select</option>
+							<option value="all">All job types</option>
+							<option value="volunteer"> Volunteer</option>
+							<option value="parttime"> Part-time</option>
+							<option value="custom_1"> Walk-In</option>
+							<option value="temporary"> Temporary</option>
+							<option value="fulltime"> Full-time</option>
+							<option value="internship"> Internship</option>
+							<option value="commission"> Commission</option>
+							<option value="new_grad"> Fresher</option>
+							<option value="contract"> Contract</option>
+							</select>
+					</div>
+				</span>
+				</div>
+				<div class="col1">
+					<label>Jobs From</label>
+				<span>
+					<div id="win-xp8">
+						<select class="dd-new" id="search_type" name="search_type">
+							<option value="">All web sites</option>
+							<option value="jobsite">Job boards only</option>
+							<option value="employer">Employer web sites only</option>
+						</select>
+					</div>
+				</span>
+				</div>
+				<div class="col1">
+					<label>Location</label>
+				<span>
+					<div id="win-xp8">
+						<select class="dd-new" name="radius" id="radius">
+						<option value="0">only in</option>
+						<option value="5">within 5 kilometers of</option>
+						<option value="10">within 10 kilometers of</option>
+						<option value="15">within 15 kilometers of</option>
+						<option value="25">within 25 kilometers of</option>
+						<option value="50">within 50 kilometers of</option>
+						<option value="100" selected>within 100 kilometers of</option>
+						</select>
+
+					</div>
+				</span>
+				</div>
+				<div class="col1">
+
+					<label>Place</label>
+				<span>
+					<input type="text" value="" placeholder="New york, United states" maxlength="250" size="28" name="l" name="place" id="place">
+				</span>
+				</div>
+				<div class="col1">
+					<label>Age - Jobs published</label>
+				<span>
+					<div id="win-xp8">
+						<select class="dd-new" name="fromage" id="fromage">
+							<option value="any">anytime</option>
+                            <option value="15">within 15 days</option>
+                            <option value="7">within 7 days</option>
+                            <option value="3">within 3 days</option>
+                            <option value="1">since yesterday</option>
+						    <option value="last">since my last visit</option>
+						</select>
+					</div>
+				</span>
+				</div>
+				<!-- Col1 Starts -->
+				<div class="col1">
+					<label>&nbsp;</label> <span style="  display: inline-block;width: 61px;float: right;text-align: center; ">
+						<input name="" type="button" alt="Search" title="Search" class="btn-search fr" value="Search" id = "advanced_search"/></span>
+				</div>
+				<!-- Col1 Ends -->
+			</form>
+
+		</div>
+	</div>
+
+	<div class="links-viewall" style="margin-bottom: 0; border-bottom: none;">
+		<!-- Job list holder -->
+		<div id = "job_list_holder">
+			<!--- Append indeed jobs here using ajax ------------>
+			<div id="search_result_header_bar" class="search_result_bar">
+				<div style="margin: 3px 0 5px !important;">
+					<h3>Search Result</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Links View Starts -->
+<input type = hidden value = "0" name = "offsett" id = "offsett"/>
+<!-- Two values for search form : simple, advanced  -->
+<input type = hidden value = "" name = "search_form" id = "search_form"/>
+<!-- Content Right Right Ends -->
+

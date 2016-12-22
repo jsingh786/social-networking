@@ -1,0 +1,37 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Monster-Jobs' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/monster_jobs.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+
+?>
+
+<div class="content-right-right">
+
+<!-- Bookmarks Header Starts -->
+	<div style="padding-bottom:10px !important;" class="job-hdr">
+     	<div class="job-hdr-top">
+        	<h2>Monster Jobs UK</h2>
+		</div>
+	</div>
+<!-- Bookmarks Header Ends -->
+<div id="jobslisting">
+<div id="MonsterJobSearchResultPlaceHoldervH0AAA_e_e" class="xmns_distroph"></div>
+<script type="text/javascript">
+(function() {
+  var oScript = document.createElement('script');
+  oScript.type = 'text/javascript';
+  oScript.async = true;
+  oScript.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'publisher.monster.com/Services/WidgetHandler.ashx?WidgetID=EAAQFNEL0adpmvLdJdkX1w6.HrtYZN4tYPCbUiGNjWNTrwY-&Verb=Initialize';
+  var oParent = document.getElementsByTagName('script')[0];
+  oParent.parentNode.insertBefore(oScript, oParent);
+})();
+</script>
+<a id="monsterBrowseLinkvH0AAA_e_e" target="_blank" class="monsterBrowseLink fnt4" href="http://jobsearch.monster.co.uk/jobs/">View More Job Search Results</a>
+</div>

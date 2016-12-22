@@ -1,0 +1,24 @@
+span#email_validate_image {
+    display: inline-block;
+    left: 63px;
+    position: absolute;
+    top: 100px;
+}
+
+.input-prepend .add-on{
+    margin-right: -5px !important;
+}
+
+div#success_error_msg
+{
+	color: #b94a48;
+    margin-left: 10px;
+}
+
+div.send_email.button-outer
+{
+	margin: 15px 0 25px;
+}
+div.login-input {
+    position: relative;
+}

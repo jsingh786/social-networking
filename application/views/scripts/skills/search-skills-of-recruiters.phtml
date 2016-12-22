@@ -1,0 +1,156 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Search Recruiters following skills' );
+// Javascript
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/skills_search.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/skills_search.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/skills_menu.phtml' );
+?>
+
+ <!-- Content Right Left Ends -->
+        
+        <!-- Content Right Right Starts -->
+       	  <div class="content-right-right">
+        	<div class="job-application-outer">
+        	 
+        	  <div class="job-application-hdr1">
+       	        <div class="job-application-hdr1lt">
+           	        <h4>Search Skills</h4>
+           	      </div>
+        	  </div>
+              
+       
+              <div class=" search-skills">
+                <form action="/<?php echo PROJECT_NAME;?>skills/search-skills-of-recruiters" method="get">
+					<input type="text" name="search_str" value="<?php echo $this->search_str; ?>" placeholder="Enter Skill"> 
+					<input type="submit" value="" name="search_btn" class="search-skills-icon">
+				</form>
+  	 
+              </div>
+              
+              
+            </div>
+            <div class="white-outer2">
+            <div class="skill-outer">
+            <h4>Search Result</h4>
+            	<!-- Col3 Starts -->
+<?php 
+	if( $this->paginator )
+	{	
+		if( $this->paginator->getTotalItemCount() )
+		{		
+?>	
+		<div class="bsr-box">
+		<div class="bookmark-search-right">	
+		<div class="col3">
+		<div class="fl text-grey3">
+		<?php 
+				$query_str = "";
+				foreach( $this->prms as $key=>$p )
+				{
+					if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+					{
+						continue;
+					}
+					$query_str .= $key."=".$p."&amp;";
+				}
+		?>
+				VIEWS 
+				<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."skills/search-skills-of-recruiters?".$query_str."list_len=20";?>">
+					<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/search-skills-of-recruiters?".$query_str."list_len=50";?>">
+					<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/search-skills-of-recruiters?".$query_str."list_len=100";?>">
+					<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/search-skills-of-recruiters?".$query_str."list_len=all";?>">
+					<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+				</a>
+			</div>
+			<div class="fr  text-grey3">
+		<?php
+				echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+		?>							
+		</div>
+		</div>
+		</div>
+		</div>
+<?php
+			}
+		}
+?>
+
+  <?php 
+  if($this->paginator)
+  {
+  			if( $this->paginator->getTotalItemCount() )
+			 {	 
+			 	
+				?>
+				
+		<div class="skill-outer-data">
+				<?php 
+				 foreach ( $this->paginator->getCurrentItems() as $currentItem )
+				{
+					
+					$ilook_user_id = $currentItem->getIlook_user_id();
+					$skill = $currentItem->getSkill();
+					$first_letter_of_skill = $skill[0]; 
+					$skill_ref_id = $currentItem->getId();
+					$current_user_id = Auth_UserAdapter::getIdentity()->getId();
+					
+					$checkIfSkillIsFollowed = \Extended\user_skills::checkIfSkillIsFollowed( $skill_ref_id, $current_user_id );
+	
+				?>
+					<div class="skill-outer-col1">
+					<div class="skill-outer-col1-lt"><img src="<?php echo Helper_common::getImageAccToAlphabet($first_letter_of_skill);?>" width="60" height="60" alt=""/></div>
+					<div class="skill-outer-col1-mid">
+					
+					<h4><a class="" id="" href="/<?php echo PROJECT_NAME; ?>skills/skill-recruiters/skillId/<?php echo $skill_ref_id; ?>"><?php echo $skill; ?></a></h4>
+					</div>
+					
+					<div class="skill-outer-col1-rt">
+					<?php if($checkIfSkillIsFollowed) {?>
+					<input value="Following" class="btn-green following" type="button" />
+					<?php } else {?>
+					<input value="Follow" class="btn-green skill_<?php echo $skill_ref_id; ?>" type="button" onclick="followSomeSkill(<?php echo  $skill_ref_id;?>, <?php echo $current_user_id;?>, this );"/>
+					<?php } ?>
+					</div>
+					
+					</div>
+				<?php 
+				} 
+		?>
+		</div>
+		
+			<?php 	
+			 }
+			
+			
+  }
+  else if (!empty($_REQUEST))
+  {
+  	?>
+  
+  	<div class="no-rec-msg text-grey3">
+  	
+  	<?php echo "No records found"; ?>
+  	</div>
+  
+  	<?php
+  }
+  
+?>	
+            
+           
+             </div>   
+    
+    
+    </div>
+
+		
+	

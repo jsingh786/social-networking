@@ -1,0 +1,31 @@
+<div id="who_liked_listing_popup" class = "popup transparent_border" style = "display: none;">
+	<div class="forgot-password-outer_1" style="width: 395px;">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1">
+			<div id="forgot-password" class="left ">
+			
+<?php 
+			$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+			if($params['action'] == 'photos')
+			{
+				echo '<h2>People who Ok this Album</h2>';
+			}
+			else 
+			{
+				echo '<h2>People who Ok this</h2>';
+			}
+?>
+				
+			<img class="close_bpopup"
+			src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+			title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		<!-- Forgot Password Header -->
+			<!-- Forgot Password Content -->
+			<div id = "list_of_who_liked" class="forgot-password-content_1">
+			</div>
+			<!-- Forgot Password Content -->
+	</div>
+</div>

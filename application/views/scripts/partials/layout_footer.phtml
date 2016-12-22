@@ -1,0 +1,47 @@
+<?php
+if( !Auth_UserAdapter::hasIdentity() )
+{
+	?>
+	<div class="footer">
+		<div class="footer-left">
+			<img src="<?php echo IMAGE_PATH; ?>/footerLogo.png" alt="iLook logo" title="iLook" />
+		</div>
+		<div class="footer-mid">
+		</div>
+		<div class="footer-right">
+			<div class="footer-social-icon-outer">
+				<a target="_blank" href = "https://www.facebook.com/ilookpage" ><div class="footer-social-fb"></div></a>
+				<a target="_blank" href = "https://twitter.com/ilookpage" ><div class="footer-social-twitter"></div></a>
+				<a target="_blank" href = "https://plus.google.com/u/0/103955795716201186526/about" ><div class="footer-social-gplus"></div></a>
+				<a target="_blank" href = "https://www.youtube.com/channel/UC3LYCnbzOHxnIw2rqIdPNOg" ><div class="footer-social-ytube"></div></a>
+				<a href = "https://play.google.com/store/apps/details?id=com.ilookapp.android" ><div class="footer-social-gplay"></div></a>
+			</div>
+		</div>
+		<div class="footer-text">
+		</div>
+	</div>
+	<?php
+}
+?>
+<div class="footer-links text-purple">
+	<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/about-us';?>">About Us</a> &nbsp;|&nbsp;
+	<a href="javascript:;">Advertisements</a> &nbsp; |&nbsp;
+	<a href="javascript:;">Send Feedback</a> &nbsp; |&nbsp;
+	<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/terms';?>">Terms</a> &nbsp; |&nbsp;
+	<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/privacy-policy';?>">Privacy Policy</a> &nbsp; | &nbsp;
+	<?php
+	if( Auth_UserAdapter::hasIdentity() )
+	{
+		?>
+		<a href="javascript:void(0)" onclick = "openEnquiryForm('<?php echo Auth_UserAdapter::getIdentity()->getEmail() ?>');" class = "open_enquiry_form">Enquiry</a> &nbsp; | &nbsp;
+	<?php		}
+	else
+	{
+		?>
+		<a href="javascript:void(0)" onclick = "openEnquiryForm();" class = "open_enquiry_form">Enquiry</a> &nbsp; | &nbsp;
+		<?php
+	}
+	?>
+
+	<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/help';?>">Help</a>
+</div>			

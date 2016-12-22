@@ -1,0 +1,276 @@
+.content {clear: both; display: table; position: relative; table-layout: fixed; float:none !important;} 
+.content-left{display:table-cell; float:none !important;}
+.content-right{display:table-cell; vertical-align:top; float:none !important; width:100% !important; margin:0 !important;}
+
+.bot-link-content {
+    width: 97.9% !important; padding:10px !important; float:none !important; display:table;
+}
+.bot-link-content-data-left{padding:0 !important width:120px !important;}
+.bot-link-content-data-right{width:89% !important;}
+.bot-link-content-data-right .col1{width:100% !important;}
+div#maximised_menu{ display:table-cell ; float:none !important;}
+.bot-link-content-data-left {padding: 130px 0 !important; text-align: center !important; width: 80px !important;}
+.content-left-closed{ float:none !important;  display: table-cell;}
+.bot-link-content-data-right .col1 .hdr{float:none !important;font-size:20px !important; font-weight:bold; margin-bottom:5px !important;}
+.bot-link-content-data-right p{ font-size:13px; margin:0 0 10px 0; color: #626262;}
+.bot-link-content-data-right .col1 p{ font-weight:normal;}
+.bot-link-content-data-right a{ color:#6C518F;}
+.sub-p{ padding-left:23px !important; box-sizing:border-box;}
+
+/* HELP SECTION */
+.help-header {
+    float: left;
+    margin: 0 0 20px;
+    width: 100%;
+}
+.help-content {
+    background: #fff none repeat scroll 0 0;
+    float: left;
+    margin: 0;
+    padding: 2%;
+    width: 96%;
+}
+.help-content h2 {
+    border-bottom: 1px solid #cecece;
+    font-size: 32px;
+    padding: 15px 0 10px;
+    text-align: center;
+    width: 100%;
+}
+.help-content h3 {
+    border-bottom: 1px solid #ddd;
+    color: #6c518f;
+    font-family: arial;
+    font-size: 20px !important;
+    font-weight: bold;
+    margin: 35px 0 10px !important;
+    padding-bottom: 5px;
+}
+.help-content h5 {
+    border-bottom: 1px solid #ddd;
+    color: #6c518f;
+    font-family: arial;
+    font-size: 18px !important;
+    font-weight: bold;
+    margin: 20px 0 10px !important;
+}
+.help-content h4 {
+    color: #6c518f;
+    font-family: arial;
+    font-size: 14px !important;
+    font-weight: bold;
+    margin: 25px 0 2px !important;
+}
+.help-content p {
+    color: #626262;
+    font-size: 13px !important;
+    font-weight: normal;
+    line-height: 18px;
+    margin-bottom: 5px !important;
+}
+.help-data {
+    background: #fff none repeat scroll 0 0;
+    float: left;
+    margin: 0;
+    padding: 6%;
+    width: 88%;
+}
+.help-data ul {
+    float: left;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+.help-data ul li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0 60px 30px 0;
+    text-align: center;
+    width: 200px;
+}
+.help-data ul li a {
+    color: #8e8d8d;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 140px 0 20px;
+    text-decoration: none;
+}
+.help-data ul li a:hover {
+    color: #fff;
+}
+.help-data ul li a.help-icon1 {
+    background: #f2f2f2 url("../../images/help-icon1.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    width: 100%;
+}
+.help-data ul li a.help-icon1:hover {
+    background: #422b64 url("../../images/help-icon1-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon2 {
+    background: #f2f2f2 url("../../images/help-icon2.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.help-data ul li a.help-icon2:hover {
+    background: #422b64 url("../../images/help-icon2-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon3 {
+    background: #f2f2f2 url("../../images/help-icon3.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.help-data ul li a.help-icon3:hover {
+    background: #422b64 url("../../images/help-icon3-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon4 {
+    background: #f2f2f2 url("../../images/help-icon4.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.help-data ul li a.help-icon4:hover {
+    background: #422b64 url("../../images/help-icon4-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon5 {
+    background: #f2f2f2 url("../../images/help-icon5.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.help-data ul li a.help-icon5:hover {
+    background: #422b64 url("../../images/help-icon5-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon6 {
+    background: #f2f2f2 url("../../images/help-icon6.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    width: 100%;
+}
+.help-data ul li a.help-icon6:hover {
+    background: #422b64 url("../../images/help-icon6-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon7 {
+    background: #f2f2f2 url("../../images/help-icon7.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    width: 100%;
+}
+.help-data ul li a.help-icon7:hover {
+    background: #422b64 url("../../images/help-icon7-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon8 {
+    background: #f2f2f2 url("../../images/help-icon8.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    width: 100%;
+}
+.help-data ul li a.help-icon8:hover {
+    background: #422b64 url("../../images/help-icon8-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li a.help-icon9 {
+    background: #f2f2f2 url("../../images/help-icon9.png") no-repeat scroll center 55px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    float: left;
+    width: 100%;
+}
+.help-data ul li a.help-icon9:hover {
+    background: #422b64 url("../../images/help-icon9-hover.png") no-repeat scroll center 55px;
+    border: 1px solid #422b64;
+}
+.help-data ul li:nth-child(3n) {
+    margin-right: 0;
+}
+.breadcrumb {
+    float: left;
+    margin: 0 0 15px;
+    width: 100%;
+}
+.breadcrumb ul {
+    margin: 0;
+    padding: 0;
+}
+.breadcrumb ul li {
+    float: left;
+    font-size: 13px;
+    list-style-type: none;
+    margin: 0 5px 0 0;
+}
+.breadcrumb ul li a {
+    color: #888;
+    text-decoration: none;
+}
+.breadcrumb ul li:last-child {
+    color: #6c518f;
+}
+.help-content p.subhdr {
+    font-size: 13px;
+    padding: 10px 0 0;
+}
+.sub-p {
+    box-sizing: border-box;
+    margin: 10px 0 !important;
+    padding-left: 23px !important;
+}
+.sub-outer {
+    float: left;
+    margin: 10px 0 20px;
+    padding-left: 23px;
+    width: 100%;
+}
+.sub-outer p {
+    line-height: 22px;
+}
+.search ul li {
+    color: #626262;
+    line-height: 25px;
+}
+
+/* HELP SECTION END*/
+ul.col1-ul
+{
+    color: #626262;
+    margin: 0 0 20px;
+    padding: 0 0 0 15px;
+    width: 90%;
+}
+.col1-ul > li {
+    margin-top: 40px;
+}
+
+.bot-link-content-data-right .col1 .hdr {
+
+	margin: 40px 0 7px !important;
+}
+
+.bot-link-content-data-right p {
+    width: 95%;
+}
+
+.bot-link-content-data-right .col1 p  {
+    width: 95% !important;
+}

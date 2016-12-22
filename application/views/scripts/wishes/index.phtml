@@ -1,0 +1,249 @@
+<?php
+$this->headTitle()->prepend('Wishes');
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/wishes.js" );
+// $this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/photo_feed.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/wishes.css" );
+// $this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_feed.css" );
+
+
+//Partials
+echo $this->partial ( 'partials/who_liked_popup.phtml' );
+
+?>
+<style>
+/**** laod more div *****/
+
+div.see_more_wishes
+{
+    margin: 2px 0 0;
+    text-align: center;
+    width: 92% !important;
+	padding: 6px 4%;
+ 	border: 1px solid #6c518f;
+}
+a.see_more_wishes_text
+{
+	margin: 0;
+    text-align: center !important;
+	float:none;
+}
+p.see_more_wishes_p
+{
+	margin: 5px 0 0;
+}
+/**** laod more div CSS*****/
+
+
+</style>
+<!-- Content Starts -->
+<div class="bot-link-content">
+	<div class="bot-link-content-data">
+		<div class="job-hdr-top">
+			<h2>Your Wishes</h2>
+		</div>
+		<div class="main_outer_div" >
+		<input type="hidden" id="my_user_id" value="<?php echo Auth_UserAdapter::getIdentity()->getId();?>"> 
+		<input type="hidden" id="my_small_image" value="<?php echo Helper_common::getUserProfessionalPhoto( Auth_UserAdapter::getIdentity()->getId(), 3 ); ?>">
+				<!--  Wish Section -->
+<?php
+			if( $this->wishes_collec )
+			{
+?>	
+			<div class="wish-outer">
+<?php 
+					foreach ( $this->wishes_collec as $wishes )
+					{
+?>
+						<div class = "wish-content-outer">
+<?php	
+							switch ( \Extended\wishes::getDiscriminatorValue($wishes) )
+							{
+								//new_link_wishes
+								case 1:
+	?>
+								<div class="no-pointer wish-data icon-add-people" id="<?php echo $wishes->getId(); ?>">
+									<div class="wish-data-lt">
+										<img alt="" width="40" height="40"
+											src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+									</div>
+									<div class="wish-data-rt">
+										<div class="wish-data-rt-text">
+											<a class="text-purple2-link wish_about_user_name" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.$wishes->getIlookUser()->getUsername();?>"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+											has a new <a style="cursor:default" class="text-purple2-link" href="javascript:;">Link</a>
+										</div>
+										<div class="wish-data-rt-img">
+											<div class="icon-add-people"></div>
+											<!-- img alt="" src="<?php echo IMAGE_PATH; ?>/icon-add-people.png"-->
+										</div>
+										<div class="wish-data-rt2-outer" style="">
+											<div class="wish-data-rt2">
+												<div class="wish-data-rt2-lt">
+<?php
+						                			$new_link_obj = \Extended\ilook_user::getRowObject( $wishes->getLink_ilook_user_id(), TRUE );
+?>
+													<a class="new_link_user" href="<?php echo  PROJECT_URL.'/'.PROJECT_NAME.$new_link_obj->getUsername(); ?>">
+						                    		<h4 style="color:#6C518F !important">
+<?php												
+														echo $new_link_obj->getFirstname()." ".$new_link_obj->getLastname(); 
+?>
+													</h4>
+													</a>
+<?php 
+						                        	echo Helper_common::getUserProfessionalInfo(  $new_link_obj->getId() ,true );
+?>
+
+						                    	</div>
+												<div class="wish-data-rt2-rt">
+													<img width="40" height="40" alt="" src="<?php echo Helper_common::getUserProfessionalPhoto( $new_link_obj->getId(), 3 );?>">
+												</div>
+											</div>
+										</div>
+									</div>
+								<div class="wish-bot-text"></div>
+								</div>
+<?php
+								break;
+			
+								//new_job_wishes
+								case 2:
+?>
+							 <!-- Second option -->
+							<div class="wish-data icon-bag" id="<?php echo $wishes->getId(); ?>" onclick = "populateWishPopup( <?php echo $wishes->getId(); ?> )">
+								<div class="wish-data-lt">
+									<img width="40" height="40" alt=""
+										src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+								</div>
+								<div class="wish-data-rt">
+									<div class="wish-data-rt-text">
+										<a class="text-purple2-link wish_about_user_name" href="javascript:;"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+										has a new <a class="text-purple2-link" href="javascript:;">Job</a>
+									</div>
+									<div class="wish-data-rt-img">
+										<!-- <div class="icon-bag"></div> -->
+										<!--  img alt="" src="<?php echo IMAGE_PATH; ?>/icon-bag.png"-->
+									</div>
+									<div class="wish-bot-text"><?php echo $wishes->getUnderlying_text(); ?></div>
+								</div>
+								
+							</div>
+							<!-- Second option -->
+<?php			
+							break;
+			
+							//job_anniversary_wishes
+							case 3:
+?>
+	        				<!-- Third option -->
+							<div class="wish-data icon-anniversary" id="<?php echo $wishes->getId(); ?>" onclick = "populateWishPopup( <?php echo $wishes->getId(); ?> )">
+								<div class="wish-data-lt">
+									<img width="40" height="40" alt=""
+										src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+								</div>
+								<div class="wish-data-rt">
+
+									<div class="wish-data-rt-text">
+										<a class="text-purple2-link wish_about_user_name" href="javascript:;"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+										having a work Anniversary
+									</div>
+									<div class="wish-data-rt-img">
+										<div class="icon-anniversary"></div>
+									</div>
+									<div class="wish-bot-text"><?php echo $wishes->getUnderlying_text(); ?>
+									</div>
+								</div>
+							</div>
+							<!-- Third option -->
+			
+<?php
+							break;
+			
+							//birthday_wishes
+							case 5:
+?>
+       					 	<!-- Fourth option -->
+							<div class="wish-data icon-bday" id="<?php echo $wishes->getId(); ?>" onclick = "populateWishPopup( <?php echo $wishes->getId(); ?> )">
+								<div class="wish-data-lt">
+									<img width="40" height="40" alt=""
+									src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+								</div>
+								<div class="wish-data-rt">
+									<div class="wish-data-rt-text">
+										<a class="text-purple2-link" href="javascript:;"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+										celebrating Birthday Today
+									</div>
+									<div class="wish-data-rt-img">
+										<div class="icon-bday"></div>
+									</div>
+									<div class="wish-bot-text"><?php echo $wishes->getUnderlying_text(); ?></div>
+								</div>
+							</div>
+							<!-- Fourth option -->
+<?php
+							break;
+			
+							default:
+							;
+							break;
+							}
+		
+
+?>
+
+						<!------------- Wish Popup Starts ------------>
+						<!-------------------------------------------->
+							<div class="wish-pop-outer" id = "<?php echo $wishes->getId(); ?>">
+								<div class="wish-pop-arrow">
+									<img width="36" height="22" src="<?php echo IMAGE_PATH; ?>/arrow-purple2.png">
+								</div>
+							
+								<div class="wish-pop-bot" id = "wish_<?php echo $wishes->getId();?>" >
+								</div>
+							</div>
+						<!-------------------------------------------->
+						<!------------- Wish Popup Ends -------------->
+						<!-------------------------------------------->
+
+						</div>
+<?php		
+		
+		
+					}	
+?>	
+  					</div>
+  	
+<?php 
+					if( $this->is_more_wishes)
+					{
+						echo'<div class="see_more_wishes job-content view_more">';
+						echo'<p class="see_more_wishes_p" >';
+						echo'<a onclick="loadMoreWishes(this)" href="javascript:;" class="see_more_wishes_text text-dark-purple">';
+						echo'Show More';
+						echo'</a>';
+						echo'</p>';
+						echo'</div>';
+					}
+					if($this->is_more_wishes )
+					{
+						echo '<input type="hidden" id = "wishes_offset" value="10"/>';
+						echo '<input type="hidden" id="wishes_recordLimit" value="10"/>';
+					}
+
+				}
+				else
+				{
+					echo '<div class="no_messages">';
+					echo '<div class="no_messages-img"><img src="'.PUBLIC_PATH.'/images/notes-folder-empty.png"></div>';
+					echo '<div class="no_messages-data">No Events For Today</div>';
+					echo '</div>';
+				}
+?>		
+			</div>
+		</div>
+	</div>
+<!-- Content Ends -->
+<!-- Dialog Box -->
+<div id="dialog_delete_comment" title="Delete Comment">
+	<p>
+		Want to delete this comment?
+	</p>
+</div>

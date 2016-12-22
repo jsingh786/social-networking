@@ -1,0 +1,158 @@
+<!-- Including JS -->
+<?php
+$this->headTitle()->prepend('Privacy settings');
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/account_settings_privacy.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/account_settings_privacy.css" );
+
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/tokenInput/token-input-facebook.css" );
+
+//	Partials
+echo $this->render("partials/add_contacts_popup.phtml");
+echo $this->render("partials/settings_menu.phtml");
+$privacy_settings = $this->privacy_settings;
+
+$personalinfo = $this->personalInfo; 
+
+if( Auth_UserAdapter::getIdentity()->getId() != $this->userId )
+{	
+?>
+<style>
+	.content-right-right { 
+	margin: 0 !important;  
+	}
+	input.btn-dark-purple
+	{
+		margin-top:2px !important;
+	}
+</style> 
+<?php
+}
+?>
+
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Jobs Header Starts -->
+	<div class="job-hdr">
+		<div class="job-hdr-top">
+			<h2>PRIVACY SETTINGS</h2>
+		</div>
+	</div>
+	<!-- Jobs Header Ends -->
+	<!-- Settings Content Starts -->
+ 	<div style="" class="settings-content">
+	
+	
+		<!-- Settings col1 Outer Starts -->
+		<div class="settings-content-col1-outer">
+			<div class="settings-content-col1">
+				<h3 class="sub-heading-arial-narrow">Who can view my Album</h3>
+				<div class="setting-view-album-row">
+					
+						<select name="my-dropdown" id="dropdown_albums" class="sen-option">
+							<option value="0">Select</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_PUBLIC; ?>">Public</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_LINKS; ?>">Links</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_LINKS_OF_LINKS; ?>">Links of links</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_CUSTOM; ?>">Custom</option>
+						</select>
+				
+				</div>
+				<div class="settings-content-col1-bot">
+				
+				</div>
+			</div>
+		</div>
+		<!-- Settings col1 Outer Endss -->
+			<!-- Settings col1 Outer Starts -->
+ 		<div class="settings-content-col1-outer">
+			<div class="settings-content-col1">
+				<h3 class="sub-heading-arial-narrow" >Who viewed your profile</h3>
+			
+				<div class="setting-view-profile-row">
+                     <select name="view_profile" id="dropdown_view_profile" class="sen-option">
+							
+<?php                    if($privacy_settings ==false) 
+						 { 
+?>
+			             <option value="<?php echo \Extended\privacy_settings::SHOW_PROFILE;?>" <?php if($privacy_settings==false){ echo "selected";}?>>Show my profile when i visit others profile</option>
+		                 <option value="<?php echo \Extended\privacy_settings::DONT_SHOW_PROFILE;?>"<?php if($privacy_settings==true){ echo "selected";}?>>Don&#39;t Show my profile when i visit others profile</option>
+<?php 
+						 } 
+						 else 
+						 {
+?>
+			             <option value="<?php echo \Extended\privacy_settings::SHOW_PROFILE;?>" <?php if($privacy_settings[0]['who_viewed_profile']==true){ echo "selected";}?>>Show my profile when i visit others profile</option>
+		                 <option value="<?php echo \Extended\privacy_settings::DONT_SHOW_PROFILE;?>"<?php if($privacy_settings[0]['who_viewed_profile']==false){ echo "selected";}?>>Don&#39;t Show my profile when i visit others profile</option>
+<?php 
+						 }
+?>	
+		
+					</select>
+						
+					</div>
+				
+				
+				
+			</div>
+		</div> 
+		<!-- Settings col1 Outer Endss -->
+		<div class="save_changes">
+		<input name="" type="button" class="btn-dark-purple" id="privacy_settings_save_changes" value="Save" alt="Save Changes" title="Save Changes" />
+		</div>
+		<!-- Slide Down 2 Starts -->
+		<div class="slide-down">
+			<a class="selected" href="javascript:void(0)">
+				<h3 class="sub-heading-arial-narrow" id = "blocked_users_header">Block users
+					<img alt="v" src="<?php echo IMAGE_PATH; ?>/arrow-up-blue.png" id = "block_users_dropdown_arrow"/>
+				</h3>
+			</a>
+		</div>
+		
+		<!-- Slide Down 2 Ends -->
+		<!-- Settings label Span Outer Starts -->
+		<div id = "blocked_users_div" class="settings-labelspan-outer">
+			
+			<label class="text-black" >Block user</label>
+			<span>
+				<input id = "to_be_blocked" class="text-black" name="" style="width: 70%;" type="text" value="" placeholder = "Add name or email"/>
+				<input type="button" id = "block_user_btn" class="block_user btn-dark-purple" value="Block" />
+				<a id="mail_contacts_popup" href="javascript:;">
+					<img title="My Links" src="<?php echo IMAGE_PATH; ?>/search-user-icon.png">
+				</a>
+			</span>
+			<div id = "to_be_blocked_ids_holder">
+			</div>
+			<div id = "blocked_users">
+<?php 
+			if( $this->blocked_users )
+			{
+				foreach ( $this->blocked_users as $blocked_user )
+				{
+					echo '<label class="text-black"><span class = "clickable" id = "'.$blocked_user['id'].'">Unblock</span></label>'; 
+					echo '<span id = "'.$blocked_user['id'].'" class="text-black" style="text-transform:none !important;line-height: 20px; !important">'.$blocked_user['name'].' - '.$blocked_user['email'].'</span>';
+				}
+			}
+?>			
+				
+			</div>
+		</div>
+		<!-- Settings label Span Outer Endss -->
+	</div>
+	<!-- Settings Content Ends -->
+</div>
+<!-- Content Right Right Ends -->
+<!-- alert box -->
+<!-- div id="dialog_confirm" title="Select Privacy">
+  <p>
+    <span class="ui-icon ui-icon-info" style="float: left; margin: 0 7px 50px 0;"></span>
+    Please select option for privacy settings.
+  </p>
+</div-->

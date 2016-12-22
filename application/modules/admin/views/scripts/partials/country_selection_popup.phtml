@@ -1,0 +1,178 @@
+<script type = "text/javascript">
+$(document).ready(function() 
+{
+			// Checking all checkboxes when click on master check box.
+			$("input.master_select_country_cb").click(function(){
+				
+				if( $('input.master_select_country_cb:checked').length > 0 )
+				{
+					$("input.select_country_cb").attr("checked", "checked");
+				}
+				else
+				{
+					$("input.select_country_cb").removeAttr("checked");
+				}
+			});	
+			
+			//Dialog box to show list of users
+			//Added by hkaur5
+		    $( "div#dialog_country_list" ).dialog({
+			      modal: false,
+			      autoOpen: false,
+			      draggable:true,
+			      width: 370,
+			      show: {
+			    	  effect: "fade"
+			    	  },
+				  hide: {
+					  effect: "fade"
+					  },
+			      buttons: {
+			    		 Add: {
+			    			 	click: function() {
+			    			 		$( this ).dialog( "close" );
+			    			  },
+			    			  id : 'add_country',
+			    			  text : 'Add'
+			    		 },
+			 	    	 Cancel: {
+			 	                 click: function () {
+			 	                     $(this).dialog("close");
+			 	                 },
+			 	                 class: 'only_text',
+			 	                 text : 'Cancel'
+			 	             }
+			      			}
+		    });
+		    
+		    //On filter text change event binding.
+		    $('input#search_countries').keyup(function() 
+		    {
+		    	//filter keyword
+		    	var keyword = $(this).val();
+		    	
+		    	//If filter keyword changes.
+		    	if( $(this).val() != jQuery.data(this, "lastvalue") )
+		    	{
+		    	    if(keyword != "")
+		    	    {
+		    	    	//Hide all countries.
+			    	    $('div.searched_countries table#country_list tr').hide();
+			    	    if($('div.searched_countries tr:icontains('+keyword+')'))
+			    	    {
+				    	    $($('div.searched_countries tr:icontains('+keyword+')')).each(function()
+				    	    {
+				    	    	//Show matched countries
+				    			$(this).show();
+				    	   
+				    	    });
+			    	    }
+			    	    else
+		    	    	{
+			    	    	//When no user matches keyword.
+			    	    	$('div.searched_countries').html('No matching results found');
+		    	    	}
+		    	    }
+		    	    // If no filter keyword show all users.
+		    	    else
+			    	{
+		    	    	$('div.searched_countries table#country_list tr').show();
+			    	}
+		    	    
+		    	    // To check last value of input filter.
+		    		jQuery.data(this, "lastvalue", keyword);
+		    	}
+		    });
+			
+		});
+
+		/**
+		 * Call function to fetch users list and
+		 * opens user list dialog box.
+		 * @author hkaur5
+		 */
+		function openCountryList()
+		{
+			 $('input#search_users').val('');
+			 
+			 //Call function to fetch all users
+			 listCountries();
+			 $( "div#dialog_country_list" ).dialog( "open" );
+		}
+
+		/**
+		 * Get all Active users in ilook
+		 * and dispaly them in table.
+		 * @author hkaur5
+		 * @param filter_text
+		 */
+		function listCountries( filter_text )
+		{
+			image_name = typeof filter_text !== 'undefined' ? filter_text : "";
+			$('div.searched_countries table#country_list').html('<span style = "padding: 5px; display: inline-block;">Loading...</span>');
+			jQuery.ajax({
+		        url: "/" + PROJECT_NAME + "admin/manage-users/get-country-list",
+		        type: "POST",
+		        dataType: "json",
+		        data: {
+		              },
+		        timeout: 50000,
+		        success: function(jsonData) {
+		        	var tbody = '';
+		        	if( jsonData != 0 )
+		        	{
+		        		for( i in jsonData )
+			            {
+			    			tbody += '<tr role="row" class="even">';
+				        	tbody += '<td><input type = "checkbox" name = "select_country_cb[]" class = "select_country_cb" onclick = "" value = "'+jsonData[i].id+'"></td>';
+			    			tbody += '<td id="'+jsonData[i].id+'">'+jsonData[i].name+'</td>';
+			    			tbody += '</tr>';
+			            }
+		        		$('div.searched_countries table#country_list').html(tbody);
+
+		        		//Selecting previous or already selected values.
+		        		$.each( $("input#selected_country_ids").val().split(','), function(index, value) {
+							$("table#country_list input.select_country_cb[value='"+value+"']").prop('checked', true);
+		        		});
+		        	}
+		        	else if(jsonData == 0)
+		    		{
+		        		$('div.searched_countries table#country_list').html('<span style = "padding: 5px; display: inline-block;">No countries found.</span>');
+		    		}
+		        }
+			});
+		}
+</script>
+<style>
+input#search_countries
+{
+	float:right;
+}
+label#master_select_checkbox_text
+{
+	display: inline-block;
+    margin: 4px 0 0;
+    padding: 3px;
+}
+table#country_list td 
+{
+	padding:3px;
+}
+input.master_select_country_cb
+{
+	margin: 10px 0 0 4px;
+    padding: 0;
+}
+</style>
+<div style="display:none;" id="dialog_country_list" title="countries">
+	<span>
+	<input type = "checkbox" name = "master_select_checkbox" class = "master_select_country_cb">
+	<label id="master_select_checkbox_text"> Select All</label>
+	</span>
+	<input type="text" value="" maxlength="60" placeholder="Filter countries" id="search_countries" name="search"> 
+	
+	
+	<div style="width: 341px;max-height:300px; min-height:100px;overflow-y:auto;border:2px solid #6C518F" class="searched_countries">
+	<table id="country_list"></table>
+	</div>
+</div>

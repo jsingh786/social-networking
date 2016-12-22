@@ -1,0 +1,345 @@
+<?php echo $this->doctype ();?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php
+$this->headLink()->headLink(array('rel' => 'icon', 'href' => PUBLIC_PATH.'/images/favicon.ico'), 'PREPEND');
+$this->headMeta()->setHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+
+$this->headTitle()->prepend('Profile');
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/home_search.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/home_search.css" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/registeration.js" );
+
+echo $this->headTitle();
+echo $this->headMeta();
+echo $this->headLink();
+echo $this->headScript();
+
+?>
+<!-- Wrapper Starts -->
+<div class="wrapper">
+	<!-- Content Starts -->
+	<div class="content">
+		<div class="common-div">
+			<div class="home-search-left">
+				<div class="top">
+					<img src="<?php echo IMAGE_PATH;?>/banner1.png" width="390"
+						height="267" />
+				</div>
+				<div class="mid">
+					<!-- Login Outer Starts -->
+					<form id="login" style="margin:0;" name="login" method="POST"
+						action="<?php echo PROJECT_URL.'/'.PROJECT_NAME?>authenticate/login">
+						<div class="login-outer2">
+							<!-- Login Top Starts -->
+							<div class="login-top2">
+								<h4>SIGN IN</h4>
+								<div class="textbox">
+									<input type="text" placeholder="Enter email" value=""
+										class="search-one-textbox" name="email">
+								</div>
+								<div class="textbox">
+									<input type="password" placeholder="Enter password" value=""
+										class="search-one-textbox" name="password">
+								</div>
+								<div class="common-div">
+									<div class="separator-div">
+										<input style="width: auto" type="checkbox" value="" name=""> <span
+											class="text-grey">Keep me Logged in</span>
+									</div>
+									<div class=".popup_box"></div>
+									<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME; ?>authenticate/forgot-password" id="forgot" class="forgot-password text-purple" style="text-decoration:none;">Forgot your password</a>
+								</div>
+
+							</div>
+							<!-- Login Top Ends -->
+						<div class="login-bot">
+							<div class="login-btn-new ">
+								<input name="login_submit" type="submit" alt="LOGIN" title="LOGIN"
+									value="LOGIN" />
+							</div>
+						</div>
+							
+							<div class="login-nav">
+								<ul>
+									<li class="none"><a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/privacy-policy';?>">PRIVACY POLICY</a></li>
+									<li><a href="/<?php echo PROJECT_NAME ?>page/cookies">COOKIES</a></li>
+									<li><a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/terms';?>">TERMS</a></li>
+									<li><a href="javascript:void(0)">HELP</a></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+					<!-- Login Outer Ends -->
+				</div>
+
+				<!-- Create Account Starts -->
+				<div class="create-account2">
+					<div class="tick-box2" id="tick-box-image">
+					</div>
+					<h3>Create Your Account</h3>
+					<form name="registeration_step1" id="registeration_step1" method="POST" action="/<?php echo PROJECT_NAME;?>registration">				
+					<label>First Name:</label> <span><input id="first_name" name="first_name" type="text" /></span>
+					<label>Last Name:</label> <span><input id="last_name" name="last_name" type="text" /></span>
+					<label>Email:</label> <span><input id="email" name="email" type="text" /></span> 
+					<label>Password:</label><span><input id="password" name="password" type="password" /></span>
+					<p>
+						By clicking Join Now, you agree to our <a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/terms';?>"
+							class="text-purple-link">Terms</a> and that you have read our <a
+							href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/privacy-policy';?>" class="text-purple-link">Data Use Policy</a>,
+						including our <a href="/<?php echo PROJECT_NAME ?>page/cookies" class="text-purple-link">Cookie
+							Use</a>.
+					</p>
+					<input type="hidden" name="created_from" value="ilook" id="created_from">
+<?php 
+					if(@$this->prms['id']){
+						$search_profile_id = $this->prms['id'];
+					}
+?>
+					<input type="hidden" name="search_profile_id" value="<?php echo @$search_profile_id; ?>" >		
+					<div style="float: right; margin-top: 10px;" class="join-now-right">
+						<input type="submit" value="JOIN NOW" title="Join Now"
+							alt="Join Now" name="signup_submit">
+					</div>
+					</form>
+				</div>
+				<!-- Create Account Ends -->
+
+			</div>
+
+			<!-- HOME SEARCH RIGHT STARTS -->
+			<div class="home-search-right">
+
+				<!-- Col1 Starts -->
+				<div class="col1">
+					<form method="GET"
+						action="/<?php echo PROJECT_NAME; ?>index/home-search"
+						id="home_search">
+						<h3 class="text-purple2">Search for someone by Name</h3>
+						<div class="namebox">
+							<input type="hidden" name="list_len" value="20" /> <input
+								type="hidden" name="country" value="" /> <input type="text"
+								id="search_by_fname" name="first_name" class="fl"
+								value="<?php echo @$this->prms['first_name']; ?>"
+								placeholder="First Name"> <input type="text"
+								id="search_by_lname" name="last_name"
+								value="<?php echo @$this->prms['last_name']; ?>" class="fl"
+								placeholder="Last Name" style="margin-left: 10px;" />
+						</div>
+						<div class="fr search-someone-btn">
+							<a id="home_search_btn" href="javascript:"> <strong>SEARCH</strong>
+								<img width="25" height="25" align="absmiddle" title="Search"
+								alt="Search"
+								src="<?php echo IMAGE_PATH; ?>/search-icon.png">
+							</a>
+						</div>
+					</form>
+				</div>
+				<!-- Col1 Ends -->
+				<!-- Link Request Header Starts -->
+				<div style="margin-left: 0px;" class="link-request-hdr">
+					<div class="fl">
+						<img src="<?php echo IMAGE_PATH; ?>/slide-left2.png" width="27"
+							height="27" align="absmiddle" /> <font><a class="text-white-link"
+							href="<?php echo Zend_Controller_Front::getInstance()->getRequest()->getServer('HTTP_REFERER');?>">Return to Result Page</a></font>
+					</div>
+
+					<div class="fr">
+						<h4>
+							<a class="text-white-link signup_or_login_first" href="javascript:;">View Profile</a>
+						</h4>
+					</div>
+				</div>
+				<!-- Link Request Header Ends -->
+				<!-- Invite Connect Starts -->
+				<div style="margin-left: 0px; margin-top: 2px;"
+					class="invite-connect-outer">
+					<div class="home-search-hdr">
+						<div class="col1">
+							<img src="<?php echo IMAGE_PATH; ?>/icon-download1.png"
+								width="21" height="27" />
+						</div>
+						<div class="col2">
+							<img src="<?php echo IMAGE_PATH; ?>/icon-connection-hover.png"
+								width="16" height="15" hspace="5" align="absmiddle" /> <a
+								class="text-purple-link signup_or_login_first" href="javascript:;">Invite to connect</a>
+						</div>
+						<div class="col3">
+							<img src="<?php echo IMAGE_PATH; ?>/mail-hover.png" width="16"
+								height="13" align="absmiddle" /><a class="text-purple-link signup_or_login_first"
+								href="javascript:;">Send Email</a>
+						</div>
+						<div class="col5">
+							<img src="<?php echo IMAGE_PATH; ?>/img-man.png" width="16"
+								height="14" align="absmiddle" /><a class="text-purple-link signup_or_login_first"
+								href="javascript:;">Get Introduced</a>
+						</div>
+
+					</div>
+					<div class="invite-connect-footer">
+						<div class="left">
+							<div class="image">
+								<div class = "image_inner">
+<?php 
+								$user_prof_img = Helper_common::getUserProfessionalPhoto($this->user_collec->getId(),2);
+?>
+									<img src="<?php echo $user_prof_img; ?>">
+								</div>	
+							</div>
+						</div>
+						<div class="right">
+							<h2 class="text-purple2"><?php echo $this->user_collec->getFirstname()." ".$this->user_collec->getMiddle_name()." ".$this->user_collec->getLastname(); ?></h2>
+<?php 
+								//if user is employed then show his current experience.
+								if( $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_EMPLOYED 
+									|| $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_RECRUITER )
+								{
+									foreach ( $this->user_collec->getUsersExperience() as $usrExp )
+									{
+										if( $usrExp->getCurrently_work() == Extended\experience::CURRENTLY_WORK_YES )
+										{
+?>								
+										<h4 class="text-grey2"><?php echo $usrExp->getJob_title(); ?> at <?php echo $usrExp->getExperiencesCompany()->getName(); ?></h4>
+										
+<?php
+										}
+									}
+								}
+								// if user is student then show him/her as student.
+								else if ( $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_STUDENT )
+								{
+									echo "<h4 class='text-grey2'>Student</h4>";
+								}
+								// if user is jobseeker then show his last experience.
+								else if ( $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_JOB_SEEKER )
+								{
+?>
+									<h4 class="text-grey2"><?php echo $this->user_collec->getUsersExperience()->last()->getJob_title(); ?> at <?php echo $this->user_collec->getUsersExperience()->last()->getExperiencesCompany()->getName(); ?></h4>
+<?php									
+								}
+								// if user is home maker then show him/her as home maker.
+								else if ( $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_HOME_MAKER )
+								{
+									echo "<h4 class='text-grey2'>Home Maker</h4>";
+								}
+?>			
+								<p>
+								<?php if($this->user_collec->getAddress()){echo $this->user_collec->getAddress();} 
+								if( $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_JOB_SEEKER 
+										|| $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_RECRUITER
+										|| $this->user_collec->getUser_type() == Extended\ilook_user::USER_TYPE_EMPLOYED )
+								{		
+									echo $this->user_collec->getUsersIndustry()?" in the ".$this->user_collec->getUsersIndustry()->getTitle().' industry':'';
+								}
+?>
+								</p>
+<?php 
+
+?>														
+
+<?php 
+								// Below job seeker flag code added by hkaur5.
+								$jobSeekerFlagCounter = $this->user_collec->getJobseeker_display_flag();
+								switch($jobSeekerFlagCounter)
+								{
+									case 1:
+									$iconFlag = "icon-flag-grey.png";
+									$titleText = "Off";
+									break;
+									
+									case 3:
+									$iconFlag = "icon-flag-on-hidden.png";
+									$titleText = "On But Hidden";
+									break;
+									
+									case 2:
+									$iconFlag = "icon-flag.png";
+									$titleText = "On";
+									break;
+									
+									default:
+									$iconFlag = "icon-flag-grey.png";
+									$titleText = "Off";
+								}
+								if( $jobSeekerFlagCounter == 2 )
+								{
+?>
+									<img src="<?php echo IMAGE_PATH.'/'.$iconFlag;?>" width="15"
+											height="16" align="absmiddle" />&nbsp;&nbsp; <font 
+											class="text-green">Job Seeker</font> 
+
+                  
+<?php 
+								}
+?>									
+						</div>
+					</div>
+				</div>
+				<!-- Invite Connect Ends -->
+
+				<!-- Invite Connect Ends -->
+
+				<!-- Home Search Starts -->
+				<div class="home-search-bot signup_or_login_first">
+
+					<!-- Slide Down Starts -->
+					<div class="slide-down bdr-btm-none">
+						<a href="javascript:"><h4>Contact</h4></a>
+					</div>
+					<!-- Slide Down Ends -->
+				</div>
+				<!-- Home Search Ends -->
+
+				<!-- Home Search Starts -->
+				<div class="home-search-bot signup_or_login_first">
+
+					<!-- Slide Down Starts -->
+					<div class="slide-down bdr-btm-none">
+						<a href="javascript:"><h4>Background</h4></a>
+					</div>
+					<!-- Slide Down Ends -->
+				</div>
+				<!-- Home Search Ends -->
+
+				<!-- Home Search Starts -->
+				<div class="home-search-bot signup_or_login_first">
+
+					<!-- Slide Down Starts -->
+					<div class="slide-down bdr-btm-none">
+						<a href="javascript:"><h4>Photo Albums</h4></a>
+					</div>
+					<!-- Slide Down Ends -->
+				</div>
+				<!-- Home Search Ends -->
+
+				<!-- Home Search Starts -->
+				<div class="home-search-bot signup_or_login_first">
+
+					<!-- Slide Down Starts -->
+					<div class="slide-down bdr-btm-none">
+						<a href="javascript:"><h4>Links</h4></a>
+					</div>
+					<!-- Slide Down Ends -->
+				</div>
+				<!-- Home Search Ends -->
+
+				<div class="create-account-bar">
+				
+					<h4 style="color: white;" >
+						Create an account or sign in to view full profiles
+					</h4>
+				</div>
+			</div>
+			<!-- HOME SEARCH RIGHT ENDS -->
+		</div>
+	</div>
+	<!-- Content Ends -->
+</div>
+
+<div id="dialog_signup_or_login" title="Hi User..." style = 'display:none;'>
+  <p>
+    <span class="ui-icon ui-icon-info" style="float: left; margin: 0 7px 50px 0;"></span>
+    Create an account or sign in to view full profiles.
+  </p>
+</div>

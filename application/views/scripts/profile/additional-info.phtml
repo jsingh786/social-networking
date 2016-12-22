@@ -1,0 +1,117 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Additional Info');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/additional-info.js" );
+if($this->additional_info['hobbies']==""){
+?>
+<style type="text/css">
+#hobbie-detail{
+	display:none;
+}
+#edit-hobbies{
+	display:inline;
+}		
+#additional-info{
+	display:none;
+}	
+input[name=cancel]{
+	display:none;
+}
+.contact-label-span2 span {
+    margin: 0 0 10px -10% !important;
+}
+</style>
+<?php 	
+}
+else{
+?>
+<style type="text/css">
+#hobbie-detail{
+	display:inline;
+}
+#edit-hobbies{
+	display:none;
+}
+#additional-info{
+	display:inline;
+}	
+input[name=cancel]{
+	display:inline;
+}
+.contact-label-span2 span {
+    margin: 0 0 10px -10% !important;
+}
+</style>
+<?php
+}
+?>
+<!-- Content Right Left Starts -->
+<?php
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+	<!-- Content Right Left Ends -->
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<form name="additional-info-form" id="additional-info-form" method="post" action="">
+			<input type="hidden" name="skill_id" id="skill_id" value="" />
+			<input type="hidden" name="user_skills_id" id="user_skills_id" value="" />
+				<!-- Summary Outer Starts -->
+				<div class="summary-outer">
+					<!-- Summary Edit Starts -->
+					<div class="summary-edit text-grey3">
+						<h3 class="text-purple2">Additional Info</h3>
+						<font style="float:right;">
+						<span id="additional-info">
+							<img src="<?php echo IMAGE_PATH;?>/edit-pencil.png" class="edit-new-icon" /> 
+						
+							</span>
+						</font>
+					</div>
+					<!-- Summary Edit Ends -->
+					<!-- Contact Details Starts -->
+				<div id="edit-hobbies" >
+				<div class="contact-details">
+				<div class="contact-label-span2">
+					<label>Additional Info</label>
+					<span>
+						<textarea name="hobbie" id="hobbie"  class="textarea2"  style="width:95%;" cols="" rows="5"><?php echo @$this->additional_info['hobbies'];?></textarea>
+					</span>
+					</div>
+					<div class="contact-label-span2">
+					<label>&nbsp;</label>
+					<span>
+						<font style="font-size:11px; margin-top:5px; float:left; width:100%;">
+							<strong>Tip:</strong> Use commas to separate multiple activities
+						</font>
+						<br />
+						<font style="font-size:11px; margin-top:2px; float:left; width:100%;">
+							<strong>Example:</strong> Management Training, New Technology, Investing
+						</font>
+					</span>
+					</div>
+				</div>
+				<!-- Contact Details Ends -->
+				<div class=" summary-btn-outer">
+					<input name="save-additionalinfo" id="save-additionalinfo" type="button"  alt="Save" title="Save" class="new-save-btn" value="Save" />
+					<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+				</div>
+				</div>
+				<!-- Contact Details Starts -->
+				<div class="contact-details" id="hobbie-detail">
+				<div class="contact-label-span">
+					<label>Additional Info</label>
+					<span style="margin: 0 0 10px -10%;" class="text-grey3" id="additional-infotext">
+					<?php echo @$this->additional_info['hobbies'];?>
+					</span>
+					</div>
+				</div>
+				<!-- Contact Details Ends -->
+				</div>
+				<!-- Summary Outer Ends -->
+			<!-- Summary Outer Ends -->
+		</form>
+	</div>
+	<!-- Content Right Right Ends -->

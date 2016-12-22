@@ -1,0 +1,513 @@
+.forgot-password-content span {
+	margin: 0 !important;
+}
+input[type="checkbox"] {
+	margin-left: 3px;
+}
+div.mail_select_all
+{
+	background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 2px 0 0 0;
+    padding: 8px 0;
+    position: relative;
+    width: 100%;
+    border-bottom: 2px solid #dedede;
+	}
+
+a.mail_button, a#accept_link_req, a#decline_link_req {
+    background-color: #6b508e;
+    border: medium none;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    margin: 0 5px;
+    text-decoration: none;
+    width: 63px;
+}	
+	
+.mail-content-mid a#decline_link_req
+{
+	background-color: white !important;
+	color: grey !important;
+}
+.mail-content-mid a#decline_link_req:hover
+{
+	background-color: white !important;
+	color: grey !important;
+}
+.mail_button:hover, .mail-content-mid a#accept_link_req:hover, .mail-content-mid a#decline_link_req:hover
+{
+    background-color: #795BA0;
+}
+
+
+div.no_messages {
+    background-color: #FFFFFF;
+    float: left;
+    font-size: 29px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+}
+.mail-grey-hdr-col1.row_holder.unread {
+    background-color: #F4F4F4;
+}
+.mail-grey-hdr-col1.row_holder {
+    background-color: white;
+}
+
+ul.token-input-list-facebook 
+{
+	width:91.5% !important;
+	margin: 0 9px 16px 0 !important;
+	background-color: #F2F2F2 !important;
+	border: 1px solid #F2F2F2 !important;
+	cursor: default;
+}
+.mail-grey-hdr-col1 .mid {
+
+    width: auto !important;
+}
+
+div.mail-all-hdr.controls
+{
+	display:none !important;
+}
+.mail-grey-hdr-col1 .right .mid {
+    
+    margin: 10px 86px !important;
+    
+}
+input#mail_list_main_cb {
+    margin-left: 13px;
+}
+input[type="checkbox"] {
+    bottom: 1px;
+    margin-right: 5px;
+    margin-top: 1px;
+    position: relative;
+    vertical-align: middle;
+}
+input[type="checkbox"] {
+	margin-top: 1px;
+}
+input[type="checkbox"]#mail_list_main_cb {
+	margin-top: 4px;
+}
+
+.mail-grey-hdr-col1 .mid {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 251px;
+}
+
+.mail-grey-hdr-col1 {
+   background: #ffffff none repeat scroll 0 0 !important;
+    border-right: 4px solid #c4c4c4;
+    float: left !important;
+/*     margin: 0 0 0 2px !important; Causing problem on mail detail page*/
+    overflow: inherit !important;
+    padding: 10px 0 !important;
+    position: relative;
+    width: 99.5% !important
+}
+.manage-pop-outer{
+	z-index: 1 !important;
+}
+.manage-pop2-outer{
+	z-index: 1 !important;
+}
+
+.manage {
+    float: left;
+    margin: 10px 0 0;
+    padding: 0;
+    width: 70px !important;
+}
+
+.manage a#manage_mails
+{ 
+	background:url("../../images/folder.png") no-repeat scroll right 2px; color:#b6b6b6;
+	text-decoration:none; 
+	display:block;
+}
+.manage a#manage_mails:hover 
+{ 
+	background:url("../../images/folder-hover.png") no-repeat scroll right 2px;
+	color:#b084e9;
+	text-decoration:none;
+}
+
+.mail-sendmsg-col2 span input[type="text"] 
+{
+    width: 69%;
+	background-color: #F2F2F2;
+	border: 1px solid #F2F2F2 !important;
+	height: 33px !important;
+}
+.textarea 
+{
+    background: none repeat scroll 0 0 #F2F2F2 !important;
+}
+.mail-sendmsg-col2-msg 
+{
+    padding: 22px 0 5px;
+	border-bottom:none !important;
+}
+.mail-save-draft 
+{
+    border-bottom: none !important;
+    border-top: none !important;
+	width: 96% !important;
+}
+div.fr_btn 
+{
+    margin-right: 10px;
+}
+.mail-span 
+{
+    width: 104% !important;
+}
+.mail-grey-hdr-col1.row_holder:hover
+{
+	background-color: #F4F4F4;
+}
+div.fr_cancel /*Senseless class*/
+{
+	  margin: 6px 0 0 0 !important;
+}
+a#mail_contacts_popup
+{
+	display: inline-block;
+    margin-top: 5px;
+}
+.mail-grey-hdr-col1 .right .top
+{
+	color: #808080 !important;
+}
+.bookmarks-add-new .fr img{
+	margin: 0 0 0 2px !important;
+    vertical-align: middle !important;
+}
+.bookmarks-add-new{
+	height:auto !important;
+}
+.bookmarks-add-new .fl{
+	 margin-top: -3px;
+}
+.mail-img-listing{
+	display: inline-block;
+    margin-left: 10px;
+}
+h2#mail_detail_subject
+{
+	min-height: 27px;
+	max-height: 54px;
+	width: 558px!important;
+	overflow-y: auto;
+	word-wrap: break-word;
+}.text-purple2{
+	font-family: arialnarrowregular !important;
+}
+.mail-user-title{
+	 font-family: arial;
+}
+
+div.mail-hdr div div.fl h4.text-purple2 {
+    margin-top: 4px !important;
+}
+div#detailed_msg div.mail-hdr div.bookmarks-add-new div.fr
+{
+	margin-top:2px !important;
+}
+.go_to_detail {
+    background: none repeat scroll 0 0 #fff;
+    border-bottom: 1px solid #dedede;
+    border-right: 4px solid #c4c4c4;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+position:relative;
+}
+.go_to_detail.unread .go_to_detail-text a h3,
+.go_to_detail.unread .go_to_detail-text p a
+{
+	font-weight: bold;
+}
+.go_to_detail.unread .go_to_detail-text a h4,
+.go_to_detail.unread .go_to_detail-text p a
+{
+	font-weight: bold;
+}
+
+.go_to_detail.unread{
+	 background-color: #efefef;
+}
+.go_to_detail:hover{
+	background-color: #e3e3e3;
+	border-right: 4px solid #6c518f;
+}
+.go_to_detail-image{
+	width:90px;
+	margin:0;
+	padding:15px 0 15px 14px;
+	float:left;
+}
+.go_to_detail-image input[type="checkbox"]{
+	width:auto;
+	margin:0;
+	padding:0;
+	float:left;
+}
+.go_to_detail-imagebox{
+	width:auto;
+	margin:0;
+	padding:0;
+	border:1px solid #ddd;
+	display:table-cell;
+	vertical-align:center;
+}
+.go_to_detail-text{
+	width:63.5%;
+	margin:0;
+	padding:15px 0;
+	float:left;
+	min-height: 52px;
+}
+.go_to_detail-text:hover{
+	cursor:pointer;
+}
+.go_to_detail-text h3{
+	color: #686868;
+    float: left;
+    font-family: arial !important;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+div.mid .text-purple-link {
+	color: #636363;
+	font-weight: normal;
+}
+.go_to_detail-text p{
+	width:100%;
+	float:left;
+	margin:0;
+	padding:0;
+	word-wrap: break-word;
+	color: #6C518F;
+	font-family: arial !important;
+	font-size: 14px;
+}
+.go_to_detail-time{
+	width:93px;
+	margin:0 10px 0 0;
+	padding:15px 0;
+	float:right;
+ 	min-height: 63px;
+}
+.go_to_detail-time-top{
+	width:100%;
+	margin:0;
+	padding:0;
+	float:left;
+  text-align: right;
+	color: #808080;
+}
+.go_to_detail-time-bot{
+	margin:0;
+	padding:0;
+	position:absolute;
+	bottom:10px; 
+	right: 7px;
+    width: auto;
+}
+ .mail-grey-hdr-col1 .right{
+	 margin: 0 16px 0 0 !important;
+	width:	128px !important;
+ }
+ .mail-grey-hdr-col1 .left{
+	 padding-left: 3.8% !important;
+ }
+ 
+ #back_to_mail_list{
+	 position: relative !important;
+    top: -2px !important;
+ }
+ #back_to_mail_list:hover{
+ 	text-decoration:none !important;
+ }
+ 
+ #back_to_mail_list_inbox{
+	 position: relative !important;
+    top: -2px !important;
+ }
+ #back_to_mail_list_inbox:hover{
+ 	text-decoration:none !important;
+ }
+#mail_holder {
+    background: none repeat scroll 0 0 #FFFFFF;
+    min-height: 818px;
+}
+/*****9 April *****/
+ .no_messages-data{color: #808080;
+    font-size: 17px;
+margin:10px 0 0 0;
+}
+
+/*** 29th april**/
+
+
+.archive_feedback{
+	  background: url("../../images/folder.png") no-repeat scroll right 2px;
+    color: #909090 !important;
+    float: left;
+    min-width: 65px;
+    padding: 0 0 1px 3px !important;
+}
+
+.archive_feedback:hover{
+	background : url("../../images/folder-hover.png") no-repeat scroll right 2px;
+	color : #B084E9;
+}
+
+.archive_feedback span{ width:auto; color:#a0a0a0;}
+.archive_feedback:hover span{ width:auto; color:#b084e9; text-decoration: none;}
+
+.archive_ref{
+	background: url("../../images/folder.png") no-repeat scroll right 2px;
+    color: #909090 !important;
+    float: left;
+    min-width: 65px;
+    padding: 0 0 1px 3px !important;
+}
+
+.archive_ref:hover{
+	background : url("../../images/folder-hover.png") no-repeat scroll right 2px;
+}
+
+.archive_ref span{ width:auto; color:#a0a0a0;}
+.archive_ref:hover span{ width:auto; color:#b084e9; text-decoration: none;}
+
+.mail-content-bot ul li a.delete_inbox{
+	/*background : url("../../images/icon-trash.png") no-repeat scroll right 0px;*/
+	background : url("../../images/icon-trash-hover.png") no-repeat scroll right 0px;
+	padding : 0 0 1px 3px !important;
+	/*color: #909090 !important;*/
+	min-width: 56px;
+    float:left;
+}
+
+.mail-content-bot ul li a.delete_inbox:hover{
+	background : url("../../images/icon-trash-hover.png") no-repeat scroll right 0px;
+		
+}
+.mail-content-bot ul li a.delete_inbox span{ width:auto; color:#a0a0a0;}
+.mail-content-bot ul li a.delete_inbox:hover span{ width:auto; color:#b084e9; text-decoration: none;}
+
+#back_to_mail_list{
+/* 	background : url("../../images/back-arrow-grey.jpg") no-repeat; */
+/* 	padding : 0 0 1px 19px !important; */
+	color: #909090 !important;
+}
+
+#back_to_mail_list:hover {
+/* 	background : url("../../images/back-arrow.png") no-repeat; */
+}
+
+#back_to_mail_list span{ width:auto; color:#a0a0a0;}
+#back_to_mail_list:hover span{ width:auto; color:#b084e9; text-decoration: none;}
+
+.accept_feedback{margin: 30px auto 0;
+    text-align: center;}
+
+.accept_reference{margin: 15px auto 0;
+    text-align: center;}
+
+.accept_link{margin: 15px auto 0;
+    text-align: center;}
+
+
+.feedback-btn-outer{background: #fff none repeat scroll 0 0;
+    margin: 0;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+.mail-all-hdr {
+    background:#fff !important;
+    color: #B6B6B6 !important;
+}
+
+.bookmarks-hdr-text1 
+{
+    margin: 10px 0 0 2px !important;
+
+}
+div.pagination_nav.controls:nth-child(2) div.pagination.mail-all-hdr
+{
+	border:none !important;
+}
+
+div#detial_msg_holder div.mail-grey-hdr-col1
+{
+	/** On detail page margin is not required**/
+	margin: 0 !important;
+}
+div.content_removed
+{
+	font-style: italic;
+	
+}
+/***** Attachment icons css *****/
+.attachment-outer{width:100%; padding:0 4%; float:left; box-sizing:border-box; background:#fff;}
+.attachment-inner{ border:1px solid #e8e8e8; box-sizing:border-box; background:#f2f2f2; padding:0; width:100%; float:left; max-height:65px;   overflow-y: auto;}
+.attachment-column{ width:auto; float:left; margin:5px 15px;}
+.attachment-column-lt{ width:auto; float:left; margin-right:5px;}
+.attachment-column-rt{ width:auto; float:left; margin:0px; color:#424242; font-size:12px; line-height:20px;}
+.attachment-clip{width:auto; text-align:right; float:right; margin-top:10px;}
+/***** Attachment icons css *****/
+
+/****24Dec ******/
+.post-individual-outer{  background: none repeat scroll 0 0 #f6f6f6;border-left: 2px solid #ddd;
+    box-sizing: border-box;float: left;margin-top: 10px;padding: 10px;width: 100%;}
+.post-individual{width:100%; float:left; margin:0px;}
+.post-individual-lt{width:40px; float:left; border: 1px solid #ddd;}
+.post-individual-lt img{ width:100%;}
+.post-individual-rt{width:auto; float:left;  margin: 1px 0 0 7px; color: #48545e;}
+.shared-link-outernew { float: left; margin:0; width: 100%;}
+.share-link-outer {float: left; margin: 0;  padding: 0;  width: 100%;}
+.share-link-img {
+    box-sizing: border-box;float: left;padding: 10px 0 0 0;width: 100%;}
+/****24Dec *****/
+
+
+form#fileattach_reply .progress.ui-progressbar.ui-widget.ui-widget-content.ui-corner-all
+{
+	height : 5px !important;
+	margin-top : 2px !important;
+}
+form#fileattach_forward .progress.ui-progressbar.ui-widget.ui-widget-content.ui-corner-all
+{
+	height : 5px !important;
+	margin-top : 2px !important;
+}
+
+.left-mail-sendmsg-col1-rply, .left-mail-sendmsg-col1-fwd { float:left;}
+.mail-sendmsg-col1 .right{margin: 8px 0 0 !important;}
+.template-download{ margin-top:5px;}
+button.delete.remove_thumb{ background:none; border:none;}
+button.remove_thumb.delete span.ui-icon-trash {
+    display: none;
+}
+button.remove_thumb.delete span.ui-button-text{ padding:0 !important;}
+.mail-sendmsg-col2{margin: 5px 0 0 !important;}

@@ -1,0 +1,357 @@
+<?php
+//$this->headScript()->appendFile( PUBLIC_PATH."/js/dropzone.js" );
+?>
+
+<style>
+
+.enquiry-pop-outer{ width:700px; position:absolute: right:0; left:0; background:#fff; display:table;}
+.enquiry-pop-hdr{box-sizing: border-box; width: 100%; background:#f5f6f7; height: 40px;
+    line-height: 40px; padding: 0 15px;}
+.enquiry-pop-hdr h2{font-size: 17px !important; margin-top: 0 !important; font-weight:bold; width:97%; float:left;}
+.enquiry-labelspan-outer{ width:100%; float:left; min-height:50px;   color: #000;}
+.enquiry-labelspan-outer label{ width:30%; float:left; text-align:right; line-height:30px;}
+.enquiry-labelspan-outer span.inputfield .error{text-align:left; }
+.enquiry-labelspan-outer span.inputfield { width:68%; float:left; text-align:left; margin-left:2%;}
+.enquiry-labelspan-outer span.inputfield input[type="text"]{ padding:8px; width:72%; background: #f2f2f2; border:none; box-sizing: border-box;}
+.enquiry-labelspan-outer span.inputfield select{ padding:8px; width:72%; background: #f2f2f2;  border:none; box-sizing: border-box;}
+.enquiry-labelspan-outer span.inputfield select.enquiry{  margin-right: 10px;}
+.enquiry-labelspan-outer span.inputfield textarea{ width:70%; min-height:200px;}
+.pb20{ padding-bottom:20px !important;}
+
+.close_bpopup {
+    cursor: pointer;
+    float: right;
+    height: 12px;
+    margin: 14px 0 0;
+    width: 12px;
+}
+
+.enquiry-pop-outer{
+	background: none repeat scroll 0 0 #fff;
+    float: left;
+    width: 700px;
+	max-height: 500px;
+}
+
+div#enquiry_form
+{
+	height: 561px;
+}
+div#enquiry_form div.content
+{
+	height: 490px;
+    /*overflow-y: scroll;*/
+	padding-top: 20px;
+}
+
+div.enquiry-labelspan-outer.ckeditor
+{	
+	float: left;
+	width: 80%;
+}
+div.enquiry-labelspan-outer.send {
+    float: right;
+    width: 12%;
+}
+.new-save-btn {
+	
+    min-width: 70px;
+    padding: 4px 7px;
+    
+}
+</style>
+
+<script type = "text/javascript">
+var ajaxRequestReply;
+$(document).ready(function(){
+
+		 $('input#send_reply').on('click', function() {
+			send_reply();
+		  });
+
+			//Dialog box show if uploaded file size exceeds 20 MB
+		    $( "div#dialog_file_size" ).dialog({
+			      modal: false,
+			      autoOpen: false,
+			      draggable:true,
+			      width: 312,
+			      show: {
+			    	  effect: "fade"
+			    	  },
+				  hide: {
+					  effect: "fade"
+					  },
+			      buttons: {
+			    		 OK: {
+				    		 click: function () {
+	 	                     $(this).dialog("close");
+
+	 	                 },
+	 	                 	text : 'OK'
+			    		 }
+			 	    	 
+			      }
+		    });
+	
+});
+
+function openEnquiryForm(enquiry_id)
+{
+	
+	//Bpopup for enquiry form.
+		$("div#enquiry_form").bPopup({
+			closeClass:'close_bpopup',
+			modalClose: false,
+			scrollBar: true,
+			zIndex : 110,
+			escClose: true,
+			onClose: function() {
+				
+				//Destory CKEditor
+				if (CKEDITOR.instances['reply_editor']) {
+					CKEDITOR.instances['reply_editor'].setData('');
+					CKEDITOR.instances['reply_editor'].destroy();
+				}
+
+				$("div#temp_uploads_info").empty();
+				// clear all other fields
+				$('div.enquiry-labelspan-outer  input[type=text][name=email_id]').val('');
+				$('div.enquiry-labelspan-outer  input[type=text][name=phone_number]').val('');
+				$('div.enquiry-labelspan-outer  input[type=text][name=subject]').val('');
+				
+			
+				 },
+				 
+			onOpen: function(){
+
+				
+				//if any previous instance left then Destory CKEditor
+				/*if (CKEDITOR.instances['reply_editor']) {
+					CKEDITOR.instances['reply_editor'].setData('');
+					CKEDITOR.instances['reply_editor'].destroy();
+				}*/
+				//Apply CKeditor
+				/*alert('hbghjb');
+				return;*/
+				CKEDITOR.replace( 'reply_editor', {
+					width:500,
+					enterMode :CKEDITOR.ENTER_P,
+					uiColor: '#6C518F',
+					toolbar: [
+								{ name: 'basicstyles' , items : [ 'Bold','Italic','TextColor',"BGColor", 'NumberedList','BulletedList'  ] },
+								{ name: 'tools', items : [ 'Maximize','-' ] },
+							],
+					removePlugins : 'elementspath',
+					on:
+					{
+					'instanceReady': function(evt) {
+
+						 var tags = ['p', 'ol', 'ul', 'li']; // etc.
+
+					        for (var key in tags) {
+					        	evt.editor.dataProcessor.writer.setRules(tags[key],
+					                {
+					                    indent : false,
+					                    breakBeforeOpen : false,
+					                    breakAfterOpen : false,
+					                    breakBeforeClose : false,
+					                    breakAfterClose : false
+					                });
+					        }
+					//Set the focus to your editor
+					CKEDITOR.instances.reply_editor.focus();
+					}
+					},
+				});
+				
+				CKEDITOR.add
+				
+				
+			    $.ajax({
+			        url : "/"+PROJECT_NAME+"admin/enquiry/enquiry-details",
+			        data: {
+				        	'enquiry_id':enquiry_id
+				        	},
+			        type: "POST",
+			        success: function(jsonData) {
+				       // console.log(jsonData); 
+			            if(jsonData)
+			            {
+			            	var jsonData = JSON.parse(jsonData);
+			            	$('#email_id').val(jsonData.email_id);
+			            	$('#enquiry_id').val(jsonData.enquiry_id);
+			            	$('#type').val(jsonData.type);
+			            	$('#user_id').val(jsonData.user_id);
+
+			            	html = '';
+			            	html += '</br>';
+			            	html += '---------</br>';
+			            	html += '\r\n'+jsonData.final_date_time+',</br>' ;
+			            	html += jsonData.sender_firstname+' '+jsonData.sender_lastname+' wrote:</br>';
+			            	html += '\r\n---------</br>';
+			            	html += jsonData.body;
+			            	// set message thread to ckeditor 
+			            	CKEDITOR.instances['reply_editor'].setData(html);
+			           
+			            }
+			        }
+				});
+
+			}
+
+		
+		});
+}
+
+
+function send_reply(){
+
+	var iddd = addLoadingImage($("#send_reply"), "before","loading_small_purple.gif",0 ,21 );
+	$("#send_reply").hide();
+	
+	var temp_path_info_arr = {};
+	var temp_path_info_inner_arr = {};
+	
+	$.each( $("div#temp_uploads_info span"), function( key, value ) {
+
+		temp_path_info_inner_arr = {};
+		
+		temp_path_info_inner_arr.ts_file_name 			= $(this).attr("ts_file_name");
+		temp_path_info_inner_arr.ts_file_size 			= $(this).attr("ts_file_size");
+		temp_path_info_inner_arr.ts_actual_file_name 	= $(this).attr("ts_actual_file_name");
+
+		temp_path_info_arr['index_'+key] = temp_path_info_inner_arr;
+	});
+
+	// checking uploaded attachments size for not greater than 20 MB
+	// on first ajax call and then
+	// on success call enquiry compose ajax call
+	
+	jQuery.ajax({
+		url : "/" + PROJECT_NAME + "admin/enquiry/check-attachments-size",
+		type : "POST",
+		dataType : "json",
+		data: {
+	         	'uploads' 	: temp_path_info_arr,
+	          },
+	     timeout: 600000,
+	     success: function(jsonData) {
+	         if(jsonData == 1)
+	         {
+	        	 ajaxRequestReply =  jQuery.ajax({
+	        	        url: "/" + PROJECT_NAME + "admin/enquiry/reply",
+	        	        type: "POST",
+	        	        dataType: "json",
+	        	        beforeSend: function() {
+	        	      	  	$("span#"+iddd).remove();
+	        				$("#send_reply").show();
+	        				$('div#enquiry_form').bPopup().close();
+	        	        	$("div#temp_uploads_info").empty();
+	        	        	//showDefaultMsg("You have posted reply.", 1);
+
+	        	        	//clear ckeditor
+	        				if (CKEDITOR.instances['reply_editor']) {
+	        					CKEDITOR.instances['reply_editor'].setData('');
+	        					CKEDITOR.instances['reply_editor'].destroy();
+	        				}
+	        				// clear uploaded image div
+	        				$( "div.dz-complete" ).remove();
+	        				$( "div.dz-message" ).show();
+
+	        	        },
+	        	        data: {
+	        	            	'uploads' 		: temp_path_info_arr,
+	        	            	'enquiry_type' 	: $('input#type').val(),
+	        	            	'email_id'		: $('input#email_id').val(),
+	        	            	'enquiry_id'	: $('input#enquiry_id').val(),
+	        	            	'user_id'		: $('input#user_id').val(),
+	        	            	'body'			: nl2br(CKEDITOR.instances.reply_editor.getData()),
+	        	              },
+	        	        timeout: 600000,
+	        	        success: function(jsonData) {
+	        	            if(jsonData)
+	        	            {
+	        		         showDefaultMsg("You have posted reply.", 1);
+	        	            }
+	        	            else if(jsonData == 0)
+	        				{
+	        					$("span#"+iddd).remove();
+	        					$("#send_reply").show(); 
+	        					//$( "div#dialog_file_size" ).dialog( "open" );
+	        				}
+	        	            else
+	        	            {
+	        	           		showDefaultMsg("Error while posting reply.", 2); 	
+	        	            }
+	        	                
+	        	        },
+	        	        error: function(xhr, ajaxOptions, thrownError) {
+	        	        	if (ajaxRequestReply.statusText =='abort')
+		        	        {
+	        	        		showDefaultMsg("Your mail could not be sent due to some technical error.", 2); 	
+	        	        	}
+	        				//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        			}
+	        			
+	        		});
+		
+	         }
+	         else if(jsonData == 0)
+			 {
+				$("span#"+iddd).remove();
+				$("#send_reply").show(); 
+				$( "div#dialog_file_size" ).dialog( "open" );
+			 }
+	         else
+	         {
+	        		showDefaultMsg("Error while posting reply.", 2); 	
+	         }
+	     }      
+	});
+	
+	
+}
+
+</script>
+
+<div id="enquiry_form" class = "popup transparent_border" style = "display: none;">
+	<div class="enquiry-pop-outer">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1 enquiry-pop-hdr">
+			<div id="forgot-password" class="left ">
+				<h2>Enquiry</h2>
+			<img class="close_bpopup"
+			src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+			title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		
+		<div class = "content" >
+			<form name="reply-enquiry" id="reply-enquiry">
+				<div class="enquiry-labelspan-outer ckeditor">
+					<textarea name = 'body' id='reply_editor' class = 'enquiry'></textarea>
+				</div>
+				<div class="enquiry-labelspan-outer send">
+				 	<input value="Send" type="button" class ='btn btn-large' id = 'send_reply'/>
+				</div>
+			<input type="hidden" id= "email_id" name="email_id"  value =""/>
+			<input type="hidden" id= "enquiry_id" name="enquiry_id"  value =""/>
+			<input type="hidden" id= "type" name="type" value ="">
+			<input type="hidden" id= "user_id" name="user_id" value ="">
+
+			</form>
+			<div class="enquiry-labelspan-outer">
+				<span class="inputfield">
+					<div style="width:450px; float:left; height:150px; margin-bottom:20px;margin-top:20px; overflow-x:auto;">
+						<form class = "dropzone" action="<?php echo PROJECT_URL.'/'.PROJECT_NAME ?>admin/enquiry/move-uploaded-files-to-temp-location">
+						</form>	
+					</div>
+				</span>
+			</div>
+		</div>	
+		</div>
+	</div>
+	<div style="display:none; z-index: 115;" id="dialog_file_size" title="File Size">
+	Total Attachment size should not exceed 20 MB
+</div>

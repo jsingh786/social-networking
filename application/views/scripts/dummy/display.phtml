@@ -1,0 +1,152 @@
+<?php echo $this->doctype ();?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/jquery-ui-1.10.3.custom/css/ilook-theme/jquery-ui-1.10.3.custom.css" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery.validate.1.9.0.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery-1.8.min.js");
+
+echo $this->headTitle();
+echo $this->headMeta();
+echo $this->headLink();
+echo $this->headScript();
+?>
+
+<style>
+@font-face {
+    font-family: 'ArialNarrowRegular';
+    src: url('<?php echo PUBLIC_PATH; ?>/fonts/2677999333.eot');
+    src: url('<?php echo PUBLIC_PATH; ?>/fonts/2677999333.eot') format('embedded-opentype'),
+         url('<?php echo PUBLIC_PATH; ?>/fonts/2677999333.woff') format('woff'),
+         url('<?php echo PUBLIC_PATH; ?>/fonts/2677999333.ttf') format('truetype'),
+         url('<?php echo PUBLIC_PATH; ?>/fonts/2677999333.svg#ArialNarrowRegular') format('svg');
+}
+
+body{padding:0; margin:0;}
+.wrapper{ padding:0; background: none repeat scroll 0 0 #dedede; font-family: Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 13px;}
+.main-bg{ background:url('<?php echo IMAGE_PATH; ?>/socialize-demo.jpg'); width:1145px; height:4276px; margin: auto;}
+
+
+/***Add experience popup***/
+
+.contact-details {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.close_bpopup {
+    cursor: pointer;
+    float: right;
+    height: 12px;
+    margin: 14px 0 0;
+    width: 12px;
+}
+div#welcome_users_box {
+    background: none repeat scroll 0 0 #ffffff;
+    float: left;
+    height: auto;
+    margin: 0;
+    padding: 15px;
+    width: 440px;
+}
+         
+div#welcome_users_box p{ padding:0 0 20px 0; margin:0;}
+
+
+div.welcome_users_hdr_inner .close_popup, div.welcome_users_hdr_inner .close_popup_2, div.welcome_users_hdr_inner .close_popup_3 {
+    cursor: pointer;
+    float: right;
+    margin-top: 4px;
+}
+div.welcome_users_hdr_inner h2 
+{
+    color: #000;
+    float: left;
+    font-weight: bold;
+    text-transform: inherit !important;
+    width: 243px;
+	font-size: 20px !important;
+}
+
+/**********************/
+div.welcome_users_hdr_inner
+{
+	background: none repeat scroll 0 0 #f5f6f7;
+	border-bottom: 1px solid #ddd;
+	float: left;
+	height: 40px;	line-height:40px;
+	font-family: arialnarrowregular;
+	margin: 0;
+	padding: 0 15px;
+	width: 94%;
+}
+div.welcome_users_hdr_inner h2{ margin:0;}
+.transparent_border {
+    border: 10px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+
+.general_btn {
+    background: url("<?php echo IMAGE_PATH; ?>/login-btn.png") repeat scroll 0 0 rgba(0, 0, 0, 0);    border: medium none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial;
+    font-size: 15px;
+    font-weight: bold;
+    height: 34px;
+    line-height: 33px;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    width: 136px;
+}
+</style>
+<script>
+$(document).ready(function(){
+$('div#welcome_users_popup').bPopup(
+		{
+			modalClose: false,
+		    easing: 'easeOutBack', //uses jQuery easing plugin
+	        speed: 500,
+	        amsl:0,
+			closeClass : 'close_bpopup',
+			zIndex : 2,	
+	        //transition: 'slideDown',
+	        onClose: function() {},
+	        onOpen: function() 
+	        {
+	        	var html = "";
+	        	html = "<div style='text-align:center; color: #422B64; font-weight:bold; line-height:40px; font-size:20px; padding:0 0 20px 0; font-family: arialnarrowregular;'>";
+
+	        	html += "<p>Hurray!!! Registered Successfully!</br> All Set to Go. Just few more days for the L-Day. Watch out this space for regular updates on the glimpse of iLook's Features.</p>";
+				html += "<a href ='/<?php echo PROJECT_NAME?>index/index' class = 'general_btn'>Close the page</a>";
+				
+	        	html += "</div>";
+	        	$('div#welcome_users_box').html(html);
+	        }
+		});
+});
+</script>
+
+<div class="wrapper">
+	<div class="main-bg">
+	</div>
+</div>
+
+<!-- -------------------------- B popup html ---------------------------------------->
+<div id="welcome_users_popup" class = "popup transparent_border" style = "display: none;">
+	<div class="welcome_users_outer" style="width: 470px;">
+		<!-- Forgot Password Header -->
+			<!-- Forgot Password Content -->
+			<div id = "welcome_users_box" class="welcome_users_box">
+			</div>
+			<!-- Forgot Password Content -->
+	</div>
+</div>
+</head>
+</html>
+<!-- -------------------- B popup html Ends---------------------------------------->

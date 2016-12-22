@@ -1,0 +1,202 @@
+<?php
+$this->headTitle()->prepend('Notifications');
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/notification_view_all.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/notification_view_all.css" );
+?>
+<!-- Content Starts -->
+<div class="bot-link-content">
+	<div class="bot-link-content-data">
+		<div class="notification-hdr">
+			<h2>Your Notifications</h2>
+			<a class="text-purple2-link" href="/<?php echo PROJECT_NAME; ?>account-settings/notifications/id/<?php echo Auth_UserAdapter::getIdentity()->getId();?>">Notification
+				Settings</a>
+		</div>
+		<div class="get-notification">
+		</div>
+		<div class="main_outer_div" >
+		<input type="hidden" value="<?php echo $this->unread_notifications;?>"  id="unread_notification_count"/>
+<?php 
+		//All notification grouped by date index.
+		if($this->allNotifications)
+		{
+			foreach ($this->allNotifications as $key=>$notificationDetails)
+			{ 
+?>				
+				
+				<div  id="<?php echo $key;?>"  class="today-notification-hdr">
+<?php
+				//Showing today, yesterday and other dated based on notification date.
+				echo $key;
+?>
+				</div>
+		
+
+				<div id="<?php echo $key;?>" class="today-notification-outer">
+<?php 
+				if ($this->is_more_notifications)
+				{ 
+					echo '<input type="hidden" name="more_notifications" id="more_notifications" value="'.$this->is_more_notifications.'">';
+				}
+?>
+					<input type="hidden" value="<?php echo $this->offset;?>" name="offset" id="offset"/>
+
+<?php 
+					foreach ($this->allNotifications[$key] as $singleNotification)
+					{
+	?>
+						<div class="today-notification-data">
+							<div class="today-notification-icon">
+<?php 
+								switch ($singleNotification['type']) 
+								{
+								case 1:
+									echo'<img style="margin-top:-4px;" src="'.IMAGE_PATH.'/link-icon.png" alt="" />';
+									break;
+								case 2:
+									echo'<img src="'.IMAGE_PATH.'/eye-icon.png" alt="" />';
+									break;
+								case 3:
+									echo '<img style="margin-top:-4px;" src="'.IMAGE_PATH.'/icon-support-notifications.png" alt="" />';
+									break;
+								case 4:
+									echo '<img style="margin-top:-4px;" src="'.IMAGE_PATH.'/link-icon.png" alt="" />';
+									break;
+								case 8:
+								case 13:
+								case 20:
+								case 23:
+									echo '<img style="" src="'.IMAGE_PATH.'/tick-hover.png" alt="" />';
+									break;
+								case 9:
+								case 14:
+								case 21:
+								case 24:
+									echo '<img style="" src="'.IMAGE_PATH.'/comments-icon.png" alt="" />';
+									break;
+								case 10:
+								case 15:
+								case 22:
+								case 25:
+									echo '<img style="" src="'.IMAGE_PATH.'/share-icon.png" alt="" />';
+									break;
+								case 18:
+									echo '<img style="" src="'.IMAGE_PATH.'/reference-icon-notification.png" alt="" />';
+									break;
+								case 19:
+									echo '<img style="" src="'.IMAGE_PATH.'/feedback-icon-notification.png" alt="" />';
+									break;
+								}
+?>
+								
+							</div>
+<?php 
+							$about_user = $singleNotification['about_user_id'];
+							$about_user_username = $singleNotification['about_user_username'];
+							$w_id = $singleNotification['wallpost_id'];
+							$nid = $singleNotification['id'];
+							switch ($singleNotification['type'])
+							{
+								case 1:
+									echo'<a class="view_notification" href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/username/'.$about_user_username.'/nid/'.$nid.'">';
+									break;
+								case 2:
+									echo'<a class="view_notification" href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/username/'.$about_user_username.'/nid/'.$nid.'">';
+									break;
+								case 3:
+									echo '<a class="view_notification" href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/skills/">';
+									break;
+								case 4:
+									echo '<a class="view_notification" href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/username/'.$about_user_username.'/nid/'.$nid.'">';
+									break;
+								case 8 :
+								case 9:
+								case 10:
+								case 13:
+								case 14:
+								case 15:
+									// case for ok wall post
+									echo '<a style="color:black;" class="view_notification" href="/'.PROJECT_NAME.'post/detail/id/'.$w_id.'/nid/'.$nid.'">';
+// 									echo '<a style="color:black;" class="view_notification" href="javascript:;">';
+									break;
+// 								case 9 :
+// 									// case for comment on wall post
+// 									echo '<a style="color:black;" class="view_notification" href="/'.PROJECT_NAME.'post/detail/id/'.$w_id.'/nid/'.$nid.'">';
+// 									echo '<a style="color:black;" class="view_notification" href="javascript:;">';
+// 									break;
+// 								case 10 :
+// 									// case for share wall post
+// 									echo '<a style="color:black;" class="view_notification" href="/'.PROJECT_NAME.'post/detail/id/'.$w_id.'/nid/'.$nid.'">';
+// 									echo '<a style="color:black;" class="view_notification" href="javascript:;">';
+// 									break;
+								case 18 :
+									// case of reference received.
+									echo '<a style="color:black;" class="view_notification" href="/'.PROJECT_NAME.'reference-request/received/nid/'.$nid.'">';
+									break;
+								case 19 :
+									// case of feedback received.
+									echo '<a style="color:black;" class="view_notification" href="/'.PROJECT_NAME.'feedback/received/nid/'.$nid.'">';
+									break;
+								case 23 :
+								case 24 :
+								case 25 :
+									// case of ok album.
+									$notif_obj = \Extended\notifications::getRowObject($nid);
+									$socialise_album_obj = \Extended\socialise_album::getRowObject($notif_obj->getSocialize_album_id());
+									$socialise_album_owner_id = $socialise_album_obj->getSocialise_albumIlook_user()->getId();
+									echo '<a style="color:black;" class="view_notification" href="/'.PROJECT_NAME.'profile/photos/uid/'.$socialise_album_owner_id.'/id/'.$notif_obj->getSocialize_album_id().'/inid/'.$nid.'">';
+									break;
+								default:
+									echo '<a style="color:black; cursor:default !important" class="view_notification">';
+									break;
+									
+							}
+?>
+							<div class="today-notification-detail">
+							<font class="text-purple2"><?php echo $singleNotification['about_user'];?></font>
+								<font style="color:black"><?php echo $singleNotification['text'];?> </font>
+								<span><?php echo $singleNotification['time_stamp'];?></span>
+							</div>
+						</div>
+						
+						
+<?php 
+						echo'</a>';
+// 						if($singleNotification['is_read'])
+// 						{
+// 							echo '<form name="view_all_notifications" id ="view_all_notifications" >';
+// 							echo '<input name="notification_ids[]" id="notification_id" type="hidden" value="'.$singleNotification['id'].'"/>'; 
+// 							echo '</form>';
+							
+// 						}
+					}
+?>
+						</div>
+<?php 		
+			}
+				
+			
+		
+?>
+		</div>
+<?php 
+		if($this->is_more_notifications!==0)
+		{
+			echo '<div onclick="viewMore();" class="show_more real"><div><span id="show_more">Show more</span></div></div>';
+		}
+			echo '<div style="display:none" class="show_more loading"><div class="loading" width="100%" style="margin-top:11px;"><img src = "'.PUBLIC_PATH.'/images/loading_medium_purple.gif"></div></div>';
+	}
+		else if ( !$this->allNotifications )
+	{
+		echo '<div style="color:grey;border-bottom:none;" class="today-notification-hdr">'; 
+		echo '<div class="today-notification-outer">';
+		echo 'You have received no notifications yet!';
+		echo '</div>';
+		echo '</div>';
+	}
+?>		<!-- Column1 Starts -->
+
+		<!-- Column1 Ends -->
+		
+	</div>
+</div>
+<!-- Content Ends -->

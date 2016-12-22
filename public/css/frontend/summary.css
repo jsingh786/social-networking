@@ -1,0 +1,11 @@
+@CHARSET "ISO-8859-1";
+div.summary-outer div#edit_summary
+{
+	display : none;
+}
+.contact-label-span span{
+	 min-height: 100px !important;
+}
+
+.contact-label-span2 span{
+	margin : 0 0 10px 8px !important}

@@ -1,0 +1,361 @@
+<?php
+echo $this->partial ( 'partials/user_selection_popup.phtml' );
+?>
+
+<style>
+
+.enquiry-labelspan-outer span.inputfield {
+    float: left;
+    text-align: left;
+    margin-left : 0% !important;
+    width: 68%;
+}
+div.enquiry-labelspan-outer.select_user
+{	
+	float: left;
+	width: 80%;
+}
+div.enquiry-labelspan-outer.send {
+    float: right;
+    width: 12%;
+}
+.new-save-btn {
+	
+    min-width: 70px;
+    padding: 4px 7px;
+    
+}
+div.content input[type="text"]{
+	  height: 32px !important;
+	 float : left;
+}
+.enquiry-labelspan-outer label.error {
+    float: left;
+    line-height: 30px;
+    margin-left: 5px;
+    text-align: left;
+    width: 58%;
+}
+
+
+.enquiry-labelspan-outer.select_user > input {
+    width: 95%;
+}
+.enquiry-labelspan-outer.subject > input {
+    width: 76%;
+}
+</style>
+
+<script type = "text/javascript">
+
+
+$(document).ready(function(){
+	
+		 $( "form#compose_form" ).validate(
+					{
+						rules: {
+							receiver_ids: {
+								required: true,
+								multiemail: true
+							},
+							subject: {
+								required: true,	
+								maxlength: 255
+							},
+							compose_editor: {
+								required: true
+							}
+						}
+					});
+
+		 $('input#compose_mail').on('click', function() {
+			 if($("form#compose_form").valid())
+			    {
+			 compose_mail();
+			    }
+			});
+
+
+			// create selected user array on add button in user list popup
+			$('button#add_user').click(function(){
+				$("input#selected_user_ids").val('');
+				//$("input#selected_user_ids_display").val('');
+				var idArray = new Array();
+				var emailArray = new Array();
+				$i = 0;
+				$("input.select_user_cb:checked").each(function ()
+				{
+					idArray[$i] = $(this).val();
+					emailArray[$i] = $(this).attr('id');
+				    $i++;
+				    $("input#selected_user_ids").val(idArray.join(","));
+				    //$("input#selected_user_ids_display").val(idArray.join(";"));
+				    $("input#receiver_ids").val(emailArray.join("; "));
+				});
+				
+			});
+
+
+			//Dialog box show if uploaded file size exceeds 20 MB
+		    $( "div#dialog_file_size_compose" ).dialog({
+			      modal: false,
+			      autoOpen: false,
+			      draggable:true,
+			      width: 312,
+			      show: {
+			    	  effect: "fade"
+			    	  },
+				  hide: {
+					  effect: "fade"
+					  },
+			      buttons: {
+			    		 OK: {
+				    		 click: function () {
+	 	                     $(this).dialog("close");
+   
+	 	                 },
+	 	                 	text : 'OK'
+			    		 }
+			 	    	 
+			      }
+		    });
+	
+});
+
+/* open popup for compose form 
+ * @author sjaiswal
+ */
+function openComposeForm()
+{
+	
+	//Bpopup for compose form.
+		$("div#compose_form").bPopup({
+			closeClass:'close_bpopup',
+			modalClose: false,
+			scrollBar: true,
+			zIndex : 110,
+			escClose: true,
+			onClose: function() {
+				
+				//Destory CKEditor
+				if (CKEDITOR.instances['compose_editor']) {
+					CKEDITOR.instances['compose_editor'].setData('');
+					CKEDITOR.instances['compose_editor'].destroy();
+				}
+
+				$("div#temp_uploads_info").empty();
+				// clear all other fields
+				$('div.enquiry-labelspan-outer  input[type=text][name=receiver_ids]').val('');
+				$('div.enquiry-labelspan-outer  input[type=text][name=subject]').val('');
+			},
+			onOpen: function(){
+				//if any previous instance left then Destory CKEditor
+				if (CKEDITOR.instances['compose_editor']) {
+					CKEDITOR.instances['compose_editor'].destroy();
+				}
+				
+				//Apply CKeditor
+				CKEDITOR.replace( 'compose_editor', {
+					width:500,
+					uiColor: '#6C518F',
+					toolbar: [
+								{ name: 'basicstyles' , items : [ 'Bold','Italic','TextColor',"BGColor", 'NumberedList','BulletedList'  ] },
+								{ name: 'tools', items : [ 'Maximize','-' ] },
+							],
+					removePlugins : 'elementspath',
+					on:
+					{
+					'instanceReady': function(evt) {
+
+						 var tags = ['p', 'ol', 'ul', 'li']; // etc.
+
+					        for (var key in tags) {
+					        	evt.editor.dataProcessor.writer.setRules(tags[key],
+					                {
+					                    indent : false,
+					                    breakBeforeOpen : false,
+					                    breakAfterOpen : false,
+					                    breakBeforeClose : false,
+					                    breakAfterClose : false
+					                });
+					        }
+					//Set the focus to your editor
+					CKEDITOR.instances.compose_editor.focus();
+					}
+					},
+				});
+			}
+		});
+}
+
+function compose_mail(){
+
+	var iddd = addLoadingImage($("#compose_mail"), "before","loading_small_purple.gif",0 ,21 );
+	$("#compose_mail").hide();
+	
+	var temp_path_info_arr = {};
+	var temp_path_info_inner_arr = {};
+	//var temp_path_attachment_arr = {};
+	
+	$.each( $("div#temp_uploads_info span"), function( key, value ) {
+
+		temp_path_info_inner_arr = {};
+		
+		temp_path_info_inner_arr.ts_file_name 			= $(this).attr("ts_file_name");
+		temp_path_info_inner_arr.ts_file_size 			= $(this).attr("ts_file_size");
+		temp_path_info_inner_arr.ts_actual_file_name 	= $(this).attr("ts_actual_file_name");
+
+		temp_path_info_arr['index_'+key] = temp_path_info_inner_arr;
+		//temp_path_attachment_arr[key] = temp_path_info_inner_arr.ts_actual_file_name;
+	});
+
+
+		var iddd = addLoadingImage($("#compose_mail"), "before","loading_small_purple.gif",0 ,21 );
+		$("#compose_mail").hide();
+
+
+		// checking uploaded attachments size for not greater than 20 MB
+		// on first ajax call and then
+		// on success call enquiry compose ajax call
+		
+		jQuery.ajax({
+			url : "/" + PROJECT_NAME + "admin/enquiry/check-attachments-size",
+			type : "POST",
+			dataType : "json",
+			data: {
+		         	'uploads' 	: temp_path_info_arr,
+		          },
+		     timeout: 600000,
+		     success: function(jsonData) {
+		         if(jsonData == 1)
+		         {
+					$.ajax({
+						url : "/" + PROJECT_NAME + "admin/enquiry/compose-mail",
+						method : "POST",
+						data: {
+			            	'uploads' 			: temp_path_info_arr,
+			            	'receiver_ids' 		: $('input#selected_user_ids').val(),
+			            	'receiver_emails' 	: $('input#receiver_ids').val(),
+			            	'subject' 			: $('input#subject').val(),
+			            	'message_body'		: nl2br(CKEDITOR.instances.compose_editor.getData()),
+			              },
+						type : "post",
+						dataType : "json",
+						beforeSend : function(){
+			
+							$("span#"+iddd).remove();
+							$("#compose_mail").show();
+							$('div#compose_form').bPopup().close();
+							$("div#temp_uploads_info").empty();
+			
+				        	// clear all other fields
+							$('div.enquiry-labelspan-outer  input[type=text][id=receiver_ids]').val('');
+							$('div.enquiry-labelspan-outer  input[type=text][name=subject]').val('');
+							
+							//clear ckeditor
+							if (CKEDITOR.instances['compose_editor']) {
+								CKEDITOR.instances['compose_editor'].setData('');
+								CKEDITOR.instances['compose_editor'].destroy();
+								
+							}
+							// clear uploaded image div
+							$( "div.dz-complete" ).remove();
+							$( "div.dz-message" ).show();
+						},
+						success : function(jsonData) {
+							if(jsonData == 1)
+							{
+								showDefaultMsg("You have sent imail.", 1);
+								
+					        }
+							else if(jsonData == 0)
+							{
+								$("span#"+iddd).remove();
+								$("#compose_mail").show(); 
+							 }
+					         else
+					         {
+					            showDefaultMsg("Error while posting imail.", 2); 	
+					         }			
+						}
+					});
+
+		         }
+		         else if(jsonData == 0)
+				 {
+					$("span#"+iddd).remove();
+					$("#compose_mail").show(); 
+					$( "div#dialog_file_size_compose" ).dialog( "open" );
+				 }
+		         else
+		         {
+		        		showDefaultMsg("Error while posting imail.", 2); 	
+		         }
+		     }      
+		});
+		
+
+}
+
+</script>
+
+<div id="compose_form" class = "popup transparent_border" style = "display: none;">
+	<div class="enquiry-pop-outer">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1 enquiry-pop-hdr">
+			<div id="forgot-password" class="left ">
+				<h2>Compose Enquiry</h2>
+			<img class="close_bpopup"
+			src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+			title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		
+		<div class = "content" >
+			<form name="compose_form" id="compose_form">
+					
+				<div id="show_selected_email"></div>
+				<div class="enquiry-labelspan-outer  select_user">
+				<input type="text"  ondblclick="openUserList()" name="receiver_ids" 
+				id = "receiver_ids" value = "" placeholder="Select users">	
+				</div>
+				<div class="enquiry-labelspan-outer send">
+				 	<input value="Send" type="button" class ='btn btn-large' id = 'compose_mail'/>
+				</div>
+				
+				<div class="enquiry-labelspan-outer subject">
+				<input type="text" name="subject" id = "subject" value = "" placeholder="Subject">
+					
+				</div>
+				<div class="enquiry-labelspan-outer ">
+					<textarea name = 'compose_editor' id='compose_editor' class = 'enquiry'></textarea>
+				</div>
+				
+			<input type="hidden" id= "email_id" name="email_id"  value =""/>
+			<input type="hidden" id= "type" name="type" value ="<?php echo Extended\message::MSG_TYPE_GENERAL; ?>">
+			<input type="hidden" id= "sender_id" name="sender_id" value ="">
+			<input id="selected_user_ids" type="hidden" value="" name="selected_user_ids">
+	
+		<!-- input type = "hidden" name="selected_user_ids_display" id = "selected_user_ids" value = ""/-->
+		
+			</form>
+			<div class="enquiry-labelspan-outer">
+				<span class="inputfield">
+					<!-- <div id = 'temp_uploads_info' ></div>-->
+					<div style="width:500px; float:left; height:150px; margin-bottom:20px;margin-top:20px; overflow-x:auto;">
+						<form class = "dropzone" action="/<?php echo PROJECT_NAME ?>/admin/enquiry/move-uploaded-files-to-temp-location">
+						</form>	
+					</div>
+				</span>
+			</div>
+				
+		</div>	
+				
+		
+		</div>
+	</div>
+	
+<div style="display:none; z-index: 115;" id="dialog_file_size_compose" title="File Size">
+	Total Attachment size should not exceed 20 MB
+</div>

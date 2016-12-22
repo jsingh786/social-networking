@@ -1,0 +1,162 @@
+<?php
+$this->headTitle()->prepend('i-Profile');
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/get_tooltip.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/iprofile.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/iprofile.css" );
+$personalinfo = $this->personalInfo; ?>
+<!-- Content Right Left Starts -->
+<?php	
+		
+	echo $this->partial('partials/profile_menu.phtml');
+?>
+<style type="text/css">
+.purple-header-bot .left {
+	width: 100% !important;
+}
+
+.invite-connect-pop-outer {
+	z-index: 2000 !important;
+	top: 12px !important;
+	left: -766% !important;
+	float: left;
+}
+
+.min-accord-open {
+	background: none repeat scroll 0 0 #4D356F !important;
+	border: 0 none !important;
+	border-radius: 0 0 0 0 !important;
+	color: #FFFFFF !important;
+	float: none !important;
+	font-weight: normal !important;
+	margin: auto !important;
+	padding: 2px 15px !important;
+	display: inline-block;
+	text-align: center !important;
+	font-size: 15px;
+}
+
+.purple-header-bot {
+	width: 98%;
+}
+
+.accord-content {
+	background: none repeat scroll 0 0 #FFFFFF !important;
+	border: 0 none !important;
+	border-radius: 0 0 0 0 !important;
+	color: #48545E !important;
+	float: left;
+	font-family: opensansregular;
+	font-size: 13px;
+	margin: 0 0 0 1px !important;
+	padding: 1% !important;
+	width: 98% !important;
+}
+</style>
+<script>
+
+$(function() {
+	var icons = {
+	header: "ui-icon-circle-arrow-e",
+	activeHeader: "ui-icon-circle-arrow-s"
+	};
+	$( "div.accordion" ).accordion({
+		active:true,
+		icons: icons,
+		collapsible: true,
+		heightStyle: "content"
+	}),
+	$( "#toggle" ).button().click(function()
+	{
+		if ( $( "div.accordion" ).accordion( "option", "icons" ) ) 
+		{
+			$( "div.accordion" ).accordion( "option", "icons", null );
+		}
+		else 
+		{
+			$( "div.accordion" ).accordion( "option", "icons", icons );
+		}
+	});
+});
+
+
+</script>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<form name="feedback-request" id="feedback-request" action=""
+		method="post">
+		<input type="hidden" name="req_id" id="req_id"
+			value="<?php echo @$this->userId;?>">
+
+		<!-- Photo Album Starts -->
+		<div class="photoalbum-outer">
+			<div class="photoalbum-hdr">
+				<h2 class="text-grey2">Feedback</h2>
+				<div class="photoalbum-addnew2">
+					8 <a
+						style="border-right: 1px solid #c4c4c4; padding: 0 10px 0 0; margin: 0 10px 0 0;"
+						class="text-purple-link" href="javascript:;">Feedback Provided</a>
+					0 <a
+						style="border-right: 1px solid #c4c4c4; padding: 0 10px 0 0; margin: 0 10px 0 0;"
+						class="text-purple-link" href="javascript:;">Pending Requests</a>
+					<a target="_blank" class="text-purple-link" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>mail/compose/type/<?php echo \Extended\message::MSG_TYPE_FEEDBACK_REQ; ?>">Request Feedback</a>
+					<img src="images/icon-feedback-hover.png" width="13" height="15" />
+				</div>
+
+
+			</div>
+			<div class="feedback-hdr-bot">
+				<div class="fl text-grey2">
+					<h3>
+						<font class="text-purple">4</font> Messages
+					</h3>
+				</div>
+				<div class="fr text-grey3">
+					<font class="text-purple">2</font> Visible &nbsp;&nbsp;<font
+						class="text-purple">2</font> Hidden
+				</div>
+			</div>
+			<div class="accordion">
+<?php
+				if (@$this->feedbackRequest) 
+				{
+					foreach ( $this->feedbackRequest as $feedbackRequest ) 
+					{
+?>				
+			<h3 class="accord-open  text-white">Feedback Title</h3>
+				<div class="accord-content feedback-content">
+					<div class=" feedback-content-top">
+						<div class="fl text-grey2">September 29, 2012</div>
+						<div class="fr">
+							<div class="col1">
+								<a href="#">Delete<span></span></a>
+							</div>
+							<div class="col2">
+								<a href="#">Hide<span></span></a>
+							</div>
+						</div>
+					</div>
+
+					<!-- Contact section start -->
+					<div class=" feedback-content-bot">
+						<div class="left">
+							<img src="<?php echo IMAGE_PATH;?>/icon-phone.png" width="60"
+								height="60" />
+						</div>
+						<div class="right text-grey2">
+							<p><?php echo $feedbackRequest->getSender_msg();?></p>
+						</div>
+					</div>
+					<!-- End Contact section start -->
+
+					<!-- End project section -->
+					<!-- Purple Header Ends -->
+				</div> 
+<?php
+					}
+			}
+?>
+                 </div>
+		</div>
+	</form>
+</div>
+<!-- Content Right Right Ends -->

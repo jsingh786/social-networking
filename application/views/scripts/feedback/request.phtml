@@ -1,0 +1,117 @@
+<!-- Title -->
+<?php
+$this->headTitle ()->prepend ( 'Request Feedback' );
+?>
+<!-- Including JS -->
+<?php
+
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/request_feedback.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/feedback.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/jQuery.bPopup.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/overlay/center.jquery.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/js/tokenInput/token-input-facebook.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/sdmenu_feedback.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/request_feedback.css" );
+echo $this->render ( "partials/add_contacts_popup.phtml" );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<style type="text/css">
+.cke_editable {
+    background:black !important;
+}
+</style>
+<?php 
+$links_str = Auth_UserAdapter::getIdentity()->getLink_list()
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2>Request Feedback</h2>
+		</div>
+		<div class="feedback-hdr-bot"></div>
+		<!-- Content -->
+		<div class="mail-sendmsg-outer">
+<?php 
+			if( $links_str )
+			{	
+?>		
+			<form name="request_feedback_form" id="request_feedback_form" action="" method="post">
+				<!-- Col 2 Starts-->
+				<div style="display: none;" id="request_receiver_ids_holder"></div>
+				<div class="mail-sendmsg-col2">
+					<span class="mail-span"> 
+						<select class="font-arial dropdown" name="requester_links" id="requester_links">
+<?php
+							//Logged in user i.e provider.
+							$current_user = Auth_UserAdapter::getIdentity()->getId();
+
+							$user['links'] = explode(",", $links_str );
+							echo"<option value=''>Select</option>";
+							foreach( $user['links'] as $link )
+							{
+								//Converting id to object.
+								$link_obj = \Extended\ilook_user::getRowObject( $link );
+								if($link_obj)
+								{
+										echo"<option rel=".$link_obj->getId()." value=".$link_obj->getId().">".$link_obj->getFirstname()." ".$link_obj->getLastname()."</option>";
+								}
+							}
+?>
+					</select>
+					</span>
+					<span class="mail-span">
+						<select class="font-arial dropdown" name="requester_jobs" id="requester_jobs">
+							<option value="">Select</option>
+							<?php 
+							if( $this->student == 1 )
+							{
+							 	echo "<option value='student'>Student</option>";
+							}
+							if( $this->home_maker == 1 )
+							{
+								echo "<option value='student'>Home Maker</option>";
+							}
+							if( $this->jobs )
+							{
+								foreach( $this->jobs as $job )
+								{
+									echo "<option value='".$job." (Working Experience)'>".$job." (Working Experience)</option>";
+								}
+							}
+							?>
+						</select>
+					</span>
+				</div>
+				<div class="mail-sendmsg-col2-content">
+					<textarea rows="" cols="" style="font-size:13px;width: 97%; border: 1px solid rey; min-height: 170px; margin-bottom: 20px; text-align:left; resize: none;" class="font-arial textarea" name="requester_msg" id="requester_msg">Please provide Feedback</textarea>
+				</div>
+				<div class="mail-save-draft btm_btns">
+				<div class="fr fr_cancel">
+						<input type="button" title="Clear" value="Clear" class="btn-white" name="" id="cancel">
+					</div>
+					<div class="fr_btn fr">
+						<input type="button" title="Request Feedback" value="Request Feedback" class="btn-dark-purple" name="" id="send_request">
+					</div>
+					
+
+				</div>
+				<!-- Col 2 Ends-->
+			</form>
+<?php 
+			}
+			else
+			{
+				echo '<div class="no_messages">You have no links to request feedback.</div>';
+			}	
+?>			
+		</div>
+	 <!--Send feedback Request Ends -->
+	</div>
+</div>
+

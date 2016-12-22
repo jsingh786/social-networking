@@ -1,0 +1,133 @@
+@CHARSET "ISO-8859-1";
+div#ilook_dt_wrapper table#jquery_dt tr td a.view
+{
+	background: url("../../images/view.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+	margin: 0 2px;
+	cursor: pointer;
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.view:HOVER
+{
+	background: url("../../images/view_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.edit
+{
+	background: url("../../images/edit-icon-txt.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 16px;
+    width: 20px;
+	cursor: pointer;
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.edit:HOVER
+{
+	background: url("../../images/edit-icon-hdr.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+div#ilook_dt_wrapper table#jquery_dt tr td a.disable
+{
+ 	background: rgba(0, 0, 0, 0) url("../../images/disable_user_small.png") no-repeat scroll 0 0;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    width: 25px;
+	margin : 0 8px 1px 0;
+
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.disable:HOVER
+{
+	background: url("../../images/disable_user_hover_small.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+div#ilook_dt_wrapper table#jquery_dt tr td a.enable
+{
+ 	background: rgba(0, 0, 0, 0) url("../../images/disabled_user_small.png") no-repeat scroll 0 0;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    width: 25px;
+	margin : 0 8px 1px 0;
+
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.enable:HOVER
+{
+	background: url("../../images/disabled_user_hover_small.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+div#ilook_dt_wrapper table#jquery_dt tr td a.delete
+{
+	background: url("../../images/recycle_bin.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+	margin: 0 2px;
+	cursor: pointer;
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.delete:HOVER
+{
+	background: url("../../images/recycle_bin_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+div#ilook_dt_wrapper span.buttons
+{	
+	display: inline-block;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: -17px;
+    width: 50px;
+}
+div#ilook_dt_wrapper span.buttons span#delete_records
+{
+	background: url("../../images/recycle_bin_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+	cursor: pointer;
+}
+div#ilook_dt_wrapper span.buttons span#delete_records:hover
+{
+	background: url("../../images/recycle_bin_hover_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+div#ilook_dt_wrapper span.buttons span#disable_records
+{
+	background: url("../../images/disable_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 47px;
+    width: 50px;
+	cursor: pointer;
+}
+div#ilook_dt_wrapper span.buttons span#disable_records:hover
+{
+	background: url("../../images/disable_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+div#ilook_dt_wrapper span.buttons span#enable_records
+{
+	background: url("../../images/disable_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 47px;
+    width: 50px;
+	cursor: pointer;
+}
+div#ilook_dt_wrapper span.buttons span#enable_records:hover
+{
+	background: url("../../images/disable_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+div.content label {
+    float: left;
+}
+
+input#expiry_date {
+	background-color : #fff !important;
+	cursor : text !important;
+}
+
+select, input[type="file"]{
+	height : 35px !important;
+}
+div.ui-datepicker
+{
+	font-size : 12px !important;
+}

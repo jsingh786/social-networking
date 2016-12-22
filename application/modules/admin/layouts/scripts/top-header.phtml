@@ -1,0 +1,14 @@
+<div class="update-nag">
+	<p class="toplinks-outer" style="width: 480px;">
+		<span class="text">Logged in as,</span> 
+		<a class="profile"
+			href="/<?php echo PROJECT_NAME;?>admin/profile/index/id/<?php echo Auth_AdminAdapter::getIdentity()->getId(); ?>"
+			title='<?php echo Auth_AdminAdapter::getIdentity()->getFirstname().' '.Auth_AdminAdapter::getIdentity()->getLastname(); ?>'>
+<?php
+echo Helper_common::showCroppedText(Auth_AdminAdapter::getIdentity()->getFirstname().' '.Auth_AdminAdapter::getIdentity()->getLastname(), 20 );
+?></a>(<?php echo Auth_AdminAdapter::getIdentity()->getRole()->getName() ?>)&nbsp;&nbsp;|&nbsp;&nbsp; <img
+			src="<?php echo PUBLIC_PATH;?>/images/lock.png" border="0" /> <a
+			href="/<?php echo PROJECT_NAME.'admin/authenticate/logout';?>"
+			title="Logout" class="logout"> Logout </a>
+	</p>
+</div>

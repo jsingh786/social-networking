@@ -1,0 +1,57 @@
+<!--  script for tracking sign up page -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64030551-2', 'auto');
+  ga('send', 'pageview', '/registered');
+
+</script>
+<style>
+div#registrationSuccess
+{
+	margin: 20px auto;
+	display: block;
+	text-align: center;
+}
+.content
+{
+	background: none repeat scroll 0 0 white;
+    border: 4px double silver;
+    width: 935px;
+}
+.content-right
+{
+	margin:0 0 0 16px;
+}
+.space {
+    height: 180px;
+}
+.success_div p {
+    border: 1px solid #12a85d;
+    font-weight: bold;
+    line-height: 25px;
+    margin-left: 24%;
+    padding: 2%;
+    width: 465px;
+}
+</style>
+
+<div id = "registrationSuccess">
+	<div class="space"></div>
+	<div class="success_div">
+	<p>
+<?php 
+		if( $this->message )
+		{
+			echo $this->message;
+		}
+?>
+	</p>
+	</div>
+</div>
+</div>
+<?php echo $this->partial('partials/layout_footer.phtml');
+?>

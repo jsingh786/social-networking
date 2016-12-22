@@ -1,0 +1,161 @@
+<?php
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/get_tooltip.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links_menu.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.stylish-select.js" );
+
+?>
+<div class="content-right">
+<style type="text/css">
+.linkprofile-outer .col1-img{
+	float:none !important;
+	display:table-cell !important;
+	height:102px !important;
+	width:102px !important;
+	text-align:center !important;
+	vertical-align:middle !important;
+}
+.linkprofile-outer .col1-img img{
+	max-width:100px !important;
+	max-height:100px !important;
+}
+.quickview-outer{
+top:115px !important;
+left:0px !important;	
+}
+.quickview-outer-second{
+top:115px !important;
+left:-136px !important;	
+}
+.quickview-outer-third{
+top:115px !important;
+left:-272px !important;	
+}
+.quickview-outer-four{
+top:115px !important;
+left:-408px !important;	
+}
+.arrow-first{
+	margin:0 0 1px 41px !important;
+}
+.arrow-second{
+	margin:0 0 1px 179px !important;
+}
+.arrow-third{
+	margin:0 0 1px 314px !important;
+}
+.arrow-four{
+	margin:0 0 1px 453px !important;
+}
+.quickview-top-right .right .botlinks .col1{
+	width:100% !important;
+}
+.quickview-top-right .right .toplinks{
+	border:none;
+}
+.tag-popup{
+	height:195px !important;
+}
+.notes-popup-outer{
+	margin:14px 0 0 5px !important;
+}
+</style>
+<?php 
+	echo $this->partial ( 'partials/link_menu.phtml' );
+?>
+<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Photo Album Starts -->
+		<div class="photoalbum-outer">
+			<div class="photoalbum-hdr">
+				<h2 style="width: auto;" class="text-grey2">
+					<font class="text-purple2"></font> Bookmarked Profiles
+					<div class="addnew-links">
+						<a class="text-purple-link" href="javascript:;">Add New Bookmarked Groups</a>
+						<img src="<?php echo IMAGE_PATH;?>/icon-connection-hover.png" width="16" height="15" align="absmiddle" />
+					</div>
+				</h2>
+				<div class="photoalbum-addnew">
+					<h3 class="text-purple2">Bookmarked users for my profile</h3>
+				</div>
+				<div class="bookmarks-hdr-text1" style="margin-top: 0px">
+					<div class="links-needhelp-right">
+						<a class="text-grey3-link" href="javascript:;">Need Help</a> 
+						<img src="<?php echo IMAGE_PATH;?>/help-icon.png" width="20" height="20" align="absmiddle" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="linkprofile-container">
+			<!-- Link Profile Outer Starts -->
+			<div class="linkprofile-outer">
+			<?php 
+			$i=0;
+			foreach(@$this->bookmarkedProfiles as $bookmarked){
+				Zend_Debug::dump($this->bookmarkedProfiles);die;
+				$i++;
+				$mod_clas=$i%4;
+				
+				if($mod_clas==1){
+					$arrow_class="arrow-first";
+					$quickview_class="quickview-outer";
+				}
+				else if($mod_clas==2){
+					$arrow_class="arrow-second";
+					$quickview_class="quickview-outer-second";
+				}
+				else if($mod_clas==3){
+					$arrow_class="arrow-third";
+					$quickview_class="quickview-outer-third";
+				}
+				else if($mod_clas==0){
+					$arrow_class="arrow-four";
+					$quickview_class="quickview-outer-four";
+				}
+			?>
+				<!-- Col1 Starts -->
+				<div class="col1" style="position:relative !important;" id="col1_<?php echo $bookmarked->getBookmark_profilesAssignByUser()->getId();?>">
+				<div class="<?php echo $quickview_class;?>  quickview-outer" style="display:none;" id="view-outer_<?php echo $bookmarked->getBookmark_profilesAssignByUser()->getId();?>" popup-state="off">
+						<div class="<?php echo $arrow_class;?>">
+							<img src="<?php echo IMAGE_PATH;?>/arrow-purple2.png" width="36" height="22" />
+						</div>
+						<div class="quickview" id="view_<?php echo $bookmarked->getBookmark_profilesAssignByUser()->getId();?>" style="height:600px !important;">
+						   <!-- user records view.... -->
+						</div>
+					</div>
+				<!-- Quick-View-Ends -->
+					<div class="col1-img">
+						<a href="javascript:;" id="<?php echo $bookmarked->getBookmark_profilesAssignByUser()->getId();?>" onclick="getTooltip(this)"> 
+						<?php 
+						$filename="images/profile/big_thumbnails/thumbnail_".$bookmarked->getBookmark_profilesAssignByUser()->getProfessional_image();
+						if($bookmarked->getBookmark_profilesAssignByUser()->getProfessional_image()!="" && file_exists($filename)){
+							$img_name=IMAGE_PATH."/profile/big_thumbnails/thumbnail_".$bookmarked->getBookmark_profilesAssignByUser()->getProfessional_image();
+						}
+						else{
+							$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+						}
+						?>	
+						<img src="<?php echo $img_name;?>" />
+						</a>
+					</div>
+					<div class="col1-text1">
+						<font class="text-purple2"> 
+						<a class="text-purple2-link" href="javascript:;"><?php echo $bookmarked->getBookmark_profilesAssignByUser()->getFirstname()." ".$bookmarked->getBookmark_profilesAssignByUser()->getLastname();?> </a>
+						</font> 
+						
+					</div>
+				
+				</div>
+				<!-- Col1 Starts -->
+				<?php 	
+					}
+				?>
+				<!-- Quick-View-Starts -->
+				
+			</div>
+
+		</div>
+		<!-- Content Right Right Ends -->
+
+	</div>
+	<!-- Content Right Ends -->
+

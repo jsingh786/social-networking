@@ -1,0 +1,192 @@
+.job-detail-col1 p label {
+    float: left !important;
+    margin: 10px 0 0 !important;
+    padding: 0 !important;
+    width: 250px !important;
+	clear: both;
+    float: left;
+}
+.job-detail-col1 p span.job_span {
+    float: left;
+    margin: 7px 0 0;
+    padding: 0;
+/*     width: 250px; */
+}
+
+div.photoalbum-hdr div.job-detail-col1 span.add_info
+{
+	margin: 12px 0 0;
+}
+.job_detail_p{
+  padding-top: 2px;
+    text-align: justify;
+    word-wrap: break-word;
+}
+.job-detail-col1 {
+    float: left !important;
+/*     margin: 0 0 20px !important; */
+    padding: 0 0 10px !important;
+    width: 100% !important;
+}
+.job-detailh4{
+	color: #6C518F;
+    font-size: 12px;
+/* 	margin-bottom:7px; */
+	text-transform : uppercase;
+}
+.job-detail-btn-outer {
+    float: left !important;
+	margin: 0 0 4px 73px !important;
+    padding: 0 0 10px !important;
+	text-align:right;
+}
+
+.job-detail-btn-outer input {
+    margin-right: 3px !important;
+}
+
+.job-detail-col1-img {
+    border: 1px solid #E8E8E8;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+.job-detail-col1-detail {
+    float: left;
+    margin: 0px 0 0 10px;
+    padding: 0;
+    width: 86%;
+    word-wrap: break-word;
+}
+input#saved_job{
+	background-color:#B3B3B3;
+	cursor:auto;
+}
+input#job_applied{
+	background-color:#B3B3B3;
+	cursor:auto;
+}
+.need-help-text
+{
+	  text-align: right !important;
+}
+div.job_detail_img_inner{
+	   display: table-cell;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+	
+}
+div.job_detail_img_outer
+{
+	border: 1px solid #C0C0C0;
+    display: inline-block;
+    float: left;
+    height: 60px;
+    margin:0 !important;
+    padding: 0;
+    width: 60px;
+	
+}
+.job-hdr-top 
+{
+	 color: #6C518F !important;
+}
+.btn-purple-lt 
+{
+	background: none repeat scroll 0 0 #6C518F !important;
+}
+.text-bold
+{
+	font-weight:bold;
+}
+
+/* start renew pop up css*/
+.ui-dialog{
+	width:460px !important;
+}
+.ui-dialog .ui-dialog-content{
+	height:auto !important;
+}
+.job_expiry_date{
+	width:57% !important;
+	margin:0 !important;
+}
+.ui-dialog-content{
+	text-align:center !important;
+}
+.hasDatepicker{
+	text-align:center !important;
+}
+.ui-datepicker-inline{
+	margin:auto !important;
+}
+/* end renew pop up css*/
+
+a.jobdetail-save{
+	background:url(../../images/save-icon3.png) no-repeat left center;
+	padding:0 15px 0 22px;
+	text-decoration:none;
+	height:20px !important;
+	color: #707070;
+	float:right;
+	line-height:22px;
+	width: 65px;
+	text-align: left;
+}
+a.jobdetail-save:hover{
+	text-decoration:none !important;
+	background:url(../../images/save-icon3-hover.png) no-repeat left center;
+	color: #b084e9;
+}
+a.jobdetail-share{
+	background:url(../../images/share-icon3.png) no-repeat left center;
+	padding:0 15px 0 27px;
+	float:right;
+	text-decoration:none;
+	height:20px !important;
+	color: #707070;
+	line-height:22px;
+	
+}
+a.jobdetail-share:hover{
+	text-decoration:none !important;
+	background:url(../../images/share-icon3-hover.png) no-repeat left center;
+	color: #b084e9;
+}
+a.jobdetail-apply{
+	background:url(../../images/apply-icon.png) no-repeat left center;
+	padding:0 15px 0 20px;
+	text-decoration:none;
+	height:20px !important;
+	color: #707070;
+	float:right;
+	line-height:22px;
+	margin:0 20px 0 20px;
+	
+}
+a.jobdetail-apply:hover{
+	text-decoration:none !important;
+	color: #b084e9;
+	background:url(../../images/apply-icon-hover.png) no-repeat left center;
+}
+div.job-btns {
+    clear: both;
+    display: block;
+    float: right;
+    margin-top: 40px;
+}
+a.job-applied-by-me
+{
+	cursor:default;
+}
+
+/** Need to use this as someone has used ui-dialog class to write CSS **/
+div.ui-dialog.login_popup
+{
+	width :200px !important;
+}
+/************************************************************************/

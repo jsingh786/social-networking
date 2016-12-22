@@ -1,0 +1,100 @@
+
+div#send_report_abuse_mail_box {
+    background: #ffffff none repeat scroll 0 0;
+    float: left;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 491px;
+}
+
+div.profile_pic_small {
+    float:left; width:32px; margin:0 5px 0 5px;
+}
+div.profile_pic_small img{width:100%;}
+
+div.profile_pic_medium {
+	float:left;
+}
+div.post_data {
+	float:left;
+	width:70%; margin-left:3%;
+}
+.user_info_content span{float:left; line-height:32px;}
+    
+.user_post_content {
+    margin: 10px 0 0 60px;
+}  
+    
+
+input.send_cancel_mail {
+    display: block;
+    float: right;
+}
+    
+input.send_rprt_abuse_mail {
+    width: 30px;
+/* 	margin-right:10px; */
+}
+
+.default_msg {
+    padding: 10px 10px 10px 20px;
+}
+
+.user_info_content {
+    margin: 10px 0 0 0;
+float:left;
+}
+div.post_content
+{
+	   border: 3px solid #f2f2f2;
+    height: auto;
+/*     min-height: 200px; */
+   width: 340px;
+	float:left; margin-top:5px;
+}
+div.post_content textarea{ margin:0;}
+
+span.post_update_type_info {
+    float: left;
+    font-weight: bold;
+    margin: 0 0 3px;
+    width: 100%;
+}
+span.user-name{ color: #6e6e6e;
+    font-size: 11px;
+    font-weight: normal;}
+
+div#send_cancel_mail
+{
+  	display: block;
+    float: right;
+    margin: 10px 26px 0 0;
+    padding: 10px 0;
+}
+
+div.share-hdr2-lt.send_mail_collage
+{
+   float: left;
+    margin: 0;
+    padding: 0;
+}
+
+div.post_content.post_content_collage
+{
+    min-height: 256px;
+    width: 375px;
+}
+
+div.share-hdr2-lt.send_mail_profile_photo
+{
+	 float: left;
+    margin: 0;
+}
+
+.post_info{float:left; padding:10px; width:100%; box-sizing:border-box;}
+.orig_post_content{width:100%; margin:5px 0 0 0;}
+.orig_post_content a{word-wrap: break-word;}
+.share-hdr2-lt.collage_text {
+    width: 100%;
+}

@@ -1,0 +1,33 @@
+
+.un-editable-outer h3 a{
+	float:right;
+}
+.un-editable-outer h3 span{
+	text-transform:none !important;
+	font-family: 'ArialNarrowRegular' ;
+	color:#000 !important;
+font-weight:bold;
+}
+.proj_dates{
+	color:#BEBEBE !important;
+	font-size:12px !important;
+}
+.proj_descrip{
+
+	margin-top:6px !important;
+	font-size:12px !important;
+}
+.proj_occu{
+	font-size:14px !important;
+	color:#000 !important;
+}
+.proj_url{
+	color:#48545E !important;
+	font-size:12px !important;
+}
+.exp_location{
+	font-size:12px !important;
+}
+img.edit-new-icon{
+	width:20px;
+}

@@ -1,0 +1,65 @@
+<?php
+/*
+ * This file is made for handling pagination.
+ * 
+ */
+if ($this->pageCount) :
+	
+	// you need to add each of the request parameters to url
+	$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+	// remove the system parameters, $this->url will put them back
+	
+	$actionn = $params ['action'];
+	$controllerr = $params ['controller'];
+	
+	unset ( $params ['module'] );
+	unset ( $params ['controller'] );
+	unset ( $params ['action'] );
+	unset ( $params ['page'] );
+?>
+<div class="paginationControl">
+	<!-- Previous page link -->
+<?php
+	
+if (isset ( $this->previous )) :
+		$temp_2 = array_merge ( array ('page' => $this->previous ), $params );
+		$url = Helper_common::createUrlForZendPagination ( $temp_2, $controllerr, $actionn )?>
+     	<a href="<?php echo $url;//echo $this->url( array_merge(array('page' => $this->previous), $params ) ); ?>">
+		PREVIOUS 
+		</a> 
+		<span class="bar"> | </span>
+      	<?php else: ?>
+      	<span class="disabled">PREVIOUS</span> <span class="bar"> | </span>
+		<?php endif; ?>
+		<!-- Numbered page links -->
+		<?php foreach ($this->pagesInRange as $page): ?>
+<?php
+		
+			if ($page != $this->current) :
+			$temp_2 = array_merge ( array ('page' => $page ), $params );
+			$url = Helper_common::createUrlForZendPagination ( $temp_2, $controllerr, $actionn )?>
+	    	<a href="<?php echo $url; //echo $this->url( array_merge(array('page' => $page), $params ) ); ?>">
+	        <?php echo $page; ?>
+	    	</a> 
+	    	<span class="bar"> | </span>
+	  		<?php else: ?>
+	    	<?php echo $page; ?> <span class="bar"> | </span>
+	  		<?php endif; ?>
+		<?php endforeach; ?>
+		<!-- Next page link -->
+<?php
+	
+if (isset ( $this->next )) :
+		$temp_3 = array_merge ( array ('page' => $this->next ), $params );
+		$url = Helper_common::createUrlForZendPagination ( $temp_3, $controllerr, $actionn )?>
+  		<a href="<?php echo $url; //echo $this->url( array_merge(array('page' => $this->next), $params ) ); ?>">
+		NEXT 
+		</a>
+		<?php else: ?>
+  			<span class="disabled">NEXT </span>
+		<?php endif; ?>
+		</div>
+
+<?php
+endif;
+?>

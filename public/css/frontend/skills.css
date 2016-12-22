@@ -1,0 +1,136 @@
+
+div.accord-content {
+   margin-top: 6px;
+}
+div.slide-down-inner
+{
+	cursor: pointer;
+}
+div.slide-down-content-left
+{
+	margin-left: 0px; margin-top: 6px;
+}	
+
+/* div.slide-down-inner-container div.col1
+{
+	float: left !important; width: 66px ! important; display: block;
+} */
+.contact-details {
+    margin: 20px 0 10px!important;
+}
+
+.contact-label-span2 {
+    min-height: 35px!important;
+}
+.contact-label-span2 label {
+	padding: 0!important;
+}
+
+.contact-label-span2 span {
+	margin: 0 0 0 1%!important;
+}
+.contact-label-span2 label {
+	margin: 5px 0 0!important;
+}
+
+.contact-label-span2 span input[type="text"] {
+	margin: 0!important;
+}
+
+body {
+    background: url("../../images/body-bg.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    font-family: Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+}
+div.accord-content {
+    clear: both;
+    float: right;
+    height: auto;
+    width: 100%;
+}
+.slide-down-inner {
+    margin: 0 0 5px 0!important;
+}
+div#edit_controls
+{
+    clear: both;
+    float: right;
+    margin-bottom: 11px;
+    padding: 0 18px;
+    text-align: right;
+}
+div#edit_controls img#edit
+{
+	margin-top: 5px;
+	cursor: pointer;
+}
+div#edit_controls label#done_edit
+{
+	margin-top: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	color: #6C518F;
+	display: none;
+	height: 25px;
+	line-height: 30px;
+}
+div.delete-icon {
+ 	cursor: pointer;
+    position: absolute;
+    right: 22px;
+    top: 4px;
+    width: 20px;
+}
+span.delete_loading
+{
+	position: absolute;
+    right: -41px;
+}
+.slide-down-inner-container, .slide-down-inner-container .col1 {
+margin: 0 !important;
+ text-align: center;}
+
+
+<!--added 11th feb-->
+ 
+div.slide-down-inner-container
+{
+	text-align: center; display: none; margin-left:0 !important;
+}
+
+div.slide-down-inner-container div.col1
+{
+	float: left !important; width: 15% ! important; display: block;
+	margin: 0 2% 0 0 !important;
+	width: 64px !important;
+}
+
+.slide-down-inner-container .col1 a {
+/*     border: 2px solid #DDDDDD !important; commented as only purple border required according to testing team*/
+  padding: 5px !important;
+}
+
+.more_skill_supporter {
+    border-top: 1px solid #DEDEDE;
+    float: left;
+    margin: 10px 0 0;
+    padding: 5px 0 0;
+    text-align: right;
+    width: 100%;
+}
+
+
+.more_skill_supporter > a {
+    color: #6C518F;
+    text-decoration: none;
+}
+
+
+div.slide-down-inner-container .col1:nth-child(6) {
+    margin-right: 0 !important;
+}
+a.supporter_name
+{
+	width:100%;
+	float:left;
+}

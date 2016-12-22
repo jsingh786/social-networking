@@ -1,0 +1,239 @@
+<!-- Title -->
+<?php
+$this->headTitle ()->prepend ( 'Pending Request' );
+?>
+<!-- Including CSS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/reference_request_pending.js" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/pending_request.css" );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Photo Album Starts -->
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2>Pending Reference</h2>
+		</div>
+<?php
+if ($this->paginator) {
+	if ($this->paginator->getTotalItemCount ()) {
+?>				
+		<div class="feedback-hdr-bot">
+			<div class="fr">
+				<h3 class="sub-heading-arial-narrow">
+					<font class="text-purple my-pending-ref-requests"><?php echo $this->unread_reference_requests;?></font>
+					Reference Requested
+				</h3>
+			</div>
+			<div class="fr"></div>
+		</div>
+			<!-- Col3 Starts -->
+			<div class="col3">
+			<div class="new-border-space" ></div>
+				<div  class="fl text-grey3">
+<?php
+		$query_str = "";
+		foreach ( $this->prms as $key => $p ) {
+			if ($key == "controller" || $key == "action" || $key == "module" || $key == "list_len") {
+				continue;
+			}
+			
+			$query_str .= $key . "=" . $p . "&amp;";
+		
+		}
+?>
+						VIEWS <a class="text-grey3-link" style="margin-left: 5px"
+						href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>reference-request/pending-request?".$query_str."list_len=10";?>"><?php echo $this->prms["list_len"] == 10 ? "<b>10</b>" : '10'?></a>
+					| <a class="text-grey3-link"
+						href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>reference-request/pending-request?".$query_str."list_len=20";?>"><?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?></a>
+					| <a class="text-grey3-link"
+						href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>reference-request/pending-request?".$query_str."list_len=30";?>"><?php echo $this->prms["list_len"] == 30 ? "<b>30 </b>" : '30 '?></a>
+					| <a class="text-grey3-link"
+						href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>reference-request/pending-request?".$query_str."list_len=all";?>"><?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?></a>
+				</div>
+				<div class="fr  text-grey3">
+<?php
+					echo $this->paginationControl ( $this->paginator, 'Sliding', 'partials/pagination.phtml' );
+?>							
+				</div>
+			</div>
+<?php
+	}
+}
+?>					
+				<!-- Col3 Ends -->
+
+
+<?php
+if ($this->recieved_reference_requests == true) {
+	?>
+		
+
+		<!-- Mail Hdr  -->
+		<div class="mail-all-hdr">
+			<div class="fl">
+				<a href="javascript:;" class="text-purple-link">&nbsp;</a>
+			</div>
+			<div class="fr ">
+
+				<div class="col1">
+<?php
+	if(isset($this->prms["id"]) && isset($this->prms["list_len"])){
+		$pagingParameters="?id=".$this->prms["id"]."&list_len=".$this->prms["list_len"];
+	}
+	else{
+		$pagingParameters="";
+	}
+
+	if ($this->order == 'asc') {
+		?>				
+				<a class="text-purple-link text-white" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>reference-request/pending-request/order/desc".$pagingParameters; ?>">BY DATE 
+				<img width="15" height="15" align="absmiddle" src="<?php echo PUBLIC_PATH;?>/images/arrow1.png" />
+				</a>
+<?php
+	} else {
+		?>				 
+				<a class="text-purple-link text-white" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>reference-request/pending-request/order/asc".$pagingParameters; ?>">BY DATE 
+					<img width="15" height="15" align="absmiddle" src="<?php echo PUBLIC_PATH;?>/images/arrow2.png" />
+				</a>
+<?php
+	}
+	?>
+			
+				</div>
+			</div>
+		</div>
+		<!-- Mail Hdr -->
+
+		<!-- Mail Hdr col1 -->
+<?php
+	if ($this->paginator) {
+		if ($this->paginator->getTotalItemCount ()) {
+			$i = 0;
+			foreach ( $this->paginator as $ref_req ) {
+				$i ++;
+				$mod_clas = $i % 3;
+				
+				if ($mod_clas == 1) {
+					$arrow_class = "arrow-first";
+					$quickview_class = "quickview-outer";
+				} else if ($mod_clas == 2) {
+					$arrow_class = "arrow-second";
+					$quickview_class = "quickview-outer-second";
+				} else if ($mod_clas == 0) {
+					$arrow_class = "arrow-third";
+					$quickview_class = "quickview-outer-third";
+				}
+				?>			
+		<div class="mail-grey-hdr-col1">
+			<div class="chkbx-img">
+				<div class="prof-img">
+					<a
+						href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_req->getReference_requestRequester_user()->getId();?>">
+						<img style="max-width:50px; max-height:50px;" src="<?php echo Helper_common::getUserProfessionalPhoto($ref_req->getReference_requestRequester_user()->getId(), 3 );?>"/></a>
+				</div>
+			</div>
+			<div class="mid">
+				<h4 class="font-arial">
+					<a class="text-purple" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_req->getReference_requestRequester_user()->getId();?>" style="color:#6C518F!important;text-decoration: none;"><?php echo $ref_req->getReference_requestRequester_user()->getFirstName();?></a>
+				</h4>
+<?php				
+						if( $ref_req->getRequested_as() )
+						{
+							echo"<p class='ref_as'>";
+							echo $ref_req->getRequested_as();
+							echo"</p>";
+						}
+						else
+						{
+							//Nothing
+						}
+						if( $ref_req->getRequest_for_the_position() )
+						{
+						echo"<p class='for_position'>";
+						echo $ref_req->getRequest_for_the_position();
+						echo"</p>";
+						}
+						else
+						{
+							//Nothing.
+						}
+		
+?>
+
+			</div>
+			<div class="right">
+				<div class="top"><?php echo $ref_req->getCreated_at()->format('F j, Y'); ?></div>
+				<div class="bot"></div>
+			</div>
+			<div class="quotes-outer">
+				<div class="quotes-lt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-start.jpg"/>
+				</div>
+				<div class="quotes-mid">
+<?php 
+
+				if (strlen ( $ref_req->getRequester_msg () ) <= 300) 
+				{
+?>
+					<p class="p_all_note_text">	
+<?php
+						echo nl2br($ref_req->getRequester_msg ());
+?>
+					</p>
+<?php
+				} 
+				else 
+				{
+?>
+					<div id="full_text_<?php echo $ref_req->getId(); ?>" class="full_text">
+						<p id="p_all_note_text_<?php echo $ref_req->getId(); ?>" class="full_note">
+<?php
+							echo nl2br($ref_req->getRequester_msg ());
+?>
+						</p>
+						<span title="show less" rel ="<?php echo $ref_req->getId(); ?>" class="show_less">less</span>
+					</div>
+					<div id="clickable_text_div_<?php echo $ref_req->getId(); ?>" class="clickable_text">
+						<p class="clickable_note" rel="<?php echo $ref_req->getId(); ?>">
+<?php
+							echo Helper_common::showCroppedText ( $ref_req->getRequester_msg (), 300 );
+?>	
+						</p>
+						<span title="show more" rel ="<?php echo $ref_req->getId(); ?>" class="show_more">more</span>
+					</div>
+<?php
+				}
+?>			
+				</div>
+					<!--  <div class="quotes-rt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-end.jpg"/></div>-->
+			</div>	
+			<div class="btn-long-bot">
+				<a class="text-dark-purple" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>/reference-request/provide-reference/rid/<?php echo $ref_req->getId();?># <?php echo $ref_req->getReference_requestRequester_user()->getId();?>" style="text-decoration: none;">
+				Accept & Provide Reference
+				</a>
+			</div>
+		</div>
+<?php
+			}
+		}
+	}
+} else {
+?>
+
+
+		<div class="mail-grey-hdr-col1-new">
+
+			<div class="no_messages">
+				<div class="no_messages-img"><img src="<?php echo IMAGE_PATH; ?>/empty-folder.png"></div>
+				<div class="no_messages-data">This folder is empty</div>
+			</div>
+		</div>
+<?php
+}
+?>
+		<!-- Mail Hdr col1 -->
+	</div>
+	<!-- Photo Album Ends -->
+</div>
+<!-- Content Right Right Ends -->

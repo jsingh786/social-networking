@@ -1,0 +1,187 @@
+.mail-grey-hdr-col1 .chkbx-img {
+    padding: 0 0 0 12px;
+} 
+.btn-purple {
+    font-size: 12px;
+    padding: 0 9px 2px;
+}
+.mail-grey-hdr-col1-new
+{
+	background: none repeat scroll 0 0 #fff;
+    float: left;
+    margin: 0 0 0 -1px;
+    min-height: 737px;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+	
+}
+p.no_feedbacks
+{
+	position:relative;
+	left:222px;
+	width:200px;
+	font-family: opensansregular;
+    font-size: 13px;
+	color: #A0A0A0;
+	text-align: center;
+}
+.col3 {
+ 	background: none repeat scroll 0 0 #fff;
+    float: left;
+    margin: 0 0 0 0;
+    padding: 0 4% 10px 4%;
+    width: 92% !important;
+}
+.col3 .fl{ margin-top:10px;}
+.col3 .fr{ margin-top:10px;}
+
+.text-grey3 {
+    color: #A0A0A0 !important;
+}
+
+
+.prof-img
+{
+ 	border: 1px solid #808080;
+    display: table-cell;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    width: 50px;
+}
+
+.mail-grey-hdr-col1 .mid
+{
+	width:70% !important;
+	float:left;
+}
+.mail-grey-hdr-col1 .chkbx-img {
+   
+    width: 50px !important;
+}
+
+.mail-grey-hdr-col1 .right .top 
+{
+	float: right !important;
+
+}
+
+.mail-grey-hdr-col1 .right .mid 
+{
+	
+	float: right !important;
+}
+
+.mail-grey-hdr-col1 .right
+{
+	width:12% !important;
+}
+
+.btn-long-bot {
+    clear: both;
+    float: right;
+    margin: 5px 5px 0 0;
+    width: auto;
+}
+.mail-all-hdr .fr .col1 img {
+    margin: 0 0 0 0px !important;
+}
+a.text-white
+{
+	color: white !important;
+}
+.text-dark-purple:hover
+{
+	text-decoration: underline !important;
+}
+
+.feedback-hdr-bot .fr {
+    margin: 5px 0 0 0 !important;
+}
+p.full_note {
+	cursor: default;
+	display:inline;
+	word-wrap:break-word;
+}
+
+p.clickable_note {
+	cursor: default;
+	display:inline;
+	word-wrap:break-word;
+}
+p.p_all_note_text
+{
+
+	word-wrap:break-word;
+}
+div.full_text
+{
+	display:none;
+}
+span.show_less , span.show_more
+{
+	cursor: pointer;
+	font-weight : bold;
+}
+div.mid p.ref_as
+{
+	padding-bottom:12px !important;
+}
+.quotes-outer
+{
+	float: left;
+    margin:0;
+    padding: 12px 0 0 0;
+    width: 100%;
+}
+.quotes-lt
+{
+	float: left;
+    margin:0;
+    padding: 0;
+    width: 30px;
+}
+.quotes-mid
+{
+	float: left;
+    margin: 7px 0 0;
+    max-width: 94%;
+    padding: 0 0 10px;
+}
+.quotes-rt
+{
+	width:7%;
+	margin:0;
+	padding:0;
+	float:left;
+	height:100%;
+}
+div.mid p.for_position
+{
+	padding-bottom: 12px !important;
+}
+div.mid p.fdbk_as
+{
+	padding-bottom: 12px !important;
+}
+div.mid h4 {
+    text-transform: capitalize !important;
+}
+div.no_messages {
+    background-color: #ffffff;
+    float: left;
+    font-size: 29px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+}
+div.no_messages {
+    font-size: 29px;
+    text-align: center;
+}
+.no_messages-data {
+    color: #808080;
+    font-size: 17px;
+    margin: 10px 0 0;
+}

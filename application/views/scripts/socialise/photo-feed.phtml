@@ -1,0 +1,473 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Photo-Feed');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/jquery.autogrow-textarea.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/photo_feed.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/photo_detail.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/view-popup-fullscreen.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/import_contacts.js" );
+
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/tokenInput/token-input-facebook.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_feed.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_detail.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/import_contacts.css" );
+//Partials
+echo $this->partial ( 'partials/move_photo_to_other_album.phtml' );
+echo $this->partial ( 'partials/import_gmail_contacts_popup.phtml' );
+
+//==========================================
+// Start Blueimp jQuery-File-Upload includes
+//==========================================
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload.css" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/tmpl.min.js" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-process.js" );
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-validate.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-image.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-ui.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/jquery.fileupload-jquery-ui.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/Blueimp-jQuery-File-Upload/main.js" );
+
+//========================================
+// End Blueimp jQuery-File-Upload includes
+//========================================
+
+//Adding partial for unlink popup
+echo $this->partial('partials/yahoo_login_popup.phtml');
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+
+echo $this->partial ( 'partials/photos-popup.phtml' );
+echo $this->partial ( 'partials/report_abuse_options.phtml' );
+echo $this->partial ( 'partials/who_liked_popup.phtml' );
+echo $this->partial ( 'partials/who_shared_popup.phtml' );
+echo $this->partial ( 'partials/share_photo_feed_popup.phtml' );
+
+$inviteYourContactsHtml = '';
+$inviteYourContactsHtml .= '<div id="sticky-anchor"></div>';
+$inviteYourContactsHtml .= '<div id="sticky" class="invite-mails-outer">';
+$inviteYourContactsHtml .= '<div class="invite-mails-hdr">Invite your Mail Contacts</div>';
+$inviteYourContactsHtml .= '<div class="invite-mails-data">';
+$inviteYourContactsHtml .= '<a id="gmail" href="javascript:;"><img src="'.IMAGE_PATH.'/gmail-icon2.png"  alt=""/> <span>Gmail</span></a>';
+$inviteYourContactsHtml .= '</div>';
+$inviteYourContactsHtml .= '<form action="#" id = "more_ways_to_connect_frm" onsubmit="return false">';
+$inviteYourContactsHtml .= '<div class="invite-your-mail">';
+$inviteYourContactsHtml .= '<input type="text" placeholder="Emails separated by semi-colons." id="more_ways_to_connect" value="" name="more_ways_to_connect">';
+$inviteYourContactsHtml .= '<input id="more_ways_to_connect_btn" name="more_ways_to_connect_btn" value="Send" type="button">';
+$inviteYourContactsHtml .= '</div>';
+$inviteYourContactsHtml .= '</form>';
+$inviteYourContactsHtml .= '</div>';
+?>
+
+<!-- Content Right Right Starts -->
+
+<div class="socialise-content">
+
+<div id = "socialise-banner" class="socialise-banner2-closed">
+
+<!-- Socialise hdr Starts -->
+	<div class="socialise-rt-hdr">
+		<h1>DISPLAY</h1>
+		<div class="menu">
+			<div class="col2 sltd">
+				<a href="#" class="sltd"><span class="sltd">Photo Feed</span></a>
+			</div>
+			<div class="col2">
+				<a href="/<?php echo PROJECT_NAME;?>profile/photo-albums"><span>Photo Albums</span></a>
+			</div>
+		</div>
+	</div>
+	<!-- Socialise hdr Ends -->
+</div>
+
+
+	<div class="socialise-share-photo">
+		<h2 class="text-purple2">Share Professional Photos</h2>
+		<h5>(Projects, Portfolios, Team Lunch, Office Parties, Leaving Parties, Christmas/New Year Part...)</h5>
+	</div>
+	
+	<div class="socialise-share-photo2">
+
+<!-- The file upload form used as target for the file upload widget -->
+<div class = "multi-photo-upload">
+	<form id="fileupload" action="" method="POST" enctype="multipart/form-data">
+	    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+	    <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+	    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+	    <div class="fileupload-buttonbar">
+	        <div class="fileupload-buttons">
+	            <!-- The fileinput-button span is used to style the file input field as button -->
+	            <span class="fileinput-button">
+	                <span>Add Photos...</span>
+	                <input type="file" name="files[]" multiple id = "add_photos" title="Add Photos">
+	            </span>
+	            <span class="fileinput-button">
+	                <span>Create Photo Album...</span>
+	                <input type="file" name="files[]" multiple id = "create_album" title="Create Photo Album">
+	            </span>
+	            <span>
+	               <input type = "text" maxlength = "30" name = "Album_title" value = "" placeholder = "Untitled Album" id = "album_title">
+	               <!-- '1' for just photos and '2' for photo album -->
+	               <input type = "hidden" name = "just_photos_or_photo_album" value = "1" id = "just_photos_or_photo_album">
+	            </span>
+	            <!-- The global file processing state -->
+	            <span class="fileupload-process"></span>
+	        </div>
+	        <!-- The global progress state -->
+	        <div class="fileupload-progress fade" style="display:none">
+	            <!-- The global progress bar -->
+	            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+	            <!-- The extended global progress state -->
+	            <div class="progress-extended">&nbsp;</div>
+	        </div>
+	    </div>
+	    
+	    <textarea name="photo_text_ckeditor" maxlength="255" id="photo_text_ckeditor"
+					style="width: 96%; height: 40px; margin:10px 0; border: 1px solid #e6e5e6; padding: 3px; font-family: arial;"
+					cols="" rows="" placeholder="Say something about this..."></textarea>
+	   
+	    <!-- The table listing the files available for upload/download -->
+	    <div class="presentation-outer">
+	   	 <table style="width:100%;" role="presentation"><tbody class="files"></tbody></table>
+	    </div>
+	</form>
+</div>
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <div class="template-download fade">
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+			
+            {% if (file.error) { %}
+                <div><span class="error">Error</span> {%=file.error%}</div>
+            {% } %}
+
+               <button class="delete remove_thumb" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}><img src="<?php echo IMAGE_PATH; ?>/cross-white2.png" alt="X" title="Remove"  width="10px" height="10px" /></button>
+				<textarea maxlength=255 rel="{%=file.name%}" class="add_photo_desc" id="photo_desc" style="" class="" placeholder="Add description"></textarea>
+        </div>
+		
+    {% } %}
+
+</script>
+		
+		
+<!-- End Blueimp jQuery-File-Upload -->
+	
+		<form
+			action="/<?php echo PROJECT_NAME ?>socialise/post-photos"
+			method="POST" id="photo_feed" enctype="multipart/form-data">
+<!-- 			<div class="col1"> -->
+<!-- 				Select Photo from your computer -->
+			<!--  	<input name="photo" alt="Browse" title="Browse" type="file" style="width: 196px;" /> -->
+<!-- 			</div> -->
+			<div class="col2">
+				<div id = "post_btn" class="col3">
+					<div class="photofeed-privacy"  id="win-xp6">
+						<select name="privacy" id="privacy">
+							<option value="<?php echo \Extended\wall_post::VISIBILITY_CRITERIA_PUBLIC?>">Public</option>
+							<option value="<?php echo \Extended\wall_post::VISIBILITY_CRITERIA_LINKS?>">Links</option>
+							<option value="<?php echo \Extended\wall_post::VISIBILITY_CRITERIA_LINKS_OF_LINKS?>">Links of Links</option>
+						</select>
+					</div>
+					<a class="fl" href="javascript:;" id="share">
+						<img src="<?php echo IMAGE_PATH; ?>/btn-share.png" alt="Share" title="Share" width="102" height="27" />
+					</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="socialise-content-lt">
+
+		<div class="news-update">
+			<div class="news-update-heading">
+				<h3>Updates</h3>
+				<input type="hidden" name="is_socialize" value="1" id="is_socialize">
+				<input type="hidden" name="offsettt" value="0" id="offsettt"> 
+				<input type="hidden" id="my_user_id" value="<?php echo Auth_UserAdapter::getIdentity()->getId();?>"> 
+				<input type="hidden" id="my_small_image" value="<?php echo Helper_common::getUserProfessionalPhoto( Auth_UserAdapter::getIdentity()->getId(), 3 ); ?>">
+				<input type="hidden" id="offset_who_liked" value="0">
+				<input type="hidden" id="limit_who_liked" value="10">
+				<input type="hidden" id="offset_who_shared" value="0">
+				<input type="hidden" id="limit_who_shared" value="10">
+				<input type="hidden" id="wallpost_wish_nbotif" value="">
+				
+				<!-- 				For comment listing in popup. -->
+				<input type="hidden" name="isThisSocializeWall" value="1" id="isThisSocializeWall">
+
+			</div>
+			<div id="updates_holder">
+				<!-- 				Populate photo feeds here. -->
+			</div>
+		</div>
+	</div>
+	<div class="socialise-content-rt">
+
+
+
+
+
+		<!--  Wish Section -->
+<?php
+if( $this->wishes_collec )
+{
+?>	
+	<div id="sticky-anchor"></div>
+	<div class="wish-outer wish_stick" id="sticky">
+			<div class="wish-hdr">WISH</div>
+	<?php 
+	foreach ( $this->wishes_collec as $wishes )
+	{
+	?>
+				<div class = "wish-content-outer">
+	<?php	
+		switch ( \Extended\wishes::getDiscriminatorValue($wishes) )
+		{
+			//new_link_wishes
+			case 1:
+	?>
+			<div class="no-pointer wish-data icon-add-people" id="<?php echo $wishes->getId(); ?>">
+				<div class="wish-data-lt">
+					<img alt="" width="40" height="40"
+						src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+				</div>
+				<div class="wish-data-rt">
+					<div class="wish-data-rt-text">
+						<a class="text-purple2-link wish_about_user_name" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'/profile/iprofile/id/'.$wishes->getIlookUser()->getId(); ?>"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+						has a new <a class="text-purple2-link" href="javascript:;">Link</a>
+					</div>
+					<div class="wish-data-rt-img">
+						<div class="icon-add-people"></div>
+						<!-- img alt="" src="<?php echo IMAGE_PATH; ?>/icon-add-people.png"-->
+					</div>
+					<div class="wish-data-rt2">
+						<div class="wish-data-rt2-lt">
+<?php
+	                		$new_link_obj = \Extended\ilook_user::getRowObject( $wishes->getLink_ilook_user_id(), TRUE );
+?>
+<?php						
+							echo '<a style="text-decoration:none;" href = "'.PROJECT_URL.'/'.PROJECT_NAME.'/profile/iprofile/id/'.$new_link_obj->getId().'">';	
+	                    	echo'<h4 style="cursor:pointer" >';
+							echo $new_link_obj->getFirstname()." ".$new_link_obj->getLastname(); 
+
+							echo'</h4>';
+							echo '</a>';
+
+	                        echo  Helper_common::getUserProfessionalInfo( $new_link_obj->getId(),true );
+?>
+
+	                    </div>
+						<div class="wish-data-rt2-rt">
+							<img width="40" height="40" alt="" src="<?php echo Helper_common::getUserProfessionalPhoto( $new_link_obj->getId(), 3 );?>">
+						</div>
+					</div>
+				</div>
+				<div class="wish-bot-text"></div>
+			</div>
+<?php
+			break;
+			
+			//new_job_wishes
+			case 2:
+?>
+			 <!-- Second option -->
+			<div class="wish-data icon-bag" id="<?php echo $wishes->getId(); ?>" onclick = "populateWishPopup( <?php echo $wishes->getId(); ?> )">
+				<div class="wish-data-lt">
+					<img width="40" height="40" alt=""
+						src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+				</div>
+				<div class="wish-data-rt">
+					<div class="wish-data-rt-text">
+						<a class="text-purple2-link wish_about_user_name" href="javascript:;"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+						has a new <a class="text-purple2-link" href="javascript:;">Job</a>
+					</div>
+					<div class="wish-data-rt-img">
+						<!-- <div class="icon-bag"></div> -->
+						<!--  img alt="" src="<?php echo IMAGE_PATH; ?>/icon-bag.png"-->
+					</div>
+					<div class="wish-bot-text"><?php echo $wishes->getUnderlying_text(); ?></div>
+				</div>
+				
+			</div>
+			<!-- Second option -->
+<?php			
+			break;
+			
+			//job_anniversary_wishes
+			case 3:
+?>
+	        <!-- Third option -->
+			<div class="wish-data icon-anniversary" id="<?php echo $wishes->getId(); ?>" onclick = "populateWishPopup( <?php echo $wishes->getId(); ?> )">
+				<div class="wish-data-lt">
+					<img width="40" height="40" alt=""
+						src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+				</div>
+				<div class="wish-data-rt">
+
+					<div class="wish-data-rt-text">
+						<a class="text-purple2-link wish_about_user_name" href="javascript:;"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+						having a work Anniversary
+					</div>
+					<div class="wish-data-rt-img">
+						<div class="icon-anniversary"></div>
+						<!--  img alt="" src="<?php echo IMAGE_PATH; ?>/icon-anniversary.png"-->
+					</div>
+					<div class="wish-bot-text"><?php echo $wishes->getUnderlying_text(); ?></div>
+				</div>
+			</div>
+			<!-- Third option -->
+			
+<?php
+			break;
+			
+			//birthday_wishes
+			case 5:
+?>
+	        <!-- Fourth option -->
+			<div class="wish-data icon-bday" id="<?php echo $wishes->getId(); ?>" onclick = "populateWishPopup( <?php echo $wishes->getId(); ?> )">
+				<div class="wish-data-lt">
+					<img width="40" height="40" alt=""
+						src="<?php echo Helper_common::getUserProfessionalPhoto( $wishes->getIlookUser()->getId(), 3 );?>">
+				</div>
+				<div class="wish-data-rt">
+					<div class="wish-data-rt-text">
+						<a class="text-purple2-link" href="javascript:;"><?php echo $wishes->getIlookUser()->getFirstname()." ".$wishes->getIlookUser()->getLastname(); ?></a>
+						celebrating Birthday Today
+					</div>
+					<div class="wish-data-rt-img">
+						<div class="icon-bday"></div>
+						<!-- img alt="" src="<?php echo IMAGE_PATH; ?>/icon-bday.png" -->
+					</div>
+					<div class="wish-bot-text"><?php echo $wishes->getUnderlying_text(); ?></div>
+				</div>
+			</div>
+			<!-- Fourth option -->
+<?php
+			break;
+			
+			default:
+				;
+			break;
+		}
+?>
+
+			<!------------- Wish Popup Starts ------------>
+			<!-------------------------------------------->
+			<div class="wish-pop-outer" id = "<?php echo $wishes->getId(); ?>">
+				<div class="wish-pop-arrow">
+					<img src="<?php echo IMAGE_PATH; ?>/arrow-purple3.png">
+				</div>
+
+				<div class="wish-pop-bot" id = "wish_<?php echo $wishes->getId();?>" >
+				</div>
+			</div>
+			<!-------------------------------------------->
+			<!------------- Wish Popup Ends -------------->
+			<!-------------------------------------------->
+
+	</div>
+<?php		
+		
+		
+	}	
+?>	
+  		
+<?php 
+		if( $this->is_more_wishes)
+		{
+			echo'<div class="see_more_wishes job-content view_more">';
+			echo'<p class="see_more_wishes_p" >';
+			echo'<a href="'.PROJECT_URL.'/'.PROJECT_NAME.'wishes/" class="see_more_wishes_text text-dark-purple">';
+			echo'View More';
+			echo'</a>';
+			echo'</p>';
+			echo'</div>';
+		}
+?>
+		</div>
+<?php 
+		if($this->is_more_wishes )
+		{
+			echo '<input type="hidden" id = "offsett" value="10"/>';
+			echo '<input type="hidden" name="recordLimit" id="recordLimit" value="10"/>';
+		}
+
+	}
+	else
+	{
+		echo $inviteYourContactsHtml;
+	}
+?>
+		
+	</div>
+</div>
+<!-- Content Right Right Ends -->
+<!-- Dialog Box -->
+<div id="dialog_delete_comment" title="Delete Comment">
+	<p>
+		Want to delete this comment?
+	</p>
+</div>
+<div id="dialog_delete_comment_in_popup" title="Delete Comment">
+	<p>
+		Want to delete this comment?
+	</p>
+</div>
+<div id="dialog_confirm" title="Delete Comment">
+	<p>
+		Want to delete this comment?
+	</p>
+</div>
+<div id="dialog_success_share" title="Share Photo">
+	<p>
+		successfully.
+	</p>
+</div>
+<div id="dialog_confirm_delete_wallpost" title="Delete Wallpost">
+  <p>
+  	Are you sure you want to delete your post?
+  </p>
+</div>
+<div id="dialog_confirm_comment2" title="Delete Comment" style = "display:none;height:66px !important;">
+	<p>
+  		Are you sure you want to delete this comment?
+  	</p>
+</div>
+
+<!--  script for tracking display page -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64030551-2', 'auto');
+  ga('send', 'pageview', '/photo-feed');
+
+</script>

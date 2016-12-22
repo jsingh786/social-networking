@@ -1,0 +1,73 @@
+<?php
+$this->headTitle()->prepend('News');
+
+?>
+<style type="text/css">
+.news-detail-outer {
+	text-align: justify;
+	width: 99%;
+}
+
+.news-detail-heading {
+	border: none;
+}
+
+p {
+	margin-top: 12px;
+	font-size: 14px;
+}
+</style>
+<!-- Content Right Right Starts -->
+<div class="socialise-content">
+	<!-- Col1 -->
+	<div class="news-content-outer">
+		<div class="news-detail-heading">
+			<h2 style="margin-bottom: 5px; font-weight: bold; border-bottom: 1px solid #C4C4C4;">
+            		<?php echo $this->heading;?>
+            		<a class="text-purple2-link"
+					style="float: right; font-size: 15px; margin-top: 8px; margin-right: 2px"
+					href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>news/"> &lt;&lt;
+					News </a>
+			</h2>
+			<p style="font-weight: bold; font-size: 13px;"><?php
+			$timestamp = strtotime ( $this->date );
+			$newDate = date ( 'l, F j, g:iA ', $timestamp );
+			echo $newDate;
+			?> </p>
+			<!--div class="tweet-outer" style="margin-top: 10px;"><img width="324" height="22" src="<?php echo IMAGE_PATH?>/twitter-fb-ilook.png"></div-->
+		</div>
+		<div class="news-detail-outer">
+	
+		<?php /* if no image available*/
+			if($this->img[0])	{
+				echo '<img src="'. $this->img[0].'" />';
+			 }
+
+			echo '<b style="font-size: 14px;">'.$this->introduction.'</b>';
+			$paragraphNews = $this->paragNews;
+		if(!empty($paragraphNews)) {
+			$html ="<p>";
+			for($i = 0; $i < count ( $paragraphNews ); $i += 3) {
+
+				if(isset($paragraphNews [$i])) {
+					$html.= $paragraphNews [$i].' ';
+				}
+				if(isset($paragraphNews [$i+1])) {
+					$html.= $paragraphNews [$i+1].' ';
+				}
+				if(isset($paragraphNews [$i+2])) {
+					$html.= $paragraphNews [$i+2].' ';
+				}
+			}
+			$html.="</p>";
+			echo $html;
+		}
+
+		?>
+		</div>
+
+	</div>
+	<!-- Col1 -->
+
+</div>
+<!-- Content Right Right Ends -->

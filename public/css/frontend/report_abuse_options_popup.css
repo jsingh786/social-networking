@@ -1,0 +1,27 @@
+
+div#report_abuse_popup_box {
+    background: #ffffff none repeat scroll 0 0;
+    border: 5px solid #ffffff;
+    float: left;
+    margin: 0;
+    max-height: 400px;
+    min-height: auto;
+    overflow-y: auto;
+   	width: 387px;
+	padding:10px;
+	 box-sizing: border-box;
+}
+.report-abuse-option{ width:100%; float:left; margin:0 0 0 0;}
+
+.report-abuse-option input{ margin:0px 5px 10px 0; float:left;}
+
+#report_abuse_actions_form .btn-outer {
+    box-sizing: border-box;
+    padding: 0 0 0 0;
+    margin:5px 0 0 0;
+   
+}
+div#report_abuse_popup_box label
+{
+	cursor:pointer;
+}

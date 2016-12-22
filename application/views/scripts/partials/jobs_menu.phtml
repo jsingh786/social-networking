@@ -1,0 +1,279 @@
+<!-- Content Right Left Starts -->
+<?php
+
+$this->headScript()->prependFile( PUBLIC_PATH . "/js/frontend/sdmenu.js" );
+$this->headScript()->prependFile( PUBLIC_PATH . "/js/frontend/job_menu.js" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/jobs.css" );
+
+$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+$current_user = Auth_UserAdapter::getIdentity()->getId();
+$saved_searches = \Extended\saved_search::getAllSavedSearchesForAUser( $current_user);
+if(count($saved_searches)>0)
+{
+?>
+<style type="text/css">
+	.group-popup-top span
+	{
+		background: none repeat scroll 0 0 transparent !important;
+	    float: left !important;
+	    margin-left: 7px;
+	    margin-top: 7px;
+	    width: 32px !important;
+	}
+	.group-popup-btn span
+	{
+		background: none repeat scroll 0 0 transparent !important;
+	    float: left !important;
+	    margin-left: 7px;
+	    margin-top: 7px;
+	    width: 65px !important;
+	}
+	.grouplist
+	{
+			display:block;
+			float:left;
+			width:100% !important;
+	}
+	.group-popup-mid
+	{
+			height:auto !important;
+			max-height:170px !important;
+	}
+	.update_save_search {
+		float:right !important;
+	}
+}
+	</style>
+<?php 
+}
+else
+{
+?>
+	<style type="text/css">
+	.update_save_search {
+		float:right !important;
+	}
+	.grouplist
+	{
+		display:none;
+		float:left;
+		width:100% !important;
+	}
+	.group-popup-mid
+	{
+		height:auto !important;
+		max-height:87px !important;
+	}
+	</style>
+<?php 
+}
+?>
+<!-- Content Right Left Ends -->
+<div class="content-right-left">
+	<div id="grp-pop" class="nav-popup-outer main-group-popup" style="display:none">
+		<div class="tag-popup-arrow">
+			<img width="26" height="16" src="<?php echo IMAGE_PATH; ?>/arrow-popup.png">
+		</div>
+	    <div class="groupdiv">
+	    	
+	    </div>
+	</div>
+	<div class="heading">
+		<h1>JOBS</h1>
+	</div>
+	<!-- Slide Nav Starts -->
+	<div class="sdmenu" id="my_menu" style="float: left; margin-top:50px;">
+		<h3 class = "menuSepratorHeading">
+      	Job Seeker
+      	</h3>
+	
+		<div  class = "" >
+	       	<span style = "display:none;">Recommended Jobs</span><!-- hidden -->
+	        <a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."job/recommended-jobs" ?>">Recommended Jobs</a>
+      	</div>
+	    <div  class = "" >
+	        <span style = "display:none;">Search Jobs</span>
+	        <a id = "mimic_parent" href='<?php echo "/".PROJECT_NAME."job/search-jobs" ?>'>Search Jobs</a>
+	  	</div>
+      <div class="collapsed" id = "saved_search_holder">
+        <span class="Saved_Job_Searches">
+        	Saved Job Searches
+        </span>
+			<a class="tag-cross edit-pencil" href="javascript:;" onclick="loadSavedSearchesPopup(this);" name="getnav" id="<?php echo Auth_UserAdapter::getIdentity()->getId();?>">
+				<img id ="edit_saved_serach_img" width="16" height="16" title="Edit" alt="Edit" src="<?php echo IMAGE_PATH; ?>/icon-pencil2.png">
+			</a>
+<?php 
+		$saved_searches = \Extended\saved_search::getAllSavedSearchesForAUser( Auth_UserAdapter::getIdentity()->getId() );
+		if($saved_searches)
+		{
+			foreach ( $saved_searches as $saved_search )
+			{
+?>        
+	        	<a class="cross-outer" rel ="<?php echo $saved_search->getId(); ?>" href="<?php echo "/".PROJECT_NAME."job/search-jobs/search_id/".$saved_search->getid(); ?>" title = "<?php echo $saved_search->getSave_search_name(); ?>" id = "search_<?php echo $saved_search->getId(); ?>" >
+	        		<?php echo Helper_common::showCroppedText( $saved_search->getSave_search_name() ,15 ); ?>
+	        	</a>
+<!-- 	        	<label id = "search_<?php echo $saved_search->getid(); ?>" class = "remove_search"  onclick ="deleteSavedSearch(this);" rel="<?php echo $saved_search->getid(); ?>">
+	        		<img  style="cursor:pointer"  id="delete_saved_search_<?php echo $saved_search->getid();?>" class ="delete_saved_search" src="<?php echo IMAGE_PATH; ?> /cross-white.png"/>
+ 	        	</label> -->
+<?php 
+			}
+		}	
+?>        
+      </div>
+       <div class="collapsed">
+        <span style = "display:none;"
+<?php 
+		if
+		( 
+			($params['controller'] == "job" && $params['action'] == "my-applications")
+		)	
+		echo "class='selected'";
+?>	
+        >Applications
+        </span>
+<?php 
+			if( $params['controller'] == "job" && $params['action'] == "my-applications" )
+			{
+			echo '<a id = "mimic_parent" class="current" href="#">Applications</a>';
+			}
+			else
+			{
+			echo '<a id = "mimic_parent" href="/'.PROJECT_NAME.'job/my-applications">Applications</a>';
+			}
+?>
+      </div>
+       <div class="collapsed">
+		
+        <span style = "display:none;"     
+<?php 
+			if(($params['controller'] == "job" && $params['action'] == "saved-jobs"))	
+			echo "class='selected'";
+?>	
+		>
+		Saved Jobs
+		</span>
+<?php 
+			if( $params['controller'] == "job" && $params['action'] == "saved-jobs" )
+			{
+				echo '<a id = "mimic_parent" class="current" href="#">Saved jobs</a>';
+			}
+				else
+			{
+				echo '<a id = "mimic_parent" href="/'.PROJECT_NAME.'job/saved-jobs">Saved Jobs</a>';
+			}
+?> 
+      </div>
+<?php
+		$userCountryName = Auth_UserAdapter::getIdentity()->getUsersCountry()->getName();
+		$monster_country_arr = array(	\Extended\job::MONSTER_JOB_COUNTRY_IN,
+										\Extended\job::MONSTER_JOB_COUNTRY_DE,
+										\Extended\job::MONSTER_JOB_COUNTRY_CA,
+										\Extended\job::MONSTER_JOB_COUNTRY_NL,
+										\Extended\job::MONSTER_JOB_COUNTRY_US,
+										\Extended\job::MONSTER_JOB_COUNTRY_UK,
+										\Extended\job::MONSTER_JOB_COUNTRY_FR
+									);
+
+
+
+		if(in_array($userCountryName,$monster_country_arr)) {
+
+?>
+       <div class="collapsed">
+        <span
+<?php
+
+			if(
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs") ||
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs-uk") ||
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs-de")||
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs-ca")||
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs-us")||
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs-nl")||
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs-fr")||
+			  ($params['controller'] == "job" && $params['action'] == "monster-jobs-in")
+					)
+			echo "class='selected'";
+?>	
+		>
+		Monster Jobs
+		</span>
+<?php
+		if($userCountryName == \Extended\job::MONSTER_JOB_COUNTRY_US) {
+			if( $params['controller'] == "job" && $params['action'] == "monster-jobs-US" )
+				echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right"></label>Jobs in US</a>';
+			else
+				echo '<a href="/'.PROJECT_NAME.'job/monster-jobs-US"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "pending_ref_uread_count" ></label>Jobs in US</a>';
+
+		}
+
+		if( $userCountryName == \Extended\job::MONSTER_JOB_COUNTRY_UK) {
+			if( $params['controller'] == "job" && $params['action'] == "monster-jobs-UK" )
+				echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right"></label>Jobs in UK</a>';
+			else
+				echo '<a href="/'.PROJECT_NAME.'job/monster-jobs-UK"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "pending_ref_uread_count" ></label>Jobs in UK</a>';
+
+		}
+
+		if( $userCountryName == \Extended\job::MONSTER_JOB_COUNTRY_CA) {
+			if( $params['controller'] == "job" && $params['action'] == "monster-jobs-ca" )
+				echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right"></label>Jobs in Canada</a>';
+			else
+				echo '<a href="/'.PROJECT_NAME.'job/monster-jobs-ca"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "received_ref_unread_count" ></label>Jobs in Canada</a>';
+
+		}
+
+		if( $userCountryName == \Extended\job::MONSTER_JOB_COUNTRY_DE) {
+			if( $params['controller'] == "job" && $params['action'] == "monster-jobs-de" )
+				echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right"></label>Jobs in Deutschland</a>';
+			else
+				echo '<a href="/'.PROJECT_NAME.'job/monster-jobs-de"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "received_ref_unread_count" ></label>Jobs in Deutschland</a>';
+		}
+
+		if( $userCountryName == \Extended\job::MONSTER_JOB_COUNTRY_NL) {
+			if( $params['controller'] == "job" && $params['action'] == "monster-jobs-nl" )
+				echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right"></label>Jobs in Netherlands</a>';
+			else
+				echo '<a href="/'.PROJECT_NAME.'job/monster-jobs-nl"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "received_ref_unread_count" ></label>Jobs in Netherlands</a>';
+		}
+
+		if( $userCountryName == \Extended\job::MONSTER_JOB_COUNTRY_FR) {
+			if( $params['controller'] == "job" && $params['action'] == "monster-jobs-fr" )
+				echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right"></label>Jobs in France</a>';
+			else
+				echo '<a href="/'.PROJECT_NAME.'job/monster-jobs-fr"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "received_ref_unread_count" ></label>Jobs in France</a>';
+		}
+
+		if( $userCountryName == \Extended\job::MONSTER_JOB_COUNTRY_IN) {
+			if( $params['controller'] == "job" && $params['action'] == "monster-jobs-in" )
+				echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right"></label>Jobs in India</a>';
+			else
+				echo '<a href="/'.PROJECT_NAME.'job/monster-jobs-in"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "received_ref_unread_count" ></label>Jobs in India</a>';
+		}
+
+?> 
+      </div>
+<?php } ?>
+
+	<div  class = "" >
+			<span style = "display:none;">Indeed Jobs</span>
+			<a id = "mimic_parent" href='<?php echo "/".PROJECT_NAME."job/indeed-jobs";?>'>Indeed Jobs</a>
+		</div>
+
+
+
+      <h3 style="margin-top: 73px !important;" class = "menuSepratorHeading">
+      	Job Poster
+      </h3>
+	  <div class="">
+        <span style = "display:none;">Post A Job</span>
+        <a id = "mimic_parent" href='<?php echo "/".PROJECT_NAME."job/create-job";?>'>Post A Job</a>
+      </div>
+      <div class="collapsed">
+        <span>Jobs Posted</span>
+         <a  href='<?php echo "/".PROJECT_NAME."job/active-jobs";?>' >Active Jobs<label style="float:right;color:#B084E9;font-weight:bold;" class="active-cnt"><?php echo \Extended\job::getCountOfJobs(Auth_UserAdapter::getIdentity()->getId(), "Active");?></label></a>
+         <a  href='<?php echo "/".PROJECT_NAME."job/expired-jobs";?>' >Expired Jobs<label style="float:right;color:#B084E9;font-weight:bold;" class="expired-cnt"><?php echo \Extended\job::getCountOfJobs(Auth_UserAdapter::getIdentity()->getId(), "Expired");?></label></a>
+         <a  href='<?php echo "/".PROJECT_NAME."job/closed-jobs";?>' >Closed Jobs<label style="float:right;color:#B084E9;font-weight:bold;" class="closed-cnt"><?php echo \Extended\job::getCountOfJobs(Auth_UserAdapter::getIdentity()->getId(), "Closed");?></label></a>
+      </div>   
+    </div>
+</div>

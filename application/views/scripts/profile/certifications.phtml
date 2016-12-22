@@ -1,0 +1,166 @@
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/certification.css" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/certification.js" );
+if( !$this->certificationInfoList )
+{
+	?>
+<style type="text/css">
+	input[name=add-more]{
+		display:none;
+	}
+	#certification-form{
+		display:block;
+	}
+	input[name=save-certiinfo]{
+		display:block;
+		float:right;
+	}
+	input[name=cancel-certification]{
+		display:none;
+	}
+</style>
+<?php 
+}
+else
+{
+?>
+<style type="text/css">
+	#certification-form{
+		display:none;
+	}
+</style>
+<?php 
+}
+?>
+
+	<!-- Content Right Left Starts -->
+<?php
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<!-- Content Right Left Ends -->
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+			<form name="certi-form" id="certi-form" method="post" action="">
+			<input type="hidden" name="school_id" id="school_id" value="" />
+			<input type="hidden" name="degree_id" id="degree_id" value="" />
+			<input type="hidden" name="field_stud_id" id="field_stud_id" value="" />
+			<input type="hidden" name="certi_id" id="certi_id" value="" />
+			<!-- Summary Edit Starts -->
+                <div class="summary-edit text-grey2">
+                	<h3 style="width:100%; text-align:left;" class="text-purple2"> 
+	                	Certifications
+	                	<input name="add-more"  type="button" class="btn-purple fr" value="+ Add more Certification" alt="+ Add more Certification" title="+ Add more Certification" />
+                	</h3>
+   	    	    </div>
+           		<!-- Summary Edit Ends -->
+            
+            
+            
+           		<!-- Contact Details Starts -->
+	   	    	    <div class="contact-details" id="certification-form">
+	   	    	    <div class="contact-label-span2">
+							<label>Certification Name</label> 
+							<span> 
+								<input type="text" name="certification_name" id="certification_name" class="search-one-textbox" value="">
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Certification Authority</label>
+							<span> 
+								<input type="text" name="authority" id="authority" class="search-one-textbox" value="">
+							</span>
+							</div>
+							<div class="contact-label-span2"> 
+							<label>License Number </label> 
+							<span> 
+								<input type="text" name="lincense_number" id="lincense_number" class="search-one-textbox" value="">
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Date </label> 
+							<span class="text-grey2" style = "width: 250px;">
+								<span>
+									<input readonly type="text" name="from" id="from" class="search-one-textbox" value="" style="width:100px;">
+								</span>
+							</span>
+							</div>
+							<div class="contact-label-span2"> 
+							<label>&nbsp;</label> 
+							<span> 
+								<font style="font-size: 11px; margin-top: 5px; float: left; width: 100%;">
+									<input type="checkbox" style="float:left;" value="1" name="expired" id="expired" checked = "checked" > This certificate does not expire
+								</font>
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label id="expiry_date_label" style="display:none;" >Expiry date </label> 
+							<span id ="expiry_date_span" class="text-grey2" style = "width: 250px;display:none;">
+								<span>
+									<input  readonly type="text" name="expiry_date" id="expiry_date" class="search-one-textbox expiry_date" value="" style="width:100px;">
+								</span>
+							</span>
+							</div>
+							<div class="contact-label-span2"> 
+							<label>&nbsp;</label>
+							<div class=" summary-btn-outer bdr-grey2">
+							<span style="width:200px;">
+								<a id="remove-certification" class="text-purple-link fl" href="javascript:;" style="display:none;">
+								Remove this Certification
+								</a>
+							</span>
+							<div style="float: right; width: 200px;">
+								<input name="update-certiinfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" style="display:none;" />
+								<input name="save-certiinfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+								<a class="new-cancel-btn" id="cancel-certification" href="javascript:;">Cancel</a>
+							</div>
+							</div>
+							</div>
+					</div>
+					
+			
+			</form>	
+				<?php 
+			$ids=array();
+			$certificationListing=$this->certificationInfoList;
+						if( @$certificationListing )
+			{
+				foreach( $certificationListing as $cl )
+				{
+			?>	
+			<!-- Un Editable Outer Starts -->
+			<div class="un-editable-outer" id="certification<?php echo $cl->getId();?>">
+				<h3>
+					<?php echo strtoupper($cl->getName());?>
+					<a id="<?php echo $cl->getId();?>" href="javascript:;" onclick="editCertification(this)">
+						<img src="<?php echo IMAGE_PATH;?>/icon-pencil.png" width="16" height="16" />
+					</a>
+				</h3>
+				<p><?php echo $cl->getAutority();?></p>
+				<p><?php echo $cl->getLicense_number();?></p>
+				<p><?php echo $cl->getCertification_date()->format("j F, Y");?> </p>
+<?php 
+				if ( $cl->getExpiry_date() )
+				{
+?>
+				<p>
+				<?php
+				 echo $cl->getExpiry_date()->format("j F, Y");
+				 ?> 
+				 </p>
+<?php 
+				}
+?>
+			</div>
+			<!-- Un Editable Outer Ends -->
+			<?php 
+					}
+				}
+				?>
+			
+			<!-- Un Editable Outer Starts -->			
+		</div>
+		<!-- Content Right Right Ends -->
+	</div>
+	<!-- Content Right Ends -->

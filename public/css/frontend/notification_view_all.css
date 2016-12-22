@@ -1,0 +1,121 @@
+.bot-link-content 
+{
+	width:auto !important;
+}
+.view-all-notification{
+    padding:2% 0%;
+    width:100%;
+	float:left;
+	border-top: 1px solid #E8EAE9;
+	background:#6c518f;
+	color:#fff;
+	text-align:center;
+	margin-bottom:3px;
+}
+.notification-hdr{
+	border-bottom:2px solid #C0C0C0;
+	padding-bottom:5px;
+	float:left;
+	width:100%;
+}
+.notification-hdr h2{
+	width:auto;
+	float:left;
+	font-size:20px;
+	font-weight:bold;
+	color:#48545E;
+}
+.notification-hdr a{
+	width:auto;
+	float:right;
+	font-size:12px;
+	text-decoration:none;
+	margin-top:8px;
+}
+.get-notification{
+	width:98%;
+	padding:1%;
+	color:grey;
+	font-size:12px;
+	float:left;
+}
+.today-notification-outer{
+    float: left;
+    margin: 10px 0;
+    padding: 0 2%;
+    width: 96%;
+    background: white none repeat scroll 0 0;
+}
+.today-notification-hdr{
+	   border-bottom: 1px solid #DDDDDD;
+    float: left;
+    font-size: 15px;
+    padding-bottom: 4px;
+    width: 100%;
+}
+.today-notification-data{
+	width:100%;
+	float:left;
+	margin:10px 0;
+}
+div.today-notification-icon{
+ 	float: left;
+    margin: 2px 0 0;
+    max-height: 15px;
+    max-width: 18px;
+    min-height: 14px;
+    min-width: 18px;
+    width: auto;
+}
+.today-notification-detail{
+    cursor: pointer;
+    float: left;
+    margin-left: 5px;
+    width: auto;
+}
+.today-notification-detail span{
+	color:grey;
+	font-size:11px;
+}
+
+a.view_notification {
+    width: auto !important;
+}
+/*** show more div starts ***/
+div.show_more {
+    background-color: #ffffff;
+    border: 1px solid #6c518f;
+    cursor: pointer;
+    display: inline-block;
+    height: 36px;
+    width: 100%;
+}
+
+div.show_more div {
+    color: #6c518f;
+    display: block;
+    height: inherit;
+    text-align: center;
+    vertical-align: middle;
+    width: inherit;
+}
+
+div.show_more span#show_more {
+    display: block;
+    margin-top: 10px;
+}
+/*** show more div ends ***/
+
+.bot-link-content-data{
+	float : none !important;
+	background: white none repeat scroll 0 0;
+}
+.bot-link-content{
+/* 	float : none !important; */
+}
+
+.content-right-full{
+	background: none repeat scroll 0 0 #fff;
+    min-height: 818px;
+	overflow:hidden;
+}

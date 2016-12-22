@@ -1,0 +1,247 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Experience');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/experience.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/experience.css" );
+?>
+<?php if ( !$this->myExps )
+{
+?>
+<style>
+	input[name=add]
+	{	
+ 		display : none;
+	}
+	.add_or_edit
+	{
+		display: block;
+	}
+	span.delete_span
+	{
+		display: none;	
+	}
+	input[name=cancel]
+	{
+		display: none;	
+	}
+</style>
+<?php
+}
+else 
+{
+?>
+<style>
+.add_or_edit
+	{
+		display: none;
+	}
+</style>	
+<?php	
+}		
+	echo $this->partial('partials/profile_menu.phtml');
+?>
+	<div class="content-right-right">
+	<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+			<!-- Summary Edit Starts -->
+			<div class="summary-edit text-grey2">
+			<h3 style="width:100%; text-align:left;" class="text-purple2"> Experience   
+				<input name="add"  type="button" class="btn-to-link fr" value="+ Add more Experience" alt="+ Add more Experience" title="+ Add more Experience" /></h3>
+			</div>
+			<!-- Summary Edit Ends -->
+			<!-- Contact Details Starts -->
+			<form id = "exp" action="">
+				<input type = "hidden" name = "identity" value = "" id = "identity"/>
+				<div class="contact-details add_or_edit">
+				<div class="contact-label-span2">
+					<label>Company Name</label>
+					<span>
+						<input type="text" name="company" class="search-one-textbox " maxlength="60">
+					</span>
+					</div>
+					<div class="contact-label-span2">
+					<label>Title</label>
+					<span>
+						<input type="text" name="title" class="search-one-textbox " maxlength="200">
+					</span>
+					</div>
+					<div class="contact-label-span2">
+					<label>Location
+					</label>
+					<span>
+						<input type="text" name="location" class="search-one-textbox " maxlength="80">
+					</span>
+					</div>
+					<div class="contact-label-span2">
+					<label>Time Period
+					</label>
+					<span style="color: #48545E!important;">
+						<input name="currunt_company" id="currunt_company" type="checkbox" value="1" /> I am currently working at
+					</span>
+					</div>
+					<div class="contact-label-span2">
+					<label>&nbsp;</label>
+					<span class="text-grey2" style = "width: 250px;">
+						<label>
+							From
+						</label>
+						<span>
+							<input name="from_date" id="from_date" type="text" value="" readonly/>
+						</span>
+						<br />
+						<label>
+							To
+						</label>
+						<span>
+							<input name="to_date" id="to_date" type="text" value="" readonly/>
+						</span>
+					</span>
+					</div>
+					<div class="contact-label-span2">
+					<label>Additional Notes</label>
+					<span style="min-height:115px;">
+						<textarea maxlength="1500" name="additional_notes" class="textarea2"  cols="10" rows=20"></textarea>
+					</span>
+					</div>
+					
+				</div>
+				<!-- Contact Details Ends -->
+				<div class=" summary-btn-outer bdr-grey2 add_or_edit">
+					<span class = "delete_span">
+						<a class="remove-link fl delete" href="javascript:;">Remove this Experience</a>
+					</span>
+					<input name="save" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+					<a href="javascript:;" id="cancel" class="new-cancel-btn">Cancel</a>
+				</div>
+			</form>
+			
+		<!-- Un Editable Outer Starts -->
+			<div id = "un-editable-outer-wrapper">
+<?php
+			if( $this->myExps )
+			{	
+				foreach ( $this->myExps as $exp )
+				{
+?>
+				<div class="un-editable-outer" id = "<?php echo $exp->getId(); ?>">
+					<h3>
+<?php 
+						echo "<span class = 'exp_title' style='font-weight: bold;word-wrap:break-word'>".$exp->getJob_title()."</span>";
+?>
+						<a href="javascript:;" onclick="editClick(this)" class = "edit_exp" id = "<?php echo $exp->getId(); ?>">
+							<img  class="edit-new-icon" src="<?php echo IMAGE_PATH; ?>/edit-pencil.png">
+						</a>
+					</h3>
+					<p class = 'exp_company' >
+<?php				
+					echo $exp->getExperiencesCompany()->getName();
+?>				
+					</p>
+					
+					<p class = 'exp_location'>
+<?php 
+					echo $exp->getLocation();
+?>				
+					</p>					
+					
+					<p class = 'exp_dates'>
+					
+<?php				$currentlyWorkingStatus = $exp->getCurrently_work();
+ 
+                      if($exp->getJob_startdate())
+                      {
+                        $from = $exp->getJob_startdate()->format('F-Y');
+                        if($currentlyWorkingStatus != '1')
+                        {
+                        	if($exp->getJob_enddate()!='')
+                        	{
+                        		 $to = $exp->getJob_enddate()->format('F-Y');
+                        	}
+                        	else
+                        	{
+                        		$to = $exp->getJob_enddate();
+                        	}
+                        		 
+                        }
+                        else
+                        {
+                        	$to = '<span class="notSet">Present<span>';
+                        }		  
+                          
+						//echo $exp->getJob_startdate()->format('F-Y')." - ".if($exp->getJob_enddate()==''){ $exp->getJob_enddate()->format('F-Y');}else { echo 'Currently Working.'}
+                        echo $from." - ".$to;
+                     if($currentlyWorkingStatus != '1')
+                     {
+                     	if($exp->getJob_enddate()!='')
+                     	{
+                        $days = intVal( $exp->getJob_startdate()->diff( $exp->getJob_enddate() )->d );
+						$months = intVal( $exp->getJob_startdate()->diff($exp->getJob_enddate())->m );
+						$year = intVal( $exp->getJob_startdate()->diff($exp->getJob_enddate())->y );
+                        
+						// for years, months and days
+
+						if($months == 0 && $year == 0 && $days >= 1)  
+							$diff = $days. ' day(s)';
+						elseif($months == 0 && $year >= 1 && $days == 0)  
+							$diff = $year.' year(s)';
+						elseif($months == 0 && $year >= 1 && $days >= 1)
+							$diff = $year.' year(s) '. $days.' day(s)';
+						elseif($months >= 1 && $year == 0 && $days == 0)
+							$diff = $months.' month(s)';
+						elseif($months >= 1 && $year == 0 && $days >= 1)
+							$diff = $months.' month(s) '.$days.' day(s)';
+						elseif($months >= 1 && $year >= 1 && $days == 0)
+							$diff = $year. ' year(s) '.$months.' month(s) ';
+						elseif($months >= 1 && $year >= 1 && $days >= 1)
+							$diff = $year.' year(s) '.$months.' month(s) '.$days.' day(s)';
+                        
+						else
+						{	
+							$diff = $year.' year(s) '.$months.' month(s) ';
+						}
+						echo ' (' . $diff . ')';
+						
+						}
+						else
+						{
+							echo "Not Set";
+						}
+                     }	
+				   }
+				   else
+				   {
+				     echo $exp->getJob_startdate()->format('F-Y')." - <span class='notSet'>Currently Working</span>";
+				   }
+?>				
+					</p>
+					<p class = 'exp_notes'> 
+<?php 
+					echo nl2br($exp->getDescription());
+?>				
+					</p>
+							
+				</div>
+				
+<?php 
+				}
+			}
+?>			
+<!-- Dialog Box for prompting user that only one experience is left -->
+<div id="dialog_experience" title="Delete Experience" style="display:none;">
+  <p>
+  	You require minimum one experience.
+  </p>
+</div>
+		<!-- Un Editable Outer Ends -->
+			</div>
+			
+			
+	<!-- Content Right Right Ends -->
+		</div>	
+	</div>

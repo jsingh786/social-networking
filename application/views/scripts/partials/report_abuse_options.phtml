@@ -1,0 +1,481 @@
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/report_abuse_options_popup.css" );
+echo $this->partial('partials/send_report_abuse_mail_popup.phtml');
+?>
+<script>
+
+	$(document).ready(function(){
+
+
+
+	});
+	/**
+	 * opens Popup to show 1st step of report abuse
+	 * i.e 3 options ->
+	 * 1. block user
+	 * 2. Report to admin
+	 * 3. Send mail
+	 *
+	 * @param element ( report abuse option under wallpost )
+	 * @author hkaur5
+	 *
+	 */
+	function showReportAbuseOptions(elem)
+	{
+		//Putting value of user_id, wallpost_id and wallpost update type in button
+		// to be used in other functions.
+		$('input.report_abuse_nxt').attr('rel_u',$(elem).attr('rel'));
+		$('input.report_abuse_nxt').attr('rel_wp',$(elem).attr('rel1'));
+		$('input.report_abuse_nxt').attr('rel_typ',$(elem).attr('rel2'));
+
+		$('div#show_report_abuse_options').bPopup(
+			{
+				modalClose: true,
+				easing: 'easeOutBack', //uses jQuery easing plugin
+				speed: 500,
+				closeClass : 'close_bpopup',
+				//		        transition: 'slideDown',
+				onClose: function() {},
+				onOpen: function()
+				{
+
+
+				}
+			});
+	}
+	/**
+	 * Checks the selected option in Report Abuse first popup(radio buttons):
+	 * 1.Send Mail
+	 * 2.Block user
+	 * 3.Report to Admin
+	 * and
+	 * take action accordingly.
+	 *
+	 * @param element
+	 * @author hkaur5
+	 */
+	function reportAbuseStep2(elem)
+	{
+		/*var checked_option = ($('input[name=report_Abuse_actions]:checked').val());
+		 alert(checked_option);
+		 return;*/
+//return;
+		$('div#show_report_abuse_options').bPopup().close();
+		switch ($('input[name=report_Abuse_actions]:checked').val())
+		{
+			case '1':
+
+				getPostInfoInPopupToSendMail($(elem).attr('rel_wp'), $(elem).attr('rel_typ') );
+				break;
+			case '2':
+				blockUser($(elem).attr('rel_u'));
+				break;
+			case '3':
+				abuseReportWallPost($(elem).attr('rel_wp'),$(elem).attr('rel_u'));
+				break;
+			default:
+				abuseReportWallPost($(elem).attr('rel_wp'),$(elem).attr('rel_u'));
+				break;
+		}
+
+	}
+
+
+	/**
+	 * Report wallpost to admin.
+	 * @params post_id
+	 * @params wallpost_owner_id
+	 * @author sjaiswal
+	 * @author hkaur5 ( modifications )
+	 * version 1.0
+	 */
+
+	function abuseReportWallPost(post_id,wallpost_owner_id)
+	{
+
+		__addOverlay();
+		//var ids = addLoadingImage($("div.report-abuse."+post_id+""), 'after', 'tiny_loader.gif',0 ,16 );
+		jQuery.ajax({
+			url: "/" + PROJECT_NAME + "dashboard/abuse-report",
+			type: "POST",
+			dataType: "json",
+			data: {"post_id" :post_id  ,"wallpost_owner_id" :wallpost_owner_id},
+			timeout: 50000,
+			success: function(jsonData) {
+				__removeOverlay();
+				$("[name=abuse_"+post_id+"]").removeAttr("onclick");
+				$("div.abuse-text."+post_id).html("Reported as abuse");
+				$('div#show_report_abuse_options').bPopup().close();
+				showDialogMsg('Report Abuse','Reported to Admin successfully.',0,
+					{
+						buttons: [
+							{
+								text: "OK",
+								click: function(){
+									$(this).dialog("close");
+								}
+							}
+						],
+						show: {
+							effect: "fade"
+						},
+						hide: {
+							effect: "fade"
+						},
+						dialogClass: "general_dialog_message",
+						height: 150,
+						width: 300,
+						modal: true,
+					});
+
+			},
+
+			error: function(xhr, ajaxOptions, thrownError) {
+				__removeOverlay();
+				alert("Server Error.");
+			}
+		});
+
+
+
+	}
+
+	/**
+	 * Get info of given post to display in popup
+	 * to send imail to user as reported abuse.
+	 *
+	 * Send report abuse imail popup.
+	 * @author hkaur5
+	 * @param integer wallpost_id ( to be reported abuse )
+	 * @param integer wallpost_update_type ( of post to be reported abuse )
+	 *
+	 */
+	function getPostInfoInPopupToSendMail(wallpost_id, post_update_type)
+	{
+		$('div#show_report_abuse_options').bPopup().close();
+		var collage = 0;
+		var profile_photo = 0;
+		if(post_update_type =="" || post_update_type == undefined)
+		{
+			alert('Oops! Something went wrong, we hope to have fix it soon.');
+			return;
+		}
+		var url = "";
+		switch(post_update_type)
+		{
+			case '6':
+			case '0':
+			case '7':
+			case '1':
+				url = "dashboard/get-info-of-original-wallpost";
+				break;
+			case '14':
+			case '15':
+			case '16':
+			case '17':
+				url ="socialise/get-info-of-original-wallpost";
+				break;
+		}
+		$('div#report_abuse_post').bPopup({
+			modalClose: true,
+			amsl:125,
+			easing: 'easeOutBack', //uses jQuery easing plugin
+			speed: 500,
+			closeClass : 'close_bpopup',
+//		transition: 'slideDown',
+			onClose: function() {},
+			onOpen: function()
+			{
+				//Do required stuff...
+				$("div#share_box").html("<div style = 'display : table-cell; height: 500px; width: 490px; text-align:center; vertical-align: middle;'><image src = "+IMAGE_PATH+"/loading_medium_purple.gif></div>");
+				jQuery.ajax({
+					url: "/" + PROJECT_NAME + url,
+					type: "POST",
+					dataType: "json",
+					data: { 'wallpost_id' : wallpost_id },
+					timeout: 50000,
+					success: function( jsonData ) {
+						if( jsonData == 2 )
+						{
+							showDialogMsg( "Oops!", "Oops! Post doesnot exist anymore.", 3000, {buttons:[{text:"OK",click:function(){$(this).dialog("close");}}],show:{effect:"fade"},hide:{effect:"fade"},dialogClass:"general_dialog_message",height:200,width:300} );
+							var bPopup = $('div#report_abuse_post').bPopup();
+							bPopup.close();
+							return;
+						}
+
+						var html = "";
+						var him_her = "him";
+						//var his_her = "his";
+						if(jsonData.original_user_gender == 2)
+						{
+							him_her = "her";
+							//his_her = "her";
+						}
+
+						//==============================================================================================
+						// Html to be appended in popup - Starts
+						//==============================================================================================
+						html +='<div class="default_msg">Letting '+jsonData.original_user_full_name+' know how you feel about this post could offer '+him_her+' some assistance with posting better things in future.';
+						html +='</div>';
+						html +='<div class="user_post_content" >';
+						html +='<div class="user_info_content">';
+						html +='<span>To:</span>';
+						html +='<div class="profile_pic_small">';
+						html +='<img src="'+jsonData.original_user_profile_photo_small+'"/>';
+						html +='</div>';
+						html +='<span>'+jsonData.original_user_full_name+'</span>';
+						html +='</div>';//user_info_content
+						html +='<div class="post_content" style="">';
+						html +='<textarea class="report_abuse_msg" placeholder="Write a message in your own words."></textarea>';
+						html +='<div class="post_info">';
+						html +='<div class="profile_pic_medium">';
+						html +='<img src="'+jsonData.original_user_profile_photo_medium+'"/>';
+						html +='</div>';
+						html +='<div class="post_data">';
+						html +='<span class="post_update_type_info">';
+						html += jsonData.original_post_update_type_text;
+						html +='</span>';
+						html +='<span class="post_update_type_info user-name" style="display: block;">';
+						html += 'By '+jsonData.original_user_full_name;
+						html +='</span>';
+						html +='<div class="orig_post_content">';
+						var wallpost_content = "";
+
+						// Showing post content according to post_update_type.
+						switch (jsonData.post_update_type)
+						{
+							case 6:
+							case 7:
+								wallpost_content = jsonData.wallpost_user_text_old;
+								break;
+
+							case 0:
+							case 1:
+								wallpost_content = jsonData.wallpost_text;
+								break;
+
+							case 14:
+								profile_photo = 1;
+								break;
+							case 15:
+							case 16:
+							case 17:
+								collage = 1;
+
+								/*	if(jsonData.post_update_type == 14)
+								 {
+								 html += '<div class="share-hdr2-lt ">';
+								 html += '<div id = "photo_thumbnail">';
+								 html += '<img src = "'+jsonData.image_path+'"/>';
+								 //html += getPopupCollageHTML( jsonData.image_path, jsonData.first_img_portrait_or_landscape );
+								 }
+								 else
+								 {
+								 html += '<div class="share-hdr2-lt collage_text">';
+								 html += '<div id = "photo_thumbnail">';
+								 html += getPopupCollageHTML( jsonData.collage, jsonData.first_img_portrait_or_landscape );
+								 }
+								 html += '</div>';*/
+								break;
+						}
+						html += showCroppedText(wallpost_content,200);
+						html +='</div>';
+
+						if(collage)
+						{
+							html += '<div class="share-hdr2-lt send_mail_collage collage_text">';
+							html += '<div id = "photo_thumbnail">';
+							html += getPopupCollageHTML( jsonData.collage, jsonData.first_img_portrait_or_landscape );
+							html += '</div>';
+							html += '</div>';
+
+
+						}
+
+						if(profile_photo)
+						{
+							html += '<div class="share-hdr2-lt send_mail_profile_photo">';
+							html += '<div id = "photo_thumbnail">';
+							html += getPopupCollageHTML( jsonData.collage, jsonData.first_img_portrait_or_landscape );
+							html += '</div>';
+							html += '</div>';
+
+						}
+						html +='</div>';
+						html +='</div>';//post_info
+						html +='</div>';//post_content
+						html +='</div>';//user_post_content
+
+						// Send and cancel
+						html +='<div class="send_cancel" id="send_cancel_mail" style="display: block;">';
+						html +='<input onclick="sendReportAbuseMail(this,'+jsonData.wallpost_id+','+jsonData.original_user_id+')" id="" value="Send" class="send_rprt_abuse_mail btn-purple">';
+						//html +='<a onclick="" id="" class="text-dark-purple" rel="">Cancel</a>';
+						html +='</div>'; //send_cancel
+						//==============================================================================================
+						// Html Ends
+						//==============================================================================================
+
+						$('div#send_report_abuse_mail_box').html(html);
+
+
+						//In case of socialise post(collage) -  applying nailthumb jquery.===========================
+						if(collage)
+						{
+							$('div.post_content').addClass('post_content_collage');//Add collage to increase height and width.
+							//Resizing and crop to fit small collage images with nailthumb.js
+							$( 'img.small_jquerynailthumb' ).each(function( index )
+							{
+								jQuery( this ).nailthumb(
+									{
+										onStart:function(container){
+
+										},
+										width: $(this).attr('rel_width'),
+										height: $(this).attr('rel_height'),
+										method:'crop',
+										onFinish:function(container){
+											//container.children().removeClass('require_jquery_thumbnail_processing');
+										}
+									});
+							});
+
+							//In case of single image in collage.
+							$( 'div#send_report_abuse_mail_box img.single_image' ).each(function( index )
+							{
+								jQuery( this ).nailthumb(
+									{
+										onStart:function(container){ },
+										width: $(this).attr('rel_width'),
+										height: $(this).attr('rel_height'),
+										method:'crop',
+										onFinish:function(container){
+											//container.children().removeClass('require_jquery_thumbnail_processing');
+										}
+									});
+							});
+						}
+						//End - applying nailthumb jquery.=====================================================
+
+						//Popup reposition
+						var bPopup = $("div#report_abuse_post").bPopup();
+						bPopup.reposition();
+					}
+
+				});
+
+			}
+		});
+
+	}
+
+	/**
+	 * Send report abuse mail.
+	 *
+	 * @param object element
+	 * @param integer wallpost_id (wallpost id to be report abused)
+	 * @param integer receiver_id (wallpost_owner)
+	 * @author hkaur5
+	 */
+	function sendReportAbuseMail(elem, wallpost_id, receiver_id)
+	{
+		$(elem).hide(); // hide send button.
+		addLoadingImage($(elem), 'after', 'loading_small_purple.gif',60 ,0 ); // show loading
+
+		var report_abuse_msg = $('textarea.report_abuse_msg').val(); // report abuse msg.
+
+		jQuery.ajax({
+			url: "/" + PROJECT_NAME + "dashboard/send-report-abuse-mail",
+			type: "POST",
+			dataType: "json",
+			data: {"wallpost_id" :wallpost_id, 'report_abuse_msg': report_abuse_msg,'receiver_id':receiver_id },
+			timeout: 50000,
+			success: function(jsonData) {
+				$('div#report_abuse_post').bPopup().close();
+				if(jsonData)
+				{
+					//$("[name=abuse_"+wallpost_id+"]").removeAttr("onclick");
+					//$("div.abuse-text."+wallpost_id).html("Reported as abuse");
+					showDialogMsg('Report Abuse', "Your Report abuse message is sent.", 0,
+						{
+							buttons: [
+								{
+									text: "OK",
+									click: function(){
+										$(this).dialog("close");
+									}
+								}
+							],
+							show: {
+								effect: "fade"
+							},
+							hide: {
+								effect: "fade"
+							},
+							dialogClass: "general_dialog_message",
+							height: 150,
+							width: 300
+						}
+					);
+
+				}
+				else
+				{
+					showDialogMsg('Oops!', "Some thing went wrong while sending report abuse mail. Please try again.", 0,
+						{
+							buttons: [
+								{
+									text: "OK",
+									click: function(){
+										$(this).dialog("close");
+									}
+								}
+							],
+							show: {
+								effect: "fade"
+							},
+							hide: {
+								effect: "fade"
+							},
+							dialogClass: "general_dialog_message",
+							height: 150,
+							width: 300
+						}
+					);
+				}
+
+			}
+		});
+	}
+</script>
+<!-- Report Abuse Step 1 -->
+<div id="show_report_abuse_options" class = "report_abuse_popup1 transparent_border" style = "width: 391px;display: none;">
+	<div class="" style="width: 490px;">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1" style="width: 73% !important;">
+			<div id="" class="left text-white">
+				<h2>Report Abuse</h2>
+				<img class="close_bpopup"
+					 src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+					 title="Close" width="20" height="18" />
+			</div>
+		</div>
+		<!-- Report abuse options - radio buttons -->
+		<div id = "report_abuse_popup_box" class="">
+			<form action="" id="report_abuse_actions_form">
+				<div class="report-abuse-option"><input id="send_mail_radio" type="radio" name="report_Abuse_actions"  value="1">
+					<label for="send_mail_radio" >Send Mail </label>
+				</div>
+				<div class="report-abuse-option"><input id="block_user_radio" type="radio" name="report_Abuse_actions" value="2">
+					<label for="block_user_radio" >Block User</label>
+				</div>
+				<div class="report-abuse-option"><input id="report_admin_radio" type="radio" name="report_Abuse_actions" checked value="3">
+					<label for="report_admin_radio">Report to Admin</label>
+				</div>
+				<div class="btn-outer">
+					<input rel_u="" rel_typ="" rel_wp="" type="button" onclick ="reportAbuseStep2(this);" class="btn-purple report_abuse_nxt" name="" value="Next"/>
+				</div>
+			</form>
+		</div>
+		<!-- Report abuse options - radio buttons -  Ends -->
+	</div>
+</div>

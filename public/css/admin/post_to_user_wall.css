@@ -1,0 +1,190 @@
+@CHARSET "ISO-8859-1";
+html, body {
+    height: auto!important;
+}
+.post-box-dashboard{ background: #f9f9f9 none repeat scroll 0 0; box-shadow:0 0 2px #333; width:96%; margin-left:22px; float:left; padding:2%; box-sizing:border-box; }
+.post-box-dashboard-lt{ float:left; width:16%; margin:29px 0 0 0; text-align:center;}
+.post-box-dashboard-rt{ float:left; width:81%;}
+.post-box-dashboard-rt-top{ width:100%; float:left;}
+.post-box-dashboard-rt-bot{  width:100%; float:left; text-align:right; }
+.post-box-dashboard-rt-bot select{ float: right;
+   margin: 5px 10px !important;
+    padding: 0 2px 0 4px !important;
+    width: 134px;
+}
+.btn-purple{ line-height: 21px; background: #6c518f !important;border-radius:0; !important;border: medium none !important;color: #fff;cursor:margin: 0;padding: 3px 15px;width: auto;}
+.post-box-dashboard-rt-bot span{ line-height:36px; float:right;}
+.post-box-dashboard-rt-bot input{ float:right;}
+.top-links{ position: absolute; right:23px; top:5px; font-size: 14px;}
+.userpost-header{ position:relative; width: 96%;}
+div#heading > h2{ padding-bottom:3px;}
+
+
+.post-box-display
+{ 
+	background: #f9f9f9 none repeat scroll 0 0; 
+	box-shadow:0 0 2px #333;
+	width:96%; 
+	margin-left:22px;
+	float:left; 
+	padding:2%; 
+	box-sizing:border-box;
+	display : none;
+}
+
+
+#loading_indicator{
+	display: none;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+div.urlResult{
+	background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    display: none;
+    float: left;
+    margin: 7px 20px 0;
+    padding: 10px;
+    position: relative;
+    width: 94.3%;
+}
+
+div.urlResult h4 img.close_url {
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.extracted_thumb {
+    float: left;
+    margin-right: 10px;
+}
+
+div.extracted_content p {
+    word-wrap: break-word;
+}
+.thumb_sel {
+    float: left;
+    height: 22px;
+    margin-top: 10px;
+    width: 55px;
+}
+.thumb_sel .prev_thumb {
+    background: rgba(0, 0, 0, 0) url("../../images/thumb_selection.gif") no-repeat scroll -50px 0;
+    cursor: pointer;
+    float: left;
+    height: 22px;
+    width: 26px;
+}
+
+.thumb_sel .next_thumb {
+    background: rgba(0, 0, 0, 0) url("../../images/thumb_selection.gif") no-repeat scroll -76px 0;
+    cursor: pointer;
+    float: left;
+    height: 22px;
+    width: 24px;
+}
+span.small_text {
+    float: left;
+    font-size: 10px;
+    margin-top: 13px;
+}div.fileupload-buttons input[type="file"] {
+    border: 1px solid red;
+    display: block;
+    height: 28px;
+    width: 137px;
+}
+
+div.fileupload-buttons input#create_album[type="file"] {
+    width: 201px;
+}
+.template-download {
+    float: left;
+    height: 80px;
+    margin: 5px 10px 0 0;
+    position: relative;
+    width: 80px;
+}
+
+.presentation-outer {
+    float: left;
+    margin: 10px 0 10px 0;
+    max-height: 232px;
+    overflow: auto;
+    width: 100%;
+}
+
+button.remove_thumb.delete {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    position: absolute;
+    right: 0;
+    top: 3px;
+}
+
+button.remove_thumb.delete span.ui-icon-trash {
+    display: none;
+}
+button.remove_thumb.delete span.ui-button-text {
+    padding: 0;
+}
+.album-title{margin-bottom: -1px !important;
+    padding: 4px 5px !important;}
+
+
+.post-box-display-inner{width:100%;float:left; box-sizing:border-box; }
+.post-box-display-inner-lt{ float:left; width:16%; margin:30px 0 0 0; text-align:center;}
+.post-box-display-inner-rt{ float:left; width:81%; margin-left:1%;}
+.fileupload-buttonbar{ margin:0 0 10px 0;}
+
+div.post-box-display div.post-box-dashboard-rt-bot {
+    float: right;
+    margin: 0 21px 0 0;
+    text-align: right;
+    width: 100%;	
+	vertical-align: middle;
+}
+.fileupload-progress {
+    margin: 10px 0 0 0 !important;
+    width: 100%;
+}
+
+.fileupload-progress .progress-extended {
+    margin-top: 5px;
+}
+
+form#fileupload_admin .ui-progressbar .ui-progressbar-value 
+{
+    height: 1em;
+    margin: 0 !important;
+}
+div.progress.ui-progressbar
+{
+	height: 14px !important;
+	margin-bottom: 0 !important;
+}
+div.fileupload-buttons input#add_photos
+{
+	width: 80px!important;
+	height: 18px!important;
+}
+div.fileupload-buttons input#create_album
+{
+	width: 132px!important;
+	height: 18px!important;
+}
+
+div.fileupload-progress.fade {
+    opacity: 1!important;
+    transition: none!important;
+}
+
+form#fileupload_admin{ margin:0 0 0 0;}
+a.selected_underlined{text-decoration:underline;}
+
+div.extracted_url div.extracted_content h4
+{
+	margin: 0 !important;
+}

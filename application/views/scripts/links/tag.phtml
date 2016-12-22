@@ -1,0 +1,209 @@
+<?php
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.stylish-select.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links_menu.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/tags.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+echo $this->partial ( 'partials/link_menu.phtml' );
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+$menu_size = Auth_UserAdapter::getIdentity()->getMain_menu_size();
+
+$listArr = array();
+if( $this->paginator )
+{
+	if( $this->paginator->getTotalItemCount() )
+	{
+		foreach ( $this->paginator as $v )
+		{
+			$listArr[] = $v;
+		}
+	}
+}
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+<!-- WORK IN PROGRESS -->
+<!-- <div id="wip" style="background: none repeat scroll 0 0 #FFFEFF;border: 4px outset #D3B700;display: block;margin: 0 auto;">
+	<img src= "<?php  //echo IMAGE_PATH; ?>/WIP.jpg"/><p style="color: #FF0000;display: inline-block;float: right;font-size: 20px;margin-right: 280px;margin-top: 35px;">WORK IN PROGRESS!</p>
+</div> -->
+<!-- Photo Album Starts -->
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2 style="width: auto;" class="text-grey2">
+				<font class="text-purple2">
+					<span style="font-weight:normal;" id="tagCount">
+					<?php echo $this->allLinksCount ;?>
+					</span>
+				</font> Links
+				<div class="addnew-links">
+					<a class="text-purple-link" href="/<?php echo PROJECT_NAME?>links/import">
+					Add New Links
+					</a>
+					<img src="<?php echo IMAGE_PATH;?>/icon-connection-hover.png" width="16" height="15" align="absmiddle" />
+				</div>
+			</h2>
+			<div class="photoalbum-addnew">
+				<h3>
+					<font class="text-grey3">View by Tag </font><span title="<?php echo $this->tag_title;?>"><?php if(strlen($this->tag_title)>60){ echo substr($this->tag_title,0,60)."...";} else {echo $this->tag_title;} ?></span>
+				</h3>
+			</div>
+			<div style="margin-top: 0px" class="bookmarks-hdr-text1">
+				<div class="fl text-grey3">
+		            <br>
+					<?php 
+			if(count($this->links)>0)
+			{
+					?>
+					&nbsp;
+					<font class="text-purple">
+						<a onclick="showManagePopup();" href="javascript:;" class="text-purple-link">
+						Manage
+						</a>
+					</font>
+					&nbsp; 
+					<img width="16" height="13" align="absmiddle" src="<?php echo IMAGE_PATH;?>/folder-hover.png">
+					<?php 
+					 	} 
+					?>                           
+	            </div>
+	             <?php 
+	            	if(count($this->links)>0 || isset($_REQUEST['linkSearch'])) {
+	            ?>
+	            <div class="mail-hdr-search">
+					<form name="search-form" id="search-form" method="get" action="">
+						<input type="hidden" name="tagID" id="tagID" value="<?php echo $this->prms["id"];?>" />
+						<a href="javascript:;" id="link_search" class="fr srchBtn" onclick="searchUser()"  style="float:right;">
+						Search
+						</a>
+						<input type="text" name="linkSearch" id="linkSearch" value="<?php echo @$this->linkSearchText;?>" placeholder="Search" style="float:right;">
+					</form>
+				</div>
+				<?php
+	            	}
+				?>
+			</div>
+			<!-- Manage Pop Outer Starts -->
+			<!-- Manage POPUP here -->
+			<div class="manage-pop-outer" style="display:none;">
+				<div class="manage-pop">
+					<div class="col1">
+						<img width="14" height="16" align="absmiddle" src="<?php echo IMAGE_PATH;?>/icon-star-purple.png">
+						<a id="addBookmark" onclick="addBookmark()" class="text-grey2-link" href="javascript:;">
+						Add to Bookmarks
+						</a>
+					</div>
+					<div class="col1">
+                    	<img width="16" height="13" align="absmiddle" style="margin-top:3px;" src="<?php echo IMAGE_PATH;?>/mail-hover.png">
+                    	<a onclick="sngMsg()" class="text-grey2-link" href="javascript:;">
+                    	Send Message
+                    	</a>
+                    </div>
+					<div class="msg-popup-outer" style="display:none;">
+                    	<div class="msg-popup-top">
+                    		<img width="26" height="16" src="<?php echo IMAGE_PATH;?>/arrow-popup.png">
+                    	</div>
+                        <div class="msg-popup-bot">
+                        	<h4>
+                        	Send Message
+                        	</h4>
+                            <textarea name="sndmultiple" id="sndmultiple" cols="" rows="8"></textarea>
+                            <div class="common-div">
+                            	<div class="fl">
+                            		<a class="text-purple-link" onclick="sngMsg()" href="javascript:;">
+                            		Cancel
+                            		</a>
+                            	</div>
+                                <div class="fr">
+                                	<a id="sndmsg" class="text-purple-link" href="javascript:;" onclick="sendMessage()">
+                                	Send
+                                	</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col1">
+                    	<img width="14" height="16" align="absmiddle" src="<?php echo IMAGE_PATH;?>/icon-trash-hover.png">
+                    	<a id="remBookmark" onclick="removeFromTag()" class="text-grey2-link" href="javascript:;">
+                    	Remove from Tag
+                    	</a>
+						<!-- Tag Popup Outer -->
+						<div id="tag-manage-outertags" class="tag-manage-outer" style="display: none;">
+							<div class="tag-manage-arrow">
+								<img width="26" height="16" src="<?php echo IMAGE_PATH;?>/arrow-popup.png">
+							</div>
+							<div class="tag-manage" id="tag-manage_<?php echo Auth_UserAdapter::getIdentity()->getId();?>">
+								<a onclick="closeEditGroupPopup();" style="float: right;margin-right: -13px;margin-top: -36px;" href="javascript:;">
+									<img src="<?php echo IMAGE_PATH;?>/cross-grey2.png" alt="Close" title="Close"  align="absmiddle" style="float: right; margin: -21px -5px;"/>
+	 							</a>
+								<div id="loading_<?php echo Auth_UserAdapter::getIdentity()->getId();?>" style="display:table-cell;width:170px;text-align:center;vertical-align:middle;">
+									<img src="<?php echo IMAGE_PATH;?>/loading_medium_purple.gif">
+								</div>
+							</div>
+						</div>                                                   	     
+						<!-- Tag Popup Outer --> 
+					</div>
+					<div class="col1">
+					</div>
+              	</div>
+         	</div>
+			<!-- Manage Pop Outer Ends -->
+		</div>
+	</div>
+	<div class="bookmark-search-right">
+	<!-- Col3 Starts -->
+	<?php 
+	if( $this->paginator )
+	{	
+		if( $this->paginator->getTotalItemCount() )
+		{
+	?>				
+		<div class="col3">
+			<div class="fl text-grey3">
+	<?php 
+			$query_str = "";
+			foreach( $this->prms as $key=>$p )
+			{
+				if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+				{
+					continue;
+				}
+				$query_str .= $key."=".$p."&amp;";
+			}
+	?>
+				VIEWS 
+				<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."links/tag?".$query_str."list_len=20";?>">
+				<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/tag?".$query_str."list_len=50";?>">
+				<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/tag?".$query_str."list_len=100";?>">
+				<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/tag?".$query_str."list_len=all";?>">
+				<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+				</a>
+			</div>
+			<div class="fr  text-grey3">
+			<?php
+				echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+			?>							
+			</div>
+		</div>
+		<?php
+		}
+	}
+		?>					
+	<!-- Col3 Ends -->
+	</div>
+	<div class="linkprofile-container">
+	<!-- Link Profile Outer Starts -->
+		<form name="link-form" id="link-form" method="post" action="">
+			<div class="linkprofile-outer">
+			<?php 
+			echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(), $listArr, 1, 1);
+			?>
+			</div>
+		</form>
+	</div>
+</div>      

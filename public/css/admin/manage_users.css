@@ -1,0 +1,149 @@
+div#ilook_dt_wrapper table#jquery_dt tr td a.block
+{
+	background: url("../../images/enable_user_small.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+	margin: 0 2px;
+	cursor: pointer;
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.block:HOVER
+{
+	background: url("../../images/disable_user_small_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+div#ilook_dt_wrapper table#jquery_dt tr td a.unblock, div#ilook_dt_wrapper table#jquery_dt tr td span.unblock
+{
+	background: url("../../images/disable_user_small.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+	margin: 0 2px;
+	cursor: pointer;
+}
+
+div#ilook_dt_wrapper table#jquery_dt tr td span.unblock
+{
+	opacity: 0.3;
+	cursor: not-allowed;
+}
+
+div#ilook_dt_wrapper table#jquery_dt tr td a.unblock:HOVER
+{
+	background: url("../../images/enable_user_small_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+
+div#ilook_dt_wrapper table#jquery_dt tr td a.acc_deleted
+{
+	background: url("../../images/deleted_user_small.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+	margin: 0 2px;
+	cursor: pointer;
+}
+
+
+div#ilook_dt_wrapper table#jquery_dt tr td a.delete
+{
+	background: url("../../images/delete_user_small.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+	margin: 0 2px;
+	cursor: pointer;
+}
+
+div#ilook_dt_wrapper table#jquery_dt tr td a.delete:HOVER
+{
+	background: url("../../images/delete_user_small_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+div#ilook_dt_wrapper span.buttons
+{	
+	display: inline-block;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: -17px;
+    width: 50px;
+}
+
+div#ilook_dt_wrapper span.buttons span#delete_records, 
+div#ilook_dt_wrapper span.buttons span#disable_records, 
+div#ilook_dt_wrapper span.buttons span#enable_records,
+div#ilook_dt_wrapper span.buttons span#login_as_user,
+div#ilook_dt_wrapper span.buttons span#post_to_user_wall
+{
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+	cursor: pointer;
+	position: absolute;
+	top: -10px;
+}
+div#ilook_dt_wrapper span.buttons span#delete_records
+{
+	background: url("../../images/delete_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); top:12px !important; margin-top:0 !important;
+}
+div#ilook_dt_wrapper span.buttons span#delete_records:HOVER
+{
+	background: url("../../images/delete_user_big_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); 
+}
+div#ilook_dt_wrapper span.buttons span#disable_records
+{
+	background: url("../../images/disable_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); top:12px !important; margin-top:0 !important;
+}
+div#ilook_dt_wrapper span.buttons span#disable_records:HOVER
+{
+	background: url("../../images/disable_user_big_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+div#ilook_dt_wrapper span.buttons span#enable_records
+{
+	background: url("../../images/enable_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); top:12px !important; margin-top:0 !important;
+}
+div#ilook_dt_wrapper span.buttons span#enable_records:HOVER
+{
+	background: url("../../images/enable_user_big_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+div#ilook_dt_wrapper span.buttons span#login_as_user
+{
+	background: url("../../images/log_in_as_user_big.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); top:12px !important; margin-top:0 !important;
+}
+div#ilook_dt_wrapper span.buttons span#login_as_user:HOVER
+{
+	background: url("../../images/log_in_as_user_big_hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+div#ilook_dt_wrapper span.buttons span#post_to_user_wall
+{
+	background: url("../../images/write-on-userwall.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); top:12px !important; margin-top:0 !important;
+  
+}
+div#ilook_dt_wrapper span.buttons span#post_to_user_wall:hover
+{
+	background: url("../../images/write-on-userwall-hover.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+
+div.content label {
+    float: left;
+	margin:12px 0 0 0;
+}
+input.date_filter_input
+{
+	width:100px;
+	background-color: #fff !important;
+	cursor: default !important;
+}
+select#created_from_portal
+{
+	width:100px
+}
+span#user_signup
+{
+	 float: left;
+    font-weight: normal;
+    margin: 12px 5px 0 0;
+	line-height:30px;
+}
+.user-signup-text{ width:210px !important; padding:8px !important; margin-right:10px !important;}
+.header_user_mgmt{width:100%; float:left; padding:10px; border:1px solid #ddd;box-sizing:border-box;}

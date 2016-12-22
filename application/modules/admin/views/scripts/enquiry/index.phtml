@@ -1,0 +1,173 @@
+<?php
+$this->headTitle()->prepend('Enquiry');
+/* Including JS */
+$this->headScript()->appendFile( PUBLIC_PATH."/js/admin/enquiry.js" );
+/* Including CSS */
+// $this->headLink()->appendStylesheet( "//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/dataTables.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/enquiry.css" );
+echo $this->render("partials/compose_form.phtml");
+
+?>
+<div id='heading'>
+	<h2>Enquiry
+		<span style = 'float:right; margin-right: 5px;' title = 'Total Users according to current criteria' id = 'num_of_users'></span>
+	</h2>
+</div>
+
+<div class="content">
+	<div id="ilook_dt_wrapper" class="dataTables_wrapper">
+		<div class="dataTables_length" id="jquery_dt_length">
+			<label>Show <select name="jquery_dt_length" aria-controls="jquery_dt" class="">
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="250">250</option>
+					<option value="500">500</option></select> entries
+			</label>
+			<span class = "buttons">
+				<span title="Click to delete selected enquiries" id = "delete_records"></span>
+			
+<?php 
+/*if(Auth_UserAdapter::hasIdentity())
+{
+?>
+			<a href="javascript:void(0)" onclick = "openComposeForm('<?php echo Auth_UserAdapter::getIdentity()->getEmail() ?>');"
+			 class = "open_enquiry_form">Compose</a> 
+<?php 
+}
+else 
+{ */
+?>
+			<!--a href="javascript:void(0)" onclick = "openComposeForm();"
+			 class = "open_enquiry_form">Compose</a--> 
+			 <span onclick="openComposeForm();" class="open_enquiry_form" title="Click to compose enquiry" id="compose_enquiry">
+   
+    </span>
+	</span>
+<?php
+/*
+} */
+?>
+		
+			
+		</div>
+						
+		<div id="jquery_dt_filter" class="dataTables_filter">
+			<label>Search:<input type="search" class="" placeholder="" aria-controls="jquery_dt"></label>
+		</div>
+
+		
+		<div id="jquery_dt_processing" class="dataTables_processing"
+			style="display: none;">Processing...</div>
+
+		<table id="jquery_dt" class="display dataTable" 
+			cellspacing="0" cellpadding="0" border="0" role="grid"
+			aria-describedby="jquery_dt_info" >
+			<thead>
+				<tr role="row">
+<!-- 				----------------------------------------------------------------------------------------------------- -->
+<!-- 				db_column attribute is set according to doctrine2 query requirement. Please see query in model class. -->
+<!-- 				----------------------------------------------------------------------------------------------------- -->
+					<th style="text-align:left; ">
+					<input type = "checkbox" name = "master_delete_checkbox" class = "master_delete_cb">
+					</th>
+					<th class="sorting sorting_asc active" tabindex="0"
+						aria-controls="jquery_dt" rowspan="1" colspan="1"
+						 aria-sort="DESC" 
+						db_column="enquiry.id" db_column_alias="idd" position = "2">
+						#
+					</th>
+					 <th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1"  aria-sort="DESC"
+						db_column='enquiry.type' db_column_alias="enquiry_type"  position = "3">Type</th>
+					
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1"  aria-sort="DESC"
+						db_column='enquiry.phone_number' db_column_alias="phone_number"  position = "3">Phone Number</th>
+						
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1"  aria-sort="DESC"
+						db_column='enquiry.email_id' db_column_alias="email_id"  position = "4">Email</th>
+					
+					<th  class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1"  aria-sort="DESC"
+						db_column='enquiry.subject' db_column_alias="subject" position = "5">Subject</th>
+				
+ 					<th  class="sorting" tabindex="0" aria-controls="jquery_dt" 
+						rowspan="1" colspan="1"  aria-sort="DESC"
+						db_column='enquiry.body' db_column_alias="body" position = "6">Description</th> 
+					
+					
+					<th class="sorting_disabled" rowspan="1" colspan="1"
+						  position = "8">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+			<tfoot>
+				<tr>
+					<th rowspan="1" colspan="1"></th>
+					<th rowspan="1" colspan="1">#</th>
+					<th rowspan="1" colspan="1">Type</th>
+					<th rowspan="1" colspan="1">Phone Number</th>
+					<th rowspan="1" colspan="1">Email</th>
+					<th rowspan="1" colspan="1">Subject</th>
+					<th rowspan="1" colspan="1">Description</th>
+					<th rowspan="1" colspan="1">Actions</th>
+				</tr>
+			</tfoot>
+		</table>
+
+		<div class="dataTables_info" id="jquery_dt_info" role="status"
+			aria-live="polite"></div>
+
+		<div class="dataTables_paginate paging_simple_numbers"
+			id="jquery_dt_paginate">
+			<a class="paginate_button previous disabled" aria-controls="jquery_dt"
+				data-dt-idx="" tabindex="0" id="jquery_dt_previous">Previous</a>
+				<span id = "page_buttons">
+				</span>
+			<a class="paginate_button next" aria-controls="jquery_dt" 
+				data-dt-idx="" tabindex="0" id="jquery_dt_next">Next</a>
+		</div>
+	</div>
+</div>
+<!-- Dialog Box -->
+<div style="display:none;" id="dialog_confirm_close_jobs" title="close job(s)">
+	<p>
+		Are you sure you want to close selected job(s) ?
+	</p>
+</div>
+<div style="display:none;" id="dialog_confirm_delete_enquiry" title="delete job(s)">
+	<p>
+		Are you sure you want to delete selected enquiry ?
+	</p>
+</div>
+<div id = 'temp_uploads_info' ></div>
+<div id="view_form" class = "popup transparent_border" style = "display: none;">
+	<div class="enquiry-pop-outer">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1 enquiry-pop-hdr">
+			<div id="forgot-password" class="left ">
+				<h2>View Enquiry</h2>
+			<img class="close_bpopup"
+			src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+			title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		
+		<div class = "view_content" >
+		
+		</div>	
+		</div>
+
+	<div style="display:none; z-index: 115;" id="dialog_file_size" title="File Size">
+	Total Attachment size should not exceed 20 MB
+</div>
+
+</div>
+
+
+

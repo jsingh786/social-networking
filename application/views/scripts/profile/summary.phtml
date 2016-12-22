@@ -1,0 +1,75 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Summary');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/summary.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/summary.css" );
+
+	echo $this->partial('partials/profile_menu.phtml'); 
+?>
+        <!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+			<!-- Summary Edit Starts -->
+			<div class="summary-edit text-grey2">
+				<h3 class="text-purple2">Summary</h3>
+				<font style = "float: right;">
+					<span id = "edit_summary_btn">
+						<img class="edit-new-icon" src="<?php echo IMAGE_PATH; ?>/edit-pencil.png"  /> 
+					</span>	
+				</font>
+			</div>
+			<!-- Summary Edit Ends -->
+
+			<!-- Contact Details Starts -->
+			<?php if(Auth_UserAdapter::getIdentity()->getProfessional_exp()){
+				echo '<span id="is_summary"><input type="hidden" name="is_summary"  id="is_summary" value="available" /></span>';
+			}else{
+				echo '<span id="is_summary"><input type="hidden" name="is_summary"  id="is_summary" value="not_available" /></span>';
+			} ?>
+			<div class="contact-details" id = "view_summary">
+			<div class="contact-label-span">
+				<label>Professional Experience Summary</label> 
+				<span class="text-grey2" id = "prof_exp"><?php echo nl2br(Auth_UserAdapter::getIdentity()->getProfessional_exp()); ?></span> 
+				</div>
+				<!-- <div class="contact-label-span">
+				<label>Goals</label> 
+				<span class="text-grey2" id = "goals" ><?php //echo Auth_UserAdapter::getIdentity()->getProfessional_goals(); ?></span> 
+				</div>-->
+			</div>
+			<div id = "edit_summary">
+				<form action = "#"  id = "edit_summary">
+					<!-- Summary Edit Starts -->
+					<!-- Contact Details Starts -->
+					<div class="contact-details">
+					<div class="contact-label-span2">
+						<label>Professional Experience Summary</label>
+						<span style="min-height:115px; margin-bottom:10px;">
+		                	<textarea maxlength="1500" name="getProfessional_exp" id = "getProfessional_exp" class="textarea2 group-required"  cols="" rows="20"><?php echo Auth_UserAdapter::getIdentity()->getProfessional_exp(); ?></textarea>
+		                </span>
+		                </div>
+		               <!--  <div class="contact-label-span2">
+						<label>Goals</label>
+						<span style="min-height:115px; margin-bottom:10px;">
+		                	<textarea name="getProfessional_goals" id = "getProfessional_goals" class="textarea2 group-required" cols="" rows="5"><?php //echo Auth_UserAdapter::getIdentity()->getProfessional_goals(); ?></textarea>
+		                </span>
+		                </div>-->
+					</div>
+					<div class=" summary-btn-outer">
+						<input name="save"  type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+						<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+					</div>
+				<!-- Summary Outer Ends -->
+				<!-- Summary Edit Ends -->
+				</form>
+			</div>		
+		</div>
+	</div>	
+	<!-- Content Right Right Ends -->
+	<!-- Content Right Ends -->

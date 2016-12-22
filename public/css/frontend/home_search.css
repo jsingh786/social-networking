@@ -1,0 +1,56 @@
+@CHARSET "ISO-8859-1";
+.home-search-right .col4 {
+	min-height: 737px;
+}
+.no-rec-msg.text-grey3 {
+    border: 1px solid #E5E5E5;
+    padding: 5px;
+    text-align: center;
+}
+.mail-sendmsg-col2 .left .image .image_inner{
+	display: table-cell;
+	text-align: center;
+    vertical-align: middle;
+	height: 72px;
+	width: 83px;
+}
+.home-search-hdr .col5 {
+    float: right;
+    margin: 25px 20px 0 0;
+    padding: 0;
+    width: auto;
+}
+.home-search-right .col5 {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.login-btn-new input{
+                width:97px;
+                margin:0;
+                padding:0;
+                float:left;
+                height:52px;
+                background:url(../../images/login-btn.png) no-repeat;
+                line-height:52px;
+                border:none;
+                font-size:18px;
+                font-weight:normal;
+                color:#fff;
+                cursor:pointer;
+                font-family: opensansregular;
+}
+.login-btn-new {
+    float: left;
+    margin: 10px 0 0 95px;
+    padding: 0;
+    width: auto;
+}
+
+label.error {
+    line-height: 12px;
+
+}
+select#my-dropdown3 {
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 5px;
+}

@@ -1,0 +1,368 @@
+<!-- Content Left Starts -->
+<?php 
+$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+$actionn = $params ['action'];
+$controllerr = $params ['controller'];
+
+$menu_session = new Zend_Session_Namespace ( 'main_menu' );
+
+?>
+<style type="text/css">
+.profile-img-closed{
+	width:50px !important;
+}
+</style>
+<div class="content-left-closed" id = "minimised_menu">
+	<!-- Hide Menu Starts -->
+	<?php
+	
+	if( $actionn != 'iprofile' && $actionn != "my-iprofile" && $actionn != 'photo-feed' && $actionn != 'detail'
+			&& $actionn != 'monster-jobs-UK' && $actionn != 'monster-jobs-US' && $actionn != 'monster-jobs-US'
+			&& $actionn !='monster-jobs-in'  && $actionn !='monster-jobs-fr' && $actionn !='monster-jobs-nl'
+			&& $actionn !='monster-jobs-de' && $actionn !='monster-jobs-ca' && $actionn !='monster-jobs-ca')
+	{
+	?>
+	<div class="hide-menu-closed">
+		<a href="javascript:;" id = "maximise_menu">
+			<img width="14" height="11" alt="Show Menu" title="Show Menu" src="<?php echo IMAGE_PATH; ?>/hide-icon.png">
+		</a>
+	</div>
+	<!-- Hide Menu Ends -->
+	
+	<?php 
+	}
+			$filename=REL_IMAGE_PATH."/profile/small_thumbnails/thumbnail_".Auth_UserAdapter::getIdentity()->getProfessional_image();
+			if(Auth_UserAdapter::getIdentity()->getProfessional_image()!="" && file_exists($filename))
+			{
+				$img_name=IMAGE_PATH."/profile/small_thumbnails/thumbnail_".Auth_UserAdapter::getIdentity()->getProfessional_image();
+				$image="thumbnail_".Auth_UserAdapter::getIdentity()->getProfessional_image();
+				$uploadtxt="Edit";
+				$remtxt="";
+				$previewClass="profileImg";
+			}
+			else
+			{
+				if(Auth_UserAdapter::getIdentity()->getGender()==Extended\ilook_user::USER_GENDER_MALE)
+				{
+					$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+				}
+				else if( Auth_UserAdapter::getIdentity()->getGender()==Extended\ilook_user::USER_GENDER_FEMALE )
+				{
+					
+					$img_name=IMAGE_PATH."/profile/default_profile_image_female_big.png";
+				}
+				else
+				{
+					$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+				}
+				$image="";
+				$uploadtxt="Upload";
+				$remtxt="display:none";
+				$previewClass="";
+			}
+			
+			//Giving extra css to profile picture div in case when iprofile or myProfile is accessed.
+			if( $actionn == 'iprofile' || $actionn == 'my-iprofile' || $actionn == 'photo-feed' || $actionn == 'detail') 
+			{
+				echo '<div style="padding:3px 0 0 0 !important;" class="profilePic profile-img-closed prof_section'.$previewClass.'" rel="'.Auth_UserAdapter::getIdentity()->getId().'">';
+				echo '<img id="profileLogo_small" src="'.$img_name.'" style="max-width:39px;max-height:39px" />';
+				echo '</div>';
+			}
+			else
+			{
+				echo '<div class="profilePic profile-img-closed '.$previewClass.'" rel="'.Auth_UserAdapter::getIdentity()->getId().'">';
+				echo '<img id="profileLogo_small" src="'.$img_name.'" style="max-width:39px;max-height:39px" />';
+				echo '</div>';
+			}
+?>
+	
+	<div class="edit-changes-closed">
+		<a href="javascript:;" id="editProfileImg2"><img src="<?php echo IMAGE_PATH; ?>/icon-cam.png" width="15"
+			alt="Edit/Change" title="Edit/Change" height="12" /></a>
+	</div>
+	
+<?php 
+$links_count = Helper_common::getLinksCount();
+if( $links_count )
+{	
+?>	
+	<div style = "margin-top: 36px; text-align: center; width: 100%; font-size: 25px;" >
+		<a title = "<?php echo $links_count?> Link(s)" style ="color: #B084E9; text-decoration: none; font-family:oswaldlight;" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>links/index"><?php echo $links_count;?></a>
+	</div>
+<?php 
+}
+else
+{
+?>
+	<div style = "margin-top: 36px; text-align: center; width: 100%; font-size: 25px;" >
+		<a title = "<?php echo $links_count?> Link(s)" style ="color: #B084E9; text-decoration: none; font-family:oswaldlight;" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>links/index"><?php echo $links_count;?></a>
+	</div>
+<?php	
+}	
+?>
+	<div class="left-menu2">
+	
+	 
+		<ul>
+		<!-- 			DASHBOARD -->
+			<li class = "always_show"><span><a href="/<?php echo PROJECT_NAME;?>dashboard/index"><div class="ribbon-body">Home</div></a></span><a
+<?php 
+			if( $controllerr == "dashboard" )
+				echo "class='selected'";	
+?>			 
+			href="/
+<?php 
+			echo PROJECT_NAME;
+?>
+			dashboard">			
+			<img src="<?php echo IMAGE_PATH?>/home-icon.png" alt="Home" title="Home" width="15" height="14" />
+				</a>
+			</li>
+<!-- 			PROFILE -->
+			<li class = "always_show" id = "profile_menu_item">  
+			<span>
+				<a href="/<?php echo PROJECT_NAME.Auth_UserAdapter::getIdentity()->getUsername(); ?>">
+					<div class="ribbon-body">Profile</div>
+				</a>
+			</span>
+			<a 
+<?php 
+			if( $controllerr == "profile" || $controllerr == "bookmarks" )
+				echo "class='selected'";
+?>			
+			href="/
+<?php 	
+			echo PROJECT_NAME.Auth_UserAdapter::getIdentity()->getUsername(); 
+?>
+			">
+			<img src="<?php echo IMAGE_PATH?>/icon-industries.png" alt="Profile"
+			title="Profile" width="12" height="15" />
+			</a>
+			</li>
+
+			
+			
+			
+			<li class = "always_show"
+<?php 
+			if( !$menu_session->is_more )
+			{
+?>
+<?php				
+			}	
+?>	
+			>
+			<span>
+			<a href="/<?php echo PROJECT_NAME;?>socialise/photo-feed"><div class="ribbon-body">Display</div></a></span><a 
+<?php 
+			if( $controllerr == "socialise" )
+				echo "class='selected'";?> href = "/<?php echo PROJECT_NAME;?>socialise/photo-feed">
+						<img src="<?php echo IMAGE_PATH?>/icon-photo.png" alt="Socialise" title="Socialise" width="12" height="15" />
+			</a></li>
+		
+			
+<!-- 			MAILS -->
+			
+			<li class = "always_show" id = "mail_menu_item">
+			<span><a href="/<?php echo PROJECT_NAME;?>mail/inbox"><div class="ribbon-body">Mails</div></a></span><a 
+<?php 
+			if( $controllerr == "mail" )
+			echo "class='selected'";
+?>			
+			href="/
+<?php 
+			echo PROJECT_NAME;
+?>
+			mail/inbox">
+			<img src="<?php echo IMAGE_PATH?>/mail.png" alt="Mail" title="Mail" width="16"
+				height="13" />
+			</a>
+			</li>
+			
+			
+<!-- 			LINKS -->
+			<li class = "always_show" id = "link_menu_item"
+			><span><a href="/<?php echo PROJECT_NAME;?>mail/inbox"><div class="ribbon-body">Links</div></a></span><a
+<?php 
+			if( $controllerr == "links" )
+			echo "class='selected'";	
+?>			
+			href="/
+<?php 		
+			echo PROJECT_NAME;
+?>			
+						links">
+						<img src="<?php echo IMAGE_PATH?>/icon-connection.png" alt="Links" title="Links"
+							width="16" height="15" />
+			</a></li>
+<!-- 			JOBS -->			
+			<li class = "always_show"><span><a href="/<?php echo PROJECT_NAME;?>job"><div class="ribbon-body">Jobs</div></a></span><a
+<?php 
+			if( $controllerr == "job" )
+				echo "class='selected'";		
+?>			 
+			href="/
+<?php 
+			echo PROJECT_NAME;
+?>
+			job">						<img src="<?php echo IMAGE_PATH?>/icon-reference.png" alt="job" title="job"
+							width="15" height="14" />
+				</a>
+			</li>
+<!-- skills -->			
+			<li class = "always_show">
+				<span>
+					<a href="/<?php echo PROJECT_NAME;?>skills/my-skills">
+						<div class="ribbon-body">Skills</div>
+					</a>
+				</span>
+				<a <?php if( $controllerr == "skills" ) echo "class='selected'";?>	href="/<?php 
+				echo PROJECT_NAME;?>skills/my-skills">
+					<img src="<?php echo IMAGE_PATH?>/icon-skills.png" alt="skills" title="skills" width="15" height="14" />
+				 </a>
+			</li>
+		
+			
+<!-- end skills  -->
+<!-- news -->			
+			<li class = "always_show">
+			<?php $default_news_set = Extended\default_news::getDefaultNewsSetForUser(Auth_UserAdapter::getIdentity()->getId());
+			if($default_news_set)
+			{
+    	 		if($default_news_set->getNews_type() == 1) { ?>
+				<span>
+					<a href="/<?php echo PROJECT_NAME;?>news">
+						<div class="ribbon-body">News</div>
+					</a>
+				</span>
+				<a <?php if( $controllerr == "news" ) echo "class='selected'";?>	href="/<?php 
+				echo PROJECT_NAME;?>news">
+					<img src="<?php echo IMAGE_PATH?>/news-icon.png" alt="skills" title="skills" width="15" height="14" />
+				 </a>
+				 <?php } else {?>
+				 <span>
+					<a href="/<?php echo PROJECT_NAME;?>news/ibn">
+						<div class="ribbon-body">News</div>
+					</a>
+				</span>
+				<a <?php if( $controllerr == "news" ) echo "class='selected'";?>	href="/<?php 
+				echo PROJECT_NAME;?>news/ibn">
+					<img src="<?php echo IMAGE_PATH?>/news-icon.png" alt="skills" title="skills" width="15" height="14" />
+				 </a>
+				 <?php } } else {?>
+				 <span>
+					<a href="/<?php echo PROJECT_NAME;?>news">
+						<div class="ribbon-body">News</div>
+					</a>
+				</span>
+				<a <?php if( $controllerr == "news" ) echo "class='selected'";?>	href="/<?php 
+				echo PROJECT_NAME;?>news">
+					<img src="<?php echo IMAGE_PATH?>/news-icon.png" alt="skills" title="skills" width="15" height="14" />
+				 </a>
+				 <?php } ?>
+			</li>
+		
+			
+<!-- end news  -->
+			
+			<!--li><a href="javascript:;">
+						<img src="<?php echo IMAGE_PATH?>/icon-job-agencies.png" alt="Job Agencies"
+							title="Job Agencies" width="16" height="16" />
+			</a></li>
+			<li><a href="javascript:;">
+					<img src="<?php echo IMAGE_PATH?>/blog-icon.png" alt="Forums"
+							title="Blogs" width="16" height="16" />
+			</a></li-->
+			
+
+			
+
+					
+			<!-- li id = "show_more_view"
+<?php 
+			if( $menu_session->is_more )
+			{
+?>
+				style = "display:none;"
+<?php				
+			}	
+?>				
+			><a href="javascript:;">
+					
+						<img src="<?php echo IMAGE_PATH?>/icon-more.png" alt="More" title="More"  />
+					
+			</a></li>
+			
+			<li id = "show_less_view"
+<?php 
+			if( !$menu_session->is_more )
+			{
+?>
+				style = "display:none;"
+<?php				
+			}	
+?>				
+			><a href="javascript:;">
+					
+						<img src="<?php echo IMAGE_PATH?>/icon-less.png" alt="Less" title="Less" />
+					
+			</a></li-->
+		</ul>
+	</div>
+</div>
+	<!-- crop image popup gadget.... -->
+	
+	<div id="wrap" style="display: none;width:690px;background:white;height:auto;">
+    
+    <div id="uploader">
+        <div id="big_uploader">
+            <a style="float:right;color:white;text-decoration:none;" href="#" id="close-popup" title="Close">
+            <img class="close_popup_3"  title="Close" alt="Close" src="<?php echo IMAGE_PATH; ?>/upload-cross.png">
+            </a>
+    	</div><!-- big_uploader -->
+    	<div style="color:#48545E; font-size: 17px; float: left; width: 100%;padding:6px 0px;">
+    		<form name="upload_big" id="upload_big"  method="post" enctype="multipart/form-data" action="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/upload-crop-img/act/upload" target="upload_target">
+	              <span>1</span>
+	              <label for="photo" style="vertical-align:middle;float:left; margin-top:2px;">
+	              <input name="photo" id="file" size="27" type="file" style="overflow:hidden;width:300px; margin-right:10px;font-size:12px;vertical-align:middle;" /></label>  
+	               <input type="hidden" name="height" value="450" size="5"/>
+	               <input type="hidden" name="width" value="450" size="5" />          
+	              <input type="hidden" name="chkFrm" id="chkFrm" value="" />
+	              <input type="hidden" name="progress_id" id="progress_id" value="" />
+	              <input type="hidden" name="prof_pic" id="prof_pic" value="" />
+	              <input type="hidden" name="rotation_angle" id="rotation_angle" value=0 />
+	              <input type="submit" name="action" value="Upload" class="btn-purple fl"/>
+			</form>
+    	</div>
+    	
+    	
+        <div id="content" style="display:none;margin:10px 0px;">
+        	<!--  display cropping image, preview and thumbnails -->
+      </div><!-- content -->
+      
+        <iframe id="upload_target" name="upload_target" src="" style="width:100%;height:400px;border:1px solid #ccc; display:none"></iframe>
+        <!-- this is the secret iframe :) -->
+        
+    </div><!-- uploader -->
+
+    
+
+</div><!-- wrap -->
+	
+	
+		
+	<!-- crop image popup gadget end.... -->
+<!-- magnifying images -->
+<div id="magnify" style="display: none;width:auto;background:black;height:auto;">
+       
+    <span style="position:absolute; right: -5px; top: -5px; cursor:pointer;"><img src="<?php echo IMAGE_PATH?>/cross-3.png" alt="Close" title="Close" id="closePopup" width="16" height="16" /></span>
+    <div id="popupPreview" style="width:800px;height:600px;background:black;display:table-cell;vertical-align:middle;text-align:center;">
+    	
+        <img id="orignalImage" src="<?php echo IMAGE_PATH;?>/loading_large_black.gif" style="max-width:800px;max-height:600px;" />
+    </div><!-- uploader -->
+ <div style="position:relative;" id="rotate_img"></div>
+    
+
+	</div><!-- magnify -->	
+	<!-- magnifying images -->
+<!-- Content Left Ends -->

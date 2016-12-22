@@ -1,0 +1,438 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Search Job' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/jobs_search.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/jquery.cookie.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/search_job.css" );
+
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+?>
+
+<?php 
+if( $this->search_id )
+{
+?>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		listingForSavedSearch( <?php echo $this->search_id;?> );
+		$("input#search_form").val("advanced");
+	});
+	</script>
+<?php 
+}
+else
+{	
+?>
+	<script type = "text/javascript">
+
+		$(document).ready(function(){
+<?php
+		if( isset($_COOKIE['simple_search_country']) && $_COOKIE['simple_search_country']!="" )
+		{	
+?>	
+			$("select#simple_country").val(<?php echo $_COOKIE['simple_search_country']; ?>);
+<?php 
+		}
+		if( isset($_COOKIE['advance_search_country']) && $_COOKIE['advance_search_country']!="" )
+		{	
+?>	
+			$("select#advanced_country").val(<?php echo $_COOKIE['advance_search_country']; ?>);
+<?php 
+		}
+
+		if( isset($_COOKIE['advance_search_job_type']) && $_COOKIE['advance_search_job_type']!="" )
+		{	
+?>	
+			$("select#job_type").val(<?php echo $_COOKIE['advance_search_job_type']; ?>);
+<?php 
+		}
+
+		if( isset($_COOKIE['advance_search_experience_level']) && $_COOKIE['advance_search_experience_level']!="" )
+		{	
+?>	
+			$("select#experience_level").val(<?php echo $_COOKIE['advance_search_experience_level']; ?>);
+<?php 
+		}
+
+		if( isset($_COOKIE['advance_search_industry']) && $_COOKIE['advance_search_industry']!="" )
+		{	
+?>	
+			$("select#industry").val(<?php echo $_COOKIE['advance_search_industry']; ?>);
+<?php 
+		}
+?>
+
+<?php
+		// 	Checking if cookie is set then trigger search for that paticular form.
+		if( isset($_COOKIE['simple_search_job_title']) && $_COOKIE['simple_search_job_title']!="" )
+		{
+			//If country cookie is set then fill up options
+			//for state and city and read values of cookies for them.
+			if ( isset($_COOKIE['simple_search_country']) && $_COOKIE['simple_search_country']!="" )
+			{
+?>
+				fillUpSimpleSearchStateDD();
+				fillUpSimpleSearchCityDD();
+<?php 
+			}
+?>
+			//Change search_form value to detect which search to fire.
+			$('input#search_form').val('simple');
+			simpleSearch();
+<?php 
+		}
+
+		else if( isset($_COOKIE['advance_search_job_title']) && $_COOKIE['advance_search_job_title']!="" )
+		{
+			//If country cookie is set then fill up
+			//dropdown for state, city and salary and read cookies for them.
+
+			if ( isset($_COOKIE['advance_search_country']) && $_COOKIE['advance_search_country']!="")
+			{
+?>
+				fillUpAdvancedSearchStateDD();
+				fillUpAdvancedSearchCityDD();
+				fillUpAdvanceSearchSalaryDD();
+<?php
+			}
+?>
+				
+				//Change search_form value to detect which search to fire.
+				$('input#search_form').val('advanced');
+				advancedSearch();
+<?php 
+		}
+?>
+	});
+</script>
+<?php 
+}
+?>
+
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Bookmarks Header Starts -->
+	<div class="job-hdr">
+		<div class="job-hdr-top">
+			<h2>Search jobs</h2>
+		</div>
+		
+		<input type="hidden" name="commonSearchByJobTitle" id="commonSearchByJobTitle" value="<?php echo @$this->commonSearchByJobTitle ; ?>" />
+		<input type="hidden" name="view_more" id="view_more" value="" />
+		
+		<form action="" method="POST" id = "simple_search">
+		<input type="hidden" value="simple" name="search_type" />
+			<div class="search-job bdr-btm-none">
+				<div class=" search-job-col1">
+					<div class="search-job-right">&nbsp;</div>
+					<div class="search-job-mid">
+<?php 
+						if($this->commonSearchByJobTitle != "")
+						{ 
+?>
+							<input class = "search-job-input" id="simple_search_job_title" name="job_title" type="text" tabindex="1" placeholder= "Job Title" value="<?php echo $this->commonSearchByJobTitle ; ?>"/>
+<?php 
+						}
+						else
+						{
+?>
+							<input id="simple_search_job_title" class = "search-job-input" name="job_title" type="text" tabindex="1" placeholder= "Job Title" value="<?php echo ISSET($_COOKIE['simple_search_job_title']) ? $_COOKIE['simple_search_job_title'] : ""; ?>"/>
+<?php 
+						}
+?>
+					</div>
+					<div class="search-job-left">Job Title</div>
+				</div>
+				<div class=" search-job-col1" id = "simple_state_div">
+					<div class="search-job-right">
+					</div>
+					<div class="search-job-mid">
+						<div id="win-xp8">
+							<select name="state" id="simple_state"
+								class="dd-new-small" tabindex="3">
+								<option value="">Select</option>
+							</select>
+						</div>
+					</div>
+					<div class="search-job-left">State</div>
+				</div>
+				<div class=" search-job-col1">
+					<div class="search-job-right">
+						<input tabindex="5" name="simple_search" id = "simple_search" type="button" alt="Search" title="Search" class="btn-search" value="Search" />
+					</div>
+					<div class="search-job-mid">
+						<div id="win-xp8">
+							<select name="city" id="simple_city"
+								class="dd-new-small" tabindex="4">
+								<option value="">Select</option>
+							</select>
+						</div>
+					</div>
+					<div class="search-job-left">City</div>
+				</div>
+			</div>
+		</form>
+
+	</div>
+	<!-- Bookmarks Header Ends -->
+	<div class="new-border-space8"></div>
+	
+	<div class="pd10-white">
+	<!-- Jobs Right Header Starts -->
+	<div class="jobs-rt-hdr">
+		<div class="slide-down" >
+			<h3>Advanced search</h3>
+		</div>
+		<input type = "hidden" name = "search_id" value = "<?php echo $this->search_id;?>" id = "search_id">
+	</div>
+	<!-- Jobs Right Header Ends -->
+	</div>
+	
+	<div class="new-border-space8"></div>
+	
+	<!-- Jobs Right Content Starts -->
+		<div class="jobs-rt-content">
+			<div id = "advanceSearchPanel">
+			<form action="" method="POST" id = "advance_search">
+				<input type="hidden" value="advance" name="search_type" />
+				<h3 class="text-grey2">JOB DETAILS</h3>
+
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Job Title</label> 
+				<span>
+					<input id="job_title"  name="job_title" type="text" placeholder= "Job Title" value="<?php echo ISSET($_COOKIE['advance_search_job_title'])? $_COOKIE['advance_search_job_title'] : "";?>"/>
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+				
+	
+			<div class="col1" id = "advanced_state_div">
+				<label>State</label> 
+				<span>
+					<div id="win-xp8">
+						<select name="state" id="advanced_state" class="dd-new">
+							<option value="">Select</option>
+						</select>
+					</div>
+				</span>
+			</div>
+	
+			<div class="col1"  id = "advanced_city_div">
+				<label>City</label> <span><div id="win-xp8">
+						<select name="city" id="advanced_city" class="dd-new">
+							<option value="">Select</option>
+						</select>
+					</div></span>
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Company</label> 
+				<span>
+					<input id ="company" name="company" type="text" placeholder= "Company" value="<?php echo ISSET($_COOKIE['advance_search_company'])? $_COOKIE['advance_search_company'] : "";?>"/>
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Industry</label> <span><div id="win-xp8">
+						<select name="industry" id="industry" class = "dd-new">
+<?php
+							echo '<option value="">Select</option>';
+							foreach ( $this->allIndustriesObj as $industry )
+							{
+								echo '<option value="'.$industry->getId().'">'.$industry->getTitle().'</option>';
+							}	
+?>						
+						</select>
+					</div></span>
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Job Type</label> <span><div id="win-xp8">
+						<select name="job_type" id="job_type" class = "dd-new">
+							<option value="">Select</option>
+<?php 
+							foreach ( $this->allJobTypesObj as $jobType )
+							{
+								echo '<option value="'.$jobType->getId().'">'.$jobType->getName().'</option>';
+							}	
+?>						
+						</select>
+					</div></span>
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Experience Level</label> <span><div id="win-xp8">
+						<select name="experience_level" id="experience_level" class = "dd-new">
+							<option value="">Select</option>
+<?php 
+							foreach ( $this->allExperienceLevelsObj as $experienceLevel )
+							{
+								echo '<option value="'.$experienceLevel->getId().'">'.$experienceLevel->getDescription().'</option>';
+							}	
+?>						
+						</select>
+					</div></span>
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Date From</label>
+				<span>
+					<input type="text" name="date_from" id="date_from" style="width:40%;" readonly placeholder = "Date From"  value="<?php echo ISSET($_COOKIE['advance_search_date_from'])? $_COOKIE['advance_search_date_from'] : "";?>">
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Date To</label>
+				<span>
+					<input type="text" name="date_to" id="date_to" style="width:40%;" readonly placeholder = "Date To" value="<?php echo ISSET($_COOKIE['advance_search_date_to'])? $_COOKIE['advance_search_date_to'] : "";?>">
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>&nbsp;</label> <span style="  display: inline-block;width: 61px;float: right;text-align: center; "><input name="" type="button" alt="Search"
+					title="Search" class="btn-search fr" value="Search" id = "advanced_search"/></span>
+			</div>
+			<!-- Col1 Ends -->
+			</form>
+			
+			<p class="bdr-grey">&nbsp;</p>
+			
+			</div>
+			
+			<form action="" method="POST" id = "save_search">
+			<h3 class="text-grey2">SAVE SEARCH</h3>
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>Saved Search Name</label> 
+				<span>
+					<input name="search_name" id = "search_name" type="text" value = "" placeholder = "Saved Search Name"/>
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label> Receive Alerts</label>
+				<span>
+					<div id="win-xp8" >
+						<select name="receive_alerts" id="receive_alerts" class = "dd-new">
+							<option value="">Select</option>
+<?php 
+							foreach ( $this->receiveAlertsObj as $receiveAlert )
+							{
+								echo '<option value="'.$receiveAlert->getId().'">'.$receiveAlert->getDescription().'</option>';
+							}
+?>						
+						</select>
+					</div>
+				</span>
+			</div>	
+			
+			<div class="col1">
+				<label>Email</label> 
+				<span>
+					<input type="text" placeholder="Email (Where you want to receive alerts)" value="<?php echo $this->email_for_job_alerts;?>" id="email_to_recv_alerts" name="email_to_recv_alerts" 
+<?php 
+				if($this->email_for_job_alerts)
+				{ 
+?>
+					style = "background: #D8D6D6;"
+					readonly = "readonly";
+<?php					
+				} 
+?> 
+					>
+<?php
+				if($this->email_for_job_alerts)
+ 				{
+?>					
+					<label style = "width: 100%;">(Double click to change email)</label>
+<?php 
+ 				}
+?>					
+				</span>
+				
+			</div>
+			<!-- Col1 Ends -->
+	
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<label>&nbsp;</label> 
+				<span style="display: inline-block; float: right; width: 61px;">
+					<input name="saved_search" type="button" alt="Save" title="Save" class="btn-purple-lt fr" value="Save" id = "saved_search" />
+				</span>
+			</div>
+			</form>
+			<!-- Col1 Ends -->	
+		</div>
+
+		<!-- successfully job applied message popup start -->
+		<div id="dialog_success_job_apply"  style="display:none;"  title="Job Applied">
+ 			<p>
+  				Successfully Applied.
+  			</p>
+		</div>
+		<!-- successfully job applied message popup end -->
+		
+		<!-- job apply error message popup start -->
+		<div id="dialog_error_job_apply"  style="display:none;"  title="Apply Job">
+ 			<p>
+  				Error occured, Please try again.
+  			</p>
+		</div>
+		<!-- job apply error message popup end -->
+		
+<!-- <div class=" links-viewall-outer"> -->
+	<div style="margin-bottom: 0; border-bottom: none;" class=" links-viewall">
+	
+		
+		<!-- Job list holder -->
+		<div id = "job_list_holder">
+			<div class="jobs-rt-hdr" id="search_result">
+        		<div class="slide-down" >
+        			<h3 style="background:none;">Search Result</h3>
+        		</div>
+        	</div>
+        		
+		</div>
+	</div>
+<!-- </div>	 -->
+</div>
+	<!-- Links View Starts -->
+<input type = hidden value = "0" name = "offsett" id = "offsett"/>
+<!-- Two values for search form : simple, advanced  -->
+<input type = hidden value = "" name = "search_form" id = "search_form"/>
+<!-- Content Right Right Ends -->
+
+<!-- Dialog -->
+<div id="dialog_success_job_save" style="display:none;" title="Job Saved">
+  <p>
+  	Job saved successfully.
+  </p>
+</div>
+<!-- Dialog -->
+<div id="dialog_success_job_unsave"  style="display:none;"  title="Job Unsaved">
+  <p>
+  	Job Unsaved successfully.
+  </p>
+</div>

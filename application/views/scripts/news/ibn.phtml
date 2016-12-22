@@ -1,0 +1,223 @@
+<?php 
+
+$this->headTitle()->prepend('News');
+
+$news_arr2 = new \Zend_Session_Namespace('News_arr2');
+$this->headScript()->appendFile ( PUBLIC_PATH . "/js/frontend/news-list.js" );
+
+?>
+<?php
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/news.css" );
+?>
+<style type="text/css">
+.news-listing-col1 .top{
+	height:92px !important; /* 182*/
+	vertical-align:middle;
+	display:table-cell;
+	text-align:center;
+	float:none;
+	width:276px;
+}
+/* .news-listing-col1{ */
+/* 	width:238px; */
+/* 	height:215px !important; */
+/* } */
+.news-listing-col1 {
+    height: 215px !important;
+    width: 32%;
+}
+.news-content-outer{
+	padding: 2% 1% 0 2%;
+    width: 97%;
+}
+.news-listing-col1 .top img{
+	width:auto;
+}
+.news-listing-col1{
+	position:relative;
+	font-family: arial;
+}
+
+.news-listing-col1 .bot p {
+    font-size: 12px;
+}
+.news-listing-col1 .play{
+	width:100%;
+	position:absolute;
+	background:#000;
+	opacity:0.3;
+	top:0;
+	left:0;
+	z-index:9999;
+	height:95px;	
+	text-align:center;
+}
+.play-icon{
+	margin: 0;
+    padding: 35px 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.text-link{
+	text-decoration:none !important;
+	color : #6c518f;
+}
+.text-link:hover{
+	text-decoration:underline !important;
+}
+
+.top img
+{
+	width:100px ;
+	height:100px;
+	margin:10px 0 0;
+}
+</style>
+<script>
+$(document).ready(function() 
+{
+
+	
+});
+
+function redirectToNewsDetail()
+{
+	window.location.href = "http://stackoverflow.com";
+}
+</script>
+<!-- Content Right Right Starts -->
+<div class="socialise-content">
+
+	<!-- Socialise hdr Starts -->
+	<div class="news-header">
+		<h1 class="text-purple">News</h1>
+	</div>
+	<!-- Socialise hdr Ends -->
+
+	<div class="radio_button_div" >
+	<form class="news_type">
+	
+	  	<div id="radio">
+	    <input type="radio" value="1" id="radio_BBC" name="radio_news_type" >
+	    <label for="radio_BBC">BBC</label>
+	    <input type="radio" value="2" id="radio_IBN" name="radio_news_type" checked="checked">
+	    <label for="radio_IBN">IBN</label>
+	  	</div>
+	
+	</form>
+	</div>
+	<!-- Col1 -->
+	<div class="news-content-outer">
+	<div>
+<?php 
+	
+		$ibnNews=$this->news;
+
+		for($i=0;$i<count($ibnNews);$i++)
+		{
+			if($i % 3 == 0)
+			{
+				echo "</div>";
+				echo "<div>";
+			}
+			
+?>	
+
+	
+		<!-- News Outer --->
+		
+		<div class="news-listing-col1">
+<?php 
+		if (strpos( $ibnNews[$i]['link'], "/videos/" ) )
+		{
+			
+?>
+			<div class="play-icon">
+				<img id="showDownload" src="<?php echo IMAGE_PATH;?>/play.png" width="25" height="25" />
+			</div>
+<?php 
+		}
+		
+?>
+			<div class="top">	
+<?php
+			if($ibnNews[$i]['image'])
+			{ 
+			
+				echo '<img src="'.$ibnNews[$i]['image'].'" />';
+			
+			}
+			else
+			{
+				echo '<img src="'.IMAGE_PATH.'/no_image.png" />';
+			}
+?>
+			</div>
+			<div class="bot">
+				<h3 title="<?php echo $ibnNews[$i]['full_title'];?>">
+<?php 
+
+				if (strpos( $ibnNews[$i]['link'], "/videos/") )
+				{
+					$detail_url =  $ibnNews[$i]['link'];
+				}
+				else
+				{
+					$link = str_replace('http://www.ibnlive.com/news/india/', "", $ibnNews[$i]['link']);
+					$detail_url = PROJECT_URL."/".PROJECT_NAME."news/detail-ibn?link=".$link;
+				}
+?>
+				<a  href= "<?php echo $detail_url;?>" class="text-link">
+<?php 
+					echo $ibnNews[$i]['title'];
+?>
+				</a>	
+				</h3>
+				<p class="text-grey2">
+<?php 
+					$timestamp = strtotime($ibnNews[$i]['dateNtime']);
+					$newDate = date('l, F j, Y g:iA ', $timestamp);
+					echo $newDate;
+?>
+				</p>
+			  <p>
+			 
+<?php 
+
+	
+			if(strlen($ibnNews[$i]['description'])>200)
+			{
+				echo substr($ibnNews[$i]['description'],0,200)."..";
+			}
+			else
+			{
+				echo $ibnNews[$i]['description'];
+			}
+?>
+		</p>
+
+			</div>
+		</div>
+		<!-- News Outer --->
+<?php 
+		
+		}
+
+		
+?>
+	</div>
+	</div>
+	<!-- Col1 -->
+<input type="hidden" name="initialPoint" id="initialPoint" value="12">
+	<div id="loadingDiv" style="display:none;font-size:13px;font-weight:bold;background: none repeat scroll 0% 0% white; float: left; height: 25px;padding-top: 3px; width: 100%; text-align: center;">
+		<img style="margin-top:-7px" src="<?php echo IMAGE_PATH; ?>/loading_large_purple.gif" />
+	</div>
+
+</div>
+<!-- Content Right Right Ends -->
+<div id="dialog_confirm_default_news_type" title="Default Wallpost" style="display: none;">
+  <p>
+  	Do you want this news type as default?
+  </p>
+</div>

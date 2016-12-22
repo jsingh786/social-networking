@@ -1,0 +1,1539 @@
+<?php 
+$this->headTitle()->prepend('Post Detail');
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/post.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_detail.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_feed.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/tokenInput/token-input-facebook.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/import_contacts.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.css" );
+
+
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/tokenInput/jquery.tokeninput.js" );
+
+$this->headScript()->prependFile( PUBLIC_PATH."/js/cloud-carousel.1.0.5.js");
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/post.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/photo_detail.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/import_contacts.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/support.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/view-popup-fullscreen.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.js" );
+
+
+
+echo $this->partial('partials/who_liked_popup.phtml');
+echo $this->partial('partials/comments_listing_popup.phtml');
+echo $this->partial('partials/share_dashboard_popup.phtml');
+echo $this->partial ( 'partials/share_photo_feed_popup.phtml' );
+//echo $this->partial ( 'partials/who_shared_dashboard_wall.phtml' );
+echo $this->partial('partials/who_shared_popup.phtml');
+echo $this->partial ( 'partials/photos-popup.phtml' );
+//Adding partial for unlink popup
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+echo $this->partial('partials/import_gmail_contacts_popup.phtml');
+echo $this->partial('partials/yahoo_login_popup.phtml');
+echo $this->partial ( 'partials/move_photo_to_other_album.phtml' );
+$post_data = $this->post_data; // fetch value of post data and assign it to variable
+//define user as his/her on basis of gender.
+$his_or_her =  $post_data['wallpost']['wallpost_user_gender'] == 2?'her':'his';
+if(!($post_data['wallpost']['from_user']))
+{
+
+	$post_data['wallpost']['from_user']['is_deleted'] = false;
+}
+
+//Zend_Debug::dump($post_data['wallpost']['post_update_type']); 
+
+
+?>
+<br />
+<div class="posts_holder left">
+<div id="posts_holder">
+	<div class="news-update-content">
+<?php 
+		if( $post_data['wallpost']['post_update_type'] == 6 || $post_data['wallpost']['post_update_type'] == 7 ||  $post_data['wallpost']['post_update_type'] == 13 )
+		{
+?>
+		<div class="news-update-column no-border-bottom" >
+<?php 
+		}
+		else
+		{
+?> 
+		<div class="news-update-column" >
+<?php
+		}
+?>
+		
+			<div style="position: relative;" class="dashboard-sharelink-column">
+			<input type = "hidden" id = "my_user_id" value = "<?php echo Auth_UserAdapter::getIdentity()->getId();?>">
+			<input type="hidden" id="offset_who_shared" value="0">
+			<input type="hidden" id="limit_who_shared" value="3">
+<?php 
+			//------------------------------------------------------------------------------------------------------------
+			// Heading text for various types of shared posts.
+			//------------------------------------------------------------------------------------------------------------
+         	if( $post_data['wallpost']['post_update_type'] == 6 )//Shared text
+			{ 
+?>
+				<div class="shared-link">
+<?php 
+				//Condn to check if this shared post does not have any data of wallpost from which it is shared.
+			   if($post_data['wallpost']['sharers_string']['shared_from_wallpost_exist'])
+			   {
+?>
+					<span class="text-purple2"><?php echo $post_data['wallpost']['sharers_string']['string']; ?></span>
+					<!-- shared <span class="text-purple2">a status update</span>-->
+<?php 
+			   }
+			   else
+			   {
+?>
+					<span class="text-purple2"><?php echo $post_data['wallpost']['sharers_string']['string']; ?></span>
+					shared <span class="text-purple2">a status update</span>
+			   	
+<?php 
+			   }
+?>
+				</div>
+ <?php
+			}
+			if( $post_data['wallpost']['post_update_type'] == 7 || $post_data['wallpost']['post_update_type'] == 13 )////Shared URL
+			{ 
+?>
+			   <div class="shared-link">
+<?php 
+				//Condn to check if this shared post does not have any data of wallpost from which it is shared.
+			   if($post_data['wallpost']['sharers_string']['shared_from_wallpost_exist'])
+			   {
+?>
+					<span class="text-purple2"><?php echo $post_data['wallpost']['sharers_string']['string']; ?></span>
+					
+					<!-- shared <span class="text-purple2">URL</span>-->
+<?php 
+			   }
+			   else
+			   {
+?>
+			   		<span class="text-purple2"><?php echo $post_data['wallpost']['sharers_string']['string']; ?></span>
+			   		shared <span class="text-purple2">URL</span>
+<?php 
+			   }
+?>
+			   </div>
+<?php
+			}
+			
+			
+			if( $post_data['wallpost']['post_update_type'] == 17 )//Shared photos in default album
+			{ 
+?>
+			   <div class="shared-link">
+<?php 
+				//Condn to check if this shared post does not have any data of wallpost from which it is shared.
+			   if($post_data['wallpost']['sharers_string']['shared_from_wallpost_exist'])
+			   {
+?>
+					<span class="text-purple2"><?php echo $post_data['wallpost']['sharers_string']['string']; ?></span>
+					
+					<!-- shared <span class="text-purple2">URL</span>-->
+<?php 
+			   }
+			   else
+			   {
+			   		
+			   		$photo = sizeof($post_data['collage'])>1?'photos':'photo';
+					$his_or_her =  $post_data['wallpost']['wallpost_user_gender'] == 2?'her':'his';
+					
+					//Condn to check if user has shared his own post. Applied only in case of socialise wall.
+					if( $post_data['wallpost']['wallpost_user_id'] == $post_data['wallpost']['original_user']['id'] )
+					{
+?>
+				   		<span class="text-purple2"><?php echo $post_data['wallpost']['sharers_string']['string']; ?></span>
+				   		shared <?php echo $his_or_her;?> own <span class="text-purple2"><?php echo $photo;?></span>
+<?php 
+					}
+					else
+					{
+						$original_user_name = $post_data['wallpost']['original_user']['fullname']."'s ";
+				
+?>
+				   		<span class="text-purple2"><?php echo $post_data['wallpost']['sharers_string']['string']; ?></span>
+				   		shared <span class="text-purple2"><a class="text-purple2" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $post_data['wallpost']['original_user']['id'];?>" style="text-decoration: none !important;"><?php echo $original_user_name;?>
+				   		</a><?php echo  $photo;?></span>
+<?php 
+					}
+				}	
+?>
+			   </div>
+<?php
+			}
+			//------------------------------------------------------------------------------------------------------------
+			// END - Heading text for various types of shared posts.
+			//------------------------------------------------------------------------------------------------------------
+?>
+            
+            <div title="<?php echo $post_data['wallpost']['wallpost_user_name']; ?>" class="dashboard-sharelink-icon short_profile_border" style="border: 1px solid rgb(204, 204, 204);">
+
+				<a onclick="getShortProfile(this,<?php echo $post_data['wallpost']['wallpost_user_id']; ?>)" href="javascript:" id="<?php echo $post_data['wallpost']['wallpost_user_id']; ?>" >
+					<img width="" height="" src="<?php echo $post_data['wallpost']['wallpost_user_prof_image_path'];?>">
+				</a>
+			<!--  Short profile view popup holder-->
+				<div style="display: none;" class="quickview-outer" id="view-outer_<?php
+					echo $post_data['wallpost']['wallpost_user_id']; ?>">
+					<div class="popupArrow">
+						<img width="36" height="22" src="<?php echo IMAGE_PATH; ?>/arrow-purple2.png">
+					</div>
+					<div class="quickview" id="view_<?php echo $post_data['wallpost']['wallpost_user_id']; ?>"></div>
+				</div>
+			</div>
+<?php
+			if( $post_data['wallpost']['post_update_type'] != 11 )
+			{
+?>
+
+			<div class="dashboard-sharelink-detail">
+			<h4>
+<?php
+				if( $post_data['wallpost']['post_update_type'] == 14 )//Profile photo change wall update.
+				{
+?>
+				<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.'profile/iprofile/id/'. $post_data['wallpost']['wallpost_user_id'] ?>'"
+				 style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name'] ?></a> has updated <?php echo $his_or_her ?>profile photo.
+<?php
+				}
+				else if( $post_data['wallpost']['post_update_type'] == 16 )//collage of images posted on wall.
+				{
+
+					$photo = (sizeof($post_data['collage']))>1?'photos':'a photo';
+					if($post_data['wallpost']['wallpost_user_type']!= 5)
+					{
+?>
+						<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.'profile/iprofile/id/'. $post_data['wallpost']['wallpost_user_id'] ?>" style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name'] ?></a> has posted <?php echo $photo ?>
+<?php
+					}
+					else
+					{
+?>
+						<span class = "text-purple2"><?php echo $post_data['wallpost']['wallpost_user_name'] ?></span> has posted <?php echo $photo; ?>
+<?php
+					}
+				}
+				else if( $post_data['wallpost']['post_update_type'] == 17 )//collage of images shared.
+				{
+					$photo = sizeof($post_data['collage'])>1?'photos':'a photo';
+
+					if( $post_data['wallpost']['wallpost_user_id'] == $post_data['wallpost']['original_user']['id'] )
+					{
+						if( $post_data['wallpost']['wallpost_user_type'] != 5)
+						{
+?>
+							<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.'profile/iprofile/id/'. $post_data['wallpost']['wallpost_user_id'] ?> "style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name']; ?></a></h4>
+<?php
+						}
+						else
+						{//Case of admin
+?>
+							<a class="text-purple2" href="javascript:void(0)" style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name'] ?></a></h4>
+<?php
+						}
+					}
+					else
+					{
+?>
+						<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.'profile/iprofile/id/'. $post_data['wallpost']['wallpost_user_id'] ?> "style="text-decoration: none !important;"> <?php echo  $post_data['wallpost']['wallpost_user_name'] ?></a> has shared
+<?php
+						if( $post_data['wallpost']['original_user']['user_type'] != 5/* User type admin */ ) //Not to show link(URL) in case of post.
+						{
+?>
+						<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.'profile/iprofile/id/'. $post_data['wallpost']['original_user']['id'] ?> " style="text-decoration: none !important;"><?php echo $post_data['wallpost']['original_user']['fullname'] .  '\'s</a> '.$photo ?></a>
+<?php 					
+						}
+						else
+						{
+?>
+						<a class="text-purple2" href="javascript:void(0)" style="text-decoration: none !important; cursor: default;"><?php echo $post_data['wallpost']['original_user']['fullname'] . '\'s</a>'.$photo ?></h4>
+<?php 
+						}
+					}
+				}
+				else if( $post_data['wallpost']['post_update_type'] == 15 )//album on wall.
+				{
+					if( $post_data['wallpost']['wallpost_user_type'] != 5 ){
+?>
+						
+						<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.'profile/iprofile/id/'. $post_data['wallpost']['wallpost_user_id'] ?>" style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name'] ?>
+						</a> 
+						has posted an Album 
+						<a target="_blank" class = "text-dark-purple" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/photos/uid/<?php echo $post_data['wallpost']['wallpost_user_id'];?>/id/<?php echo $post_data['wallpost']['socialize_album_id'];?>">
+						<?php echo $post_data['wallpost']['socialize_album_name'];?>.
+						</a>
+						
+<?php 
+					}
+					else
+					{
+?>
+						<span class = "text-purple2"><?php echo $post_data['wallpost']['wallpost_user_name'] ?></span> has posted an Album.
+<?php 
+					}
+				}
+				else
+				{
+				//anchor tag added by hkaur5
+			
+?>
+				<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.'profile/iprofile/id/'. $post_data['wallpost']['wallpost_user_id'] ?>" style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name'] ?></a>
+<?php 
+				}
+?>
+				</h4>
+						
+				<p style="width:auto;float:left;"><?php echo $post_data['wallpost']['created_at'];
+				switch ($post_data['wallpost']['visibility_criteria'])
+				{
+				case 1:
+?>
+					<img class = "privacy_icon" id = "<?php echo $post_data['wallpost']['id']; ?>" 
+					src="<?php echo IMAGE_PATH; ?>/privacy_public_grey.png">
+<?php 
+				break;
+				
+				case 2:
+?>
+					<img class = "privacy_icon" id = "<?php echo $post_data['wallpost']['id']; ?>" 
+					src="<?php echo IMAGE_PATH; ?>/privacy_links_grey.png">
+<?php 
+				break;
+				
+				case 3:
+?>
+					<img class = "privacy_icon" id = "<?php echo $post_data['wallpost']['id']; ?>" 
+					src="<?php echo IMAGE_PATH; ?>/privacy_links_of_links_grey.png">
+<?php 
+				break;
+				}
+?>	
+				</p>
+<?php 
+
+			}
+			
+			if( $post_data['wallpost']['post_update_type'] == 11 )//POST_UPDATE_TYPE_WISH
+			
+			{
+?>
+			<div class="news-update-date">
+<?php 
+			switch ( $post_data['wallpost']['wish']['wish_type'] )
+			{
+			case 1:
+			case '1':
+?>
+			<div class="wish-icon"><img src = "<?php echo IMAGE_PATH ?>/icon-new-link-big.png"/> </div>
+<?php 
+			break;
+			
+			case 2:
+			case '2':
+?>
+			<div class="wish-icon"><img src = "<?php echo IMAGE_PATH ?>/icon-new-job-big.png"/> </div>
+<?php 
+			break;
+			
+			case 3:
+			case '3':
+?>
+			<div class="wish-icon"><img src = "<?php echo IMAGE_PATH ?>/icon-job-anniversary-big.png"/> </div>
+<?php 
+			break;
+			
+			case 5:
+			case '5':
+?>
+			<div class="wish-icon"><img src = "<?php echo IMAGE_PATH ?>/icon-birthday-wishes-big.png"/> </div>
+<?php 
+			break;
+			}
+	}
+		
+	
+	 if( $post_data['wallpost']['post_update_type'] == 11 )//POST_UPDATE_TYPE_WISH
+	{
+		switch ( $post_data['wallpost']['wish']['wish_type'] )
+		{
+			case 1:
+			case '1':
+?>
+				<h4><a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.$post_data['wallpost']['wallpost_user_username']; ?>" 
+				style="text-decoration: none !important;"><?php echo  $post_data['wallpost']['wallpost_user_name']; ?></a>
+				has a new
+				<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.$post_data['wallpost']['wish']['link_ilook_user_username'] ?>" 
+				style="text-decoration: none !important; title = "<?php echo  $post_data['wallpost']['wish']['link_ilook_user_name'] ?>">Link</a></h4>
+<?php 				
+				
+			break;
+			
+			case 2:
+			case '2':
+?>
+				<h4>
+				<a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.$post_data['wallpost']['wallpost_user_username'];?>" style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name']; ?></a>
+				has a new Job
+				</h4>
+<?php 
+			break;
+			
+			case 3:
+			case '3':
+
+?>
+				<h4><a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.$post_data['wallpost']['wallpost_user_username'] ?>" style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name']; ?></a>
+				having a work Anniversary</h4>
+<?php 
+			break;
+			
+			case 5:
+			case '5':
+?>
+				<h4><a class="text-purple2" href="<?php echo '/'.PROJECT_NAME.$post_data['wallpost']['wallpost_user_username'] ?>" style="text-decoration: none !important;"><?php echo $post_data['wallpost']['wallpost_user_name']; ?></a>
+				Celebrating Birthday Today</h4>
+<?php 
+			break;
+			
+		}
+		
+	}
+	//echo $wall_post;
+	?>
+		
+<?php 
+			/*Privacy options popup starts */
+			if($post_data['wallpost']['is_my_wallpost'] == 1 ) 
+			{ 
+?>
+			<div style="position: relative;float: left;margin: 3px 0px 0px 4px;">
+<?php 
+			 if( $post_data['wallpost']['post_update_type'] != 11 ) 
+			 {  
+?>
+			<img class = "privacy_settings_arrow" src=" <?php echo IMAGE_PATH; ?>/arrow-down-grey.png" onclick = "showPrivacyOptions(this)">
+<?php 
+		 	} 
+?>
+			<div class="option-pop option-pop3" style="">
+<?php 
+			
+			switch ($post_data['wallpost']['visibility_criteria'])
+			{
+				case 1:
+				case '1':
+?>
+					<a href="javascript:;" class="full-screen-view selected" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 1)">
+					<div class="public selected">&nbsp;</div>Public<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 2)">
+					<div class="links">&nbsp;</div>Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 3)">
+					<div class="links2">&nbsp;</div>Links of Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+<?php 
+				break;
+				
+				case 2:
+				case '2':
+?>
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 1)">
+					<div class="public">&nbsp;</div>Public<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+					<a href="javascript:;" class="full-screen-view selected" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 2)">
+					<div class="links selected" >&nbsp;</div>Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 3)">
+					<div class="links2">&nbsp;</div>Links of Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+<?php
+				break;
+				
+				case 3:
+				case '3':
+?>
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 1)">
+					<div class="public">&nbsp;</div>Public<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 2)">
+					<div class="links">&nbsp;</div>Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+					<a href="javascript:;" class="full-screen-view selected" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 3)">
+					<div class="links2 selected">&nbsp;</div>Links of Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+<?php 
+				break;
+				
+				default:
+?>
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 1)">
+					<div class="public">&nbsp;</div>Public<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>';
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 2)">
+					<div class="links">&nbsp;</div>Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>';
+					<a href="javascript:;" class="full-screen-view" onclick = "ChangePrivacyOfWallpost(this, <?php echo $post_data['wallpost']['id'] ?>, 3)">
+					<div class="links2">&nbsp;</div>Links of Links<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>';
+<?php 
+				break;	
+			}
+?>		
+			</div>
+			</div>
+<?php 		
+		}
+		//Privacy options popup ends------
+		
+		//----------------------------------------------------------------------------------------------------------------------------
+		// Text decription enetered by user while sharing in case of SHARED POSTS.
+		//----------------------------------------------------------------------------------------------------------------------------
+		if( $post_data['wallpost']['post_update_type'] == \Extended\wall_post::POST_UPDATE_TYPE_SHARED_TEXT || $post_data['wallpost']['post_update_type'] == \Extended\wall_post::POST_UPDATE_TYPE_SHARED_LINK || $post_data['wallpost']['post_update_type'] == 13 || $post_data['wallpost']['post_update_type'] == \Extended\wall_post::POST_UPDATE_TYPE_GROUP_IN_DEFAULT_ALBUM_BY_SHARING) //Shared text and Shared URL
+		{
+			if($post_data['wallpost']['from_user'])
+			{
+// 				if( $post_data['wallpost']['from_user']['shared_walltext'] ) // NOT REQUIRED. - hkaur5
+// 				{
+?>
+					<p id = "<?php echo $post_data['wallpost']['id']; ?>" class="text-black editable simple_text_<?php echo $post_data['wallpost']['id']; ?>">
+					<span class = "wallpost_text_cropped" id = "<?php echo $post_data['wallpost']['id']; ?>"><?php echo Helper_common::showCroppedText( $post_data['wallpost']['wallpost_text'], 750, '...<label onclick="showFullWallpostText(this)">See More</label>' ) ?></span>
+					<span class = "wallpost_text_full" id = "<?php echo $post_data['wallpost']['id'] ?>"><?php echo $post_data['wallpost']['wallpost_text'] ?></span>
+					</p>
+					
+					<div class = "wallpost_editor" id = "<?php echo $post_data['wallpost']['id'] ?>">
+					<textarea maxlength='255'>" . $post_data['wallpost']['wallpost_text'] . "</textarea>
+					<div class="wall-editor-btn">
+					<input class="btn-purple" type = "button" name = "save" value = "Done Editing" id = "<?php echo $post_data['wallpost']['id'] ?>" onclick = "saveWallpostEditing( this, <?php echo $post_data['wallpost']['id'] ?> )">
+					<a class="new-cancel-btn" id = " <?php echo $post_data['wallpost']['id'] ?>" onclick = "cancelWallpostEditing( this, <?php echo $post_data['wallpost']['id'] ?> )" href="javascript:;">Cancel</a>
+					</div>
+					</div>
+<?php 
+// 				}
+			}
+		}
+						
+?>
+		</div>
+<?php 
+		  
+		 	
+		 if( $post_data['wallpost']['post_update_type'] == \Extended\wall_post::POST_UPDATE_TYPE_SHARED_TEXT ) //Shared text
+		{
+			if( $post_data['wallpost']['from_user'] && $post_data['wallpost']['from_user']['shared_walltext'] )
+			{
+?>
+				<div class="shared-link-outernew">
+				<div class="share-link-outer">
+				
+				
+				<div class="share-link-img">
+				<div class = "short_profile_border share-link-img2" style="">
+<?php 	
+				if( $post_data['wallpost']['from_user'] && ! $post_data['wallpost']['from_user']['is_deleted'] )
+				{
+?>	
+					<a disable-border="1" id="<?php echo $post_data['wallpost']['from_user']['id'] ?>" title = "<?php echo $post_data['wallpost']['from_user']['fullname'];?>" href = "javascript:" onclick="getShortProfile(this, <?php echo $post_data['wallpost']['from_user']['id'] ?>)" >
+					<img title = "<?php echo $post_data['wallpost']['from_user']['fullname']  ?> " width = "32" src="<?php echo $post_data['wallpost']['from_user']['photo']; ?>" />
+					</a>
+<?php 
+				}
+				else
+				{
+?>
+					<img title = "<?php echo $post_data['wallpost']['from_user']['fullname']  ?> " width = "32" src="<?php echo $post_data['wallpost']['from_user']['photo']; ?>" />
+<?php 
+				}	
+   		
+	    		//Short profile view popup holder
+?>
+				<div id="view-outer_<?php echo $post_data['wallpost']['from_user']['id'] ?>" class="quickview-outer" popup-state="off" style="display:none;">
+				<div class="popupArrow">
+				<img width="36" height="22" src="<?php echo IMAGE_PATH; ?>/arrow-purple2.png">
+				</div>
+				<div id="view_<?php echo $post_data['wallpost']['from_user']['id'] ?>" class="quickview"> </div>
+				</div>
+				
+				</div>
+				</div>
+				
+				
+				<div class="share-link-detail">
+				<h4></h4>
+<?php 
+				if($post_data['wallpost']['from_user']['usertype'] != Extended\ilook_user::USER_TYPE_ADMIN)
+				{
+?>
+				<p> <a class="text-purple2 fnt-bold" href="<?php echo '/'. PROJECT_NAME.$post_data['wallpost']['from_user']['username'] ?>" ><?php echo $post_data['wallpost']['from_user']['fullname'] ?></a> 
+				</p>
+<?php 
+				}
+				else
+				{
+?>
+				<p> <a style="cursor:default;" class="text-purple2 fnt-bold" href="javascript:void(0)" ><?php echo $post_data['wallpost']['from_user']['fullname'] ?></a> 
+				</p>
+<?php
+				}
+?>
+				<p class="original_user_post_time">
+				<?php echo $post_data["wallpost"]['original_user']['post_created_at'];?>
+				</p>
+				<p><?php echo $post_data['wallpost']['from_user']['shared_walltext']; ?></p>
+				</div>
+				</div>
+				</div>
+<?php 
+			}
+		}
+		
+		
+		if( $post_data['wallpost']['post_update_type'] == \Extended\wall_post::POST_UPDATE_TYPE_SHARED_LINK ) //Shared URL
+		{
+			
+			if( $post_data['wallpost']['from_user']['shared_walltext'] )
+			{
+?>
+				<div class="shared-link-outernew">
+				<div class="share-link-outer">
+				
+				<div class="share-link-img">
+				<div class = "short_profile_border share-link-img2" style="">
+<?php 	
+				if( ! $post_data['wallpost']['from_user']['is_deleted'] )
+				{
+?>
+					<a disable-border="1" id="<?php echo $post_data['wallpost']['from_user']['id']; ?>" title = "<?php echo $post_data['wallpost']['from_user']['fullname']; ?>" href = "javascript:" onclick="getShortProfile(this,<?php echo $post_data['wallpost']['wallpost_user_id'] ?>)" >
+					<img title = "<?php echo $post_data['wallpost']['from_user']['fullname']; ?>" width = "32" src="<?php echo $post_data['wallpost']['from_user']['photo'] ?>" />
+					</a>
+<?php
+				}
+				else
+				{
+?>
+					<img title = "<?php echo $post_data['wallpost']['from_user']['fullname']; ?>" width = "32" src="<?php echo $post_data['wallpost']['from_user']['photo'] ?>" />
+<?php
+				}		
+	    		
+	    		//Short profile view popup holder
+?>
+				<div id="view-outer_<?php echo $post_data['wallpost']['from_user']['id'] ?>" class="quickview-outer" popup-state="off" style="display:none;">
+				<div class="popupArrow">
+			    <img width="36" height="22" src="<?php echo IMAGE_PATH; ?>/arrow-purple2.png">
+				</div>
+				<div id="view_<?php echo $post_data['wallpost']['from_user']['id']; ?>" class="quickview"> </div>
+				</div>
+				
+				</div>
+				</div>
+				<div class="share-link-detail">
+				<h4></h4>
+<?php 
+				if($post_data['wallpost']['from_user']['usertype'] != Extended\ilook_user::USER_TYPE_ADMIN)
+				{
+?>
+					<p> <a class="text-purple2 fnt-bold" href="<?php echo '/'. PROJECT_NAME.$post_data['wallpost']['from_user']['username'] ?>" ><?php echo $post_data['wallpost']['from_user']['fullname'] ?></a>
+<?php 
+				}
+				else
+				{
+?>
+					<p> <a style="cursor:default;" class="text-purple2 fnt-bold" href="javascript:void(0)" ><?php echo $post_data['wallpost']['from_user']['fullname']; ?></a>
+<?php 
+				}
+?>			
+				</p>
+				<p class="original_user_post_time">
+				<?php echo $post_data["wallpost"]['original_user']['post_created_at'];?>
+				</p>
+				<p class="shared_link_from_wall_to_wall">
+				<?php echo $post_data['wallpost']['from_user']['shared_walltext'] ;
+				
+				$shared_data_link = strip_tags($post_data['wallpost']['from_user']['shared_walltext']); // extract href out of a tag
+?>
+				</p>
+				
+				<a target='_blank' href='<?php echo $shared_data_link; ?>'></a>
+				<div class="dp-img-outer shared_link_from_wall_to_wall">
+<?php 
+				if($post_data['wallpost']['url_data']['image_src'] != null)
+				{	
+?>
+					<div class="dp-img-inner">
+					<div class="dp-img shared_link_from_wall_to_wall">
+					<img  src="<?php echo $post_data['wallpost']['url_data']['image_src'] ?>">
+					</div>
+					</div>
+<?php 
+				}
+?>
+				<div class="dp-data shared_link_from_wall_to_wall">
+<?php 
+				$CroppedTitle = Helper_common::showCroppedText($post_data['wallpost']['url_data']['url_title'], 70);
+?>
+		 		<p class="url_title text-dark-purple"><?php  echo $CroppedTitle; ?></p>
+<?php 
+		 		$CroppedContent  = Helper_common::showCroppedText($post_data['wallpost']['url_data']['url_content'], 200);
+?>
+				<p><?php $CroppedContent; ?></p> 
+				</div>
+				</div>
+				
+				</div>
+				</div>
+				</div>
+				
+<?php 			
+			}
+		}
+		
+		//wallpost edit/delete popup start-------
+		if( $post_data['wallpost']['wallpost_user_id'] == Auth_UserAdapter::getIdentity()->getId() )
+		{ 
+			if( $post_data['wallpost']['post_update_type'] != 11  ) 
+			{  
+?>
+			<div class="dashboard-sharelink-arrow">
+				<img onclick = "showEditDeleteOptionsForWallpost(this)" src="<?php echo IMAGE_PATH; ?>/arrow-down2.png" style = "cursor : pointer" />
+				<div class="option-pop2" >
+				<a href="javascript:;" class="full-screen-viewww" onclick = "confirmToDelete( this, <?php echo $post_data['wallpost']['id']; ?>,<?php echo $post_data['wallpost']['wall_type']?>)">
+				Delete
+				<span style="margin-left: 5px;" class = "loading">&nbsp;</span></a>
+<?php 
+				if( $post_data['wallpost']['post_update_type'] == 7 ||
+					$post_data['wallpost']['post_update_type'] == 5 || 
+					$post_data['wallpost']['post_update_type'] == 0 || 
+					$post_data['wallpost']['post_update_type'] == 13 || 
+					$post_data['wallpost']['post_update_type'] == 9 ||
+					$post_data['wallpost']['post_update_type'] == 14 ||
+					$post_data['wallpost']['post_update_type'] == 15 ||
+					$post_data['wallpost']['post_update_type'] == 16 ||
+					$post_data['wallpost']['post_update_type'] == 17 
+					)
+				{
+?>
+					<a href="javascript:;" class="full-screen-view" onclick = "showWallpostEditBox( this, <?php echo $post_data['wallpost']['id']; ?>)">Edit Post
+					<span style="margin-left: 5px;" class = "loading">&nbsp;</span>
+					</a>
+<?php 
+				}
+?>
+				</div>
+			</div>
+<?php
+			} 	
+		} 
+?>
+		</div>
+		</div>
+		<div class="news-update-content-text">
+<?php
+		if( $post_data['wallpost']['post_update_type'] == 16 ||  $post_data['wallpost']['post_update_type'] == 15 )//photo directly posted on wall.
+		{
+?>
+			<p id = "<?php echo $post_data['wallpost']['id'];?>" class="editable">
+<?php 
+			if($post_data['wallpost']['wallpost_text'] != null)
+			{
+?>
+				<span class = "wallpost_text_cropped" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo Helper_common::showCroppedText( $post_data['wallpost']['wallpost_text'], 750, true,'...<label onclick="showFullWallpostText(this)">See More</label>' );?></span>
+				<span class = "wallpost_text_full" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo $post_data['wallpost']['wallpost_text'];?></span>
+<?php 	
+			}
+?>
+			</p>
+		
+			<div class = "wallpost_editor" id = "<?php echo $post_data['wallpost']['id'] ?>">
+			<textarea><?php echo $post_data['wallpost']['wallpost_text'];?></textarea>
+			<div class="wall-editor-btn">
+			<input class="btn-purple" type = "button" name = "save" value = "Done Editing" id = "<?php echo $post_data['wallpost']['id'];?>" onclick = "saveWallpostEditing( this, <?php echo $post_data['wallpost']['id'];?>, 1 )">
+			<a class="new-cancel-btn" id = "<?php echo $post_data['wallpost']['id'];?>" onclick = "cancelWallpostEditing( this, <?php echo $post_data['wallpost']['id'];?> )" href="javascript:;">Cancel</a>
+			</div>
+			</div>
+			<?php echo Helper_common::getCollageHTML( $post_data['collage'], $post_data['first_img_portrait_or_landscape'] );?>
+<?php 		
+		}
+		
+		if($post_data['wallpost']['post_update_type'] == \Extended\wall_post::POST_UPDATE_TYPE_GROUP_IN_DEFAULT_ALBUM_BY_SHARING)
+		{
+?>
+		
+			<!------------------------------------------------------------------------------------------------->
+			<!--  Original user data - profile photo, name and post text.-------------------------------------->
+			<!--------------------------------------------------------------------------------------------------->
+
+			<div class="original_user_data">
+			
+			<!-- Original user profile photo-------------->
+			<div style="" class="original_user_img_outer">
+			<div class="original_user_img news-update-content-icon short_profile_border">
+<?php 
+					if( $post_data['wallpost']['wallpost_user_type'] != \Extended\ilook_user::USER_TYPE_ADMIN)
+					{
+						$parameter_json = "{'user_id':".$post_data["wallpost"]['original_user']['id']."}";
+?>
+						<a disable-border="1" title = "<?php echo $post_data["wallpost"]['original_user']['fullname'];?>" id="<?php echo $post_data["wallpost"]['original_user']['id'];?>" href = "javascript:" onclick="getShortProfile(this,<?php echo $parameter_json;?>)" >
+						<img src="<?php echo $post_data["wallpost"]['original_user']['photo'];?>"/>
+						</a>
+<?php 
+					}
+					else
+					{
+?>
+						<img title = "<?php echo $post_data["wallpost"]['original_user']['fullname'];?>" src="<?php echo $post_data["wallpost"]['original_user']['photo'];?>"/>
+<?php 
+					}
+?>
+			<!-- Short profile view popup holder-->
+			<div id="view-outer_<?php echo $post_data["wallpost"]['original_user']['id'];?>" class="quickview-outer" popup-state="off" style="display:none;">
+			<div class="popupArrow">
+			<img width="36" height="22" src="<?php echo IMAGE_PATH; ?>/arrow-purple2.png">
+			</div>
+			<div id="view_<?php echo $post_data["wallpost"]['original_user']['id'];?>" class="quickview"> </div>
+			</div>
+				
+			</div><!-- original_user_img end. -->
+			</div><!-- outer div end -->
+				
+			<div class="original_user_detail">
+			
+			<!-- Original user name -->
+			<p class="original_user_name">
+<?php 
+			if( $post_data['wallpost']['original_user']['user_type'] != 5/* User type admin */ ) //Not to show link(URL) in case of post.
+						{
+?>
+						<a class="fnt-bold text-purple2" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>'profile/iprofile/id/<?php echo $post_data["wallpost"]['original_user']['id'];?>" style="text-decoration: none !important;"><?php echo $post_data["wallpost"]['original_user']['fullname'];?></a>
+<?php 			
+						}
+						else
+						{
+?>
+						<a class="fnt-bold text-purple2" href="javascript:void(0)" style="text-decoration: none !important; cursor: default;"><?php echo $post_data["wallpost"]['original_user']['fullname'];?></a>
+<?php 
+						}
+						
+?>
+			</p>
+			<p class="original_user_post_time" style=""><?php echo $post_data["wallpost"]['original_user']['post_created_at'];?></p>
+			<!-- original post text -->
+						<p id = "<?php echo $post_data['wallpost']['id'];?>" class="non_editable original_user_post_text">
+<?php 
+						//alert(wallpost_text_when_shared);
+						if(photo_text != null)
+						{
+?>
+							<span class = "wallpost_text_when_shared_cropped" id = "<?php echo $post_data['wallpost']['id'] ?>">
+							<?php echo Helper_common::showCroppedText( $post_data['wallpost']['shared_walltext'],
+							750, '...<label onclick="showFullWallpostText(this)">See More</label>' );?>
+							</span>
+							<span class = "wallpost_text_when_shared_full" id = "<?php echo $post_data['wallpost']['id'];?>">
+							<?php echo $post_data['wallpost']['from_user']['shared_walltext'];?></span>
+<?php 
+						}
+?>
+						</p>
+			
+				
+			</div>
+				
+			</div>
+			<!------------------------------------------------------------------------------------------------->
+			<!--  Original user data - profile photo, name and post text.-------------------------------------->
+			<!--------------------------------------------------------------------------------------------------->
+<?php 			
+			echo Helper_common::getCollageHTML( $post_data['collage'], $post_data['first_img_portrait_or_landscape'] ); 
+
+		}
+		if($post_data['wallpost']['post_update_type'] == 14)
+		{
+?>
+			<p id = "<?php echo $post_data['wallpost']['id'];?>" class="editable">
+<?php 
+			if($post_data['wallpost']['wallpost_text'] !== null || $post_data['wallpost']['wallpost_text'] !== "")
+			{
+?>
+				<span class = "wallpost_text_cropped" id = "<?php echo $post_data['wallpost']['id'] ?>"><?php echo Helper_common::showCroppedText( $post_data['wallpost']['wallpost_text'], 750,true, '...<label onclick="showFullWallpostText(this)">See More</label>' )?></span>
+				<span class = "wallpost_text_full" id = "<?php echo $post_data['wallpost']['id'] ?>"><?php echo $post_data['wallpost']['wallpost_text'] ?></span>
+<?php 
+			}
+			?>
+			</p>
+				
+			<div class = "wallpost_editor" id = "<?php echo $post_data['wallpost']['id'] ?>">
+			<textarea><?php echo $post_data['wallpost']['wallpost_text'];?></textarea>
+			<div class="wall-editor-btn">
+			<input class="btn-purple" type = "button" name = "save" value = "Done Editing" id = "<?php echo $post_data['wallpost']['id'];?>" onclick = "saveWallpostEditing( this, <?php echo $post_data['wallpost']['id'];?>, 0 )">
+			<a class="new-cancel-btn" id = "<?php echo $post_data['wallpost']['id'];?>" onclick = "cancelWallpostEditing( this, <?php echo $post_data['wallpost']['id'];?> )" href="javascript:;">Cancel</a>
+			</div>
+			</div>
+				
+			<div class="news-update-img">
+			<div class = "photo_aligner">
+<?php 
+			if( $post_data['wallpost']['is_my_wallpost'] )
+			{
+?>
+				<a class="" onclick = "showPhotoDetail( <?php echo $post_data['wallpost']['id'];?>, 'id_of_wallpost', 1  );"  href="javascript:;">
+<?php 	
+			}
+			else
+			{
+?>
+				<a class="" onclick = "showPhotoDetail( <?php echo $post_data['wallpost']['id'];?>, 'id_of_wallpost',0  ); "  href="javascript:;">
+<?php 
+			}
+?>
+			<img src="<?php echo $post_data['collage'][0]['image_path'];?>"/>
+			</a>
+			</div>
+			</div>
+<?php 		
+		}
+		if( $post_data['wallpost']['post_update_type'] == 11 )//POST_UPDATE_TYPE_WISH
+		{
+			
+			switch ( $post_data['wallpost']['wish']['wish_type'] )
+			{
+				//new_link_wishes
+				case 1:
+				case '1':
+?>
+					<p class="wish-img-text-outer">
+					<div class="wish-img-text-lt">
+					<img src="'.$post_data['wallpost']['wish']['link_ilook_user_mediumphoto'].'" width = "100" height = "100" >
+					</div>
+					<div class="wish-img-text-rt">
+					<h4>
+					<a class="wish-img-text-rt-link"href="/<?php echo PROJECT_NAME.$post_data['wallpost']['wish']['link_ilook_user_username'];?>">
+					<?php echo $post_data['wallpost']['wish']['link_ilook_user_name'];?>
+					</a>
+					</h4>
+					<p><?php echo $post_data['wallpost']['wish']['link_ilook_user_professional_info'];?></p>
+					</div> </p>
+<?php 
+					break;
+		
+					//new_job_wishes
+				case 2:
+				case '2':
+					//job_anniversary_wishes
+				case 3:
+				case '3':
+					//birthday_wishes
+				case 5:
+				case '5':
+?>
+					<p class="wish-img-text-outer">
+					<?php echo $post_data['wallpost']['wish']['underlying_text'];?>
+					</p>
+<?php 
+					break;
+			}
+				
+		}
+// 		echo $wall_post5;
+		
+		if( $post_data['wallpost']['post_update_type'] == 0 )//Simple text
+		{
+?>
+			<p id = "<?php echo $post_data['wallpost']['id'] ?>" class = "editable simple_text simple_text_<?php echo $post_data['wallpost']['id']; ?>">
+			
+			<!-- $wall_post_text_cropped = Helper_common::showCroppedText( $post_data['wallpost']['wallpost_text'], 750,true, '...<label onclick="showFullWallpostText(this)">See More</label>' );-->
+			<span class = "wallpost_text_cropped" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo Helper_common::showCroppedText( $post_data['wallpost']['wallpost_text'], 750,true, '...<label onclick="showFullWallpostText(this)">See More</label>' );?></span>
+			<span class = "wallpost_text_full" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo $post_data['wallpost']['wallpost_text'];?></span>
+			</p>
+				
+			<div class = "wallpost_editor" id = "<?php echo $post_data['wallpost']['id'];?>">
+			<textarea><?php echo $post_data['wallpost']['wallpost_text'];?></textarea>
+			<div class="wall-editor-btn">
+			<input class="btn-purple" type = "button" name = "save" value = "Done Editing" id = "<?php echo $post_data['wallpost']['id'];?>" onclick = "saveWallpostEditing( this, <?php echo $post_data['wallpost']['id'];?> )">
+			<a class="new-cancel-btn" id = "<?php echo $post_data['wallpost']['id'];?>" onclick = "cancelWallpostEditing( this, <?php echo $post_data['wallpost']['id'];?> )" href="javascript:;">Cancel</a>
+			</div>
+			</div>
+			</div>
+<?php 
+		}
+		
+		else if ( $post_data['wallpost']['post_update_type'] == 1 || $post_data['wallpost']['post_update_type'] == 8 ) //URL or news URL
+		{
+			
+?>
+			<div class="dashboard-sharelink-data">
+			<p>
+<?php 
+			if($post_data['wallpost']['url_data']['post_data'])
+			{
+				//$split_text = explode(" ", $post_data['wallpost']['url_data']['post_data']);
+				
+				// if posted text is url with text then show whole
+				if (filter_var($post_data['wallpost']['url_data']['post_data'], FILTER_VALIDATE_URL) === FALSE) 
+				{
+?>
+					<span class = "wallpost_text_cropped" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo Helper_common::showCroppedText($post_data['wallpost']['wallpost_text'], 750,true, '...<label onclick="showFullWallpostText(this)">See More</label>' );?></span>
+					<span class = "wallpost_text_full" id = "<?php echo$post_data['wallpost']['id'];?>"><?php echo $post_data['wallpost']['wallpost_text'];?></span>
+<?php 
+				}
+				// for checking if other than url data is present in posted link 
+				/*elseif((sizeof($split_text) > 1))
+				{
+?>
+					<span class = "wallpost_text_croppedb" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo Helper_common::showCroppedText($post_data['wallpost']['wallpost_text'], 750,true, '...<label onclick="showFullWallpostText(this)">See More</label>' );?></span>
+					<span class = "wallpost_text_full" id = "<?php echo$post_data['wallpost']['id'];?>"><?php echo $post_data['wallpost']['wallpost_text'];?></span>
+					
+<?php 
+				}*/
+			}
+?>
+			</p>
+			<a target='_blank' href='<?php echo $post_data['wallpost']['url_data']['url'];?>'>
+			<div class="dp-img-outer">
+<?php 
+			if( $post_data['wallpost']['url_data']['image_src'] )
+			{
+?>
+				<div class="dp-img-inner">
+				<div class="dp-img">
+				<img  src="<?php echo $post_data['wallpost']['url_data']['image_src'];?>">
+				</div>
+				</div>
+<?php 
+			}  
+?>
+			<!--  /div-->
+			<div class="dp-data">
+			<p class="url_title text-dark-purple" ><?php echo Helper_common::showCroppedText( $post_data['wallpost']['url_data']['url_title'], 70);?></p>
+			<p><?php echo Helper_common::showCroppedText( $post_data['wallpost']['url_data']['url_content'], 160 );?></p>
+			</div>
+			</div>
+			</a>
+			</div>
+			<?php 
+		}
+		else if ( $post_data['wallpost']['post_update_type'] == 12 )//Profile URL
+		{
+?>
+			<div class="dashboard-sharelink-data">
+			<p>
+			<span class = "wallpost_text_cropped" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo Helper_common::showCroppedText( $post_data['wallpost']['wallpost_text'], 750,true, '...<label onclick="showFullWallpostText(this)">See More</label>' );?></span>
+			<span class = "wallpost_text_full" id = "<?php echo $post_data['wallpost']['id'];?>"><?php echo $post_data['wallpost']['wallpost_text'];?></span>
+			</p>
+<?php 	
+			$link = $post_data['wallpost']['wallpost_text'];
+			preg_match_all('/<a[^>].href=([\'"])(..?)\1[^>]*>/i', $link, $result);
+			
+			if (!empty($result)) 
+			{
+				echo $result[2][0];
+			}
+?>
+			
+		<a target='_blank' href='<?php echo $result[2][0];?>'>
+		<div class="link-outer">
+<?php 
+			if( $post_data['wallpost']['url_data']['image_src'] )
+			{
+?>
+				<div class="link-img">
+				<img  src="<?php echo $post_data['wallpost']['url_data']['image_src'];?>">
+				</div>
+<?php 
+			}
+?>
+			<div class="link-detail">
+			<p class="url_title text-dark-purple" ><?php echo Helper_common::showCroppedText($post_data['wallpost']['url_data']['url_title'], 34 );?></p>
+			<p><?php echo Helper_common::showCroppedText($post_data['wallpost']['url_data']['url_content'], 160 );?></p>
+			</div>
+			</div>
+			</a>
+			</div>
+<?php 	
+			
+		}
+// 		echo $wall_post6;
+			//OK-Comment-Share Section starts----------
+		//OK-Comment-Share Section starts----------
+		if( $post_data['wallpost']['is_ok_comment_share_pannel_visible'] )
+		{
+		
+?>
+				<div class="news-likes">
+				<div class="fl">
+				<div class="ok">
+				<div style = "display:inline-block;">
+<?php 		
+				if( $post_data['wallpost']['did_I_liked'] == 1 )
+				{
+				echo '<a style = "" href="javascript:;" class = "not_ok" onclick = "notOkTheWallpost( '. $post_data['wallpost']['id'].', this );" rel = "'. $post_data['wallpost']['id'].'" ><span>&nbsp;</span>Unok</a>';
+				echo '<a style = "display:none;" href="javascript:;" class = "ok" onclick = "okTheWallpost( '. $post_data['wallpost']['id'].', this );" rel = "'. $post_data['wallpost']['id'].'" ><span>&nbsp;</span>Ok</a>';
+				}
+				else
+				{
+				
+				echo '<a style = "" href="javascript:;" class = "ok" onclick = "okTheWallpost( '. $post_data['wallpost']['id'].', this );" rel = "'. $post_data['wallpost']['id'].'" ><span>&nbsp;</span>Ok</a>';
+				echo '<a style = "display:none;" href="javascript:;" class = "not_ok" onclick = "notOkTheWallpost( '. $post_data['wallpost']['id'].', this );" rel = "'. $post_data['wallpost']['id'].'" ><span>&nbsp;</span>Unok</a>';
+				}
+?>	
+				</div>
+				<div style = "display:inline-block; float: right;" class = "like_count">
+<?php 
+				if( $post_data['wallpost']['like_count'] > 0 )
+				{
+				echo '<a href="javascript:;" onclick = "openWhoLikedPopupByWallpostID(' . $post_data['wallpost']['id'] . ')" >('. $post_data['wallpost']['like_count'] .')</a>';
+				}
+				
+				else
+				{
+					echo '<a href="javascript:;" style = "display : none;" onclick = "openWhoLikedPopupByWallpostID(' . $post_data['wallpost']['id'] . ')" >('. 0 .')</a>';
+				}
+?>
+				</div>
+				</div>
+				
+				<div class="comments">
+<?php 	
+				if( $post_data['wallpost']['comment_count'] > 0 )
+				{
+				
+				
+				echo '<a href="javascript:;" class = "add_comment" >Comment</a><span id = "comment_count_'. $post_data['wallpost']['id'].'" >('.$post_data['wallpost']['comment_count'].')</span>';
+				}
+				
+				else
+				{
+					
+				echo '<a href="javascript:;" class = "add_comment" >Comment</a><span id = "comment_count_'. $post_data['wallpost']['id'].'"></span>';
+				}
+?>
+				</div>
+				<div class="share">
+<?php 
+				switch ( $post_data['wallpost']['post_update_type'] ) 
+				{
+					case 0:
+					case 1:
+					case 6:
+					case 7:
+					case 12:
+					case 13:
+						
+					echo'	<a href="javascript:;" onclick="shareThisPostByWallpostId_1( '. $post_data['wallpost']['id'].', this )" ><span>&nbsp;</span>Share </a>';
+					 
+					break;
+		
+					case 5:
+					case 9:
+					case 14:
+					case 15:
+					case 16:
+					case 17:
+					echo '<a href="javascript:;" onclick="shareThisPostByWallpostId_2( '. $post_data['wallpost']['id'].', this )" ><span>&nbsp;</span>Share </a>';
+					break;
+				}
+				
+				if($post_data['wallpost']['share_count'] != "null" && $post_data['wallpost']['share_count'] > 0)
+				{
+					 echo '<span>&nbsp;<a href="javascript:;" id="share_count_'. $post_data['wallpost']['id'].'" onclick="getSharedPhotoListByWallpostId('. $post_data['wallpost']['id'].',this);" >('.$post_data['wallpost']['share_count'].')</a></span>';
+				}
+				else
+				{
+					echo '<span>&nbsp;<a href="javascript:;" id="share_count_'. $post_data['wallpost']['id'].'" onclick="getSharedPhotoListByWallpostId('. $post_data['wallpost']['id'].',this);" ></a></span>';
+				}
+?>
+				</div>
+<?php
+				if($post_data['wallpost']['is_wallpost_reported_abuse'] == 0)
+				{
+					$abusetxt="Report Abuse";
+					$abuseprop='onclick="abuseReportWallPost('. $post_data['wallpost']['id'].','.$post_data['wallpost']['wallpost_user_id'].')"';
+				}
+				else
+				{
+					$abusetxt="Reported as Abuse";
+					$abuseprop='';
+				
+				}
+				if( $post_data['wallpost']['post_update_type'] != 11
+					&& $post_data['wallpost']['wallpost_user_id'] != $this->current_user_id
+				)
+				{
+?>
+					<div class="report-abuse <?php echo $post_data['wallpost']['id'];?>">
+					<a <?php echo $abuseprop;?> href="javascript:;" name="abuse_<?php echo $post_data['wallpost']['id'];?>">
+					<span>&nbsp;</span> 
+					<div class="abuse-text <?php echo  $post_data['wallpost']['id'];?>"><?php echo $abusetxt; ?></div>
+					 </a>
+					</div>
+<?php 
+				} 
+?>
+				</div>
+			
+				</div>
+<?php 
+		}
+			else
+			{
+				
+			
+			echo '<p style="float:left; width:100%;">&nbsp;</p>';
+			}
+?>
+			<!-- OK-Comment-Share Section Ends---------->
+			
+			</div>
+			
+			<div class="comment-box-outer ">
+		
+<?php 
+			//likers string.
+			if( $post_data['wallpost']['likers_string'] != "" )
+			{
+				if( strlen($post_data['wallpost']['likers_string']) > 0 )
+				{	
+?>
+					<div class="people-who-liked" id = "<?php echo  $post_data['wallpost']['id'];?>">
+					<img src="<?php echo IMAGE_PATH;?>/tick-grey.png" align="absmiddle" />	
+					<span>
+<?php 
+					echo $post_data['wallpost']['likers_string'];
+?>
+					</span>
+					</div>
+<?php 
+				}
+				
+				else
+				{
+?>
+					<div class="people-who-liked" id = "<?php echo  $post_data['wallpost']['id'];?>" style = "display:none;">
+					<img src="<?php echo IMAGE_PATH;?>/tick-grey.png" align="absmiddle" />	
+					<span>
+					</span>
+					</div>
+<?php 
+				}
+			}
+			else
+			{
+?>
+				<div class="people-who-liked" id = "<?php echo  $post_data['wallpost']['id'];?>" style = "display:none;">
+				<img src="<?php echo IMAGE_PATH?>/tick-grey.png" align="absmiddle" />	
+				<span>
+				</span>
+				</div>
+<?php 
+			}
+			
+			//  Comments section starts here.
+			if( $post_data['wallpost']['comment_count'] >= 1 )
+			{
+?>
+				<input type="hidden" name="offsettt_comm_'<?php echo  $post_data['wallpost']['id'];?>" value="2" id="offsettt_comm_<?php echo  $post_data['wallpost']['id'];?>"/>
+				<div class="ok-comment-box" id = "comment_box_<?php echo  $post_data['wallpost']['id'];?>">
+		    	<div class="ok-comment-box-bot ">
+			    
+<?php   
+			    if( $post_data['wallpost']['comment_count'] > 2 )
+			    {
+?> 	
+				<div id = "load_more_comments_<?php echo  $post_data['wallpost']['id'];?>">
+			    	<div class="ok-comment-box-bot-left"><img src="<?php echo IMAGE_PATH;?>/comments--grey.png"  align="absmiddle" />
+			    	</div>
+			    	<div class="ok-comment-box-bot-right" style = "cursor:pointer;" onclick = "loadMoreComments(<?php echo  $post_data['wallpost']['id'];?>,this, event)" > View more comments</div>
+			    	</div>
+<?php 
+			    }
+?>
+				    
+			    <div id="comments_outer_<?php echo  $post_data['wallpost']['id'];?>">
+<?php   
+			   	// echo '<pre> print_r($post_data['wallpost']['wallpost_comments']);
+			   	//reverse order of comments 
+			    $post_data['wallpost']['wallpost_comments'] = array_reverse($post_data['wallpost']['wallpost_comments']);
+			    
+			     foreach($post_data['wallpost']['wallpost_comments'] as $wallpost_comment)
+			    {		
+			    	if( $wallpost_comment['is_hidden'] == 0 )
+			    	{
+?>
+			    		<div class="comments-outer comments-outer_<?php echo $wallpost_comment['id'];?>">
+<?php 
+			    		if( ! $post_data['wallpost']['from_user']['is_deleted'] && $wallpost_comment['is_user_photo_clickable'] && !isset($wallpost_comment['is_user_account_closed']))
+			    		{
+				    		
+			    			echo'<a disable-border="1" id="'.$wallpost_comment['user_id'].'" title = "'.$wallpost_comment['user_name'].'" href = "javascript:" onclick="getShortProfile(this,'.$wallpost_comment['user_id'].')" >';
+				    		echo'<div class="img img32 short_profile_border" title = "'.$wallpost_comment['user_name'].'"><img src="' . $wallpost_comment['user_prof_image_path'] . '" width="" height="" /></div>';
+				    		echo'</a>';
+			    		}
+			    		else
+			    		{
+				    		
+				    		echo '<div class="img img32 short_profile_border" title = "'.$wallpost_comment['user_name'].'"><img src="' . $wallpost_comment['user_prof_image_path'] . '" width="" height="" /></div>';
+			    		}
+?>
+			    		<!-- Short profile view popup holder -->
+			    		<div id="view-outer_<?php echo $wallpost_comment['user_id'];?>" class="quickview-outer" popup-state="off" style="display:none;">
+			    		<div class="popupArrow">
+			    		<img width="36" height="22" src="<?php echo IMAGE_PATH;?>/arrow-purple2.png">
+			    		</div>
+			    		<div id="view_<?php echo $wallpost_comment['user_id']?>" class="quickview"> </div>
+			    		</div>
+				    	
+				    	<div class="text"><div class="comment-text1" id = "idd_<?php echo $wallpost_comment['id'];?>" rel = "<?php echo $wallpost_comment['id'];?>">
+				    	<span><a href = "/<?php echo PROJECT_NAME.$wallpost_comment['user_username'];?>"><?php echo $wallpost_comment['user_name'];?></a></span>
+				    	
+				    	<div class = "comment_text" id = "<?php echo $wallpost_comment['id'];?>">
+				    	<?php echo Helper_common::showCroppedText($wallpost_comment['text'],150,true,"...<label class = 'show_full_comment' onclick = 'showFullComment(this)'>>></label>");?>
+				    	</div>
+				    	<div class = "full_comment_text" style = "display:none" id = "<?php echo $wallpost_comment['id'];?>">
+				    	<?php echo $wallpost_comment['text']; ?>
+				    	</div>
+				    	
+				    	</div>
+				    	<textarea maxlength="255" cols="1" class="comment-textarea" rows="1" id = "id_<?php echo $wallpost_comment['id'];?>" rel = "<?php echo $wallpost_comment['id'];?>" style = "  resize: vertical; display:none;" ><?php echo $wallpost_comment['text'];?></textarea>
+				    	<div class="comments-date"><?php echo $wallpost_comment['created_at'];?></div>
+				    	</div>
+<?php 
+				    	if( $wallpost_comment['user_id'] == Auth_UserAdapter::getIdentity()->getId() )
+				    	{	
+?>
+				    		<div class="edit_comment">
+				    		<div class="edit-popup-outer" style="bottom:-85px; width:78px; padding:5px; right: -7px; text-align:left; z-index:99999">
+				    		<div class="edit-popup-arrow" style=" margin:0 0 0 55px"><img width="26" height="16" src="<?php echo IMAGE_PATH;?>/arrow-up-grey2.png"></div>
+				    		<div class="edit-popup" style="width: 65px; padding:5px;">
+				    		<div class="edit-popup-col1">
+				    		<h5 style="text-transform: none !important;"><a style="font-size:12px;" class="text-grey2-link edit_comment_link" href="javascript:;">Edit</a></h5>
+				    		</div>
+				    		<div class="edit-popup-col1">
+				    		<h5 style="text-transform: none !important;"><a style="font-size:12px;" class=" text-grey2-link delete_comment_link" href="javascript:;" rel = "<?php echo $wallpost_comment['id'];?>">Delete</a></h5>
+				    		</div>
+				    		</div>
+				    		</div>
+				    		</div>
+<?php 
+				    	}
+				    	else
+				    	{
+				    		
+				    		echo '<div style="text-align: right;" class="hide_comment"><img title="Hide comment" src="'.IMAGE_PATH.'/cross-grey.png"></div>';
+				  
+				    	}	
+				    
+?>
+				    	</div>
+<?php 
+			    	}
+			    	else
+			    	{
+			    		
+			    		echo '<div id="comments-outer_'.$wallpost_comment['id'].'" class="comments-outer hidden_comment comment-outer-popup-border" rel="'.$wallpost_comment['id'].'"><span rel="'.$wallpost_comment['id'].'" class="unhide-comment" title = "Hidden Comment [Hidden on your wall]">...</span></div>';
+			    	}
+			    }
+?>
+			    </div>
+			    </div>
+			    </div>
+<?php 
+		    }
+			else
+			{
+?>
+				<div class="ok-comment-box" id = "comment_box_<?php echo $post_data['wallpost']['id'];?>" style = "display : none;">
+		    	<div class="ok-comment-box-bot ">
+			    <div id="comments_outer_<?php echo  $post_data['wallpost']['id'];?>">
+			    <!-- Append comments here. -->
+			    </div>
+			    </div>
+			    </div>
+<?php 
+			}
+?>
+			<!--  Comments section ends here. -->
+			
+			<!--  write comment Starts -->
+<?php
+			if( $post_data['wallpost']['is_ok_comment_share_pannel_visible'] )
+			{
+?>
+				<div class="comment-write-outer ">
+				<form id = "comment_box_<?php echo $post_data['wallpost']['id'];?>">
+				<input type = "hidden" name = "wallpost_id" value = "<?php echo $post_data['wallpost']['id'];?>"/>
+				<div class="comment-write-left ">
+				<img width="" height="" src="<?php echo Helper_common::getUserProfessionalPhoto( Auth_UserAdapter::getIdentity()->getId(), 3 );?>">
+				</div>
+				<div class="comment-write-right ">
+				<textarea name="comment" maxlength="255" class="comment-textarea" placeholder = "Write a comment..." onkeydown="javascript: if(event.keyCode == 13) addComment( <?php echo  $post_data['wallpost']['id'];?>, this, event );"></textarea>
+				<div class="enter-post">
+				Press Enter to Post';
+				</div>
+				</div>
+				</form>
+				</div>
+<?php 
+			}
+				
+?>
+	<!--  write comment Ends -->
+		
+			</div>
+		</div>
+	
+	</div>
+	</div>
+
+	<div class="posts_holder right">
+	<!-- Youmay Know Starts -->
+		<!-- Content Right Starts -->
+ 				<div class="you-may-know-outer">
+	     			<div class="you-may-know-hdr">You May Know</div>
+	     			<?php 
+	     			$newMergeArray = $this->youMayKnowUsers;
+	     			//\Zend_Debug::dump($newMergeArray);
+	     				
+	     			if(!empty($newMergeArray))
+					{	
+						//Zend_Debug::dump($newMergeArray);die;
+						foreach ($newMergeArray as $neew)
+						{ // \Zend_Debug::dump($neew); die;?>
+							<div class="you-may-know-column you-may-know-column_<?php echo $neew->getId();?>">
+				            	<div class="youmay-know-cross" rel="<?php echo $neew->getId();?>">
+									<img width="9" height="8" src="<?php echo IMAGE_PATH ; ?>/cross.png" >
+								</div>
+								
+								<?php
+									$filename = "images/profile/small_thumbnails/thumbnail_" . $neew->getProfessional_image ();
+									if ($neew->getProfessional_image () != "" && file_exists ( $filename )) 
+									{
+										$img_name = IMAGE_PATH . "/profile/small_thumbnails/thumbnail_" . $neew->getProfessional_image ();
+									} 
+									else 
+									{
+										if($neew->getGender()==Extended\ilook_user::USER_GENDER_MALE)
+										{
+											$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+										}
+										else
+										{
+											$img_name=IMAGE_PATH."/profile/default_profile_image_female_big.png";
+										}
+									}
+									$jsonArr = array("user_id"=>$neew->getId(),"showEditGroupsOption"=>NULL,"disableParentBorder"=>1);
+									$finalJson = Zend_Json::encode($jsonArr);    
+								?> 
+				            	<div class="you-may-know-img">
+				            		<a  href="javascript:;"  id="<?php echo $neew->getId();?>" onclick="getShortProfile(this,'<?php echo htmlentities($finalJson);?>')" disable-border="1">
+				            			<img class="userProfileImage" src="<?php echo $img_name; ?>" width="50" height="50"/>
+				            		</a>
+				            		<div class="quickview-outer" style="display:none;" id="view-outer_<?php echo $neew->getId();?>" popup-state="off">
+										<div class="popupArrow">
+											<img src="<?php echo IMAGE_PATH;?>/arrow-purple2.png" width="36" height="22" />
+										</div>
+										<div class="quickview" id="view_<?php echo $neew->getId();?>">
+										   <!-- user records view.... -->
+										</div>
+									</div>
+				            	</div>
+				                <div class="you-may-know-data">
+				                	<h4 title="<?php echo $neew->getFirstname()." ".$neew->getLastname() ; ?>">
+				                	<?php 
+				                	$urlPath=PROJECT_URL.'/'.PROJECT_NAME.$neew->getUsername();
+				                	?>
+				                	<a href="<?php echo $urlPath;?>">
+				                	<?php echo Helper_common::showCroppedText($neew->getFirstname()." ".$neew->getLastname(), 15 ); ?>
+				                	</a>
+				                	</h4>
+				                   
+				                   <?php $userProfession =  Helper_common::getUserProfessionalInfo($neew->getId()); ?>
+				                   
+				                    <h5><?php echo isset($userProfession[0])?$userProfession[0]:NULL; ?></h5>
+				                    <p><?php echo isset($userProfession[1])?$userProfession[1]:NULL; ?></p>
+
+				                </div>
+				                
+				           		<div class="you-may-know-add">
+				                    <a style="background-size:30px 30px !important" onclick="inviteToLink(this)" href="javascript:;" title="Invite to Link" class="cursor-style invite_<?php echo $neew->getId();?> invitation-request" id="<?php echo $neew->getId();?>">
+				                    <!--img id="dashboard-invitation_<?php echo $neew->getId();?>" src="<?php echo IMAGE_PATH ?>/invitation-request-icon.png" title="Send Request" alt="" width="27" /-->
+				                    </a>
+				               </div> 
+				       </div>
+					<?php } // invite your contacts html ?>
+					
+					<div class="invite-mails-outer posts">
+					<div class="invite-mails-hdr">Invite your Mail Contacts</div>
+					<div class="invite-mails-data">
+					<a id="gmail" href="javascript:;"><img src="<?php echo IMAGE_PATH; ?>/gmail-icon2.png"  alt=""/> <span>Gmail</span></a>
+					</div>
+					<form action="#" id = "more_ways_to_connect_frm" onsubmit="return false">
+					<div class="you-may-input">
+					<input type="text" placeholder="Emails separated by semi-colons." id="more_ways_to_connect" value="" name="more_ways_to_connect">
+					<input id="more_ways_to_connect_btn" name="more_ways_to_connect_btn" value="Send" type="button">
+					</div>
+					</form>
+					</div>
+				<?php
+			
+				 	if(count($newMergeArray)==2){
+				 		echo '<style>.you-may-input{display:none;}</style>';
+				 	}
+				 	else if(count($newMergeArray)==3){
+				 		echo '<style>.you-may-input{display:none;}.invite-mails-outer{display:none;}</style>';
+				 	}
+				}
+				else
+				{ 
+?>
+					<div class="invite-mails-outer posts">
+					<div class="invite-mails-hdr">Invite your Mail Contacts</div>
+					<div class="invite-mails-data">
+					<a id="gmail" href="javascript:;"><img src="<?php echo IMAGE_PATH; ?>/gmail-icon2.png"  alt=""/> <span>Gmail</span></a>
+					</div>
+					<form action="#" id = "more_ways_to_connect_frm" onsubmit="return false">
+					<div class="you-may-input">
+					<input type="text" placeholder="Emails separated by semi-colons." id="more_ways_to_connect" value="" name="more_ways_to_connect">
+					<input id="more_ways_to_connect_btn" name="more_ways_to_connect_btn" value="Send" type="button">
+					</div>
+					</form>
+					</div>
+<?php 
+				} 
+				?>            	
+                </div>
+           
+    <!-- Content Ends -->
+
+		<!-- Youmay Know Ends -->
+	
+	</div>
+	<!-- Dialog Box -->
+<div id="dialog_delete_comment" title="Delete Comment">
+	<p>
+		want to delete this comment?
+	</p>
+</div>
+<div id="dialog_delete_comment_in_popup" title="Delete Comment">
+	<p>
+		want to delete this comment?
+	</p>
+</div>
+<div id="dialog_confirm" title="Delete Comment">
+	<p>
+		want to delete this comment?
+	</p>
+</div>
+<div id="dialog_success_share" title="Share Post" style = "display: none;">
+  <p>
+  	Post shared successfully.
+  </p>
+</div>
+	<div id="dialog_confirm_delete_wallpost" title="Delete Wallpost">
+  <p>
+  	Are you sure you want to delete your post?
+  </p>
+</div>
+<div id="dialog_confirm_comment2" title="Delete Comment" style = "display:none;height:66px !important;">
+	<p>
+  		Are you sure you want to delete this comment?
+  	</p>
+</div>
+	
+	</div>

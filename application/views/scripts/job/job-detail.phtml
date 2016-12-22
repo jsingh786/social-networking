@@ -1,0 +1,385 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Job-Details' );
+// Javascript
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/job_detail.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/job_detail.css" );
+// Partial file(side menu)
+if(Auth_UserAdapter::getIdentity())
+{
+	echo $this->partial ("partials/jobs_menu.phtml");
+}
+echo $this->partial("partials/add_contacts_popup.phtml");
+
+if($this->job_detail['job_image']!=null)
+{
+	$imgPath = IMAGE_PATH.'/jobs/'.$this->job_detail['job_image'];
+}
+else 
+{
+	$imgPath= IMAGE_PATH.'/job_default_image.png';
+}
+
+//CSS to be implemented in case user is not logged in.
+ if(!$this->logged_in)
+ {
+?>
+<style>
+.job-hdr 
+{
+ 	float: right !important;
+ 	width: 121% !important;
+}
+.photoalbum-hdr {
+    float: right !important;
+    width: 121% !important;
+}
+<?php 
+ }
+?>
+</style>
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+
+	
+<!-- HEADER ONE -->
+<?php 
+		if( $this->section )
+		{	
+?>	
+		<div class="job-application-outer">
+			<div class="job-application-hdr1">
+				<div class="job-application-hdr1lt">
+					<h4>
+<?php 
+					echo $this->job_detail['job_title'].",";
+					echo " ".$this->job_detail['company_name'].",";
+					echo " ".\Extended\job::getCityStateCountryOfAJob( $this->job_detail['job_id'] );
+?>
+					</h4>
+				</div>
+			</div>
+			<div class="job-application-hdr2">
+				<div class="job-application-hdr2lt">
+					<h4>
+						<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'job/received-applications/id/'.$this->job_detail['job_id'];?>" id="cntApplicant"><?php echo \Extended\job_applications::countApplicants($this->job_detail['job_id']);?> Applications</a> | 
+						<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'job/shortlisted-applications/id/'.$this->job_detail['job_id'];?>" id="cntCandidate"><?php echo \Extended\job_applications::countCandidates($this->job_detail['job_id']);?> Shortlisted</a> | 
+						<a class="selected" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'job/job-detail/job_id/'.$this->job_detail['job_id'].'/section/applications';?>">Job Detail</a>
+					</h4>
+				</div>
+			</div>
+		</div>
+
+<?php 
+		}
+		else
+		{	
+?>		
+<!-- HEADER TWO	 -->
+	<!-- Bookmarks Header Starts -->
+		<div class="job-hdr">
+			<div class="job-hdr-top" style = "border-bottom:none;">
+				<h2 >Job Details</h2>
+				<?php
+						if ($this->job_detail['applied_on']) 
+						{
+?>
+						<div style="width:auto; margin:15px 0 0 0; padding:0; color:#7F7F95; float:right;">
+							Applied : <?php echo $this->job_detail['applied_on'];?>
+						</div> 
+<?php 
+						}
+?>
+			</div>
+			<div class="new-border-space" style="width: 105%;"></div>
+		</div>
+<?php 
+		}
+?>			
+	
+	<!-- Bookmarks Header Ends -->
+		<div class="photoalbum-hdr" style="padding-top: 10px;">
+			<input type="hidden" name="myLat" id="myLat" value="" />
+			<input type="hidden" name="myLong" id="myLong" value="" />
+			<div class="job-detail-col1" style="margin: 0px !important;">
+				<div class = "job_detail_img_outer">
+					<div class="job_detail_img_inner">
+						<img style="max-width:60px;max-height:60px" src="<?php echo PUBLIC_PATH; ?>/Imagehandler/GenerateImage.php?image=<?php echo $imgPath;?>&h=60&w=60" />
+					</div>
+				</div>
+				<div class="job-detail-col1-detail">
+					<h4 class = "text-bold "  style="font-family: arial;cursor: default;line-height:16px !important;" title="<?php echo $this->job_detail['job_title'];?>">
+						<?php echo Helper_common::showCroppedText($this->job_detail['job_title'], 70) ?>
+					</h4>
+					<p style = "width:100%; float:left;" ><span class="job_span" title="<?php echo $this->job_detail['company_name'];?>" style="width:auto;"><?php echo Helper_common::showCroppedText($this->job_detail['company_name'], 70); ?></span></p>
+					<p style = "width:100%; float:left;" ><span class="job_span" style="width:auto;"> <?php echo \Extended\job::getCityStateCountryOfAJob( $this->job_detail['job_id'] );?></span></p>
+					<p style = "margin-top:7px; float:left;">
+					<a target="_blank" href="<?php echo $this->job_detail['url_fields'];?>" class="text-purple-link"><?php echo Helper_common::showCroppedText( $this->job_detail['url_fields'], 120 );?>
+					</a>
+					</p>
+				</div>
+			</div>
+			
+			<!-- Apply, Save and Share buttons Start -->
+		<?php 
+			if ( $this->job_saved && !$this->job_applied_by_me )
+				{
+					echo '<div class="job-detail-btn-outer">';
+				}
+				elseif(!$this->job_saved && !$this->job_applied_by_me)
+				{
+					echo '<div class="job-detail-btn-outer">';
+				}
+				else
+				{
+					echo '<div class="job-detail-btn-outer" style="margin: 0 0 15px 52px !important;">';
+				}
+			?>
+			
+			<!-- share button -->
+			<?php 
+					$status = \Extended\job::getStatusOfJob( $this->job_detail["job_id"] );
+					switch ( $status ) 
+					{
+						case 1://Active job
+						if($this->logged_in)
+						{
+							echo '<a class="jobdetail-share share_enable" href="javascript:;" title="Share Job" id = "share_job" rel = "'.$this->job_detail['job_id'].'"> Share </a>';
+						}
+						else
+						{
+							echo '<a class="jobdetail-share share_job_logout" href="javascript:;" title="Share Job" id = "share_job" onclick="showDialogToLogin();" rel = "'.$this->job_detail['job_id'].'"> Share </a>';
+							
+						}
+						break;
+						
+						case 2://Expired job
+						break;
+						
+						case 4://Closed job
+						break;
+						
+						default:
+						break;
+					}
+?>
+
+			
+<?php
+if( isset($this->job_detail['is_posted_by_me']) && $this->job_detail['is_posted_by_me'] != 1)//If I have not posted this job.
+{
+	
+	//////////////APPLY BUTTONS////////////
+	//If I have applied this job.
+	if( $this->job_applied_by_me )
+	{
+		if($this->logged_in)
+		{
+			echo'<a class="jobdetail-apply job-applied-by-me" href="javascript:;" id ="job_applied" alt="Applied" title="Applied">Applied</a>';
+		}
+	
+	}
+	//I have not applied this job and job is still active to be applied.
+	elseif( !$this->job_applied_by_me  &&  \Extended\job::canApply($this->job_detail['job_id'] ) )
+	{
+		if($this->logged_in)
+		{
+			if( $this->job_detail['apply_from'] == 1 )//Apply from company's web site.
+			{
+				echo '<a class="jobdetail-apply" target="_blank" title="Apply Job" href="'.$this->job_detail['company_job_apply_url'].'">';
+				echo 'Apply';
+				echo '</a>';
+			}
+			else //Apply from ilook website
+			{
+				echo '<a class="jobdetail-apply" href="javascript:;" title="Apply Job" onclick = "redirectToApplyPage('.$this->job_detail['job_id'].')">';
+				echo 'Apply';
+				echo '</a>';
+				//echo '<input type="button" class="btn-purple-lt" onclick = "redirectToApplyPage('.$this->job_detail['job_id'].')" value="Apply"/>';
+			}
+		}
+		else 
+		{
+			echo '<a class="jobdetail-apply" href="javascript:;" title="Apply Job" onclick = "showDialogToLogin();">';
+			echo 'Apply';
+			echo '</a>';
+		}
+	}
+	
+	/////////SAVE BUTTONS/////////////////
+	//Job not saved and not applied by me.
+	if ( !$this->job_saved && !$this->job_applied_by_me )
+	{
+		//SAVE JOB Button
+		echo '<span style="float:right;" id="save_span">';
+			//echo '<input name=""  onclick = "saveJob(this,'.$this->job_detail['job_id'].')" id ="save_job"  class="btn-purple-lt" value="Save Job" alt="Save Job" title="Save Job" type="button" />';
+			if($this->logged_in)
+			{
+				echo '<a class="jobdetail-save" href="javascript:;" onclick = "saveJob(this,'.$this->job_detail['job_id'].')" id ="save_job"  alt="Save Job" title="Save Job">Save Job</a>';
+			}
+			else 
+			{
+				echo '<a class="jobdetail-save" href="javascript:;" onclick = "showDialogToLogin();" id ="save_job"  alt="Save Job" title="Save Job">Save Job</a>';
+				
+			}
+		echo '</span>';
+		
+		//SAVED JOB Button, display none
+		echo '<span id="saved_span" style="display:none; float:right;">';
+			//echo '<input name=""  id ="saved_job"  class="btn-purple-lt" value="Saved Job" alt="Saved Job" title="Saved Job" type="button" />';
+			echo '<a class="jobdetail-save" href="javascript:;" id ="saved_job"  alt="Saved Job" title="Saved Job" >Saved Job</a>';
+		echo '</span>';
+		
+		//UNSAVE JOB Button, Comes on hover saved button, display none.
+		echo '<span id="unsave_span" style="display:none; float:right;">';
+			//echo '<input class="btn-purple-lt" style="width: 102px !important;" name=""  id ="unsave_job"  style="min-height:24px; min-width:101px; background:#dcdeda !important; cursor:pointer; color:#000;" value="Unsave" alt="Unsave Job" title="Unsave Job" type="button" onclick="UnsaveJob(this, '. $this->job_detail['job_id'].')" onmouseout="unsaveToSavedJob('. $this->job_detail['job_id'].')" />';
+			echo '<a class="jobdetail-save" href="javascript:;" id ="unsave_job" alt="Unsave Job" title="Unsave Job" onclick="UnsaveJob(this, '. $this->job_detail['job_id'].')" onmouseout="unsaveToSavedJob('. $this->job_detail['job_id'].')" >Unsave</a>';
+		echo '</span>';
+	}
+	//Job saved and not applied by me.
+	else if( $this->job_saved && !$this->job_applied_by_me )
+	{
+		//SAVED JOB Button
+		echo'<span style="float:right;" id="saved_span">';
+			//echo '<input name=""  id ="saved_job"  class="btn-purple-lt" value="Saved Job" alt="Saved Job" title="Saved Job" type="button" />';
+			echo '<a class="jobdetail-save" href="javascript:;"  id ="saved_job" alt="Saved Job" title="Saved Job" >Saved Job</a>';
+		echo '</span>';
+		
+		//UNSAVE on mouse hover.
+		echo'<span id="unsave_span" style="display:none; float:right;">';
+			//echo '<input class="btn-purple-lt" name=""  id ="unsave_job" style="min-height:24px; min-width:101px; background:#dcdeda !important; cursor:pointer; color:#000;" value="Unsave" alt="Unsave Job" title="Unsave Job" type="button" onclick="UnsaveJob(this, '. $this->job_detail['job_id'].')" onmouseout="unsaveToSavedJob('. $this->job_detail['job_id'].')" />';
+			echo '<a class="jobdetail-save" href="javascript:;"  id ="unsave_job" alt="Unsave Job" title="Unsave Job" onclick="UnsaveJob(this, '. $this->job_detail['job_id'].')" onmouseout="unsaveToSavedJob('. $this->job_detail['job_id'].')" >Unsave</a>';
+		echo '</span>';
+		
+		//SAVE BUTTON, display none.
+		echo'<span id="save_span" style="display:none; float:right;">';
+			//echo '<input name=""  onclick = "saveJob(this,'.$this->job_detail['job_id'].')" id ="save_job"  class="btn-purple-lt" value="Save Job" alt="Save Job" title="Save Job" type="button" />';
+		echo '<a class="jobdetail-save" href="javascript:;" onclick = "saveJob(this,'.$this->job_detail['job_id'].')" id ="save_job"  alt="Save Job" title="Save Job" >Save Job</a>';
+		echo '</span>';
+	}	
+
+	
+	
+}
+?>
+			</div>
+			
+			<!-- Apply, Save and Share buttons end -->
+			
+			
+			<div class="new-border-space" style="width: 105%;"></div>
+		</div>
+		
+		<div class="photoalbum-hdr" style="padding-top: 10px;">	
+			<div class="job-detail-col1 ">
+				<h4 class = "text-bold job-detailh4 "  >Job description</h4>
+				<p class="job_detail_p"><?php echo $this->job_detail['description'];?></p>
+			</div>
+			<div class="job-detail-col1 ">
+				<h4 class = "text-bold job-detailh4 " >Responsibilities</h4>
+				<p class="job_detail_p"><?php echo $this->job_detail['responsibilities'];?></p>
+			</div>
+			<div class="job-detail-col1 " style="margin: 0px !important;">
+				<h4 class = "text-bold  job-detailh4 "  >Skills & expertise</h4>
+				<p class="job_detail_p"><?php echo $this->job_detail['skills_expertise'];?></p>
+			</div>
+			<div class="new-border-space" style="width: 105%;"></div>
+		</div>
+		<div class="photoalbum-hdr" style="padding-top: 10px;">	
+			<div class="job-detail-col1 " style="margin: 0px !important;">
+				<h4 class = "text-bold job-detailh4 " >Company description</h4>
+				<p class="job_detail_p">
+				<?php echo $this->job_detail['company_desc'];?></p>
+			</div>
+			<div class="new-border-space" style="width: 105%;"></div>
+		</div>
+		<div class="photoalbum-hdr" style="padding-top: 10px; margin-bottom: 2px; min-height: 354px;">		
+			<div class="job-detail-col1">
+				<h4 class = "text-bold job-detailh4 "  >Additional information</h4>
+				<p>
+					<label>Job Posted by</label>
+					<span class="job_span add_info"><?php echo $this->job_detail['job_posted_by'];?></span>
+				</p>
+				<p>
+					<label>Posted</label>
+					<span class="job_span add_info"><?php echo $this->job_detail['time_of_post'];?></span>
+				</p>
+				<p>
+					<label>Type of work</label>
+					<span class="job_span add_info"><?php echo $this->job_detail['jobType'];?></span>
+				</p>
+				<?php 
+					if($this->job_detail['experienceLevel']!=""){
+				?>
+				<p>
+					<label>Experience</label>
+					<span class="job_span add_info"><?php echo $this->job_detail['experienceLevel'];?></span>
+				</p>
+				<?php 
+					}
+				?>
+				<!-- <p>
+					<label>Functions</label>
+					<span><?php //echo $this->job_detail['job_function'];?></span>
+				</p>
+				-->
+				<p>
+					<label>Industries</label>
+					<span class="job_span add_info"><?php echo $this->job_detail['industry_name'];?></span>
+				</p>
+				<p>
+				<label>Job Id</label>
+				<span class="job_span add_info"><?php echo $this->job_detail['job_ref_id'];?></span>
+				</p>
+				<div class="job-btns">
+<?php 
+					$status = \Extended\job::getStatusOfJob( $this->job_detail["job_id"] );
+					switch ( $status ) 
+					{
+						case 1://Active job
+						break;
+						
+						case 2://Expired job
+						echo '<input name="renew_job" class="btn-purple-lt" value="Renew Job" alt="Renew Job" title="Renew Job" type="button" id = "renew_job" rel="'.$this->job_detail["job_id"].'" onclick = "promptForRenewingAJob( '.$this->job_detail["job_id"].' )" />';
+						break;
+						
+						case 4://Closed job
+						echo '<input name="delete_job" class="btn-purple-lt" value="Delete Job" alt="Delete Job" title="Delete Job" type="button" id = "delete_job" rel="'.$this->job_detail["job_id"].'" onclick = "promptBeforeDeletingJob( this )" />';
+						break;
+						
+						default:
+						break;
+					}
+?>
+			</div>
+		</div> 
+		</div>
+<!-- Content Right Right Ends -->
+<!-- Dialog -->
+<div id="dialog_success_job_save" title="Job Saved" style="display:none">
+  <p>
+  	Job saved successfully.
+  </p>
+</div>
+<div id="renew_job_dialog_box" title="Select a new expiry date" style = "display:none;height:300px">
+	<p>
+		<input id="job_expiry_date" class="job_expiry_date" type="text" readonly="" style="width:97%; margin-left:1px;" name="job_expiry_date">
+	</p>
+	<div></div>
+</div>
+<div id="delete_job_dialog_confirm1" title="Delete Job" style = "display:none;">
+  <p>
+  	Please confirm that you want to delete the selected job(s)?
+  	<br>
+  	<br>
+	Your confirmation will remove the job from your profile and &quot;delete &quot; the job completely and you will not be able to view 
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the details of this job anymore.
+	<br>
+  	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do you want to remove this job from your profile?
+  </p>
+</div>

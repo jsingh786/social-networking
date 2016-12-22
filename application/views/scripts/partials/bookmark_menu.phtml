@@ -1,0 +1,292 @@
+<!-- Content Right Left Starts -->
+<?php 
+$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+$current_user = Auth_UserAdapter::getIdentity()->getId();
+$usr_groups = \Extended\user_bookmark_groups::getEditGroups($current_user);
+$assign_groups = \Extended\user_bookmark_groups::getCountAssignGroups($current_user);
+$requests_id = array ();
+foreach ( $assign_groups as $res )
+{
+	$requests_id [] = $res ['group_id'];
+}
+
+$a = array_count_values($requests_id);
+
+
+//Zend_Debug::dump($c);die;
+if(count($usr_groups)>0){
+?>
+<style type="text/css">
+	.group-popup-top span{
+		background: none repeat scroll 0 0 transparent !important;
+	    float: left !important;
+	    margin-left: 7px;
+	    margin-top: 7px;
+	    width: 32px !important;
+	}
+	.group-popup-btn span{
+		background: none repeat scroll 0 0 transparent !important;
+	    float: left !important;
+	    margin-left: 7px;
+	    margin-top: 7px;
+/* 	    width: 65px !important; */
+	}
+	.grouplist{
+			display:block;
+			float:left;
+			width:100% !important;
+		}
+		.group-popup-mid{
+			height:auto !important;
+			max-height:87px !important;
+		}
+		.groupdiv{
+			max-height:189px !important;
+			background: none repeat scroll 0 0 #FFFFFF;
+		    border: 2px solid #3B4A54;
+		    float: left;
+		    margin: 1px 0 0;
+		    padding: 10px;
+		    width: 170px;
+			color:black !important;
+		}
+</style>
+<?php 
+}
+else
+{
+?>
+	<style type="text/css">
+		.grouplist{
+			display:none;
+			float:left;
+			width:100% !important;
+		}
+		.group-popup-mid{
+			height:auto !important;
+			max-height:87px !important;
+		}
+		.groupdiv{
+			max-height:189px !important;
+			height:189px;
+			background: none repeat scroll 0 0 #FFFFFF;
+		    border: 2px solid #3B4A54;
+		    float: left;
+		    margin: 1px 0 0;
+		    padding: 10px;
+		    width: 170px;
+			color:black !important;
+		}
+	</style>
+<?php 	
+}
+?>
+<style type="text/css">
+div.sdmenu div span img{
+	margin:0px !important;
+}
+.main-group-popup{
+	right:-15px; 
+	top:366px; 
+	overflow:inherit;
+	left:347px;
+	display:none;
+	width:194px;
+}
+.group-popup-mid{
+	float: left;
+    height: 93px;
+    margin: 10px 0 0;
+    overflow-y: scroll;
+    padding: 0;
+    width: 104%;
+}
+.group-popup-col1 {
+    float: left;
+    margin: 0 0 5px;
+    padding: 0;
+    width: 100%;
+}
+.group-popup-col1-text {
+    float: left;
+    margin: 0 0 0 3%;
+    padding: 0;
+    width: 80%;
+}
+.group-popup-btn {
+    float: left;
+    margin: 10px 0 0;
+    padding: 0;
+    text-align: right;
+    width: 100%;
+}
+.group-popup-top {
+    float: left;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    width: 100%;
+}
+.menu-span{
+			color:black !important;
+			cursor:pointer;
+		}	
+.menu-span:hover {
+			color:black !important;
+			background:none;
+		}
+.menu-span2{
+	color:black !important;
+}		
+.view-anchor {
+    background: none repeat scroll 0 0 transparent !important;
+    padding: 0 !important;
+}
+.txt-purple a{
+	padding:0 !important;
+}
+
+.nav-popup-outer
+{
+	margin: 0;
+    padding: 0;
+    position: absolute !important;
+    right: 0px;
+    top:222px !important;
+	left:16px !important;
+    width: 194px;
+    z-index: 9999;
+}
+	
+div.sdmenu div {
+    overflow: hidden;
+    position: relative;
+}
+
+.tag-popup-arrow {
+    float: left;
+    margin: 7px 0 0 164px;
+    padding: 0;
+    width: 40px;
+}
+.editpop-cross img{
+	cursor:pointer !important;
+}
+.groups-menu-listing-addnewGroup {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 2px solid #3B4A54;
+    color: #000000 !important;
+    float: left;
+    height: 189px;
+    margin: 1px 0 0;
+    max-height: 189px !important;
+    padding: 14px 10px 10px 10px;
+    width: 170px;
+}
+.remHover:hover
+{
+		background:url("<?php echo IMAGE_PATH ?>/slide-nav-bdr.png") repeat-x scroll center bottom rgba(0, 0, 0, 0) !important
+}
+</style>
+<input type="hidden" name="currentLoginUserID" id="currentLoginUserID" value="<?php echo Auth_UserAdapter::getIdentity()->getId();?>" />
+<div class="content-right-left">
+
+	<div id="groups-menu-popUp" class="nav-popup-outer main-group-popup">
+		<div class="tag-popup-arrow">
+			<img width="26" height="16" src="<?php echo IMAGE_PATH; ?>/arrow-popup.png">
+		</div>
+		<div class="groups-menu-listing-addnewGroup">
+	    </div>
+	</div>
+	
+	<div class="heading">
+		<h1>BOOKMARKS</h1>
+	</div>
+	<div class="connections">
+		<div class="connections-left text-white">
+			<h3></h3>
+		</div>
+		<div class="connections-mid text-purple"></div>
+		<div class="connections-right"></div>
+	</div>
+	<!-- Slide Nav Starts -->
+	<div style="float: left" class="sdmenu">
+	<div  class = "" >
+			<?php 
+// 			if( $params['controller'] == "bookmarks" && $params['action'] == "index" )
+// 			{
+			?>
+<!-- 	       	<span class="selected" style="color:white !important;">Bookmarks</span> -->
+	       	<?php 
+// 			}
+// 			else
+// 			{
+				?>
+				 <a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."bookmarks" ?>">Bookmarks</a>
+				<?php 
+// 			}
+	       	?>
+	       
+     </div>		
+	<div>
+			<span class="remHover" style="margin-top:50px;">
+				<font class="text-white">
+					<h3 style="width:auto; margin:-14px 0 -5px 0;">Categories</h3>
+				</font> 
+			</span>
+		</div>
+		<div>
+		<?php 
+			if(@$params['id']){
+				$cls="class='selected' style='color:white !important;'";
+			}
+			else{
+				$cls="";
+			}
+		?>
+			<span id="grplisting" <?php echo $cls;?> >Groups<div class="tag-cross"><a href="javascript:;" onclick="loadBookmarkPopup(this);" name="getnav" id="<?php echo Auth_UserAdapter::getIdentity()->getId();?>"><img width="16" height="16" title="Edit" alt="Edit" src="<?php echo IMAGE_PATH; ?>/icon-pencil2.png"></a>
+			<!-- edit group popup start -->
+	
+	
+</div>
+	<!-- edit group popup end -->
+			</span>
+			<?php 
+				if(count($usr_groups)>0){
+					
+					for($i=0;$i<count($usr_groups);$i++){
+						if($usr_groups[$i]['group_id']==@$params['id']){
+							$clr="background:none repeat scroll 0 0 #48545E !important;color:white;";
+						}
+						else{
+							$clr="";
+						}
+				?>
+					<a class="grp-listing" title="<?php echo $usr_groups[$i]['group_title'] ;?>" href="/<?php echo PROJECT_NAME?>bookmarks/group/id/<?php echo $usr_groups[$i]['group_id'];?>" id="menu_grp_<?php echo $usr_groups[$i]['group_id'];?>" style="<?php echo $clr;?>">
+						<font style="text-align:right; width:21px;float:left; margin: 0 10px 0 0;"><?php //echo $c; ?></font> 
+						<?php 
+						if(strlen($usr_groups[$i]['group_title'])>19){
+							echo substr($usr_groups[$i]['group_title'],0,19)."...";
+						}
+						else{
+							echo $usr_groups[$i]['group_title'];
+						}
+						?>
+					</a>
+			<?php 
+					
+				}}
+				else{
+				?>
+					<a name="add_grptxt" id="<?php echo Auth_UserAdapter::getIdentity()->getId();?>" href="javascript:;" onclick="loadBookmarkPopup(this);">
+						 Add Group
+					</a>
+			<?php 		
+				}
+			?>
+		</div>
+		
+	</div>
+	<!-- Slide Nav Starts -->
+</div>
+<!-- Content Right Left Ends -->

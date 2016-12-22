@@ -1,0 +1,150 @@
+<?php
+$this->headTitle()->prepend('Notification settings');
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/account_settings_notifications.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/account_settings_notifications.css" );
+echo $this->render("partials/settings_menu.phtml");
+echo $this->render("partials/add_experience_popup.phtml");
+echo $this->render("partials/add_education_popup.phtml");
+$not_settings = $this->notification_settings;
+//Zend_Debug::dump($not_settings);
+
+?>
+<!-- Content Right Right Starts -->
+     <div class="content-right-right">
+          
+          <!-- Jobs Header Starts -->
+          <div class="job-hdr">
+        	<div class="job-hdr-top">
+               <h2>Email Notifications and frequency <!--Settings--></h2>
+            </div>
+          </div>
+          <!-- Jobs Header Ends -->
+            
+       
+        <!-- Settings Content Starts -->
+        <form name="notification_settings" id="notification_settings" method="post" action="">   
+        <div class="settings-content email-ns">
+       
+          <!-- Settings col1 Outer Starts -->
+          <div class="settings-content-col1-outer">
+             <div class="settings-content-col1">
+                 <h3>Link Request</h3>
+                 <div class="setting-email-notification-row">
+                   <select name="link_request" id="link_request" class="sen-option">
+                 <?php if($not_settings ==false) { ?>
+		             <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings==false){ echo "selected";}?>>Send email notification</option>
+	                 <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings==true){ echo "selected";}?>>Don&#39;t send email notification</option>
+                 <?php } else { ?>
+		             <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings[0]['email_on_link_req']==true){ echo "selected";}?>>Send email notification</option>
+	                 <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings[0]['email_on_link_req']==false){ echo "selected";}?>>Don&#39;t send email notification</option>
+                 <?php } ?>	
+                   </select>		
+                 </div>
+            </div>
+         </div>
+         <!-- Settings col1 Outer Endss -->
+                            
+          <div class="settings-content-col1-outer">
+               <div class="settings-content-col1">
+                 <h3>Feedback Request</h3>
+                     <div class="setting-email-notification-row">
+                       <select name="feedback_request" id="feedback_request" class="sen-option">
+                     <?php if($not_settings ==false) { ?>
+               			<option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings==false){ echo "selected";}?>>Send email notification</option>
+	                 	<option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings==true){ echo "selected";}?>>Don&#39;t send email Notification</option>
+                 	 <?php } else { ?>
+	                     <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings[0]['email_on_feedback_req']==true){ echo "selected";}?>>Send email notification</option>
+	                     <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings[0]['email_on_feedback_req']==false){ echo "selected";}?>>Don&#39;t send email notification</option>
+                     <?php } ?>
+                      </select>
+					 </div>
+			  </div>
+         </div>
+       	<!-- Settings col1 Outer Endss -->
+	       <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Reference Request</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="reference_request" id="reference_request" class="sen-option">
+	                 <?php if($not_settings ==false) { ?>
+		            	<option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings==false){ echo "selected";}?>>Send email notification</option>
+	                 	<option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings==true){ echo "selected";}?>>Don&#39;t send email notification</option>
+                 	 <?php } else { ?>
+		                <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings[0]['email_on_ref_req']==true){ echo "selected";}?>>Send email notification</option>
+	                    <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings[0]['email_on_ref_req']==false){ echo "selected";}?>>Don&#39;t send email notification</option>
+	                 <?php } ?>	
+	                 </select>		
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	         <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>Job Invite</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="job_invite" id="job_invite" class="sen-option">
+		                <?php if($not_settings ==false) { ?>
+		            	<option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings==false){ echo "selected";}?>>Send email notification</option>
+	                 	<option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>"<?php if($not_settings==true){ echo "selected";}?>>Don&#39;t send email notification</option>
+                 	 	<?php } else { ?> 
+		                 <option value="<?php echo \Extended\notifications::SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings[0]['email_on_job_invite']==true){ echo "selected";}?>>Send email notification</option>
+	                     <option value="<?php echo \Extended\notifications::DONT_SEND_EMAIL_NOTIFICATION;?>" <?php if($not_settings[0]['email_on_job_invite']==false){ echo "selected";}?>>Don&#39;t send email notification</option>
+	                    <?php }?>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	         <!-- Settings col1 Outer Starts -->
+	          <div class="settings-content-col1-outer">
+	             <div class="settings-content-col1">
+	                 <h3>General Notifications</h3>
+	                 <div class="setting-email-notification-row">
+	                 <select name="general_notification" id="general_notification" class="sen-option">
+	                  <?php if($not_settings ==false) { ?>
+		            	 <option value="<?php echo \Extended\notifications::SEND_GENERAL_NOTIFICATION;?>" <?php if($not_settings==false){ echo "selected";}?>>Send general notification</option>
+	                 	 <option value="<?php echo \Extended\notifications::DONT_SEND_GENERAL_NOTIFICATION;?>"<?php if($not_settings==true){ echo "selected";}?>>Don&#39;t send general notification</option>
+                 	  <?php } else { ?> 
+		                 <option value="<?php echo \Extended\notifications::SEND_GENERAL_NOTIFICATION;?>" <?php if($not_settings[0]['general_notifications']==true){ echo "selected";}?>>Send general notification</option>
+	                 	 <option value="<?php echo \Extended\notifications::DONT_SEND_GENERAL_NOTIFICATION;?>" <?php if($not_settings[0]['general_notifications']==false){ echo "selected";}?>>Don&#39;t send general notification</option>
+	                  <?php }?>
+	                 </select>			
+	                 </div>
+	            </div>
+	         </div>
+	         <!-- Settings col1 Outer Endss -->
+	         
+	        
+	         
+    		 <div class="settings-content-col1-outer">
+                <div class="settings-content-col1">
+                       <div class="setting-email-notification-button">
+                       		<input type="submit" name="post" id="post" value="Save Changes" class="btn-purple-lt" alt="Save Changes" title="Save Changes" />
+					   </div>
+			    </div>
+             </div>
+            <!-- Settings col1 Outer Endss -->
+                            
+                         
+         </div>
+         </form>
+         <!-- Settings Content Ends -->
+        
+            
+  		</div>
+        <!-- Content Right Right Ends -->
+         
+<!--       </div> -->
+        <!-- Content Right Ends -->
+        
+<!--     </div> -->
+    <!-- Content Ends -->

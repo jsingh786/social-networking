@@ -1,0 +1,127 @@
+.mail-grey-hdr-col1 .chkbx-img 
+{
+    padding: 0 0 0 12px;
+} 
+.btn-purple 
+{
+    font-size: 12px;
+    padding: 0 9px 2px;
+}
+.mail-sendmsg-col2 label 
+{
+    width: 25%;
+}
+.mail-sendmsg-col2 span 
+{
+    width: 105%;
+} 
+.mail-sendmsg-col2 span input[type="text"]
+{
+	width:90%;
+}
+ul.token-input-list-facebook 
+{
+    width: 91.5% !important;
+	margin-right: 5px;
+	background-color:#F2F2F2 !important;
+	border: 1px solid #F2F2F2 !important;
+	margin-bottom: 16px;
+	font-family: arial !important;
+}
+.mail-sendmsg-col2 span input[type="text"] 
+{
+	background-color:#F2F2F2 !important;
+	border: 1px solid #F2F2F2 !important;
+	height: 33px!important;
+}
+textarea.textarea
+{
+	background-color:#F2F2F2 !important;
+	border: 1px solid #F2F2F2 !important;
+	margin-top: 6px;
+}
+div.fr_btn
+{
+	margin:10px 10px 0 0;
+}
+.mail-save-draft 
+{
+	width: 96% !important;
+	border-bottom: none !important;
+	border-top: none !important;
+}
+.mail-sendmsg-col2-content
+{
+	margin:0 !important;
+	width:96.5% !important;
+}
+.photoalbum-outer
+{
+	height:818px !important;
+	background-color:white !important;
+}
+.text-white 
+{
+    color: #FFFFFF;
+}
+div#modal_contacts.contact-list 
+{
+    min-height: 100px;
+}
+div#modal_contacts ul 
+{
+    list-style: none outside none;
+}
+input[type="checkbox"] 
+{
+    margin-left: 3px;
+}
+.forgot-password-content span {
+    margin: 0 !important;
+}
+.fr 
+{
+    float: right !important;
+}
+div.token-input-dropdown-facebook 
+{
+	 width: 367px !important ; 
+}
+div.fr_cancel
+{
+	  margin: 10px 0 0 0 !important;
+}
+.photoalbum-hdr 
+{
+	height : 66px !important;
+}
+a#request_contacts_popup
+{
+	display: inline-block;
+    margin-top: 5px;
+}
+/* Ckeditor CSS*/
+span#cke_1_top , span#cke_1_bottom
+{
+	display:none !important;
+}
+div#cke_requester_msg span#cke_1_top , span#cke_1_bottom
+{
+	display:block !important;
+}
+.cke_1.cke_chrome , .cke_1.cke_chrome 
+{
+	border:none !important;
+}
+.dropdown
+{
+	width:91.5% !important;
+}
+div.no_messages {
+    background-color: #ffffff;
+    float: left;
+    font-size: 29px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+}

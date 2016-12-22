@@ -1,0 +1,57 @@
+<div id="yahoo_login_popup" class = "popup transparent_border" style = "display: none;">
+	<div class="forgot-password-outer_1">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1">
+			<div id="forgot-password" class="left text-white">
+				<h2>Yahoo Authentication</h2>
+				<img class="close_bpopup"
+						src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+						title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		<!-- Forgot Password Header -->
+			<!-- Forgot Password Content -->
+			<div class="yahoo_login_popup">
+				<form id="yahoo_login_form">
+					<table>
+						<tr>
+							<th style = "width:120px;">
+							</th>
+							<th style = "width:258px;">
+							</th>
+						</tr>
+						<tr>
+							<td class = "top">
+								<span>Email</span>
+							</td>
+							<td class = "top">
+								<input type = "text" name = "yahoo_email" id = "yahoo_email" value = "" style = "width: 250px;"/>
+							</td>
+						</tr>
+						<tr>
+							<td class = "top">
+								<span>Password</span>
+							</td>
+							<td class = "top">
+								<input type = "password" name = "yahoo_pwd" id = "yahoo_pwd" value = "" style = "width: 250px;"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							</td>
+							<td>
+								<span class="fr">
+									<input type="button" value="Abort" name="cancel_yahoo_auth" id = "cancel_yahoo_auth" style = "display: none"/>
+								</span>
+								<span class="fr">
+									<input type="button" value="Submit" name="submit_yahoo_credentials" id = "submit_yahoo_credentials"/>
+								</span>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<!-- Forgot Password Content -->
+	</div>
+</div>

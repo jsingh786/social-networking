@@ -1,0 +1,25 @@
+<?php
+	$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+	//Removing all the cookies when action is not equal to job-detail and controller is not equal to job
+	if($params['controller'] != "job" && $params['action'] != "job-detail" )
+	{
+// 		setcookie("simple_search_job_title", "", time()-60*60*24*30, "/");
+// 		setcookie("simple_search_country", "", time()-60*60*24*30, "/");
+// 		setcookie("simple_search_state", "", time()-60*60*24*30, "/");
+// 		setcookie("simple_search_city", "", time()-60*60*24*30, "/");
+		
+		
+// 		setcookie("advance_search_job_title", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_country", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_state", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_city", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_company", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_industry", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_salary", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_salary", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_job_typ", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_experience_level", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_date_from", "", time()-60*60*24*30, "/");
+// 		setcookie("advance_search_date_to", "", time()-60*60*24*30, "/");
+	}
+?>	

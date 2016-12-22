@@ -1,0 +1,214 @@
+/* div .bot-right */
+/* { */
+/* 	display:none!important; */
+/* } */
+
+.mail-all-hdr .fr .col1 img {
+    margin: 0 !important;
+}
+.mail-grey-hdr-col1 .chkbx-img {
+    padding: 0 0 0 12px;
+} 
+.btn-purple {
+    font-size: 12px;
+    padding: 0 9px 2px;
+}  
+
+
+.mail-grey-hdr-col1-new {
+    background: none repeat scroll 0 0 #fff;
+    float: left;
+    margin: 0 0 0 -1px;
+    min-height: 737px;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+}
+
+.mail-all-hdr .fr .col1 img {
+    float: right !important;
+}
+p.no_feedbacks {
+    color: #a0a0a0;
+    font-family: opensansregular;
+    font-size: 13px;
+    left: 222px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+}
+.col3 {
+ 	width:92% !important;
+	margin:0px 0 1px 2px;
+	padding:0 4% 10px 4%;
+	float:left;
+	background:#fff;
+}
+.col3 .fl{ margin-top:10px;}
+.col3 .fr{ margin-top:10px;}
+
+.text-grey3 {
+    color: #A0A0A0 !important;
+}
+.chkbx-img
+{
+	 padding: 0 0 0 12px !important;
+}
+.prof-img
+{
+ 	border: 1px solid #808080;
+/*     display: table-cell; */
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    width: 50px;
+}
+.feedback-received-col1-left
+{
+	height: 50px !important;
+    width: 50px !important;
+}
+.feedback-received-col1 
+{
+	min-height:100px !important;
+}
+.feedback-received-col1-right .top-left 
+{
+	width:none !important;
+}
+div.bot-left p.for_position
+{
+	padding-bottom : 12px !important;
+}
+p.full_text 
+{
+	cursor:default;
+	word-wrap:break-word;
+	display:inline;
+}
+div.full_text
+{
+	display:none;
+	cursor:default;
+	
+}
+p.clickable_text 
+{
+	word-wrap:break-word;
+	display:inline;
+	cursor:default;
+}
+div.clickable_text
+{
+	cursor:default;
+}
+p.p_all_text
+{
+	word-wrap:break-word;
+}
+.mail-grey-hdr-col1 .chkbx-img 
+{
+	padding: 0 0 0 12px;
+}
+
+.btn-purple 
+{
+	font-size: 12px;
+	padding: 0 9px 2px;
+}
+span.show_less , span.show_more
+{
+	cursor: pointer;
+	font-weight : bold;
+}
+/*Accept & display, hide, display and delete text*/
+.accept_display
+{
+	cursor: pointer;
+}
+.accept_display:hover
+{
+	text-decoration:none !important;
+}
+.display_feedbk
+{
+	cursor: pointer;
+}
+.display_feedbk:hover
+{
+	text-decoration:none !important;
+}
+.hide_feedbk
+{
+	cursor: pointer;
+}
+.hide_feedbk:hover
+{
+	text-decoration:none !important;
+}
+.delete_feedbk
+{
+	cursor:pointer;
+}
+.delete_feedbk:hover
+{
+	text-decoration:none !important;
+}
+.quotes-outer
+{
+	 float: left;
+    margin: 10px 1% 0 0;
+    padding: 0;
+    width: 98%;
+}
+.quotes-lt
+{
+	float: left;
+    margin: 5px 0 0;
+    padding: 0;
+    width: 30px;
+}
+.quotes-mid
+{
+	float: left;
+    line-height: 25px;
+    margin: 10px 0 0;
+    max-width: 94%;
+    padding: 0 0 10px;
+}
+.quotes-rt
+{
+	width:7%;
+	margin:0;
+	padding:0;
+	float:left;
+	height:100%;
+}
+div.fdbck_postion
+{
+   color: #a0a0a0;
+    float: left;
+    font-size: 13px;
+    padding: 0 0 20px;
+    text-align: right;
+    width: 100%;
+}
+.top-left h4{text-transform: capitalize;}
+
+div.no_messages {
+    background-color: #ffffff;
+    float: left;
+    font-size: 29px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+}
+div.no_messages {
+    font-size: 29px;
+    text-align: center;
+}
+.no_messages-data {
+    color: #808080;
+    font-size: 17px;
+    margin: 10px 0 0;
+}

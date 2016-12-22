@@ -1,0 +1,136 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Languages');
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/languages.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/languages.css" );
+?>
+
+<?php if ( !$this->languages )
+{
+?>
+<style>
+	input[name=add]
+	{	
+ 		display : none;
+	}
+	.add_or_edit
+	{
+		display: block;
+	}
+	span.delete_span
+	{
+		display: none;	
+	}
+	input[name=cancel]
+	{
+		display: none;	
+	}
+</style>
+<?php
+}	
+?>
+
+
+<script type="text/javascript">
+var num_of_records = <?php echo count( $this->languages ); ?>;
+$(document).ready(function(){
+	if( num_of_records == 0 )
+	{
+		
+	}	
+});
+</script>
+<?php
+	echo $this->partial('partials/profile_menu.phtml');
+?>
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+	<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+		<!-- Summary Edit Starts -->
+			<div class="summary-edit text-grey3">
+				<h3 class="text-purple2">Languages</h3>
+					<input type="button" title="+ Add another Language" alt="+ Add another Language" value="+ Add another Language" class="btn-to-link" name="add" id = "add"> 
+			</div>
+			<!-- Summary Edit Ends -->
+			<!-- Contact Details Starts -->
+			<form id="lang" action="">
+				<input id="identity" type="hidden" value="" name="identity">
+				<div class="contact-details add_or_edit">
+				<div class="contact-label-span2">
+					<label>Language</label>
+		                <span >
+		                	<input type="text" name="lang_name" id = "lang_name" class="search-one-textbox">
+		                </span>
+		                </div>
+		                <div class="contact-label-span2">
+					<label>Proficiency</label>
+					<span >
+						<select class="dropdown"  name="lang_proficiency" id="select">
+							<option value = "">Select</option>
+							<option value = "<?php echo Extended\user_languages::PROFICIENCY_LEVEL_BASIC; ?>"><?php echo Extended\user_languages::PROFICIENCY_LEVEL_BASIC; ?></option>
+							<option value = "<?php echo Extended\user_languages::PROFICIENCY_LEVEL_CONVERSATIONAL; ?>"><?php echo Extended\user_languages::PROFICIENCY_LEVEL_CONVERSATIONAL; ?></option>
+							<option value = "<?php echo Extended\user_languages::PROFICIENCY_LEVEL_FLUENT; ?>"><?php echo Extended\user_languages::PROFICIENCY_LEVEL_FLUENT; ?></option>
+						</select>
+					</span>
+					</div>
+				</div>
+			</form>		
+			<!-- Contact Details Ends -->
+			<div class=" summary-btn-outer bdr-grey2 add_or_edit">
+				<span class="delete_span">
+					<a class="remove-link fl delete" href="javascript:;">Remove this Language</a>
+				</span>
+				<input name="save" type="button"  alt="Save" title="Save"  class="new-save-btn" id = "save_language" value="Save" />
+				<a href="javascript:;" id="cancel" class="new-cancel-btn">Cancel</a>
+			</div>
+			<div class="contact-details">
+				<!-- Un Editable Outer Starts -->
+				<div id="un-editable-outer-wrapper">
+<?php
+				if( $this->languages )
+				{
+					foreach ( $this->languages as $lang )
+					{	
+?>				
+						<div class="un-editable-outer" id = "<?php echo $lang->getId(); ?>">
+							<label class = "lang_name">
+<?php
+							echo $lang->getLanguage();
+?>
+							</label>
+							<span class="text-grey3">
+								<div class="loader-col1 lang_profi">
+							
+<?php
+
+									echo $lang->getProficiency();
+?>
+								</div>
+								<div class="loader-col2">
+								    <a href="javascript:;" id="<?php echo $lang->getId(); ?>" class="edit_lang fl" onclick="editClick(this)">
+										<img src="<?php echo IMAGE_PATH; ?>/edit-pencil.png" alt="Edit" class="edit-new-icon"  align="absmiddle" title="Edit" />
+									</a> 
+								</div>
+							</span>
+						</div>
+<?php 
+					}
+				}
+?>			
+<!-- Content Right Right Ends -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="language_exists" title="Alert" style = "display:none;">
+  		<p>
+    		Language already exists!
+  		</p>
+	</div>

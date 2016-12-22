@@ -1,0 +1,46 @@
+<style>
+div#registrationFailures
+{
+	margin: 20px auto;
+	display: block;
+	text-align: center;
+}
+.content
+{
+	background: none repeat scroll 0 0 white;
+    border: 4px double silver;
+    width: 935px;
+}
+.content-right
+{
+	margin:0 0 0 16px;
+}
+.space {
+    height: 175px;
+}
+.failure_div p {
+    border: 1px solid red;
+    font-weight: bold;
+    line-height: 25px;
+    margin-left: 24%;
+    padding: 2%;
+    width: 458px;
+}
+</style>
+
+<div id = "registrationFailures">
+	<div class="space"></div>
+	<div class="failure_div">
+	<p>
+<?php 
+		if( $this->message )
+		{
+			echo $this->message;
+		}
+?>
+	</p>
+	</div>
+</div>
+</div>
+<?php echo $this->partial('partials/layout_footer.phtml');
+?>

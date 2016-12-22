@@ -1,0 +1,159 @@
+<?php
+//Title 
+$this->headTitle()->prepend('People you may know');
+
+//js
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.stylish-select.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/import_contacts.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links_menu.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/people_you_may_know.js" );
+
+//CSS
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/people-you-may-know.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/import_contacts.css" );
+echo $this->partial ( 'partials/link_menu.phtml' );
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+$menu_size = Auth_UserAdapter::getIdentity()->getMain_menu_size();
+$listArr =array();
+if( count( $this->youMayKnowUsers ) )
+{
+	foreach ( $this->youMayKnowUsers as $youMayKnowUser )
+	{
+		$listArr[] = $youMayKnowUser->getId();
+	}
+}
+?>
+
+<script type="text/javascript">
+
+function filterUser()
+{
+	var txt = $('input#you_may_know_search').val();
+	$("div.col4").hide();
+	$('a.text-purple2-link:contains("'+txt+'")').parents("div.col4").show();
+}
+</script>
+
+<div class="content-right-right">
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+        	<div class="new-style2-photoalbum-addnew photoalbum-addnew">
+				<h3 class="text-purple2 new-style-headings">People You May Know</h3>
+				<div class="addnew-links new-style-addnew-links">
+				</div>
+			</div>
+<?php 
+			if( count($this->youMayKnowUsers)>0 || isset($_REQUEST['linkSearch']) ) 
+			{
+?>
+				<div style="margin-top: 0px; display : none;" class="bookmarks-hdr-text1">
+					<div class="mail-hdr-search">
+						<form name="search-form" id="search-form" method="get" action="">
+							<a href="javascript:;" id="you_may_know_search" class="fr srchBtn" onclick="searchUserByJS()" style="float:right;">
+							Search
+							</a>
+							<input type="text" placeholder="Search" style="float:right;">
+						</form>
+					</div>
+				</div>
+<?php 
+			}
+?>
+		</div>
+
+	</div>
+
+	
+<?php
+		if($this->is_more_records  )
+		{
+			echo '<input type="hidden" id = "offsett" value="9" />';
+			echo '<input type="hidden" name="recordLimit" id="recordLimit" value="9" />';
+		}
+		echo '<div = id="user_records" class="people_you_may_know_records">';
+		$text = '<span class="no_people_img"><img src="'.IMAGE_PATH.'/invitation-icon.png" width="25" height="20"/></span>No People You May know</br></br>';
+		$text.= 'Invite your contacts to ilook and increase <br> your network for more activities';
+		echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(),$listArr,null,null,null,$text);
+		if( $this->is_more_records )
+		{
+		
+			echo'<div class="see_more_you_may_know job-content view_more">';
+			echo'<p>';
+			echo'<a href="javascript:;" onclick="loadMorePeopleYouMayKnow(this);" class="see_more_you_may_know_text text-dark-purple">';
+			echo'View More';
+			echo'</a>';
+			echo'</p>';
+			echo'</div>';
+		}
+		echo'</div>';
+	// Show import contacts options ( same as in add new links )
+	// if there are no records in "people you may know".
+	if( isset($listArr) && count( $listArr ) <= 0 ) 
+	{
+?>		
+		<div class="add-new-event">
+			<div class="link-invite-connect">
+				<h3>Have you found everyone on iLook ? Search your email contacts
+						to see.
+				</h3>
+				<div class="box1" id = "gmail">
+					<div class="box1-img">
+						<img src="<?php echo IMAGE_PATH; ?>/gmail-icon.png" width="65" height="47"/>
+					</div>
+					<p>
+						<a class="text-purple2-link" href="javascript:;">Gmail</a>
+					</p>
+				</div>
+				<!-- div class="box1">
+					<div class="box1-img">
+						<img style="opacity :0.2" src="<?php echo IMAGE_PATH; ?>/hotmail-icon.png" width="76" height="53" />
+					</div>
+					<p>
+						<a class="text-purple2-link" href="javascript:;">Hotmail</a>
+					</p>
+				</div-->
+				<!--div class="box1" id = "yahoo">
+					<div class="box1-img">
+						<img src="<?php echo IMAGE_PATH; ?>/yahoo-icon.png" width="54" height="54" />
+					</div>
+					<p>
+						<a class="text-purple2-link" href="javascript:;">Yahoo!</a>
+					</p>
+				</div-->
+				<!--div class="box1 mr-none">
+					<div class="box1-img">
+						<img style="opacity :0.2" src="<?php echo IMAGE_PATH; ?>/outlook-icon.png" width="52" height="56" />
+					</div>
+					<p>
+						<a class="text-purple2-link" href="javascript:;">Outlook</a>
+					</p>
+				</div-->
+				<!-- Col1 Starts -->
+				<div class="col1">
+					<h3>More ways to Connect</h3>
+					<div class="col1-bot">
+						<p>Invite by individual email</p>
+						<p>
+							<form action="#" id = "more_ways_to_connect_frm" onsubmit="return false">
+								<div class="more-ways-textbox">
+									<input id = "more_ways_to_connect" name="more_ways_to_connect" type="text" value="" placeholder="Type email addresses, separated by semi-colons.." style="font-weight: bold;"/>
+								</div>
+								<div class="more-ways-btn">
+									<input name="more_ways_to_connect_btn" id = "more_ways_to_connect_btn" type="button" class="btn-purple" value="Send Invitations" alt="Send Invitations" title="Send Invitations" style = "float:left;" />
+								</div>
+							</form>
+						</p>
+					</div>
+				</div>
+				<!-- Col1 Ends -->
+			</div>
+		</div>
+<?php 
+	}
+?>
+</div>

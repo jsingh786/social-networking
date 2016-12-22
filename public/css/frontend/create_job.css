@@ -1,0 +1,41 @@
+input.btn-purple-lt
+{
+	background-color:#6C518F !important;
+}
+ .bookmarks-add-new{
+	margin-bottom:12px !important;
+ }
+ .ddCls{
+	 border:1px solid #DEDEDE;
+ }
+ h4.applying_option_text:hover
+ {
+	text-decoration:none !important;
+ }
+ a.empty_url:hover
+ {
+	text-decoration:none !important;
+ }
+ div.col2
+ {
+	float: left;
+    margin: 0 0 10px;
+    padding: 0;
+    width: 100%;
+ }
+ div.ckeditor_fields
+ {
+	float: right;
+/*     margin: -17px 0 0; */
+    width: 75%;
+ }
+ 
+.jobs-rt-content .col1 span span
+{
+	width: auto !important;
+}
+
+.jobs-rt-content
+{
+	margin: 0 !important;
+}

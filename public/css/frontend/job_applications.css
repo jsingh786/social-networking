@@ -1,0 +1,125 @@
+.job-content {
+    margin: 0 0 2px 0 !important;
+}
+.job-detail-col1 p label {
+    float: left;
+    font-size: 11px;
+    margin: 10px 0 0;
+    padding: 0;
+   /* text-transform: uppercase;*/
+    width: 250px;
+}
+
+.job-detail-col1 p span {
+    float: left;
+    font-size: 11px;
+    margin: 10px 0 0;
+    padding: 0;
+    /*text-transform: uppercase;*/
+    width: 250px;
+}
+
+.job-detail-col1 {
+    float: left;
+    margin: 0 0 15px;
+    padding: 0 0 10px;
+    width: 100%;
+}
+.mail-grey-hdr-col1-no-records
+{
+    background: none repeat scroll 0 0 #FFFFFF !important;
+/*  border-right: 4px solid #C4C4C4 !important; */
+    float: left !important;
+    margin-left:-1px !important;
+    padding: 5px 0 !important;
+    position: relative !important;
+    width: 100% !important;
+	min-height: 727px;	
+}
+div.applied_job_img_inner
+{
+    display: table-cell;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+}
+div.applied_job_img
+{ 
+     border: 1px solid #C0C0C0;
+    display: inline-block;
+    float: left;
+    height: 60px;
+    margin: 0 0 0 26px;
+    padding: 0;
+    width: 60px;
+}
+
+.apply-2-job a 
+{
+    float:right !important;
+	margin: 0 0 -3px 0 !important;
+}
+.bookmarks-add-new 
+{
+    border-bottom: 2px solid #EAEAEA !important;
+    border-top: 1px solid #EAEAEA !important;
+	padding: 10px 0 6px !important;
+}
+.mail-grey-hdr-col1 .right .top 
+{
+    color: #C3C3C3 !important;
+}
+.mail-grey-hdr-col1{
+	margin:0 0 0 2px !important;
+  	padding: 17px 0 10px !important;
+}
+
+.mail-grey-hdr-col1 .mid {
+    float: left !important;
+    margin: 0 0 0 20px !important;
+    padding: 0 !important;
+    width: 67% !important;
+}
+
+.mail-grey-hdr-col1 .right .top
+{
+	width:auto !important;
+}
+.apply-2-job 
+{
+	padding:0 !important;
+}
+.applicant-col1{
+	width: 98% !important;
+}
+
+.no_messages-data {
+    color: #808080;
+    font-size: 17px;
+    margin: 10px 0 0;
+}
+
+div.no_messages {
+    background-color: #ffffff;
+    float: left;
+    font-size: 29px;
+    min-height: 437px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.job-application-single{
+background: #fff none repeat scroll 0 0;
+    display: block;
+	float:left;
+	width : 100%;
+}
+
+.job-application-single:hover{
+background: #f3f3f3 none repeat scroll 0 0;
+    display: block;
+	float:left;
+	width : 100%;
+}

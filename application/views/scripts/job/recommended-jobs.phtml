@@ -1,0 +1,73 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Recommended-Jobs' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/jobs_recommended.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/recommended_jobs.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+
+?>
+
+<div class="content-right-right">
+<input type="hidden" name="offset" id="offset" value="0" />
+<input type="hidden" name="recordLimit" id="recordLimit" value="10" />
+<input type="hidden" name="myLat" id="myLat" value="" />
+<input type="hidden" name="myLong" id="myLong" value="" />
+
+<!-- Bookmarks Header Starts -->
+	<div style="padding-bottom:10px !important;" class="job-hdr">
+     	<div class="job-hdr-top">
+        	<h2>Recommended Jobs</h2>
+          
+		</div>
+	</div>
+<!-- Bookmarks Header Ends -->
+<div id="jobslisting" style="float:left; width: 100%">	
+
+</div>
+
+
+</div>
+        <!-- Content Right Right Ends -->
+<!-- successfully job applied message popup start -->
+<div id="dialog_success_job_apply" title="Job Applied" style="display:none;">
+	<p>
+		Successfully Applied.
+	</p>
+</div>
+<!-- successfully job applied message popup end -->
+
+<!-- job apply error message popup start -->
+<div id="dialog_error_job_apply1" title="Apply Job" style="display:none;">
+	<p>
+		Error occured! Please try again.
+	</p>
+</div>
+<!-- job apply error message popup end -->    
+<!-- Dialog -->
+<div id="dialog_success_job_save" title="Job Saved" style="display:none;">
+	<p>
+		Job saved successfully.
+	</p>
+</div> 
+
+<!-- start Dialog pop up div for unsave the job -->
+<div id="dialog_success_job_unsave" title="Job Unsaved" style="display:none;">
+	<p>
+		Job unsaved successfully.
+	</p>
+</div> 
+<!-- end Dialog pop up div for unsave the job -->
+
+    <!-- Content Right Right Ends -->
+<!-- Dialog Box -->
+<div id="dialog_on_leaving_page" title="Alert" style="display: none;">
+  <p>
+  	Do you want to cancel your application?
+  </p>
+</div>

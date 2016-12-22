@@ -1,0 +1,64 @@
+<?php 
+$params = $this->params;
+$logged_in_user_id = $this->logged_in_user_id;
+?>
+<div class="content-right-left">
+	<div class="heading">
+		<h1>SETTINGS</h1>
+	</div>
+	<!-- Slide Nav Starts -->
+	<div style="float: left;margin-top:80px;" class="sdmenu"  ">
+	<div  class = "" >
+<?php
+		if( $params['controller'] == "account-settings" && $params['action'] == "general" )
+		{
+?>
+			<span class="selected">General</span>
+<?php 
+		}
+		else
+		{
+?>
+			<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."account-settings/general/id/".$logged_in_user_id ?>">General</a>
+<?php 				
+		}
+?>
+	 </div>		
+	<div  class = "" >
+<?php
+		if( $params['controller'] == "account-settings" && $params['action'] == "privacy" )
+		{
+?>
+			<span class="selected">Privacy</span>
+<?php 
+		}
+		else
+		{
+?>
+			<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."account-settings/privacy/id/".$logged_in_user_id ?>">Privacy</a>
+<?php 				
+		}
+?>
+	 </div>	
+	<div  class = "" >
+<?php
+		if( $params['controller'] == "account-settings" && $params['action'] == "Notifications" )
+		{
+?>
+			<span class="selected">Notifications</span>
+<?php 
+		}
+		else
+		{
+?>
+			<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."account-settings/notifications/id/".$logged_in_user_id ?>">Notifications</a>
+<?php 				
+		}
+?>
+	 </div>	
+     
+		
+	</div>
+	<!-- Slide Nav Starts -->
+</div>
+<!-- Content Right Left Ends -->

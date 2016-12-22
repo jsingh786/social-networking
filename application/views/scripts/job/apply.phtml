@@ -1,0 +1,253 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Apply Job' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/jobs_apply.js" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+if($this->applyToJob['job_image']!=null)
+{
+	$imgPath = IMAGE_PATH.'/jobs/'.$this->applyToJob['job_image'];
+}
+else
+{
+	$imgPath= 	IMAGE_PATH.'/job_default_image.png';
+		
+}
+?>
+<style>
+</style>
+<style type="text/css">
+div.job_applied_text
+{
+	margin: 66px -11px 0 0;
+}
+h3#job-title:hover
+{
+	text-decoration:none;
+}
+.btn-purple-lt 
+{
+	background: none repeat scroll 0 0 #6C518F !important;
+	height:32px !important;
+}
+a#job-title1:hover
+{
+	text-decoration:none;
+}
+.mail-grey-hdr-col1 .mid
+{
+	float:left !important;
+    margin-left:11px !important;
+    padding: 0 !important;
+    width: 315px !important;
+}
+.applicant-col1-left
+{
+	float:left;
+	width:180px;
+}
+
+.applicant-col1-right
+{
+	float:left;
+	width:auto;
+}
+
+.applicant-col1 
+{
+/*     min-height: 47px; */
+	margin-left: 14px !important;
+	  margin: 15px 0 0;
+}
+
+.bdr-btm 
+{
+    text-align: right !important;
+}
+input#job_applied 
+{
+    background-color: #B3B3B3;
+    cursor: auto;
+}
+.job-content-last
+{
+	min-height:90px !important;
+}
+.job-content 
+{
+    margin: 2px 0 0 0px !important;
+	width: 97% !important;
+}
+.job-hdr-top 
+{
+    margin: 0 0 0 -8px !important;
+}
+.job_title:hover
+{
+	text-decoration:none !important;
+}
+.job_title
+{
+	text-decoration:none !important;
+	line-height:15px;
+	cursor:default;
+	font-family:arial;
+}
+.bdr-btm 
+{
+    border-bottom: none !important;
+}
+a.job_company_name:hover
+{
+	text-decoration:none;
+}
+
+.btn-purple-lt {
+    margin: 0 25px 0 0!important;
+}
+a.quick-apply-btn:hover
+{
+	text-decoration:none !important;
+}
+</style>
+
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Bookmarks Header Starts -->
+	<div style="padding-bottom:10px;" class="job-hdr">
+		<div class="job-hdr-top">
+			<h2>Apply Job</h2>
+		<!-- 	<div class="need-help">
+				<div class="need-help-text"><a href="javascript:;" class="text-grey3-link">Need Help?</a> <img width="20" height="20" align="absmiddle" src="<?php //echo IMAGE_PATH;?>/help-icon.png"></div>
+			</div> -->
+		</div>
+	</div>
+                <!-- Bookmarks Header Ends -->
+                   <!--Mail-grey-hdr-col1 Starts --> 
+                  <div class="mail-grey-hdr-col1">
+                 	<div class = "job_detail_img_outer">
+						<div class="job_detail_img_inner">
+                   	    	<img  style="max-height: 60px; max-width: 60px;"src="<?php echo PUBLIC_PATH; ?>/Imagehandler/GenerateImage.php?image=<?php echo $imgPath;?>&h=60&w=60">
+                   	    </div>
+                   	</div>
+                      <div class="mid">
+                       	<h4 class="job_title text-purple2" ><?php echo $this->applyToJob['job_title'] ;?> | <?php echo $this->applyToJob['job_reference'] ;?></h4>
+                       <p style="margin: 8px 0px 0px;"><a  href="javascript:;" style="cursor:default;" class="job_company_name text-purple-link"><?php echo $this->applyToJob['company_name'] ;?></a></p>
+                        <p style="width:165%;margin: 6px 0px 0px;"><?php echo $this->applyToJob['industry_name'] ;?>, <?php echo $this->applyToJob['country'].', '.$this->applyToJob['state'].', '.$this->applyToJob['city'] ;?></p>
+                        <p style="margin: 6px 0px 0px;"><?php echo $this->applyToJob['salary_range'];?> | <?php echo $this->applyToJob['job_type'] ;?> <?php if($this->applyToJob['experience_level']!=""){ echo "| ".$this->applyToJob['experience_level']; }?></p>
+
+                      </div>	
+                      <div class="right">
+<?php 
+						if( $this->applyToJob['job_apply_status'] == 0)
+						{ 
+?>
+                        	<div class="top">
+<?php 
+							echo $this->applyToJob['created_at'] ;?></div>
+<?php 
+						}
+						else
+						{ 
+?>
+                       	<div class="top" style=" width: 163px !important; float: right !important; font-weight: bold;">Applied on <?php echo $this->applyToJob['job_applied_on_date'] ;?></div>
+<?php 
+						}
+?>
+                      </div>
+                      <?php 
+                      //If job is already applied then show 'applied' text.
+                        if ( $this->applyToJob['job_apply_status'] == 1 )
+                        {
+                      		echo '<div class="job_applied_text" ><a class="quick-apply-btn applied" style="cursor:default !important;color:#a9a9a9;"> Applied </a></div>';
+                        }
+?>
+                    </div>
+                    <!--Mail-grey-hdr-col1 Ends -->
+<?php 
+					//Show apply form if job apply status is zero i.e job is not applied yet.
+                    if( $this->applyToJob['job_apply_status'] == 0)
+                    {
+?>
+                    <div  class="job-content-last job-content">
+                   	
+
+                        <!-- Applicant Col Starts -->
+                        <form id="applicant_form" name="applicant_form" method="POST" action="<?php echo '/'.PROJECT_NAME.'job/apply-job' ?>" enctype="multipart/form-data" >
+	                        <div id="formDiv"
+<?php 
+	                         if( $this->applyToJob['job_apply_status'] != 0)
+	                         { 
+	                         	echo "style='display:none;'"; 
+	                         }
+?>
+	                         >
+		                        <div style="margin: 20px 0 0 14px !important;" class="applicant-col1">
+		                        	<div class="applicant-col1-left">
+		                        	  <h3 style="font-size: 13px !important;" class="font-arial text-grey2">Applicant CV</h3>
+		                        	</div>
+		                            <div class="applicant-col1-left"><input name="applicant_cv" type="file"  value="Upload from computer" style="max-width: 360px;overflow:hidden"/></div>
+		                        </div>
+		                        <!-- Applicant Col Ends -->
+		                        
+		                        <!-- Applicant Col Starts -->
+		                        <div class="applicant-col1">
+		                        	<div class="applicant-col1-left">
+		                        	  <h3 class="font-arial text-grey2" style="font-size: 13px !important;">Applicant Cover Letter</h3>
+		                        	</div>
+		                            <div class="applicant-col1-left"><input name="application_cl" type="file"  value="Upload from computer" style="max-width: 360px;overflow:hidden" /></div>
+		                        </div>
+		                        <!-- Applicant Col Ends -->
+		                        
+		                        <!-- Applicant Col Starts -->
+		                        <div class="applicant-col1">
+		                        	<div class="applicant-col1-left">
+		                        	  <h3 style="font-size: 13px !important;" class="font-arial text-grey2">Applicant Message</h3>
+		                        	</div>
+		                            <div class="applicant-col1-left"></div>
+		                        </div>
+		                        <!-- Applicant Col Ends -->
+		                        
+		                        <!-- Applicant Col Starts -->
+		                        <div style="width:95% !important;" class="applicant-col1">
+		                       	  <textarea maxlength = "1000" style="margin: 0 0 0 -2px;" name="applicant_msg" cols="" rows="10">Hi, I am interested in this position and would like to apply for the same. Please have a look into my profile for more details.</textarea>
+		                        </div>
+		                        <!-- Applicant Col Ends -->
+	                        </div>
+	                          <!-- Applicant Col Starts -->
+	                      <div class="applicant-col1" >
+	                      <input type="hidden" name="job_id" id="job_id" value="<?php echo $this->applyToJob['job_id'] ;?>" />
+	                      <div class="bdr-btm">
+<?php 
+							if( $this->applyToJob['job_apply_status'] == 0)
+							{
+?>
+	                        	<input style=" margin-right: 25px !important;" id = "apply_job_btn" name="apply_job_btn" type="button"  class="btn-purple-lt fr" value="Apply" alt="Apply" title="Apply" />
+<?php 					
+							}
+?>
+	                        </div>
+	                        </div>
+                        </form>
+                        <!-- Applicant Col Ends -->
+                        
+                         <!-- Applicant Col Starts -->
+                         </div>
+<?php
+					} 
+?>
+                        <div style="" class="job-content">
+                        <div class="applicant-col1 text-grey2">
+                        	<h3 class="sub-heading-arial-narrow" >Job description </h3>
+                        </div>
+                        <!-- Applicant Col Ends -->
+                          <!-- Applicant Col Starts -->
+                      <div class="applicant-col1 text-grey2">
+                        	<?php echo $this->applyToJob['job_description'] ;?>
+                        </div>
+                        <!-- Applicant Col Ends -->
+                    </div>
+          </div>
+        <!-- Content Right Right Ends -->

@@ -1,0 +1,592 @@
+<?php
+/* Including JS */
+$this->headScript()->appendFile( PUBLIC_PATH."/js/admin/reported.js" );
+
+/* Including CSS */
+// $this->headLink()->appendStylesheet( "//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/dataTables.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/reported.css" );
+?>
+
+<div id='heading'>
+	<h2>Reported Abuse</h2>
+</div>
+<script>
+
+$(document).ready(function() {
+
+	// Checking all checkboxes
+	$("input.master_delete_cb").click(function(){
+		
+		if( $('input.master_delete_cb:checked').length > 0 )
+		{
+			$("input.delete_cb").attr("checked", "checked");
+		}
+		else
+		{
+			$("input.delete_cb").removeAttr("checked");
+		}
+	});	
+
+	//First time dataload.
+	listData( $("div#ilook_dt_wrapper select[name=jquery_dt_length]").val(),
+				0, 	
+				$('table#jquery_dt th.sorting.active').attr('db_column'),
+				$('table#jquery_dt th.sorting.active').attr('db_column_alias'),
+				$('table#jquery_dt th.sorting.active').attr('aria-sort'),
+				0,
+				$('div#ilook_dt_wrapper div.dataTables_filter input').val()
+				);
+
+	//On click for sort column event binding.
+	$('table#jquery_dt th.sorting').click(function(){
+		listData( $("div.dataTables_wrapper select[name=jquery_dt_length]").val(), 
+					0, 
+					$(this).attr('db_column'),
+					$(this).attr('db_column_alias'),
+					$(this).first().attr('aria-sort'),
+					0,
+					$('div#ilook_dt_wrapper div.dataTables_filter input').val()
+					);
+	});
+	
+	//On filter text change event binding.
+	$('div#ilook_dt_wrapper div.dataTables_filter input').keyup(function() {
+		if( $(this).val() != jQuery.data(this, "lastvalue") )
+		{
+			// As we are keeping old sort on this activity so, we have to send value opposite
+			// to aria-sort, as aria-sort tells for next sorting.
+			var sort = 'ASC';
+			if( $('table#jquery_dt th.sorting.active').attr('aria-sort') == 'DESC' )
+			{
+				sort = 'ASC';	
+			}
+			else
+			{
+				sort = 'DESC';	
+			}
+			
+			listData( $("div.dataTables_wrapper select[name=jquery_dt_length]").val(), 
+					0, 
+					$('table#jquery_dt th.sorting.active').attr('db_column'),
+					$('table#jquery_dt th.sorting.active').attr('db_column_alias'),
+					sort,
+					1,
+					$(this).val()
+					);
+			jQuery.data(this, "lastvalue", $(this).val());
+		}
+	});
+
+	//Managing list length.
+	$('div#ilook_dt_wrapper div.dataTables_length').change(function() {
+
+		// As we are keeping old sort on this activity so, we have to send value opposite
+		// to aria-sort, as aria-sort tells for next sorting.
+		var sort = 'ASC';
+		if( $('table#jquery_dt th.sorting.active').attr('aria-sort') == 'DESC' )
+		{
+			sort = 'ASC';	
+		}
+		else
+		{
+			sort = 'DESC';	
+		}	
+		listData( $("div.dataTables_wrapper select[name=jquery_dt_length]").val(), 
+				0, 
+				$('table#jquery_dt th.sorting.active').attr('db_column'),
+				$('table#jquery_dt th.sorting.active').attr('db_column_alias'),
+				sort,
+				1,
+				$('div#ilook_dt_wrapper div.dataTables_filter input').val()
+				);
+	});
+
+	//Pagination
+	$('div#ilook_dt_wrapper div#jquery_dt_paginate').on('click', 'span#page_buttons a.paginate_button', function() {
+		$('div#ilook_dt_wrapper a#jquery_dt_next').removeClass('disabled');
+		$('div#ilook_dt_wrapper a#jquery_dt_previous').removeClass('disabled');
+		if($(this).next().length == 0)
+		{
+			$('div#ilook_dt_wrapper a#jquery_dt_next').addClass('disabled');
+		}
+		
+		if($(this).prev().length == 0)
+		{
+			$('div#ilook_dt_wrapper a#jquery_dt_previous').addClass('disabled');
+		}
+
+
+		// As we are keeping old sort on this activity so, we have to send value opposite
+		// to aria-sort, as aria-sort tells for next sorting.
+		var sort = 'ASC';
+		if( $('table#jquery_dt th.sorting.active').attr('aria-sort') == 'DESC' )
+		{
+			sort = 'ASC';	
+		}
+		else
+		{
+			sort = 'DESC';	
+		}
+		listData( $("div.dataTables_wrapper select[name=jquery_dt_length]").val(),
+				($(this).attr('data-dt-idx')-1)*$("div.dataTables_wrapper select[name=jquery_dt_length]").val(), 
+				$('table#jquery_dt th.sorting.active').attr('db_column'),
+				$('table#jquery_dt th.sorting.active').attr('db_column_alias'),
+				sort,
+				1,
+				$('div#ilook_dt_wrapper div.dataTables_filter input').val()
+				);
+	});
+	
+	$('div#ilook_dt_wrapper a#jquery_dt_previous').click(function(){
+		if( $('div#ilook_dt_wrapper a.paginate_button.current').prev().length == 1 )
+		{	
+			$('div#ilook_dt_wrapper a.paginate_button.current').prev().click();
+		}
+		else
+		{
+			$(this).addClass('disabled');
+		}	
+	});
+	
+	$('div#ilook_dt_wrapper a#jquery_dt_next').click(function(){
+		if( $('div#ilook_dt_wrapper a.paginate_button.current').next().length == 1 )
+		{	
+			$('div#ilook_dt_wrapper a.paginate_button.current').next().click();
+		}
+		else
+		{
+			$(this).addClass('disabled');
+		}	
+	});
+
+	// Deletion
+	$("div#ilook_dt_wrapper span.buttons span#delete_records").click(function(){
+		var comma_sep = '';
+		$('div#ilook_dt_wrapper table#jquery_dt tbody tr td input.delete_cb:checked').each(function( index ) {
+			comma_sep += $(this).val();
+			comma_sep += ',';
+		});
+		if( comma_sep.trim() != '' )
+		{	
+			deleteReported( comma_sep.trim() );
+		}
+		else
+		{
+			showDefaultMsg('Please select atleast one item.', 2);
+		}	
+	});
+});
+
+function listData( limit, offset, sort_column, sort_column_alias, sort_column_order, keep_old_sorting, filterText )
+{
+	$('div#jquery_dt_processing').show();
+	jQuery.ajax({
+        url: "/" + PROJECT_NAME + "admin/reported/get-reported-users",
+        type: "POST",
+        dataType: "json",
+        data: {
+            	'limit':limit,
+            	'offset':offset, 
+            	'sort_column': sort_column,
+            	'sort_column_alias': sort_column_alias,
+            	'sort_column_order':sort_column_order,
+            	'keep_old_sorting': keep_old_sorting,
+            	'filterText': filterText
+              },
+        timeout: 50000,
+        success: function(jsonData) {
+        	var tbody = '';
+        	if( jsonData.grid_data.length > 0 )
+        	{
+            	var j;
+            	//Customized part
+	            for( i in jsonData.grid_data )
+	            {
+		            j = i;
+		            if(j%2 == 0)
+		            {
+		        		tbody += '<tr role="row" class="odd">';
+		            }
+		            else
+		            {
+		        		tbody += '<tr role="row" class="even">';
+		            }
+		            
+		        	tbody += '<td><input type = "checkbox" name = "delete_cb[]" class = "delete_cb" onclick = "syncWithMasterCB()" value = "'+jsonData.grid_data[i].id+'"></td>';
+		        	tbody += '<td id = "1">'+jsonData.grid_data[i].number+'</td>';
+		        	tbody += '<td class = "2">'+jsonData.grid_data[i].reporter_firstname+'</td>';
+		        	tbody += '<td class = "3">'+jsonData.grid_data[i].reporter_lastname+'</td>';
+		        	tbody += '<td class = "4">'+jsonData.grid_data[i].reporter_email+'</td>';
+		        	tbody += '<td class = "5">'+jsonData.grid_data[i].reported_firstname+'</td>';
+		        	tbody += '<td class = "6">'+jsonData.grid_data[i].reported_lastname+'</td>';
+		        	tbody += '<td class = "7">'+jsonData.grid_data[i].reported_email+'</td>';
+		        	if( jsonData.grid_data[i].reported_type == 1 )
+		        	{
+			        	tbody += '<td class = "8">Profile</td>';
+		        	}
+		        	else if( jsonData.grid_data[i].reported_type == 2 )
+		        	{
+			        	tbody += '<td class = "8">Post</td>';
+		        	}
+		        	else
+		        	{
+		        		tbody += '<td class = "8"><i>Undetermined</i></td>';
+		        	}	
+			        	tbody += '<td class = "9" style = "text-align:center;">';
+		        	if( jsonData.grid_data[i].reported_type == 1 )
+		        	{
+			        	tbody += '<a title = "View" class = "view" href="'+PROJECT_URL+PROJECT_NAME+jsonData.grid_data[i].reported_profile_user_username+'" target="_blank"></a>';
+		        	}
+		        	else if(  jsonData.grid_data[i].reported_type == 2  )
+		        	{
+//			        	tbody += '<a class = "view" href="'+PROJECT_URL+PROJECT_NAME+'post/detail/id/'+jsonData.grid_data[i].reported_post_or_profile_id+'" target="_blank"></a>';
+						tbody += '<a title = "View" class = "view" href="'+PROJECT_URL+PROJECT_NAME+'admin/reported/directions-for-post-details/post_id/'+jsonData.grid_data[i].reported_post_or_profile_id+'" target="_blank"></a>';
+		        	}
+			        	tbody += '<a title = "Delete" class = "delete" href="javascript:void(0);" onclick ="deleteReported('+jsonData.grid_data[i].id+')"></a>';
+			        	tbody += '</td>';
+		        	tbody += '</tr>';
+	            }
+
+		        //Information-------------------------------------------------------
+	        	var starting_rec = parseInt(jsonData.params.offset)+1;
+	        	var ending_rec;
+	        	if( jsonData.params.current_page != jsonData.params.total_pages )
+	        	{
+	        		ending_rec = parseInt(jsonData.params.offset)+parseInt(jsonData.params.limit);
+	        	}
+	        	else
+	        	{
+	        		ending_rec = jsonData.params.total_records;
+	        	}	
+	        	$('div#ilook_dt_wrapper div.dataTables_info').html('Showing '+starting_rec+' to '+ending_rec+' of '+jsonData.params.total_records+' entries');
+	        	//------------------------------------------------------------------
+        	}
+        	else
+        	{
+        		tbody += '<tr class="odd">';
+        		tbody += '<td class="dataTables_empty" valign="top" colspan="10">No records found.</td>';
+        		tbody += '</tr>';
+
+        		$('div#ilook_dt_wrapper div.dataTables_info').empty();
+        	}
+
+        	//Setting controls for sort column-----------------------------------
+        	if( jsonData.params.keep_old_sorting == 0 )
+        	{
+	        	$('table#jquery_dt th.sorting').removeClass('sorting_asc');
+	        	$('table#jquery_dt th.sorting').removeClass('sorting_desc');
+	        	$('table#jquery_dt th.sorting').removeClass('active');
+	        	
+	        	if( $('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').attr('aria-sort') == 'DESC')
+	        	{
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').removeClass('sorting_asc');
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').addClass('sorting_desc');
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').attr('aria-sort', 'ASC');
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').addClass('active');
+	        	}
+	        	else
+	        	{
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').removeClass('sorting_desc');
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').addClass('sorting_asc');
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').attr('aria-sort', 'DESC');
+		        	$('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').addClass('active');
+	        	}
+        	}
+        	//------------------------------------------------------------------
+        	
+        	//Setting controls for pagination-----------------------------------
+			var page_buttons = '';
+			for( var p=1; p <= jsonData.params.total_pages; p++ )
+			{
+				if( jsonData.params.total_pages > 6 )
+				{	
+					if( jsonData.params.current_page == 1 
+							|| jsonData.params.current_page == 2
+							|| jsonData.params.current_page == 3
+							|| jsonData.params.current_page == 4
+							)
+					{	
+						if( p == 1 
+							|| p == 2
+							|| p == 3
+							|| p == 4
+							|| p == 5
+							|| p == jsonData.params.total_pages
+						)
+						{
+							page_buttons += '<a class="paginate_button" aria-controls="jquery_dt" data-dt-idx="'+p+'" tabindex="0">'+p+'</a>';
+							if( p == 5 )
+							{
+								page_buttons += '<span class="ellipsis">...</span>';
+							}
+						}
+					}
+					else if(  
+							jsonData.params.current_page == jsonData.params.total_pages 
+							|| jsonData.params.current_page == jsonData.params.total_pages-1
+							|| jsonData.params.current_page == jsonData.params.total_pages-2
+							|| jsonData.params.current_page == jsonData.params.total_pages-3
+							)
+					{
+						if( p == 1 
+								|| p == jsonData.params.total_pages-4
+								|| p == jsonData.params.total_pages-3
+								|| p == jsonData.params.total_pages-2
+								|| p == jsonData.params.total_pages-1
+								|| p == jsonData.params.total_pages
+							)
+							{
+								if( p == jsonData.params.total_pages-4 )
+								{
+									page_buttons += '<span class="ellipsis">...</span>';
+								}
+								page_buttons += '<a class="paginate_button" aria-controls="jquery_dt" data-dt-idx="'+p+'" tabindex="0">'+p+'</a>';
+							}
+					}
+					else
+					{
+						if( p == 1 
+								|| p == (jsonData.params.current_page - 1)
+								|| p == (jsonData.params.current_page)
+								|| p == (parseInt(jsonData.params.current_page) + 1)
+								|| p == jsonData.params.total_pages
+							)
+							{   
+								
+								if(p == jsonData.params.total_pages )
+								{
+									page_buttons += '<span class="ellipsis">...</span>';
+								}
+								page_buttons += '<a class="paginate_button" aria-controls="jquery_dt" data-dt-idx="'+p+'" tabindex="0">'+p+'</a>';
+								if( p == 1 )
+								{
+									page_buttons += '<span class="ellipsis">...</span>';
+								}
+							}
+					}
+				}
+				else
+				{
+					page_buttons += '<a class="paginate_button" aria-controls="jquery_dt" data-dt-idx="'+p+'" tabindex="0">'+p+'</a>';
+				}	
+			}
+			$('div#ilook_dt_wrapper div.paging_simple_numbers span#page_buttons').html(page_buttons);
+
+        	$('div#ilook_dt_wrapper div.paging_simple_numbers span a.paginate_button').removeClass('current');
+        	if( jsonData.params.offset == 0 )
+        	{
+        		$('div#ilook_dt_wrapper div.paging_simple_numbers span a.paginate_button[data-dt-idx=1]').addClass('current');
+        	}
+        	else
+        	{
+            	var page_num = parseInt(jsonData.params.offset/jsonData.params.limit) + parseInt(1);
+        		$('div#ilook_dt_wrapper div.paging_simple_numbers span a.paginate_button[data-dt-idx='+page_num+']').addClass('current');
+        	}
+        	//------------------------------------------------------------------
+
+        	
+        	$('div#ilook_dt_wrapper tbody').html(tbody);
+	        $('div#jquery_dt_processing').hide();
+
+			//Adding class to show sorted column--------------------------------
+	        var header_index = $('table#jquery_dt th.sorting[db_column_alias="'+jsonData.params.sort_column_alias+'"]').attr('position');
+        	$('div#ilook_dt_wrapper table.dataTable tbody tr td:nth-child('+header_index+')').addClass('sorting_1');
+        	//------------------------------------------------------------------
+	        
+        }
+	});
+}
+
+function syncWithMasterCB()
+{
+	if( isAllCBChecked("input.delete_cb") )
+	{
+		$("input.master_delete_cb").attr("checked", "checked");
+	}
+	else
+	{
+		$("input.master_delete_cb").removeAttr("checked");
+	}	
+}
+
+function deleteReported( ids )
+{
+	var ids_r = new Array();
+	if(jQuery.isNumeric(ids) == true)
+	{
+		ids_r.push(ids);
+	}
+	else
+	{
+		ids_r =  ids.split(",");
+	}
+		
+	jQuery.ajax({
+        url: "/" + PROJECT_NAME + "admin/reported/delete-reported-users",
+        type: "POST",
+        dataType: "json",
+        data: {
+            	'ids_r': ids_r
+              },
+        timeout: 50000,
+        success: function(jsonData) {
+	        if( jsonData == 1 )
+	        {
+	        	ids_r = [];
+	        	var current_page_btn = $("div.content div#ilook_dt_wrapper div.paging_simple_numbers span#page_buttons a.paginate_button.current");
+				var next_sort;
+	        	if( $('table#jquery_dt th.sorting.active').attr('aria-sort') == "DESC" )
+	        	{
+	        		next_sort = "ASC";
+	        	}
+	        	else
+	        	{
+	        		next_sort = "DESC";
+	        	}	
+	        	listData( $("div.dataTables_wrapper select[name=jquery_dt_length]").val(),
+	    				(current_page_btn.attr('data-dt-idx')-1)*$("div.dataTables_wrapper select[name=jquery_dt_length]").val(), 
+	    				$('table#jquery_dt th.sorting.active').attr('db_column'),
+	    				$('table#jquery_dt th.sorting.active').attr('db_column_alias'),
+	    				next_sort,
+	    				1,
+	    				$('div#ilook_dt_wrapper div.dataTables_filter input').val()
+	    				);
+
+	        	showDefaultMsg('Selected records has been deleted.', 1);
+	        }
+        }
+	});
+}
+
+</script>
+
+
+<div class="content">
+	<div id="ilook_dt_wrapper" class="dataTables_wrapper">
+		<div class="dataTables_length" id="jquery_dt_length">
+			<label>Show <select name="jquery_dt_length" aria-controls="jquery_dt" class="">
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="250">250</option>
+					<option value="500">500</option></select> entries
+			</label>
+			<span class = "buttons">
+				<span id = "delete_records"></span>
+			</span>
+		</div>
+
+		<div id="jquery_dt_filter" class="dataTables_filter">
+			<label>Search:<input type="search" class="" placeholder=""
+				aria-controls="jquery_dt"></label>
+		</div>
+
+		<div id="jquery_dt_processing" class="dataTables_processing"
+			style="display: none;">Processing...</div>
+
+		<table id="jquery_dt" class="display dataTable" width="100%"
+			cellspacing="0" cellpadding="0" border="0" role="grid"
+			aria-describedby="jquery_dt_info" style="width: 100%;">
+			<thead>
+				<tr role="row">
+<!-- 				----------------------------------------------------------------------------------------------------- -->
+<!-- 				db_column attribute is set according to doctrine2 query requirement. Please see query in model class. -->
+<!-- 				----------------------------------------------------------------------------------------------------- -->
+					<th></th>
+					<th></th>
+					<th colspan ="3" style="width: 20%;">Reporter</th>
+					<th colspan ="3" style="width: 20%;">Reported</th>
+					<th></th>
+					<th></th>
+				</tr>
+<!-- 			aria-sort: 				it is next sorting order, If I will set it to DESC the script on load will change it to ASC, so next sort will become ASC. 
+										Next sort will happen when I click on sorting arror on the column header 
+									
+				class = 'sorting': 		Defines that this column is sortable.
+
+				class = 'sorting_desc': Defines current order of column
+									
+				class = 'active': 		Defines that this column is sorted.
+									
+				db_column:				attribute is set according to doctrine2 query requirement. Please see query in model class.
+-->
+				<tr role="row">
+					<th style="width: 2%; text-align:left; padding: 10px 9px;">
+						<input type = "checkbox" name = "master_delete_checkbox" class = "master_delete_cb">
+					</th>
+					
+					<th class="sorting sorting_desc active" tabindex="0"
+						aria-controls="jquery_dt" rowspan="1" colspan="1"
+						style="width: 3%;" aria-sort="DESC" 
+						db_column="reprt_abs.id" db_column_alias="idd" position = "2">#</th>
+					
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1" aria-sort="ASC"
+						db_column='reporter.firstname' db_column_alias="reporter_first_name"  position = "3" style ="border-left: 1px solid black;">First Name</th>
+					
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1" aria-sort="ASC"
+						db_column='reporter.lastname' db_column_alias="reporter_last_name" position = "4">Last Name</th>
+					
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1" aria-sort="ASC"
+						db_column='reporter.email' db_column_alias="reporter_email" position = "5" style ='width: 20%; border-right: 1px solid black;' >Email ID</th>
+						
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1" aria-sort="ASC"
+						db_column="prfle_usr.firstname" db_column_alias="reported_first_name" position = "6">First Name</th>
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1" aria-sort="ASC"
+						db_column="prfle_usr.lastname" db_column_alias="reported_last_name" position = 7">Last Name</th>
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1" aria-sort="ASC"
+						db_column='prfle_usr.email' db_column_alias="reported_email" position = "8" style ="width: 20%; border-right: 1px solid black;" >Email ID</th>
+					<th class="sorting" tabindex="0" aria-controls="jquery_dt"
+						rowspan="1" colspan="1" style="width: 5%;" aria-sort="ASC"
+						db_column='reprt_abs.type' db_column_alias="typ" position = "9">Type</th>
+					<th class="sorting_disabled" rowspan="1" colspan="1"
+						style="width: 10%;"  position = "10">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+			<tfoot>
+				<tr>
+					<th rowspan="1" colspan="1"></th>
+					<th rowspan="1" colspan="1">#</th>
+					<th rowspan="1" colspan="1" style ="border-left: 1px solid black;">First Name</th>
+					<th rowspan="1" colspan="1">Last Name</th>
+					<th rowspan="1" colspan="1" style ="border-right: 1px solid black;">Email ID</th>
+					<th rowspan="1" colspan="1">First Name</th>
+					<th rowspan="1" colspan="1">Last Name</th>
+					<th rowspan="1" colspan="1" style ="border-right: 1px solid black;">Email ID</th>
+					<th rowspan="1" colspan="1">Type</th>
+					<th rowspan="1" colspan="1">Actions</th>
+				</tr>
+				<tr>
+					<th rowspan="1" colspan="1"></th>
+					<th rowspan="1" colspan="1"></th>
+					<th rowspan="1" colspan="3">Reporter</th>
+					<th rowspan="1" colspan="3">Reported</th>
+					<th rowspan="1" colspan="1"></th>
+					<th rowspan="1" colspan="1"></th>
+				</tr>
+			</tfoot>
+		</table>
+
+		<div class="dataTables_info" id="jquery_dt_info" role="status"
+			aria-live="polite"></div>
+
+		<div class="dataTables_paginate paging_simple_numbers"
+			id="jquery_dt_paginate">
+			<a class="paginate_button previous disabled" aria-controls="jquery_dt"
+				data-dt-idx="" tabindex="0" id="jquery_dt_previous">Previous</a>
+				<span id = "page_buttons">
+				</span>
+			<a class="paginate_button next" aria-controls="jquery_dt" 
+				data-dt-idx="" tabindex="0" id="jquery_dt_next">Next</a>
+		</div>
+
+	</div>
+</div>

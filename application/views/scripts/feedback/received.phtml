@@ -1,0 +1,297 @@
+<!-- Title -->
+<?php
+$this->headTitle ()->prepend ( 'Received Feedbacks' );
+?>
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/received_feedback.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH ."/css/frontend/received_feedback.css" );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Photo Album Starts -->
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2>Received Feedback</h2>
+		</div>
+<?php
+		if ($this->paginator)
+		{
+			if ($this->paginator->getTotalItemCount ()) 
+			{
+?>				
+		<div class="feedback-hdr-bot">
+			<div class="fr">
+				<h3 class="sub-heading-arial-narrow" style="font-size:16px !important;">
+					<font class="text-dark-purple my-received-feedbacks"><?php echo $this->unaccepted_feedbacks;?></font>
+					Feedback Received
+				</h3>
+			</div>
+			<div class="fr">
+			</div>
+		</div>
+
+		<!-- Col3 Starts -->
+				<div class="col3">
+				<div  class="new-border-space"></div>
+					<div class="fl text-grey3">
+<?php
+						$query_str = "";
+						foreach( $this->prms as $key=>$p )
+						{
+							if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+							{
+								continue;
+							}
+							 $query_str .= $key."=".$p."&amp;"; 
+						}
+?>
+						VIEWS <a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."feedback/received?".$query_str."list_len=10";?>"><?php echo $this->prms["list_len"] == 10 ? "<b>10</b>" : '10'?></a>| 
+						<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."feedback/received?".$query_str."list_len=20";?>"><?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?></a>| 
+						<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."feedback/received?".$query_str."list_len=30";?>"><?php echo $this->prms["list_len"] == 30 ? "<b>30 </b>" : '30 '?></a>| 
+						<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."feedback/received?".$query_str."list_len=all";?>"><?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?></a>
+					</div>
+					<div class="fr  text-grey3">
+<?php
+						echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+					</div>
+				</div>
+<?php
+				}
+			}
+?>					
+				<!-- Col3 Ends -->
+<?php 
+		if( $this->feedback_received == true )
+		{ 
+?>
+          <!-- Mail Hdr  -->
+		<div class="mail-all-hdr">
+			<div class="fl">
+				<a href="javascript:;" class="text-purple-link">&nbsp;</a>
+			</div>
+			<div class="fr ">
+				<div class="col1">
+<?php 
+			if(isset($this->prms["id"]) && isset($this->prms["list_len"]))
+			{
+				$pagingParameters="?id=".$this->prms["id"]."&list_len=".$this->prms["list_len"];
+			}
+			else
+			{
+				$pagingParameters="";
+			}
+			if( $this->order == 'asc' )
+			{
+?>				
+				<a class="text-purple-link" style="color:white !important;" href="<?php echo "/".PROJECT_NAME."feedback/received/order/desc".$pagingParameters; ?>">BY DATE <img width="15" height="15" align="absmiddle" src="<?php echo PUBLIC_PATH;?>/images/arrow1.png"></a>
+<?php
+			}
+			else
+			{
+?>				 
+				<a class="text-purple-link" style="color:white !important;" href="<?php echo "/".PROJECT_NAME."feedback/received/order/asc".$pagingParameters; ?>">BY DATE <img width="15" height="15" align="absmiddle" src="<?php echo PUBLIC_PATH;?>/images/arrow2.png"></a>
+<?php				
+			}
+?>
+              
+				</div>
+			</div>
+		</div>
+<?php 
+		if( $this->paginator )
+		{					
+			if( $this->paginator->getTotalItemCount() )
+			{
+				$i=0;
+				foreach ( $this->paginator as $fdbk_rcvd )
+				{
+					$i++;
+					$mod_clas=$i%3;
+				
+					if($mod_clas==1)
+					{
+						$arrow_class="arrow-first";
+						$quickview_class="quickview-outer";
+					}
+					else if($mod_clas==2)
+					{
+						$arrow_class="arrow-second";
+						$quickview_class="quickview-outer-second";
+					}
+					else if($mod_clas==0)
+					{
+						$arrow_class="arrow-third";
+						$quickview_class="quickview-outer-third";
+					}
+?>			
+          <!-- Mail Hdr -->
+
+		<!-- Feedback col1 -->
+		<div class="feedback-received-col1">
+			<div class="feedback-received-col1-left">
+				<div class="prof-img">
+					<a  href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.$fdbk_rcvd->getfeedback_requestProvider_user()->getUsername();?>">
+						<img style=" max-width:50px; max-height:50px;" src="<?php echo Helper_common::getUserProfessionalPhoto($fdbk_rcvd->getfeedback_requestProvider_user()->getId(), 3 );?>">
+					</a>
+				</div>
+			</div>
+			<div class="feedback-received-col1-mid">
+				<div class="top">
+					<div class="top-left">
+						<h4 class="font-arial">
+							<a title="<?php echo $fdbk_rcvd->getfeedback_requestProvider_user()->getFirstName().' '.$fdbk_rcvd->getfeedback_requestProvider_user()->getLastName();?>" class="text-purple2" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.$fdbk_rcvd->getfeedback_requestProvider_user()->getUsername();?>" style="text-decoration: none;">
+							<?php echo Helper_common::showCroppedText($fdbk_rcvd->getfeedback_requestProvider_user()->getFirstName().' '.$fdbk_rcvd->getfeedback_requestProvider_user()->getLastName(), 40);?>
+							</a>
+						</h4>
+					</div>
+
+				
+				</div>
+				<div class="bot">
+					<div class="bot-left">
+<?php 
+						if($fdbk_rcvd->getProvided_as())
+						{
+							echo"<p class='fdbk_as'>";
+							echo $fdbk_rcvd->getProvided_as();
+							echo"</p>";
+						}
+						else
+						{
+							//Nothing.
+						}
+
+?>
+                    </div>
+<?php 
+						if( $fdbk_rcvd->getIs_accepted() == 0 && $fdbk_rcvd->getVisibility_criteria() == 0 )
+						{
+?>		
+                        <div class="bot-right">
+							<span name="accept_display" class="text-dark-purple accept_display" rel="<?php echo $fdbk_rcvd->getId();?>">Accept & Display</span>
+							<span name="" class="text-dark-purple display_feedbk" style="margin-right: 2px; display: none" rel="<?php echo $fdbk_rcvd->getId();?>">Display</span>
+							<span name="" class="text-dark-purple hide_feedbk" style="margin-right: 2px; display: none;" id="hide" rel="<?php echo $fdbk_rcvd->getId();?>">Hide</span>
+							<span name="" class="text-dark-purple delete_feedbk" id="delete" style="display: none;" rel="<?php echo $fdbk_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+						</div>
+<?php 
+                        }
+                        else
+							if($fdbk_rcvd->getIs_accepted() == 0 && $fdbk_rcvd->getVisibility_criteria() == 1)
+						{
+?>
+							<div class="bot-right">
+								<span name="accept_display" class="text-dark-purple accept_display" rel="<?php echo $fdbk_rcvd->getId();?>">Accept & Display</span> 
+								<span name="" class="text-dark-purple display_feedbk"  id="display" style="display: none;" rel="<?php echo $fdbk_rcvd->getId();?>">Display</span>
+								<span name="" class="text-dark-purple hide_feedbk" style="margin-right: 2px; display: none;" id="hide" rel="<?php echo $fdbk_rcvd->getId();?>">Hide</span>
+								<span name="" class="text-dark-purple delete_feedbk" id="delete" style="display: none;" rel="<?php echo $fdbk_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+							</div>
+<?php 
+						}
+						else	
+							if($fdbk_rcvd->getIs_accepted()== 1 && $fdbk_rcvd->getVisibility_criteria()== 1)
+							{
+?>
+							<div class="bot-right">
+								<span name="" class="text-dark-purple display_feedbk" style="margin-right: 2px; display: none" rel="<?php echo $fdbk_rcvd->getId();?>">Display</span> 
+								<span name="" class="text-dark-purple hide_feedbk" style="margin-right: 2px;" rel="<?php echo $fdbk_rcvd->getId();?>">Hide</span>
+								<span name="" class="text-dark-purple delete_feedbk" rel="<?php echo $fdbk_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+							</div>
+<?php 
+							}
+						else 
+						if($fdbk_rcvd->getIs_accepted()== 1 && $fdbk_rcvd->getVisibility_criteria()== 0)
+						{
+?>
+							<div class="bot-right">
+								<span name="" class="text-dark-purple display_feedbk" style="margin-right: 2px;" rel="<?php echo $fdbk_rcvd->getId();?>">Display</span> 
+								<span name="" class="text-dark-purple hide_feedbk" style="margin-right: 2px; display: none" rel="<?php echo $fdbk_rcvd->getId();?>">Hide</span> 
+								<span name="" class="text-dark-purple delete_feedbk" rel="<?php echo $fdbk_rcvd->getId();?>">|&nbsp;&nbsp;Delete</span>
+							</div>
+<?php 
+						}
+?>
+          </div>
+			</div>
+			<div class="feedback-received-col1-right">
+			<?php echo $fdbk_rcvd->getProvided_at()->format('F j, Y'); ?>
+			
+			</div>
+			
+			<div class="quotes-outer">
+				<div class="quotes-lt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-start.jpg"/>
+				</div>
+				<div class="quotes-mid">
+<?php 
+					if( strlen( $fdbk_rcvd->getProvider_msg()) <= 300 )
+					{
+?>
+						<p class="p_all_text">	
+<?php 	
+							echo nl2br($fdbk_rcvd->getProvider_msg());
+?>
+						</p>
+<?php 
+					}
+					else
+					{
+?>
+						<div id="full_text_<?php echo $fdbk_rcvd->getId(); ?>" class="full_text">
+							<p  id="p_all_text_<?php echo $fdbk_rcvd->getId(); ?>"class="full_text">
+<?php 
+								echo nl2br($fdbk_rcvd->getProvider_msg());
+?>
+							</p>
+							<span title="show less" rel ="<?php echo $fdbk_rcvd->getId(); ?>" class="show_less">less</span>
+						</div>
+						<div id="clickable_text_div_<?php echo $fdbk_rcvd->getId(); ?>" class="clickable_text">
+							<p  id="clickable_text_<?php echo $fdbk_rcvd->getId(); ?>" class="clickable_text" rel="<?php echo $fdbk_rcvd->getId(); ?>">
+<?php 
+								echo Helper_common::showCroppedText( $fdbk_rcvd->getProvider_msg(), 300 );
+?>	
+							</p>
+							<span title="show more" rel ="<?php echo $fdbk_rcvd->getId(); ?>" class="show_more">more</span>
+						</div>
+<?php 
+					}
+?>
+				</div>
+				<!--  <div class="quotes-rt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-end.jpg"/></div>-->
+			</div>
+			<div class="fdbck_postion">- Feedback for
+<?php 
+				if($fdbk_rcvd->getProvide_for_the_position())
+				{
+					echo $fdbk_rcvd->getProvide_for_the_position();
+				}
+				else 
+				{
+					//Nothing.
+				}
+?>
+			</div>
+		</div>
+		<!-- Feedback col1 -->
+<?php 
+				}
+			}
+		}
+	}
+		else
+		{
+			
+?>		
+			<div class="mail-grey-hdr-col1-new">
+			<div class="no_messages"><div class="no_messages-img"><img src="<?php echo IMAGE_PATH; ?>/folder-empty.png"></div><div class="no_messages-data">This folder is empty.</div></div>
+			</div>
+<?php 			
+		}
+?>   
+	</div>
+	<!-- Photo Album Ends -->
+</div>
+<!-- Content Right Right Ends -->

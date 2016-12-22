@@ -1,0 +1,403 @@
+<?php echo $this->doctype (); ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<?php
+	//Fetching notification details.
+	$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+	if( $params['controller'] == 'registration' &  $params['action'] =='registered' ){
+?>
+		<meta http-equiv="refresh" content="5;URL=<?php echo '/'.PROJECT_NAME;?>">
+<?php } ?>
+
+	<noscript>Your browser does not support JavaScript!</noscript>
+
+<?php
+	if (APPLICATION_ENV == "production") {
+	}
+
+	$this->headLink()->headLink(array('rel' => 'icon', 'href' => PUBLIC_PATH.'/images/faviconn.ico'), 'PREPEND');
+	$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8')->appendHttpEquiv('Content-Language', 'en-US');
+	$this->headMeta()->appendName('description', 'iLook is a professional Networking Website that helps Employee, Job Seekers, Recruiters, Business People, Students and Companies to build their professional network.');
+	$this->headMeta()->appendName('keywords', 'ilook, social networking sites, social site for employee, social site for job seekers');
+
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/style.css" );
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/jquery-ui-1.10.3.custom/css/ilook-theme/jquery-ui-1.10.3.custom.css" );
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/common.css" );
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/profile_photo_upload.css" );
+	$this->headLink()->appendStylesheet(PUBLIC_PATH."/css/frontend/imgareaselect-default.css");
+	$this->headLink()->appendStylesheet(PUBLIC_PATH."/css/frontend/jquery.selectBoxIt.css");
+	$this->headLink()->appendStylesheet(PUBLIC_PATH."/js/dropzone/dropzone.css");
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/enquiry_form.css" );
+
+	//	CSS XMPP Chat Starts
+	$this->headLink()->appendStylesheet(PUBLIC_PATH."/jsxc/build/css/jsxc.css");
+	$this->headLink()->appendStylesheet(PUBLIC_PATH."/jsxc/build/css/jsxc.webrtc.css");
+	$this->headLink()->appendStylesheet(PUBLIC_PATH."/jsxc/example/css/example.css");
+	//	CSS XMPP Chat Ends
+
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/common.js" );
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/constants.js" );
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/date.js");
+	$this->headScript()->prependFile( "https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js" );
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" );
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery-2.1.min.js");
+
+	$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js");
+	$this->headScript()->appendFile( PUBLIC_PATH."/text_editor/ckeditor/ckeditor.js");
+	$this->headScript()->appendFile( PUBLIC_PATH."/js/designer.js" );
+	$this->headScript()->appendFile( PUBLIC_PATH."/js/dropzone/dropzone.js" );
+	$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/enquiry_form.js" );
+	$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/jquery.selectBoxIt.min.js" );
+
+	if(Auth_UserAdapter::hasIdentity()):
+
+		//	Javascript XMPP Chat Starts
+		$this->headScript()->appendFile( PUBLIC_PATH."/jsxc/build/lib/jquery.colorbox-min.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/jsxc/build/lib/jquery.slimscroll.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/jsxc/build/lib/jquery.fullscreen.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/jsxc/build/lib/jsxc.dep.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/jsxc/build/jsxc.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/jsxc/example/js/main.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/AES.js");
+		//	Javascript XMPP Chat Ends
+
+		if( $this->layout()->disableMainMenu == False ):
+			$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/jquery.imgareaselect.min.js" );
+			$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/main_menu.js" );
+			$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/profile_pic_crop.js" );
+
+		endif;
+	endif;
+
+	echo $this->headTitle();
+	echo $this->headMeta();
+	echo $this->headLink();
+	echo $this->headScript();
+?>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-64030551-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+<!-- Setting value in serch dropdown. -->
+
+<script type="text/javascript">
+
+$(document).ready(function()
+{
+	//Set max files upload limit in dropzone area for chat window.
+	Dropzone.options.myAwesomeDropzone = {
+		maxFiles: 50 ,
+		maxFilesize: 2 ,
+		acceptedFiles:'image/*,audio/*,video/*,application/*'
+	};
+
+	// Setting search filter drop down
+	$('#advance_search_dd').val("<?php echo @$this->prms['search_type']; ?>");
+
+<?php
+	
+	//------------------------------------------------------------------------//
+	// Read Notification Starts
+	//------------------------------------------------------------------------//
+
+	if(isset($params['nid']))
+	{
+		$notification_obj = \Extended\notifications::getRowObject($params['nid']);
+		if($notification_obj)
+		{
+// 			$is_seen = $notification_obj->getIs_seen();
+		$is_read = $notification_obj->getIs_read();
+		}
+	}
+	//Call read notification function when there is notification id present in url.
+	if( isset($params['nid']) && !$is_read && $notification_obj )
+	{
+?>
+		readNotifications(<?php echo $params['nid'];?>);
+<?php
+	}
+?>
+	//------------------------------------------------------------------------//
+	// Read Notification Ends
+	//------------------------------------------------------------------------//
+});
+</script>
+<?php
+if( Zend_Registry::get('admin_logged_in_as_user') )
+{
+	echo '<style>html {border:2px solid red;}</style>';
+}
+?>
+
+</head>
+<body>
+	<!-- Wrapper Starts -->
+	<div class="wrapper">		
+	
+<?php
+		if(Auth_UserAdapter::hasIdentity())
+		{
+			echo '<div class="feedback-2admin-btn"><a href="/'.PROJECT_NAME.'mail/compose#to_user:admin" onclick = "window.location.reload();">Feedback</a></div>';
+			$full_name = Auth_UserAdapter::getIdentity()->getFirstname()." ".Auth_UserAdapter::getIdentity()->getLastname();	
+			$user_name = Auth_UserAdapter::getIdentity()->getUsername();	
+?>
+		<input type="hidden" name="user_chat_profile_pic" id="user_chat_profile_pic" value="<?php echo Helper_common::getUserProfessionalPhoto(Auth_UserAdapter::getIdentity()->getId(), 3);?>"/>
+		<!-- Advance Search Starts -->
+		<div class="advance-search">
+			<input type = 'hidden' id = 'autoAjaxCall' value = '1' name = ''>
+			<div class="advance-search-right">
+				<form name="advance-search-form" id="advance-search-form" method="get" action="<?php echo PROJECT_URL.'/'.PROJECT_NAME ;?>dashboard/search-results/">
+					<div class="advance-search-dd">
+			            <div class="advance-dd" id="win-xp">
+			            	<select name="search_type" id="advance_search_dd" style="display:none;">
+								<option value="people" <?php if(@$this->searchtype=="people"){ echo "selected";}?>>People</option>
+								<option value="jobs" <?php if(@$this->searchtype=="jobs"){ echo "selected";}?>>Jobs</option>
+								<!--option value="job_agencies" <?php if(@$this->searchtype=="job_agencies"){ echo "selected";}?>>Job Agencies</option-->
+								<option value="skills" <?php if(@$this->searchtype=="skills"){ echo "selected";}?>>Skills</option>
+							</select>
+						</div>
+					</div>
+					<div class="advance-search-textbox" >
+						<label for="search"></label>
+						<input type="text" name="search" id="search" placeholder = "Search" maxlength="60" value="<?php echo @$this->linkText;?>"> 
+					</div>
+					<div class="advance-search-icon" id = "advance_search">
+						<a href="javascript:;">
+							<img src="<?php echo IMAGE_PATH; ?>/search-icon2.png" alt="Search" title="Search" width="30" height="30" />
+						</a>
+					</div>
+				</form>
+			</div>
+			<div class="advance-search-left text-purple2"><a class="text-dark-purple" id="advance_search_link" href="<?php echo PROJECT_URL."/".PROJECT_NAME;?>search/people">Advanced</a></div>
+		</div>
+	<!-- Advance Search Ends -->
+
+	<!-- Header Starts -->
+		<div class="header-inner before_msg">
+			<div style="cursor:pointer;height: 74px;" class="logo">
+				<img src="<?php echo IMAGE_PATH?>/logo.png" height="67" alt="iLook" title="iLook" style = "margin-top: 7px;"/>
+			</div>
+			<div class="header-inner-right">
+      			<div class="header-inner-col1">
+       	    		<h5 id="user_name">
+       	    			<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.$user_name;?>" style="font-weight:bold;text-decoration:none; color:#A0A0A0;">
+<?php 
+       	    			if(!Zend_Registry::get('admin_logged_in_as_user')):
+       	    				echo $full_name;
+       	    			else:
+       	    				echo $full_name." <span style = 'color:#6C518F'>[Admin mode]</span>";
+       	    			endif;
+?>
+       	    			</a>
+       	    		</h5>
+       	  		</div>
+          		<div class="header-inner-col2">
+            		<div class="header-inner-msg mail_notifications mail_notifications_js header-inner-msg_js">
+	            		<div class="notifi-count-outer notifi-count-outer-js">
+	            			<div id="mail-notifi-count" class="notifi-count" style="visibility:hidden">
+	            				<span id = "uread_mail_count"></span>
+	            			</div>
+	            			<div class="notifi-icon">
+		            			<a title="imails" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>mail/inbox">
+									<span class="mail-count" id = "header_mail_icon">&nbsp;
+									</span>
+								</a>
+							</div>
+	            		</div>
+					</div>
+					
+					<div id="general_notifications" class="header-inner-msg mail_notifications header-inner-notification_js general_notifications_js">
+	            		<div class="notifi-count-outer gen-notifi-count-outer-js">
+	            			<div id="gen_notifi_count" class="notifi-count" style="visibility:hidden;">
+	            				<span id = "unread_notification_count"></span>
+	            			</div>
+	            			<div class="notifi-icon">
+		            			<a title="Notifications" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>notifications/view-all-notifications">
+									<span class="mail-count notification-count" id = "header_mail_icon">&nbsp;
+									</span>
+								</a>
+							</div>
+	            		</div>
+					</div>
+					
+            	</div>
+            	<div class="header-inner-col3 settings">
+	            	<a class="showsettings" href="#"><img src="<?php echo IMAGE_PATH?>/settings-icon.png" width="" height="" />
+	            	</a>
+            	</div>
+            	<div id="divSignIn" class="settings-outer settings">
+					<div class="settings-outer-links">
+                		<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>account-settings/general/id/<?php echo Auth_UserAdapter::getIdentity()->getId(); ?>">Account Settings</a>
+                    	<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>page/help">Help</a>
+                    	<a onclick="logout()" id="logout" href="javascript:void(0);">Sign Out</a>
+					</div>
+            	</div>
+			</div>
+			
+<!----------- -Mail notification popup ---------------->
+			<div class="notification-dd-outer clr mail_notifications_js notification-dd-outer_js" style = "display:none;">
+        		<div class="notification-dd notification-dd-js">
+            	
+                	<div class="notification-dd-content-js notification-dd-content">
+					</div>
+            	</div>
+        	</div>
+<!-- ------------end Mail notification popup --------------->        	
+<!------------General notification popup ---------------->
+			<div class="notification-dd-outer clr mail_notifications gen_notification-dd-outer_js general_notifications_js" style = "display:none;">
+        		<div class="gen_notification-dd-js notification-dd">
+            	
+                	<div class="gen-notification-dd-content-js notification-dd-content">
+					</div>
+            	</div>
+        	</div>
+        	
+        	
+<!-- ------------end General notification popup --------------->        	
+        	
+		</div>      
+    		<!-- Header Ends -->
+<?php
+	 	}
+	 	else
+	 	{
+?>
+		<!-- Header Starts -->
+		<div class="header before_msg">
+		 
+			<div class="logo">
+				<img src="<?php echo PUBLIC_PATH;?>/images/logo.png" alt="iLook" title="iLook" width="" height="67" />
+			</div>
+		</div>
+		<!-- Header Ends -->
+<?php
+	 	}
+
+		$messages = new Zend_Session_Namespace('messages');
+		if( $messages->successMsg )
+	 	{
+			echo '<div class="alert-box message_box">';
+			echo '<div class="alert-cross"><a href="javascript:;" class = "close"><img src="'.IMAGE_PATH.'/cross-white.png" alt="Close" title="Close" width="9" height="8" /></a></div>';
+			echo '<div class="alert-message">'.$messages->successMsg.'</div>';
+			echo '</div>';
+			unset( $messages->successMsg );
+
+		}
+	 	if( $messages->errorMsg )
+	 	{
+	 		echo '<div class="alert-box1 message_box">';
+	 		echo '<div class="alert-cross"><a href="javascript:;" class = "close"><img src="'.IMAGE_PATH.'/cross-white.png" alt="Close" title="Close" width="9" height="8" /></a></div>';
+	 		echo '<div class="alert-message">'.$messages->errorMsg.'</div>';
+	 		echo '</div>';
+	 		unset( $messages->errorMsg );
+	 	}
+
+
+	 	if( $messages->warningMsg )
+	 	{
+	 		echo '<div class="alert-box2 message_box">';
+	 		echo '<div class="alert-cross"><a href="javascript:;" class = "close"><img src="'.IMAGE_PATH.'/cross-grey.png" alt="Close" title="Close" width="9" height="8" /></a></div>';
+	 		echo '<div class="alert-message">'.$messages->warningMsg.'</div>';
+	 		echo '</div>';
+	 		unset( $messages->warningMsg );
+	 	}
+
+
+?>
+		<div class="content main_content_holder">
+<?php	
+			
+
+			if(Auth_UserAdapter::hasIdentity())
+			{
+
+				if( $this->layout()->disableMainMenu != TRUE )
+				{ 
+					//if( $menu_size == Extended\ilook_user::MENU_SIZE_MAXIMISED || $menu_size == null )
+					$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+					if( $params['controller'] == 'dashboard' && $params['action'] == 'index' )
+					{
+						echo "<style>";
+						echo "div#minimised_menu";
+						echo "{ display: none; }";
+						echo ".dashboard-knw-adv-outer .left{width:71%;}";
+						echo "#carousel1{padding:0 0 0 12%}";
+						//for dashboard banner
+						echo "div.socialise-banner-top{display:block;}";
+						echo "div.links-banner-top{display:block;}";
+						echo "</style>";
+					}
+					else
+					{
+						echo "<style>";
+						echo "div#maximised_menu";
+						echo "{ display: none; }";
+						echo ".dashboard-knw-adv-outer .left {width: 74.5%;}";
+						echo "#carousel1{padding:0 0 0 18%}";
+						//for dashboard banner
+						echo "div.socialise-banner-top{display:none;}";
+						echo "div.links-banner-top{display:none;}";
+						echo "</style>";
+					}	
+					
+					echo $this->partial('partials/main_menu_maximised.phtml');
+					echo $this->partial('partials/main_menu_minimised.phtml');
+				}
+				
+			}
+			if(Auth_UserAdapter::hasIdentity())
+			{
+				if( $params['controller'] == 'dashboard' && $params['action'] == 'index' )
+				{
+					echo "<div class='content-right'>";
+				}
+				else
+				{
+					echo "<div class='content-right content-right-full'>";
+				}	
+				echo $this->layout()->content;
+				echo "</div>";
+			}
+			else
+			{
+				echo $this->layout()->content;
+			}
+?>
+		</div>
+ 		<!-- Footer Links Starts -->
+ 		
+        <!-- Footer Starts -->
+<?php        
+
+		if( $params['controller'] != 'registration')
+		{
+			echo $this->partial('partials/layout_footer.phtml');
+		}
+		//Enquiry form partial
+		echo $this->partial ( 'partials/enquiry_form.phtml' );
+		echo $this->partial ( 'partials/chat_attachment_form.phtml' );
+?>
+		<!-- Footer Ends -->
+
+			<!-- Footer Links Ends -->   
+   
+		</div>
+<!-- Wrapper Ends --> 
+  
+	</body>
+
+<?php
+echo $this->partial ( 'partials/unset_job_search_cookies.phtml' );
+?>
+</html>
+
+

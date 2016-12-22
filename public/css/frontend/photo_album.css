@@ -1,0 +1,924 @@
+.ajax-file-upload-statusbar{
+border:1px solid #6C518F;
+width:400px;
+margin-right:10px;
+margin-top:5px;
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+border-radius:4px;
+padding:5px 5px 5px 5px;
+	
+}
+.ajax-file-upload-filename{
+width:100%;
+height:auto;
+color:#807579;
+word-wrap : break-word;
+}
+.ajax-file-upload-progress{
+margin:0 10px 5px 10px;
+position:relative;
+width:375px; /* 250 */
+border:1px solid #ddd;
+padding:1px;
+border-radius:3px;
+display:inline-block
+}
+.ajax-file-upload-bar{
+/* background-color:#0ba1b5; */
+background-color:#6C518F;
+width:0;
+height:20px;
+border-radius:3px
+}
+.ajax-file-upload-percent{
+position:absolute;
+display:inline-block;
+top:3px;
+left:48%
+}
+.ajax-file-upload-red{
+-moz-box-shadow:inset 0 39px 0 -24px #e67a73;
+-webkit-box-shadow:inset 0 39px 0 -24px #e67a73;
+box-shadow:inset 0 39px 0 -24px #e67a73;
+background-color:#e4685d;
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+border-radius:4px;
+display:inline-block;
+color:#fff;
+font-family:arial;
+font-size:13px;
+font-weight:normal;
+padding:4px 15px;
+text-decoration:none;
+text-shadow:0 1px 0 #b23e35;
+cursor:pointer;
+vertical-align:top
+}
+.ajax-file-upload-green{
+background-color:#77b55a;
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+border-radius:4px;
+margin:0;
+padding:0;
+display:inline-block;
+color:#fff;
+font-family:arial;
+font-size:13px;
+font-weight:normal;
+padding:4px 15px;
+text-decoration:none;
+cursor:pointer;
+text-shadow:0 1px 0 #5b8a3c;
+vertical-align:top
+}
+
+.ajax-upload-dragdrop{
+border:none !important;
+width:164px;
+color:#dadce3;
+text-align:left;
+vertical-align:middle;
+display:none;
+}
+.uploading-msg{
+text-align:center;
+width:100%;
+}
+div.edit-popup-outer, img.img_show
+{
+	display: none;
+	
+}
+img.img_show
+{
+	cursor:pointer;
+}
+div.edit_pencile,
+div.editPhoto
+{
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #6c518f !important;
+    border-radius: 5px;
+    cursor: pointer !important;
+    padding: 4px 8px;
+}
+div.edit_pencile
+{
+	margin: 1px 0 0;
+}
+div.editPhoto
+{
+	margin: 3px 0 0;
+}
+/********** Photo Album Page **********/
+
+.photoalbum-addnew{
+	width:100%;
+	margin:5px 0 10px 0;
+	padding:0 0 1% 0;
+	border-bottom:1px solid #c4c4c4;
+	text-align:right;
+	position:relative;
+	float:left;
+}
+
+.photoalbum-addnew img{
+	margin:0 0 -2px 10px;
+}
+.photoalbum-addnew2{
+	width:100%;
+	margin:5px 0 10px 0;
+	padding:0 0 1% 0;
+	border-bottom:1px solid #c4c4c4;
+	text-align:right;
+}
+.photoalbum-addnew2 img{
+	margin:0 0 -3px 10px;
+}
+div.album-pop-top font {
+    display: inline-block;
+    padding: 5px 0 !important;
+}
+
+.photo-slider-bot .col2-link{
+	width:176px;
+}
+.photo-slider-bot .col2-link{
+	z-index:2;
+}
+.photo-center{
+	width:175px;
+	height:175px;
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+}
+.photos-back-btn{
+	margin: 10px 0 0;
+    padding: 0;
+    position: absolute;
+    right: 5%;
+    top: 30px;
+    width: auto;
+}
+.photoalbum-hdr{
+	position:relative;
+}
+
+.photo-slider-bot .col2-link2{
+	padding:3px 0 0 3px;
+	color:#ffffff;
+	margin:0px;	
+}
+
+/********** move to another album*************/
+
+/* .move-photo-outer_1{ */
+/* 	width:560px; */
+/* }   */
+/* .move-photo-hdr_1{ */
+/* 	background: none repeat scroll 0 0 #141C23; */
+/*     float: left; */
+/*     margin: 0; */
+/*     padding: 10px 20px; */
+/*     width: 90%; */
+/* }   */
+/* .move-photo-hdr_1 h2{ */
+/* 	float:left; */
+/* 	width:480px; */
+/* }      */
+/* .move-photo-content_1 { */
+/*     background: none repeat scroll 0 0 #FFFFFF; */
+/*     border: 5px solid #FFFFFF; */
+/*     float: left; */
+/*     margin: 0; */
+/*     max-height: 400px; */
+/*     min-height: 70px; */
+/*     overflow-y: auto; */
+/*     width: 508px; */
+/*     font-family:oswaldlight; */
+/*     font-size:20px; */
+/*     padding:13px; */
+/* }     */
+/* .upper_container{ */
+/* 	margin-bottom:20px; */
+/* } */
+/* .btn-purple2{ */
+/* 	background: url(../../btn-purple.png) repeat-x #5F477E; */
+/* 	width:auto; */
+/* 	padding:7px 28px; */
+/* 	margin:0; */
+/* 	border:none; */
+/* 	color:#fff; */
+/* 	cursor:pointer; */
+/* } */
+
+/********** move to another album*************/
+
+div.edit-popup-outer, img.img_show {
+    top: 24px !important;
+/*     top: 8px !important; */
+    right: 3px;
+}
+
+.edit-popup {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 2px solid #B3B3B3;
+    float: left;
+    margin: 0 0 0 18px;
+    padding: 4px;
+    width: 148px;
+}
+.edit {
+	background:white !important;
+	border:none !important;
+    margin: 0;
+    padding: 3px;
+    position: absolute;
+    right: 4px;
+    top: 1px;
+    width: auto;
+    display:none;
+}
+.photoalbum-hdr h2{
+	font-weight:normal !important;
+}
+.delete-album{
+	width:auto;
+	position:absolute;
+	right:28px;
+	top: 33px;
+}
+
+div.photoalbum-addnew div.fl
+{
+	line-height: 15px;
+}
+div.photoalbum-addnew div.fl a#back_to_photo_album
+{
+	color: #808080;
+	text-decoration: none;
+    margin-top: 3px;
+    display: inline-block;
+}
+div.photoalbum-addnew div.fl a#back_to_photo_album:HOVER
+{
+	color: #6C518F;
+}
+div#confirm_delete_album > p {
+   text-align: justify ;
+	width: 96%;
+}
+
+div.photo-slider 
+{
+    background: none repeat scroll 0 0 #ffffff;
+    min-height: 716px !important;
+}
+
+div.no_album
+{
+	background-color: #FFFFFF;
+    float: left;
+    font-size: 29px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+}
+
+div.loading_albums {
+    display: inline-block;
+    height: 27px;
+    text-align: center;
+    width: 100%;
+}
+
+div.loading_albums div {
+    display: table-cell;
+    float: left;
+    height: inherit;
+    padding: 6px 0;
+    text-align: center;
+    vertical-align: super;
+    width: inherit;
+}
+div.loading_albums div img{
+    border: medium none;
+    margin-right: 5px;
+}
+
+div.loading_albums div label{
+    display: inline-block;
+}
+
+
+div.loading_pictures {
+    background-color: #ffffff;
+    display: inline-block;
+    height: 27px;
+    text-align: center;
+    width: 100%;
+	display: none;
+}
+
+div.loading_pictures div {
+    display: table-cell;
+    float: left;
+    height: inherit;
+    padding: 6px 0;
+    text-align: center;
+    vertical-align: super;
+    width: inherit;
+}
+div.loading_pictures div img{
+    border: medium none;
+    margin-right: 5px;
+}
+
+
+div.no_more {
+    background-color: #fff;
+    border: 1px solid #c0c0c0;
+    display: inline-block;
+    height: 28px;
+    padding-top: 9px;
+    text-align: center;
+    width: 100%;
+}
+div.no_messages 
+{
+    background-color: #ffffff;
+    float: left;
+    font-size: 29px;
+    height: 447px;
+    margin-top: 150px;
+    text-align: center;
+    width: 100%;
+}
+
+/** album share pop **/
+div.share_photo_feed_popup .forgot-password-hdr_1 
+{
+    padding: 0 2.9% !important;
+}
+/** album share pop ends **/
+
+
+/** Ok share commnet panel **/
+
+div.ok {
+    color: #c4c4c4;
+    float: left;
+    margin: 0 15px 0 0;
+    padding: 0;
+    width: auto;
+}
+div.ok {
+    color: #c4c4c4;
+}
+.news-update-likes a {
+    margin: 0 !important;
+}
+.ok a span {
+    min-height: 0;
+ display: inline-block;
+}
+.share a span {
+    color: #696969 !important;
+}
+.share a span {
+    min-height: 0;
+}
+.news-update-likes a {
+    margin: 0 !important;
+}
+/** Comments section **/
+
+.comment-box-outer {
+    background: none repeat scroll 0 0 #f6f7f8;
+    border-top: 1px solid #e8eae9;
+    float: left;
+    margin: 0;
+    padding: 0 0 10px;
+    width: 100%;
+}
+.comment-write-outer {
+    background: none repeat scroll 0 0 #f6f7f8;
+    float: left;
+    margin: 10px 0 0;
+    padding: 0 2%;
+    width: 96%;
+}
+
+.comment-write-left img {
+    width: 100%;
+}
+.ok-comment-box {
+    color: #48545e;
+    float: left;
+    margin: 0;
+    padding: 0 2%;
+    width: 96%;
+}
+
+div.ok-comment-box-bot {
+    margin-top: 10px;
+}
+.ok-comment-box {
+    color: #48545e;
+}
+
+.comment-write-left {
+    border: 1px solid #d3d3d3;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 32px;
+}
+.comment-write-right {
+    float: left;
+    padding: 0 0 0 8px;
+    width: 90%;
+}
+
+.comment-textarea {
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #d3d6db;
+    color: #48545e;
+    float: left;
+    font-size: 12px;
+    height: 18px;
+    margin: 0;
+    padding: 9px 3px 5px;
+    resize: none;
+    width: 99%;
+}
+.comments-outer {
+    float: left !important;
+    margin: 10px 0 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+.comments-outer .quickview-outer {
+    left: auto !important;
+    top: 43px !important;
+}
+
+.comments-outer .quickview {
+    float: left !important;
+    margin: 12px 0 0 -222px !important;
+    position: relative !important;
+}
+.comments-outer .popupArrow {
+    position: absolute !important;
+    top: -10px !important;
+}
+.comment-text1 {
+    color: #4e5665;
+    float: left;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 18px;
+    margin: 0;
+    width: 100%;
+}
+.comment-text1 span {
+    color: #6c518f;
+    float: left;
+    font-weight: bold;
+    margin: 0 3px 0 0;
+    width: auto;
+}
+.comment-text1 span a {
+    color: #6c518f !important;
+    float: left;
+    font-size: 12px !important;
+    margin: 0 3px 0 0;
+    text-decoration: none !important;
+    width: auto;
+}
+.comment-text1 {
+    color: #4e5665;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 18px;
+}
+
+.comments-date {
+    color: #939393;
+    float: left;
+    font-size: 11px;
+    padding-left: 0;
+    text-align: left;
+    width: 100%;
+}
+div.edit_comment {
+    background: url("../../images/icon-pencil4.png") repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: none;
+    height: 12px;
+    position: absolute !important;
+    right: 3px;
+    width: 12px;
+}
+
+.ok-comment-box-bot-left {
+    float: left;
+    margin: 4px 4px 0 0;
+    padding: 0;
+    width: auto;
+}
+.ok-comment-box-bot-right {
+    color: #6c518f;
+    float: left;
+    font-weight: bold;
+    margin: 2px 0 0;
+    padding: 0;
+    width: 94%;
+}
+span.unhide-comment {
+    float: left;
+    text-align: center;
+    width: 94% !important;
+    font-weight: bold;
+    cursor: pointer;
+}
+.comment-outer-popup-border 
+{
+    border-bottom: 1px solid #EDEDED;
+}
+div.hidden_comment {
+    cursor: pointer;
+    height: 25px;
+}
+/** Comments section ends **/
+/** share box **/
+div#share_box {
+    background: none repeat scroll 0 0 #ffffff;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 500px;
+}
+.collage2-outer {
+    float: left;
+    margin: 0 20px 20px 0;
+    padding: 0;
+    width: 205px;
+}
+.collage2-inner {
+    border: 5px solid #f4f4f4;
+    float: left;
+    height: 160px;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+}
+.collage2-pic3-div-three {
+    border-right: 5px solid #f4f4f4;
+    float: left;
+    height: 160px;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+}
+
+element.style {
+    display: inline;
+    height: 162.313px;
+    left: 0;
+    position: relative;
+    top: -1.15672px;
+    width: 100px;
+}
+#photo_thumbnail img {
+    width: 100%;
+}
+#photo_thumbnail img {
+    width: 100%;
+}
+div.nailthumb-container img.nailthumb-image, div.collage-pic1 img.single_image {
+    cursor: pointer;
+}
+.collage2-pic3-div-four {
+    border-bottom: 5px solid #f4f4f4;
+    float: left;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    width: 95px;
+}
+.collage2-pic3-div-four:last-child {
+    border: medium none;
+    height: 80px;
+}
+/** share box ends **/
+/** Ok share commnet panel ends **/
+
+div.photoalbum-addnew div.quickview-outer
+{
+	z-index:1 !important;
+}
+
+
+/** Collage CSS starts **/
+.collage2-outer{
+	width:205px;
+	margin:0 20px 20px 0;
+	padding:0;
+	float:left;
+}
+.collage2-inner{
+	width:200px;
+	height:160px;
+	margin:0;
+	padding:0;
+	float:left;
+	border:5px solid #F4F4F4;
+}
+.collage2-pic2-div-one img{ width:100%; height:100%;}
+.collage2-pic2-div-two img{ width:100%; height:100%;}
+.collage2-pic3-div-one img{ width:100%; height:100%;}
+.collage2-pic3-div-two img{ width:100%; height:100%;}
+.collage2-pic3-div-three img{ width:100%; height:100%;}
+.collage2-pic3-div-four img{ width:100%; height:100%;}
+.collage2-pic4-div-one img{ width:100%; height:100%;}
+.collage2-pic4-div-two img{ width:100%; height:100%;}
+.collage2-pic4-div-three img{ width:100%; height:100%;}
+.collage2-pic4-div-four img{ width:100%; height:100%;}
+.collage2-pic4-div-five img{ width:100%; height:100%;}
+.collage2-pic4-div-six img{ width:100%; height:100%;}
+.collage2-pic4-div-seven img{ width:100%; height:100%;}
+.collage2-pic4-div-eight img{ width:100%; height:100%;}
+.collage2-pic4-div-nine img{ width:100%; height:100%;}
+.collage2-pic4-div-ten img{ width:100%; height:100%;}
+
+.collage2-pic1{
+	margin:0;
+	padding:0;
+	float:left;
+	width:100%;
+	height:100%;
+}
+.collage2-pic1 img{ width:100%; height:100%;}
+
+.collage2-pic2-div-one{
+	width:200px;
+	margin:0;
+	padding:0;
+	float:left;
+	border-bottom:5px solid #F4F4F4;
+	height:78px;
+}
+.collage2-pic2-div-one:last-child{border:none;}
+
+.collage2-pic2-div-two{
+	width:50%;
+	margin:0;
+	padding:0;
+	float:left;
+	border-right:5px solid #F4F4F4;
+	height:160px;
+}
+.collage2-pic2-div-two:last-child{border:none; width:80px;}
+
+.collage2-pic3-div-one{
+	width:200px;
+	margin:0;
+	padding:0;
+	float:left;
+	border-bottom:5px solid #F4F4F4;
+	height:78px;
+}
+.collage2-pic3-div-two{
+	/* width:50%; */
+	height:80px;
+	margin:0;
+	padding:0;
+	float:left;
+	border-right:5px solid #F4F4F4;
+}
+.collage2-pic3-div-two:last-child{border:none; /* width:285px; */}
+
+
+.collage2-pic3-div-three {
+    border-right: 5px solid #F4F4F4;
+    float: left;
+    height: 160px;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+}
+
+.collage2-pic3-div-four {
+    border-bottom: 5px solid #F4F4F4;
+    float: left;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    width: 95px;
+}
+.collage2-pic3-div-four:last-child{border:none; height:80px; }
+
+.collage2-pic4-div-one {
+    border-bottom: 5px solid #F4F4F4;
+    border-right: 5px solid #F4F4F4;
+    float: left;
+    height: 77px;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+}
+.collage2-pic4-div-two {
+    border-bottom: 5px solid #F4F4F4;
+    float: left;
+    height: 77px;
+    margin: 0;
+    padding: 0;
+    width: 95px;
+}
+.collage2-pic4-div-three {
+    border-right: 5px solid #F4F4F4;
+    float: left;
+    height: 160px;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+}
+.collage2-pic4-div-four {
+    border-bottom: 5px solid #F4F4F4;
+    float: left;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    width: 95px;
+}
+
+.collage2-pic4-div-five {
+    float: left;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    width: 95px;
+}
+
+.collage2-pic4-div-six {
+    border-bottom: 5px solid #F4F4F4;
+    float: left;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+}
+
+.collage2-pic4-div-seven {
+    border-right: 5px solid #F4F4F4;
+    float: left;
+    height: 75px;
+    margin: 0;
+    padding: 0;
+    width: 63px;
+}
+
+.collage2-pic4-div-eight {
+    float: left;
+    height: 75px;
+    margin: 0;
+    padding: 0;
+    width: 64px;
+}
+
+.collage2-pic4-div-nine {
+    border-bottom: 5px solid #F4F4F4;
+    float: left;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+}
+
+.collage2-pic4-div-ten {
+    float: left;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+}
+
+.collage2-pic4-div-eleven {
+    border-right: 5px solid #F4F4F4;
+    float: left;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    width: 63px;
+}
+.collage2-pic4-div-twelve {
+    float: left;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    width: 64px;
+}
+.collage2-lt {
+    float: left;
+    height: 160px;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+}
+
+.collage2-top {
+    float: left;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+}
+img.small_jquerynailthumb, div#share_box img.single_image
+{
+	display: none;
+}
+
+/**Collage Ends**/
+
+
+
+.edit-popup-col1 h5.album_privacy_text:hover {
+    background-color: #4d356f !important;
+    text-decoration: none;
+}
+.edit-popup-col1 h5.album_privacy_text {
+    color: #000;
+    font-size: 15px;
+    margin: 0;
+    padding: 3px 5px;
+    position: relative;
+    text-transform: none;
+}
+/**** View more on like and share popup ****/
+.view_more_who_liked {
+    height: 30px;
+    margin: 185px 0 0;
+    position: relative;
+    text-align: center;
+}
+.view_more_who_liked > p {
+    left: 156px;
+    position: absolute;
+    text-align: center;
+    top: 8px;
+}
+
+/***Share popup***/
+.view_more_who_shared{
+       float: left;
+    height: 30px;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+.view_more_who_shared> p {
+    left: 156px;
+    position: absolute;
+    text-align: center;
+    top: 8px;
+}
+/**** END - View more on like and share popup ****/
+
+textarea.add_photo_desc {
+    border: 1px solid #ddd;
+    margin: 0 !important;
+    width: 123px;
+	padding:4px !important;
+}
+img.close_add_photos
+{
+	height: 10px;
+    margin: 10px 0 0;
+    width: 10px;
+	cursor:pointer;
+}
+div.delete-album a.edit_album{
+    float: left;
+    position: absolute !important;
+    right: 10px;
+    top: 8px;
+    width: 100px;
+}
+
+/*** default caption - As default caption text is long it needs different CSS***/
+
+div.default_photo_caption.photo_caption
+{
+	height: 40px !important;
+}
+div.default_caption.caption_hover
+{
+	line-height: 20px !important;
+}
+/*** END - As default caption text is long it needs different CSS***/

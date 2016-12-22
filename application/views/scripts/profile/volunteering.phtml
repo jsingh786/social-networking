@@ -1,0 +1,140 @@
+<?php 
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/volunteering.js" );
+ 
+	if( !$this->volunteeringInfoList ){
+		
+		?>
+<style type="text/css">
+	input[name=add-more]{
+		display:none;
+	}
+	#volunteering-form{
+		display:block;
+	}
+	input[name=save-voluninfo]{
+		display:block;
+		float:right;
+	}
+	input[name=cancel-volunteering]{
+		display:none;
+	}
+</style>
+		<?php 
+	}
+	else{
+		?>
+		<style type="text/css">
+			#volunteering-form{
+				display:none;
+			}
+		</style>
+		<?php 
+	}
+?>
+	<!-- Content Right Left Starts -->
+<?php
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<!-- Content Right Left Ends -->
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+			<form name="volun-form" id="volun-form" method="post" action="">
+			<input type="hidden" name="volunt_id" id="volunt_id" value="" />
+			<!-- Summary Edit Starts -->
+                <div class="summary-edit text-grey2">
+                	<h3 style="width:100%; text-align:left;" class="text-purple2"> 
+	                	Volunteering & Causes
+	                	<input name="add-more"  type="button" class="btn-purple fr" value="+ Add more Volunteering" alt="+ Add more Volunteering" title="+ Add more Volunteering" />
+                	</h3>
+   	    	    </div>
+           		<!-- Summary Edit Ends -->
+            
+            
+            
+           		<!-- Contact Details Starts -->
+	   	    	    <div class="contact-details" id="volunteering-form">
+	   	    	    <div class="contact-label-span2">
+							<label>Organization</label> 
+							<span>
+								<input type="text" name="organization" id="organization" class="search-one-textbox " value="<?php echo @$info["organization"];?>">
+							</span>
+							</div>
+							<div class="contact-label-span2">
+							<label>Role</label> 
+							<span> 
+								<input type="text"	name="role" id="role" class="search-one-textbox"	value="<?php echo @$info["role"];?>">
+							</span>
+							</div>
+							<div class="contact-label-span2">
+							<label>Cause</label>
+							<span>
+								<input type="text" name="cause" id="cause" class="search-one-textbox " value="<?php echo @$info["cause"];?>">
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Date</label>
+							<span>
+								<input type="text" name="datee" id="datee" class="search-one-textbox " readonly value="<?php echo @$info["datee"];?>">
+							</span> 
+							</div>
+							<div class="contact-label-span2">
+							<label>Description</label>
+							<span>
+								<textarea name="desc" id="desc"  class="textarea2"  style="width:91%;" cols="" rows="5"><?php echo @$info["description"];?></textarea>
+							</span> 
+							</div>
+							<label>&nbsp;</label>
+							<div class=" summary-btn-outer bdr-grey2">
+							<p>
+							<span style="width:200px;min-height:24px;">
+								<a id="remove-volunteer" class="text-purple-link fl" href="javascript:;" style="display:none;">
+								Remove this Volunteering
+								</a>
+								</span>
+							</p>
+							<input name="update-voluninfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" style="display:none;" />
+							<input name="save-voluninfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+							<a href="javascript:;" id="cancel" class="new-cancel-btn">Cancel</a>
+							</div>
+					</div>
+					
+			
+				
+			<?php 
+			$ids=array();
+			$volunteeringListing=$this->volunteeringInfoList;
+			$listing_number=count($volunteeringListing);
+				if($listing_number>0){
+					for($i=0;$i<$listing_number;$i++){
+						$ids[]=$volunteeringListing[$i]['id'];
+			?>	
+			<!-- Un Editable Outer Starts -->
+			<div class="un-editable-outer" id="volunteering<?php echo $volunteeringListing[$i]['id'];?>">
+				<h3>
+					<?php echo $volunteeringListing[$i]['organization'];?>
+					<a id="<?php echo $volunteeringListing[$i]['id'];?>" href="javascript:;" onclick="editVolunteering(this)" style="text-decoration:none;">
+						<img src="<?php echo IMAGE_PATH;?>/icon-pencil.png" width="16" height="16" />
+					</a>
+				</h3>
+				<?php 
+				$dob = $volunteeringListing[$i]['datee']->format("j F, Y"); 
+				?>
+				<p>Date:<?php echo$dob;?></p>
+				<p>Role:<?php echo $volunteeringListing[$i]['role'];?></p>
+				<p>Cause:<?php echo $volunteeringListing[$i]['cause'];?></p>
+				<p>Description: <?php echo $volunteeringListing[$i]['description'];?></p>
+			</div>
+			<!-- Un Editable Outer Ends -->
+			<?php 
+					}
+				}
+			?>
+			<input type="hidden" name="volun_ids" id="volun_ids" value="<?php echo implode(",",$ids);?>" />
+			</form>
+			<!-- Un Editable Outer Starts -->			
+		</div>
+		<!-- Content Right Right Ends -->
+	</div>
+	<!-- Content Right Ends -->

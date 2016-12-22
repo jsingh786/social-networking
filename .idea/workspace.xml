@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/application/controllers/MobileJobsController.php" line="11" />
+    <bookmark url="file://$PROJECT_DIR$/library/Helper/common.php" line="114" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="7653765b-2d1d-419b-b987-e85ec5cbeaf9" name="Default" comment="" />
+    <ignored path="ilook.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DatabaseView">
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="ilook" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="NewsController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers/NewsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="916">
+              <caret line="72" column="17" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="job_detail.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/frontend/job_detail.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="463" column="29" selection-start-line="463" selection-start-column="29" selection-end-line="463" selection-end-column="29" />
+              <folding>
+                <marker date="1481786456292" expanded="true" signature="10370:10460" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="10481:10548" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="10686:10728" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14038:14063" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14092:14213" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14242:14276" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14461:14531" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14559:14575" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14675:14691" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14747:14763" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14851:14867" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="14999:15121" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="15176:15201" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="15320:15333" placeholder="..." />
+                <marker date="1481786456292" expanded="true" signature="15459:15483" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jobs_active.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/frontend/jobs_active.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="359" column="103" selection-start-line="359" selection-start-column="103" selection-end-line="359" selection-end-column="103" />
+              <folding>
+                <marker date="1464936100000" expanded="true" signature="9732:9757" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="9786:9907" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="9936:9970" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="10155:10225" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="10253:10269" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="10369:10385" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="10441:10457" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="10545:10561" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="10693:10815" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="10870:10895" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="11014:11027" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="11153:11177" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="13867:13957" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="13978:14045" placeholder="..." />
+                <marker date="1464936100000" expanded="true" signature="14183:14225" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="example.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/jsxc/example/css/example.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1154">
+              <caret line="94" column="1" selection-start-line="94" selection-start-column="1" selection-end-line="94" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jsxc.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/jsxc/build/css/jsxc.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-8">
+              <caret line="3183" column="2" selection-start-line="3183" selection-start-column="2" selection-end-line="3183" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-8">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/application/controllers/DashboardController.php" />
+        <option value="$PROJECT_DIR$/application/views/scripts/dashboard/index.phtml" />
+        <option value="$PROJECT_DIR$/application/models/Extended/ilook_user.php" />
+        <option value="$PROJECT_DIR$/application/controllers/ProfileController.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/socialise_album.php" />
+        <option value="$PROJECT_DIR$/public/jsxc/locales/en.json" />
+        <option value="$PROJECT_DIR$/public/js/frontend/common.js" />
+        <option value="$PROJECT_DIR$/library/Auth/UserAdapter.php" />
+        <option value="$PROJECT_DIR$/application/controllers/IndexController.php" />
+        <option value="$PROJECT_DIR$/application/views/scripts/index/index.phtml" />
+        <option value="$PROJECT_DIR$/application/controllers/NewsController.php" />
+        <option value="$PROJECT_DIR$/public/css/frontend/style.css" />
+        <option value="$PROJECT_DIR$/application/views/scripts/partials/enquiry_form.phtml" />
+        <option value="$PROJECT_DIR$/library/Helper/links.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/chat_settings.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/city.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/feedback_requests.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileJobsController.php" />
+        <option value="$PROJECT_DIR$/public/js/Blueimp-jQuery-File-Upload/main.js" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileAuthenticateController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileDashboardController.php" />
+        <option value="$PROJECT_DIR$/library/Helper/gcm.php" />
+        <option value="$PROJECT_DIR$/library/Helper/apns.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/experience.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileRegistrationController.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/notifications.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/education_detail.php" />
+        <option value="$PROJECT_DIR$/application/controllers/AuthenticateController.php" />
+        <option value="$PROJECT_DIR$/application/layouts/scripts/layout.phtml" />
+        <option value="$PROJECT_DIR$/library/Openfire/Shape.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/admin.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MailController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileMailController.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/posted_to.php" />
+        <option value="$PROJECT_DIR$/application/models/Extended/import_external_contacts.php" />
+        <option value="$PROJECT_DIR$/library/Openfire/Main.php" />
+        <option value="$PROJECT_DIR$/application/controllers/DevelopmentController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/RegistrationController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileProfileController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileSocialiseController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/MobileLinksController.php" />
+        <option value="$PROJECT_DIR$/library/Helper/common.php" />
+        <option value="$PROJECT_DIR$/public/index.php" />
+        <option value="$PROJECT_DIR$/public/js/constants.js" />
+        <option value="$PROJECT_DIR$/application/controllers/ChatAttachmentController.php" />
+        <option value="$PROJECT_DIR$/public/js/frontend/job_detail.js" />
+        <option value="$PROJECT_DIR$/public/jsxc/example/js/main.js" />
+        <option value="$PROJECT_DIR$/public/jsxc/example/css/example.css" />
+        <option value="$PROJECT_DIR$/docs/README.md" />
+        <option value="$PROJECT_DIR$/public/jsxc/build/lib/jsxc.dep.js" />
+        <option value="$PROJECT_DIR$/public/jsxc/build/jsxc.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="JsbtTreeLayoutManager">
+    <layout place="tools.popupGrunt">
+      <scroll-view-position x="0" y="0" />
+    </layout>
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Blade files</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsxc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsxc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="build" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsxc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="build" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat_files" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ilook" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gillie" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="SearchEverywhereHistoryKey" value="chatA&#9;null&#9;null&#10;main.j&#9;FILE&#9;file://D:/wamp64/www/ilook/public/jsxc/example/js/main.js&#10;lers\MobileSocialiseController.php&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileSocialiseController.php&#10;rollers\MobileProfileController.php&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileProfileController.php&#10;mess&#9;FILE&#9;file://D:/wamp/www/ilook/application/models/Extended/message_user.php&#10;ontrollers\MobileLinksController.php&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileLinksController.php&#10;\controllers\MobileProfileController.php&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileProfileController.php&#10;mobilepro&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileProfileController.php&#10;mobiledas&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileDashboardController.php&#10;MobileProfileController.php&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileProfileController.php&#10;MobileDashboardController.php&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileDashboardController.php&#10;mobileprofile&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileProfileController.php&#10;mobil&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/MobileDashboardController.php&#10;mobilejobsco&#9;null&#9;null&#10;layout&#9;FILE&#9;file://D:/wamp/www/ilook/application/layouts/scripts/layout.phtml&#10;jsxc&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/build/jsxc.js&#10;Helper\common.php&#9;FILE&#9;file://D:/wamp/www/ilook/library/Helper/common.php&#10;mobilelink&#9;null&#9;null&#10;exte/cha&#9;FILE&#9;file://D:/wamp/www/ilook/application/models/Extended/chat_settings.php&#10;ext/expe&#9;FILE&#9;file://D:/wamp/www/ilook/application/models/Extended/experience.php&#10;links.php&#9;FILE&#9;file://D:/wamp/www/ilook/library/Helper/links.php&#10;authe&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/AuthenticateController.php&#10;mai&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/example/js/main.js&#10;profile&#9;null&#9;null&#10;develo&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/DevelopmentController.php&#10;ilook&#9;FILE&#9;file://D:/wamp/www/ilook/application/models/Extended/ilook_user.php&#10;/build/css/jsxc.css&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/build/css/jsxc.css&#10;my-iprofile.phtml&#9;FILE&#9;file://D:/wamp/www/ilook/application/views/scripts/profile/my-iprofile.phtml&#10;xample/css/example.css&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/example/css/example.css&#10;sxc.webrtc.css&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/build/css/jsxc.webrtc.css&#10;jsxc.css&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/build/css/jsxc.css&#10;jsxc.js&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/build/jsxc.js&#10;iloo&#9;null&#9;null&#10;jquery.imgareaselect.min.js&#9;FILE&#9;file://D:/wamp/www/ilook/public/js/frontend/jquery.imgareaselect.min.js&#10;delete_account.php&#9;FILE&#9;file://D:/wamp/www/ilook/application/cronjobs/user/delete_account.php&#10;jquery.colorbox&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/build/lib/jquery.colorbox-min.js&#10;2677999333.eot&#9;FILE&#9;file://D:/wamp/www/ilook/public/fonts/2677999333.eot&#10;common&#9;FILE&#9;file://D:/wamp/www/ilook/public/js/frontend/common.js&#10;cloud-carousel.1.0.5.js&#9;FILE&#9;file://D:/wamp/www/ilook/public/js/cloud-carousel.1.0.5.js&#10;new-link-request.phtml&#9;FILE&#9;file://D:/wamp/www/ilook/application/views/scripts/links/new-link-request.phtml&#10;link&#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/LinksController.php&#10;chat&#9;FILE&#9;file://D:/wamp/www/ilook/application/models/Extended/chat_settings.php&#10;jsxc.options&#9;FILE&#9;file://D:/wamp/www/ilook/public/jsxc/src/jsxc.lib.options.js&#10;LinksController.php &#9;FILE&#9;file://D:/wamp/www/ilook/application/controllers/LinksController.php&#10;links\tag.phtml&#9;FILE&#9;file://D:/wamp/www/ilook/application/views/scripts/links/tag.phtml&#10;bookmarks\group.phtml&#9;FILE&#9;file://D:/wamp/www/ilook/application/views/scripts/bookmarks/group.phtml&#10;bookmarks\index.phtml&#9;FILE&#9;file://D:/wamp/www/ilook/application/views/scripts/bookmarks/index.phtml&#10;fr/skil&#9;FILE&#9;file://D:/wamp/www/ilook/public/css/frontend/skill_recruiter.css&#10;style.css&#9;FILE&#9;file://D:/wamp/www/ilook/public/css/frontend/style.css&#10;user&#9;FILE&#9;file://D:/wamp/www/ilook/application/models/Extended/user_skills.php" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\wamp\www\ilook\public\js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\wamp\www\ilook\application\models\Extended" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\jsingh7\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7653765b-2d1d-419b-b987-e85ec5cbeaf9" name="Default" comment="" />
+      <created>1464936227868</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1464936227868</updated>
+      <workItem from="1464936229221" duration="4548000" />
+      <workItem from="1465190816703" duration="11639000" />
+      <workItem from="1465537308001" duration="1555000" />
+      <workItem from="1465539819321" duration="1204000" />
+      <workItem from="1465796641771" duration="2146000" />
+      <workItem from="1465821983593" duration="10324000" />
+      <workItem from="1465904827683" duration="45898000" />
+      <workItem from="1466485951806" duration="94345000" />
+      <workItem from="1467610124419" duration="35141000" />
+      <workItem from="1467712748218" duration="29521000" />
+      <workItem from="1467870842616" duration="53712000" />
+      <workItem from="1468565540846" duration="8492000" />
+      <workItem from="1468837474297" duration="57702000" />
+      <workItem from="1469770223207" duration="17002000" />
+      <workItem from="1470200729412" duration="83159000" />
+      <workItem from="1470913775096" duration="56664000" />
+      <workItem from="1471610561657" duration="3292000" />
+      <workItem from="1471843528763" duration="45581000" />
+      <workItem from="1472450811782" duration="1289000" />
+      <workItem from="1472453206636" duration="34240000" />
+      <workItem from="1473072025346" duration="5816000" />
+      <workItem from="1473317058640" duration="12216000" />
+      <workItem from="1473687208735" duration="28603000" />
+      <workItem from="1474377975515" duration="1040000" />
+      <workItem from="1474440306614" duration="3007000" />
+      <workItem from="1474452160811" duration="44080000" />
+      <workItem from="1475140268404" duration="99071000" />
+      <workItem from="1477483164530" duration="6849000" />
+      <workItem from="1477994966914" duration="875000" />
+      <workItem from="1478068730504" duration="116000" />
+      <workItem from="1478494766904" duration="972000" />
+      <workItem from="1478671427750" duration="2819000" />
+      <workItem from="1478871356132" duration="1030000" />
+      <workItem from="1479704665874" duration="8212000" />
+      <workItem from="1480325114456" duration="2296000" />
+      <workItem from="1480334680237" duration="1805000" />
+      <workItem from="1480913350836" duration="1184000" />
+      <workItem from="1481713782993" duration="42946000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="860391000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22012103" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47058824" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="548" y="175" width="729" height="321" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="7" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/library/Helper/links.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MobileAuthenticateController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="686">
+          <caret line="468" column="17" selection-start-line="468" selection-start-column="17" selection-end-line="468" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/notifications.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="671" column="56" selection-start-line="671" selection-start-column="56" selection-end-line="671" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/degree_ref.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Entities/education_detail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="146" column="20" selection-start-line="146" selection-start-column="20" selection-end-line="146" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/education_detail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="172" column="34" selection-start-line="172" selection-start-column="34" selection-end-line="172" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/Auth/UserAdapter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="162" column="27" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/Bootstrap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/AuthenticateController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8852">
+          <caret line="71" column="42" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MobileRegistrationController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="92" column="33" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/message_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="50" column="60" selection-start-line="50" selection-start-column="47" selection-end-line="50" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/ilook_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="588" column="39" selection-start-line="588" selection-start-column="39" selection-end-line="588" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/Openfire/Object.php" />
+    <entry file="file://$PROJECT_DIR$/application/layouts/scripts/layout.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="136" column="7" selection-start-line="136" selection-start-column="7" selection-end-line="136" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/frontend/additional-methods.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/frontend/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-986">
+          <caret line="23" column="57" selection-start-line="23" selection-start-column="57" selection-end-line="23" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/MONSTERSJOBS.MD" />
+    <entry file="file://$PROJECT_DIR$/docs/MONSTERS-JOBS.md" />
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/posted_to.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="89" column="62" selection-start-line="89" selection-start-column="62" selection-end-line="89" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/link_requests.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-996">
+          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Entities/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1700">
+          <caret line="100" column="35" selection-start-line="100" selection-start-column="35" selection-end-line="100" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MailController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8772">
+          <caret line="516" column="13" selection-start-line="516" selection-start-column="13" selection-end-line="516" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Extended/import_external_contacts.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="100" column="20" selection-start-line="100" selection-start-column="20" selection-end-line="100" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MobileMailController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13804">
+          <caret line="812" column="0" selection-start-line="812" selection-start-column="0" selection-end-line="812" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/Openfire/Shape.php" />
+    <entry file="file://$PROJECT_DIR$/library/Openfire/Main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="39" column="82" selection-start-line="39" selection-start-column="82" selection-end-line="39" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MobileProfileController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="4644" column="26" selection-start-line="4644" selection-start-column="26" selection-end-line="4644" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/RegistrationController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6579">
+          <caret line="387" column="47" selection-start-line="387" selection-start-column="47" selection-end-line="387" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MobileSocialiseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64192">
+          <caret line="3776" column="76" selection-start-line="3776" selection-start-column="76" selection-end-line="3776" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MobileLinksController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8415">
+          <caret line="495" column="49" selection-start-line="495" selection-start-column="49" selection-end-line="495" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/DevelopmentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="524">
+          <caret line="1705" column="29" selection-start-line="1705" selection-start-column="29" selection-end-line="1705" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/Email/Mailer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="35" column="55" selection-start-line="35" selection-start-column="55" selection-end-line="35" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/Helper/common.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="135" column="5" selection-start-line="135" selection-start-column="5" selection-end-line="135" selection-end-column="5" />
+          <folding>
+            <marker date="1480326038221" expanded="true" signature="45341:45357" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="45424:45440" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="46021:46037" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="46104:46120" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="46723:46739" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="46806:46822" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="48054:48152" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="48409:48507" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="49195:49293" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="49549:49647" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="56695:56741" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="56778:56824" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="75802:75832" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="75838:75868" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="97034:97065" placeholder="..." />
+            <marker date="1480326038221" expanded="false" signature="97070:97101" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="97126:97377" placeholder="..." />
+            <marker date="1480326038221" expanded="false" signature="97237:97249" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="97416:97775" placeholder="..." />
+            <marker date="1480326038221" expanded="false" signature="97437:97481" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="100572:100623" placeholder="..." />
+            <marker date="1480326038221" expanded="false" signature="101225:101256" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="101281:101543" placeholder="..." />
+            <marker date="1480326038221" expanded="false" signature="101403:101415" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="101585:101975" placeholder="..." />
+            <marker date="1480326038221" expanded="false" signature="101610:101654" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="102879:102911" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="103080:103146" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="104406:104438" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="104501:104547" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="104608:104674" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="104738:104753" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="108732:108783" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="112188:112224" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="113879:113915" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="114867:114885" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="116144:116162" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="116687:116723" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="116793:116805" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="143731:143761" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="143776:143806" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="145418:145448" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="145463:145493" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="145740:145770" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="145785:145815" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="146075:146105" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="146120:146150" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="146515:146545" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="146560:146590" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="147146:147176" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="147191:147221" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="147395:147425" placeholder="..." />
+            <marker date="1480326038221" expanded="true" signature="147440:147470" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/frontend/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="2183" column="19" selection-start-line="2183" selection-start-column="19" selection-end-line="2183" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/frontend/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="273" column="25" selection-start-line="273" selection-start-column="25" selection-end-line="273" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/configs/application.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/ChatAttachmentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="161" column="21" selection-start-line="161" selection-start-column="21" selection-end-line="161" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/frontend/job_posted_detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="315" column="14" selection-start-line="315" selection-start-column="14" selection-end-line="315" selection-end-column="14" />
+          <folding>
+            <marker date="1464936100000" expanded="true" signature="9303:9328" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="9357:9478" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="9507:9541" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="9794:9864" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="9892:9908" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10008:10024" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10080:10096" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10184:10200" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10332:10454" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10509:10534" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10653:10666" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10792:10816" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="15965:16055" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="16076:16143" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="16281:16323" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="22511:22559" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="22589:22709" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="23334:23347" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="23470:23488" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="23607:23630" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="23904:24088" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="24172:24207" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="24465:24500" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="26854:26902" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="26932:27052" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="27660:27673" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="27796:27814" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="27933:27956" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="28213:28397" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="28472:28507" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="28747:28782" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/frontend/jobs_active.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="359" column="103" selection-start-line="359" selection-start-column="103" selection-end-line="359" selection-end-column="103" />
+          <folding>
+            <marker date="1464936100000" expanded="true" signature="9732:9757" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="9786:9907" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="9936:9970" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10155:10225" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10253:10269" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10369:10385" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10441:10457" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10545:10561" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10693:10815" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="10870:10895" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="11014:11027" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="11153:11177" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="13867:13957" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="13978:14045" placeholder="..." />
+            <marker date="1464936100000" expanded="true" signature="14183:14225" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/frontend/job_detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="463" column="29" selection-start-line="463" selection-start-column="29" selection-end-line="463" selection-end-column="29" />
+          <folding>
+            <marker date="1481786456292" expanded="true" signature="10370:10460" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="10481:10548" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="10686:10728" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14038:14063" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14092:14213" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14242:14276" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14461:14531" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14559:14575" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14675:14691" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14747:14763" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14851:14867" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="14999:15121" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="15176:15201" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="15320:15333" placeholder="..." />
+            <marker date="1481786456292" expanded="true" signature="15459:15483" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/jsxc/build/css/jsxc.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="3183" column="2" selection-start-line="3183" selection-start-column="2" selection-end-line="3183" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/MONSTERJOBS.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/README.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="332">
+            <caret line="417" column="0" selection-start-line="417" selection-start-column="0" selection-end-line="418" selection-end-column="50" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="691">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/jsxc/example/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="282" column="28" selection-start-line="282" selection-start-column="28" selection-end-line="282" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/jsxc/build/lib/jsxc.dep.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="902">
+          <caret line="6986" column="21" selection-start-line="6986" selection-start-column="21" selection-end-line="6986" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/NewsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="916">
+          <caret line="72" column="17" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/jsxc/build/jsxc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3322">
+          <caret line="903" column="12" selection-start-line="903" selection-start-column="8" selection-end-line="903" selection-end-column="12" />
+          <folding>
+            <marker date="1482321343825" expanded="true" signature="153741:153751" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/jsxc/example/css/example.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1154">
+          <caret line="94" column="1" selection-start-line="94" selection-start-column="1" selection-end-line="94" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

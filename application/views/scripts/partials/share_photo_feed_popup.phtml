@@ -1,0 +1,30 @@
+<div id="share_photo_feed_popup" class = "popup transparent_border" style = "display: none;">
+	<div class="forgot-password-outer_1 share_photo_feed_popup">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1 share_photo_feed_popup">
+			<div id="forgot-password_2 share_photo_feed_popup" class="left text-white">
+<?php 
+			$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+			if($params['action'] == 'photos')
+			{
+				echo '<h2>Share Album</h2>';
+			}
+			else 
+			{
+				echo '<h2>Share Photo Feed</h2>';
+			}
+?>
+				<img class="close_bpopup"
+						src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+						title="Close" width="20" height="18" />
+			</div>
+
+		</div>
+		<!-- Forgot Password Header -->
+			<!-- Forgot Password Content -->
+			<div id = "share_box" class="forgot-password-content_1 share_photo_feed_popup">
+				
+			</div>
+			<!-- Forgot Password Content -->
+	</div>
+</div>

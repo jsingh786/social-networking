@@ -1,0 +1,258 @@
+<?php 
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/basic_info.js" );
+
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<style>
+.summary-outer 
+{
+    width: 92%;
+}
+</style>
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer" id="view-basic-info">
+			<!-- Summary Edit Starts -->
+			<div class="summary-edit text-grey2">
+				<h3 class="text-purple2">Basic Information</h3>
+				<font style="float: right;"> 
+				<span title="Edit" id="basicinfo">
+					<img class="edit-new-icon" src="<?php echo IMAGE_PATH;?>/edit-pencil.png"  />
+					
+				</span>
+				</font>
+			</div>
+			<!-- Summary Edit Ends -->
+			<!-- Contact Details Starts -->
+			<div class="contact-details">
+			<div class="contact-label-span">
+				<label>First Name</label>
+				<span class=" text-grey2" id="sfname"><?php echo $userinfo=Auth_UserAdapter::getIdentity()->getFirstname();?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Middle Name</label>
+				<span class=" text-grey2" id="smname"><?php echo $userinfo=Auth_UserAdapter::getIdentity()->getMiddle_name();?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Last Name</label>
+				<span class=" text-grey2" id="slname"><?php echo $userinfo=Auth_UserAdapter::getIdentity()->getLastname();?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Gender</label>
+				<span class=" text-grey2" id="sgender"><?php $userinfo=Auth_UserAdapter::getIdentity()->getGender(); if($userinfo == 1){echo "Male";}elseif($userinfo == 2){echo"Female";}?></span>
+				</div>
+				<div class="basic-info-bdr"></div>
+				<h3 style="border-bottom: 1px solid #dedede; width: 100%;" class="text-purple2">Headline</h3>
+				<div class="contact-details">
+				<div class="contact-label-span">
+					<label>Professional " Headline"</label>
+					<span class=" text-grey2" id="sprof_headline"><?php echo $userinfo=Auth_UserAdapter::getIdentity()->getProfessional_headline();?></span>
+				</div>
+				</div>
+				<h3 style="border-bottom: 1px solid #dedede; width: 100%;" class="text-purple2">location and industry</h3>
+				<div	style="border: none; margin-bottom: 0; padding-bottom: 0; width: 100%;"	class="contact-details">
+					<div class="contact-label-span">
+					<label>Country</label>
+					<span class=" text-grey2" id="scountrylist"><?php echo $this->country_name; ?></span>
+					</div>
+					<?php //Zend_Debug::dump($this->state_name); ?>
+					<div id="sstate_div" style="display:<?php if($this->state_name){ echo 'block';}else{echo'none';}?>">
+						
+					<div class="contact-label-span">
+					<label>State</label>
+					<span class=" text-grey2" id="sstate"><?php echo $this->state_name; ?></span>
+					</div>
+					</div>
+					<div id="scity_div" style="display:<?php if($this->city_name){ echo 'block';}else{echo'none';}?>">
+					<div class="contact-label-span">
+					<label>City</label>
+					<span class=" text-grey2" id="scity"><?php echo $this->city_name; ?></span>
+					</div>
+					</div>
+					
+					<div class="contact-label-span">
+					<label>Zip Code</label>
+					<span class=" text-grey2" id="szipcode"><?php echo $userinfo=Auth_UserAdapter::getIdentity()->getZipcode();?></span>
+					</div>
+					<div class="contact-label-span">
+					<label>Industry</label>
+					<?php if($this->industry_title || $this->industry_title!= null){ ?>
+					<span	class=" text-grey2" id="sindustrylist"><?php echo $this->industry_title; ?></span>
+					
+				<?php }else{?>
+				<span	class=" text-grey2" id="sindustrylist">&nbsp;</span>
+				<?php  } ?>
+				</div>
+				</div>
+			</div>
+			<!-- Contact Details Ends -->
+		</div>
+		<!-- Summary Outer Ends -->
+	
+	
+		
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer" id="edit-basic-info" style="display:none;">
+		<form name="basicinfo_form" id="basicinfo_form" method="post" action="">
+		<!-- Summary Edit Starts -->
+		<div class="summary-edit text-grey3">
+			<h3 class="text-purple2">Basic Information</h3>
+		</div>
+		<!-- Summary Edit Ends -->
+		<!-- Contact Details Starts -->
+		<div class="contact-details">
+		<div class="contact-label-span2">
+			<label>First Name</label> 
+			<span>
+				<input type="text" name="fname" id="fname" class="search-one-textbox " value="<?php echo $userinfo=Auth_UserAdapter::getIdentity()->getFirstname();?>">
+			</span>
+		</div>	
+			<div class="contact-label-span2">
+			<label>Middle Name</label> 
+			<span> 
+				<input type="text"	name="mname" id="mname" class="search-one-textbox"	value="<?php echo $userinfo=Auth_UserAdapter::getIdentity()->getMiddle_name();?>">
+			</span>
+			</div>
+			
+			<div class="contact-label-span2">
+			<label>Last Name</label>
+			<span>
+				<input type="text" name="lname" id="lname" class="search-one-textbox " value="<?php echo $userinfo=Auth_UserAdapter::getIdentity()->getLastname();?>">
+			</span> 
+			</div>
+			
+			<div class="contact-label-span2">
+			<label>Gender</label> 
+				<span> 
+					<select class="dropdown"  name="genderlist" id="genderlist">
+						<option value="">SELECT</option>
+						<?php 
+						$genderlist = Array ( "0" =>array("id" => '1', "name" => 'Male'), "1" =>array("id" => '2', "name" => 'Female'));
+						$genderId = Auth_UserAdapter::getIdentity()->getGender();
+						for($i=0;$i<count($genderlist);$i++){
+						?>
+							<option value="<?php echo @$genderlist[$i]["id"];?>" <?php if($genderId==$genderlist[$i]["id"]){echo "selected";}?>><?php echo @$genderlist[$i]["name"];?></option>
+						<?php 
+						}
+						?>
+					</select>
+				</span> 
+				</div>
+			
+			<div class="basic-info-bdr"></div>
+			<h3 class="text-purple2">Headline</h3>
+			<div class="contact-details">
+			<div class="contact-label-span2">
+				<label>Professional "Headline"</label> 
+				<span> 
+					<input type="text" maxlength = "50" name="prof_headline" id="prof_headline" class="search-one-textbox "	value="<?php echo $userinfo=Auth_UserAdapter::getIdentity()->getProfessional_headline();?>">
+				</span> 
+				</div>
+				<div class="contact-label-span2">
+				<label>&nbsp;</label> 
+				<span> 
+					<font class="example">
+						<strong>Example:</strong>
+						Experienced transportation executive, Web Development, etc
+					</font>
+				</span>
+				</div>
+			</div>
+			<h3 class="text-purple2">Location and Industry</h3>
+			<div style="border: none; margin-bottom: 0; padding-bottom: 0; width: 100%;" class="contact-details">
+			<div class="contact-label-span2">
+				<label>Country</label> 
+				<span> 
+					<select class="dropdown"  name="countrylist" id="simple_country">
+						<option value="">SELECT</option>
+						<?php 
+						$countrylist=$this->countries;
+						for($i=0;$i<count($countrylist);$i++){
+						?>
+							<option value="<?php echo @$countrylist[$i]["id"];?>" <?php if(@$this->country_id==$countrylist[$i]["id"]){echo "selected";}?>><?php echo @$countrylist[$i]["name"];?></option>
+						<?php 
+						}
+						?>
+					</select>
+				</span> 
+				</div>
+				
+				<div id="simple_state_div" style="display:<?php if($this->stateList){ echo 'block';}else{echo'none';}?>" >
+				<div class="contact-label-span2">
+					<label>State</label> 
+					<span> 
+						<select class="dropdown"  name="simple_state" id="simple_state">
+							<option value="">SELECT</option>
+							<?php 
+							$statelist=$this->stateList;
+							for($i=0;$i<count($statelist);$i++){
+							?>
+								<option value="<?php echo @$statelist[$i]["id"];?>" <?php if(@$this->state_id==$statelist[$i]["id"]){echo "selected";}?>><?php echo @$statelist[$i]["name"];?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</span> 
+					</div>
+				</div>
+				<div id="simple_city_div" style="display:<?php if($this->cityList){ echo 'block';}else{echo'none';}?>" >
+				<div class="contact-label-span2">
+				<label>City</label> 
+				<span> 
+					<select class="dropdown"  name="simple_city" id="simple_city">
+						<option value="">SELECT</option>
+						<?php 
+						$citylist=$this->cityList;
+						//Zend_Debug::dump($citylist);
+						for($i=0;$i<count($citylist);$i++){
+						?>
+							<option value="<?php echo $citylist ? @$citylist[$i]["id"]:'';?>" <?php if(@$this->city_id==$citylist[$i]["id"]){echo "selected";}?>><?php echo @$citylist[$i]["name"];?></option>
+						<?php 
+						}
+						?>
+					</select>
+				</span>
+				</div> 
+				</div>
+				
+				<div class="contact-label-span2">
+				<label>Zip Code</label> 
+				<span> 
+					<input type="text" name="zipcode" id="zipcode" class="search-one-textbox" value="<?php echo $userinfo=Auth_UserAdapter::getIdentity()->getZipcode();?>">
+				</span> 
+				</div>
+				<div class="contact-label-span2">
+				<label>Industry</label> 
+				<span> 
+					<select class="dropdown" name="industrylist" id="industrylist">
+						<option value="0">Select industry</option>
+						<?php 
+						@$indusrylist = $this->industry;
+						if($this->industry_id == @$indusrylist[$i]["id"]){
+							$selected = "selected";
+						}else{
+							$selected = "";
+						}
+						for($i=0;$i<count(@$indusrylist);$i++){
+						?>
+							<option value="<?php echo @$indusrylist[$i]["id"];?>" <?php echo @$selected; ?> ><?php echo @$indusrylist[$i]["title"];?></option>
+						<?php 
+						}
+						?>
+					</select>
+				</span>
+				</div>
+			</div>
+		</div>
+		<!-- Contact Details Ends -->
+		<div class=" summary-btn-outer">
+			<input name="save-basicinfo" id="save-basicinfo" type="button" alt="Save" title="Save" class="new-save-btn" value="Save" /> 
+			<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+		</div>
+		</form>	
+		</div>
+		<!-- Summary Outer Ends -->
+	
+	</div>
+	<!-- Content Right Right Ends -->

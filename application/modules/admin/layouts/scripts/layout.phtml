@@ -1,0 +1,107 @@
+<?php echo $this->doctype ();?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php
+		$this->headLink()->headLink(array('rel' => 'icon', 'href' => PUBLIC_PATH.'/images/favicon.ico'), 'PREPEND');
+		$this->headMeta()->setHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+		
+		//CSS
+		$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/style.css" );
+		$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/bootstrap.css" );
+		$this->headLink()->appendStylesheet( PUBLIC_PATH."/text_editor/ckeditor/samples/sample.css" );
+		$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/jquery-ui-1.10.3.custom/css/ilook-theme/jquery-ui-1.10.3.custom.css" );
+		$this->headLink()->appendStylesheet(PUBLIC_PATH."/js/dropzone/dropzone.css");
+		
+		
+		
+		//JS Prepends
+		$this->headScript()->prependFile( PUBLIC_PATH."/js/admin/common.js" );
+		$this->headScript()->prependFile( PUBLIC_PATH."/js/constants.js" );
+		$this->headScript()->prependFile( PUBLIC_PATH."/js/date.js" );
+		$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery.validate.1.9.0.js" );
+		$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.11.4.min.js" );
+		$this->headScript()->prependFile( PUBLIC_PATH."/js/admin/bootstrap.js" );
+		$this->headScript()->prependFile( PUBLIC_PATH."/js/jquery-2.1.min.js" );
+		//JS Appends
+		$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js");
+		$this->headScript()->appendFile( PUBLIC_PATH."/text_editor/ckeditor/ckeditor.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/js/designer.js" );
+		$this->headScript()->appendFile( PUBLIC_PATH."/js/dropzone/dropzone.js" );
+	
+	
+		echo $this->headTitle();
+		echo $this->headMeta();
+		echo $this->headLink();
+		echo $this->headScript();
+
+		
+		 
+		
+?>
+
+</head>
+	<body>
+		<div id="imbullwrap" >
+<?php
+			$sec_storage_id = 1; //Secondary auth id by default 1
+			if( Auth_AdminAdapter::hasIdentity() )
+			{
+				if( Auth_AdminAdapter::getIdentity()->getRole()->getId() == 1 )
+				{
+					//Updating secondary auth id
+					$sec_storage = new Zend_Session_Namespace('admin_secondary_identity_storage');
+					$sec_storage_id = $sec_storage->id;
+				}
+				
+				if( $sec_storage_id )
+				{
+					echo $this->render('left-panel.phtml');   // render left panel
+					echo '<div class = "content-right">';
+					echo $this->render('top-header.phtml');  // render top header
+					
+					echo '<div id = "message_holder">';
+					//Showing Messages.
+					$messages = new Zend_Session_Namespace('admin_messages');
+					if( $messages->successMsg )
+					{
+						echo '<div title = "Dismiss" class="alert-box success_messg"><span>success: </span>'.$messages->successMsg.'</div>';
+						unset( $messages->successMsg );
+					}
+					if( $messages->errorMsg )
+					{
+						echo '<div title = "Dismiss" class="alert-box error_messg"><span>error: </span>'.$messages->errorMsg.'</div>';
+						unset( $messages->errorMsg );
+					}
+					if( $messages->warningMsg )
+					{
+						echo '<div title = "Dismiss" class="alert-box warning_messg"><span>warning: </span>'.$messages->warningMsg.'</div>';
+						unset( $messages->warningMsg );
+					}
+					if( $messages->noticeMsg )
+					{
+						echo '<div title = "Dismiss" class="alert-box notice_messg"><span>notice: </span>'.$messages->noticeMsg.'</div>';
+						unset( $messages->noticeMsg );
+					}
+					echo '</div>';//Message holder closing div.
+					
+					// Render view content
+					echo $this->layout()->content;
+					echo '</div>';
+				}
+				else
+				{
+					// Render view content
+					echo $this->layout()->content;
+				}
+			}
+			else
+			{
+				// Render view content
+				echo $this->layout()->content;
+			}	
+			echo $this->partial ( 'partials/reply_form.phtml' );
+?>
+		</div>
+		
+	</body>
+</html>

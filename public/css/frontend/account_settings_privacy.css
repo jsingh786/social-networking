@@ -1,0 +1,161 @@
+#win-xp5 .newListSelected{
+	width:80% !important;
+}
+
+div.slide-down {
+    float: left;
+    margin: 0!important;
+    padding: 0!important;
+    width: 100%;
+}
+
+.settings-content h3 {
+    float: left;
+    margin: 0!important;
+    padding: 0!important;
+    width: 100%;
+}
+
+.slide-down a.selected 
+{
+	background: url("../../images/arrow-up-blue.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+	color: #48545e;
+}
+
+div#blocked_users {
+    float: left;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.settings-content{
+	width:92%;
+	/* margin: 2px 0 0 2px; */
+	padding:2% 4%;
+	float:left;
+	background:#fff;
+	min-height:646px;
+}
+.settings-labelspan-outer{
+	width:100%;
+	margin:0;
+	padding:2% 0 0 0;
+	float:left;
+}
+.settings-labelspan-outer label{
+	width:32%;
+	margin:0;
+	padding:3px 0 0 0;
+	float:left;
+	text-transform:uppercase;
+	font-size:12px;
+}
+.settings-labelspan-outer span{
+/* 	width:68%; */
+	width:420px;
+	margin:0;
+	padding:0 0 0 0;
+	float:left;
+	height:23px;
+}
+.settings-labelspan-outer span input[type="text"]{
+	margin:0 1% 0 0;
+	padding:0 0 0 5px;
+	border:1px solid #dedede;
+	height:20px;
+	line-height:20px;
+	width:73%;
+	color:#48545e;
+	font-size:12px;
+}
+
+.settings-content-col1-outer{
+	margin:0 0 20px 0;
+	padding:0;
+	float:left;
+	width:100%;
+}
+.settings-content-col1{
+	margin:0 0 0 0;
+	padding:0;
+	float:left;
+	width:70%;
+}
+.settings-content-col1 h3{
+	margin:0 0 10px 0;
+	padding:0;
+	float:left;
+	width:100%;
+}
+
+.settings-content-col1-bot{
+	margin:0 0 5px 0;
+	padding:0;
+	float:left;
+	width:115%;
+	text-align:right;
+	font-size:11px;
+}
+.settings-content-col1-bot2{
+	margin:0 0 5px 0;
+	padding:0;
+	float:left;
+	width:100%;
+	text-align:left;
+	font-size:11px;
+}
+
+div#blocked_users_div input.btn-dark-purple {
+    padding: 0 15px 1px;
+}
+
+div#blocked_users_div a {
+    display: inline-block;
+    float: right;
+}
+
+ul.token-input-list-facebook {
+    margin: 0 5px 0 0 !important;
+    width: 310px !important;
+	font-size: 12px!important;
+	max-height: 35px !important;
+	cursor:default !important;
+}
+
+.settings-labelspan-outer ul.token-input-list-facebook  span {
+    height: 14px!important;
+	font-size: 11px!important;
+}
+
+div.token-input-dropdown-facebook {
+    width: 310px!important;
+}
+.settings-labelspan-outer label.text-black span.clickable {
+    width: auto;
+	height:auto;
+}
+.settings-labelspan-outer label.text-black span.clickable:hover {
+    color : #6C518F;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.slide-down a.selected {
+    background: none!important;
+}
+img#block_users_dropdown_arrow
+{
+    display: inline-block;
+    float: right;
+    margin-top: 7px;
+}
+div.save_changes {
+    float: left;
+    margin-bottom: 10px;
+}
+
+.sen-option {
+    border: 1px solid #dedede;
+    padding: 3px;
+    width: 99.5%;
+}

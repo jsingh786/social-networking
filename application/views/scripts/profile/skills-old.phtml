@@ -1,0 +1,115 @@
+<style>
+    .contact-details span.loading
+	{
+	    float: none!important;	
+    }
+</style>	
+<?php 
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/skills-old.js" );
+	$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/skills-old.css" );
+	if( !$this->skillInfoList ){
+		?>
+<style type="text/css">
+	input[name=add-more]
+	{
+		display:none;
+	}
+	#skills-form{
+		display:block;
+	}
+	input[name=save-skillinfo]{
+		display:inline;
+		float:right;
+	}
+	input[name=cancel-skill]{
+		display:none;
+	}
+</style>
+		<?php 
+	}
+	else
+	{
+		?>
+		<style type="text/css">
+			#skills-form{
+				display:none;
+			}
+		</style>
+		<?php 
+	}
+
+	
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<!-- Content Right Left Ends -->
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer">
+			<form name="skill-form" id="skill-form">
+				<input type="hidden" name="skill_id" id="skill_id" value="" />
+				<input type="hidden" name="user_skill_id" id="user_skill_id" value="" />
+			<!-- Summary Edit Starts -->
+                <div class="summary-edit text-grey2">
+                	<h3 style="width:100%; text-align:left;" class="text-purple2"> 
+	                	Skills & Expertise
+	                	<input name="add-more"  type="button" class="btn-purple fr" value="+ Add more Skill" alt="+ Add more Skill" title="+ Add more Skill" />
+                	</h3>
+   	    	    </div>
+           		<!-- Summary Edit Ends -->
+            
+            
+            
+           		<!-- Contact Details Starts -->
+	   	    	    <div class="contact-details" id="skills-form">
+	   	    	    <div class="contact-label-span2">
+							<label>Add Skill</label> 
+							<span> 
+								<input type="text" name="skill_name" id="skill_name" class="search-one-textbox" value="">
+							</span> 
+						</div>	
+							<div class=" summary-btn-outer bdr-grey2">
+							<p>
+								<span style="width:143px; min-height:24px;">
+									<a id="remove-skill" class="text-purple-link fl" href="javascript:;" style="display:none;">
+									Remove this Skill
+									</a>
+								</span>
+							</p>
+								<input name="update-skillinfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" style="display:none;" />
+					       	 	<input name="save-skillinfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+					        	<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+							</div>
+					</div>
+					
+			
+			<div id = "skills_outer">	
+				<?php 
+				$ids=array();
+				$skillListing=$this->skillInfoList;
+				//Zend_Debug::dump($skillListing);die;
+				$listing_number=count($skillListing);
+					if($listing_number>0){
+						for($i=0;$i<$listing_number;$i++){
+							$ids[]=$skillListing[$i]['user_skill_id'];
+				?>
+				<div class="un-editable-outer" id="skill<?php echo $skillListing[$i]['user_skill_id'];?>">
+					<h3 style="text-transform:none;">
+						<?php echo $skillListing[$i]['user_skill'];?>
+						<a id="<?php echo $skillListing[$i]['user_skill_id'];?>" href="javascript:;" onclick="editSkill(this)" style="text-decoration:none;">
+							<img src="<?php echo IMAGE_PATH;?>/edit-pencil.png" class="edit-new-icon" title="Edit" />
+						</a>
+					</h3>
+				</div>
+				
+				<?php 
+						}
+					}
+				?>
+			</div>	
+			</form>
+			<!-- Un Editable Outer Starts -->			
+		</div>
+		<!-- Content Right Right Ends -->
+	</div>
+	<!-- Content Right Ends -->

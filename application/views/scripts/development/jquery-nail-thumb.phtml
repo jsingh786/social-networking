@@ -1,0 +1,30 @@
+<?php 
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.js" );
+
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.css" );
+?>
+
+<style type="text/css" media="screen">
+.square-thumb {
+	width: 0px;
+	height: 0px;
+}
+</style>
+
+<script>
+$(document).ready(function(){
+	jQuery('.nailthumb-container').nailthumb({width:570,height:185});
+});
+</script>
+
+<div class="nailthumb-container square-thumb">
+        <img src="<?php echo PUBLIC_PATH; ?>/Imagehandler/GenerateImage.php?image=<?php echo PUBLIC_PATH; ?>/images/albums/temp_storage_for_socialize_wall_photos_post/user_19/wall_thumbnails/Chrysanthemum__1429707420.jpg&h=570&w=570" />
+</div>
+<div class="nailthumb-container square-thumb">
+        <img src="<?php echo PUBLIC_PATH; ?>/Koala_v.jpg" />
+</div>
+<div class="nailthumb-container square-thumb">
+        <img src="<?php echo PUBLIC_PATH; ?>/Awesome_Bridge_11658x6112.jpg" />
+</div>
+
+

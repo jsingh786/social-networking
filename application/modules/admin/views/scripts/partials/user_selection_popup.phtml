@@ -1,0 +1,215 @@
+
+<script>
+$(document).ready(function() 
+{
+	// Checking all checkboxes when click on master check box.
+	$("input.master_select_user_cb").click(function(){
+		
+		if( $('input.master_select_user_cb:checked').length > 0 )
+		{
+			$("input.select_user_cb").attr("checked", "checked");
+		}
+		else
+		{
+			$("input.select_user_cb").removeAttr("checked");
+		}
+	});	
+			
+			//Dialog box to show list of users
+			//Added by hkaur5
+		    $( "div#dialog_user_list" ).dialog({
+			      modal: false,
+			      autoOpen: false,
+			      draggable:true,
+			      width: 370,
+			      show: {
+			    	  effect: "fade"
+			    	  },
+				  hide: {
+					  effect: "fade"
+					  },
+			      buttons: {
+			    		 Add: {
+				    		 click: function () {
+	 	                     $(this).dialog("close");
+   
+	 	                 },
+	 	                 	id: 'add_user',
+	 	                 	text : 'Add'
+			    		 },
+			 	    	 Cancel: {
+			 	                 click: function () {
+			 	                     $(this).dialog("close");
+			 	                 },
+			 	                 class: 'only_text',
+			 	                 text : 'Cancel'
+			 	             }
+			      		}
+				/*open: function (event, ui)
+				{
+					
+
+				},
+				close: function (event, ui)
+				{
+					
+				}*/
+		    });
+		    
+		    //On filter text change event binding.
+		    $('input#search_users').keyup(function() 
+		    {
+		    	// For using containsIN as case insensitive text search.
+		    	$.extend($.expr[":"], 
+		    	{
+		    		"containsIN": function(elem, i, match, array) 
+		    		{
+		    		return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		    		}
+		    	});
+		    	
+		    	//filter keyword
+		    	var keyword = $(this).val();
+		    	
+		    	//If filter keyword changes.
+		    	if( $(this).val() != jQuery.data(this, "lastvalue") )
+		    	{
+		    		
+		    	    if(keyword != "")
+		    	    {
+		    	    	//Hide all users.
+			    	    $('div.searched_users table#user_list tr').hide();
+			    
+			    	    if($('div.searched_users tr:containsIN('+keyword+')'))
+			    	    {
+				    	    $($('div.searched_users tr:containsIN('+keyword+')')).each(function()
+				    	    {
+				    	    	//Show matched users
+				    			$(this).show();
+				    	   
+				    	    });
+			    	    }
+			    	    else
+		    	    	{
+			    	    	//When no user matches keyword.
+			    	    	$('div.searched_users').html('<span style = "padding: 5px; display: inline-block;">No matching results found</span>');
+		    	    	}
+		    	    }
+		    	    // If no filter keyword show all users.
+		    	    else
+			    	{
+		    	    	$('div.searched_users table#user_list tr').show();
+			    	}
+		    	    
+		    	    // To check last value of input filter.
+		    		jQuery.data(this, "lastvalue", keyword);
+		    	}
+		    });
+			
+		});
+
+		/**
+		 * Call function to fetch users list and
+		 * opens user list dialog box.
+		 * @author hkaur5
+		 */
+		function openUserList()
+		{
+			 $('input#search_users').val('');
+			 
+			 //Call function to fetch all users
+			 listUsers();
+			 $( "div#dialog_user_list" ).dialog( "open" );
+		}
+
+		/**
+		 * Get all Active users in ilook
+		 * and dispaly them in table.
+		 * @author hkaur5
+		 * @param filter_text
+		 */
+		function listUsers( filter_text )
+		{
+			image_name = typeof filter_text !== 'undefined' ? filter_text : "";
+			$('div.searched_users table#user_list').html('<span style = "padding: 5px; display: inline-block;">Loading...</span>');
+			jQuery.ajax({
+		        url: "/" + PROJECT_NAME + "admin/manage-users/get-active-ilook-users",
+		        type: "POST",
+		        dataType: "json",
+		        data: {
+		        		'responseType':1,
+		            	'limit':null,
+		            	'offset':null, 
+		            	'sort_column': null,
+		            	'sort_column_alias': null,
+		            	'sort_column_order':null,
+		            	'keep_old_sorting': null,
+		            	'filterText': filter_text,
+		            	'countryFilterValue': null
+		              },
+		        timeout: 50000,
+		        success: function(jsonData) {
+		        	var tbody = '';
+		        	if(jsonData !=0 )
+		        	{
+			        	if( jsonData.user_data.length > 0 )
+			        	{
+			        		for( i in jsonData.user_data )
+				            {
+				    			tbody += '<tr role="row" class="even">';
+					        	tbody += '<td><input type = "checkbox" name = "select_user_cb[]" id="'+jsonData.user_data[i].email+'" class = "select_user_cb" onclick = "" value = "'+jsonData.user_data[i].id+'"></td>';
+				    			tbody += '<td id="'+jsonData.user_data[i].id+'">'+jsonData.user_data[i].firstname+' '+jsonData.user_data[i].lastname+'('+jsonData.user_data[i].email+')</td>';
+				    			tbody += '</tr>';	
+				            }
+			        		$('div.searched_users table#user_list').html(tbody);
+
+			        		//Selecting previous or already selected values.
+			        		$.each( $("input#selected_user_ids").val().split(','), function(index, value) {
+								$("table#user_list input.select_user_cb[value='"+value+"']").prop('checked', true);
+			        		});
+
+			        	}
+		        	}
+		        	else if(jsonData == 0)
+		    		{
+		        		$('div.searched_users table#user_list').html('<span style = "padding: 5px; display: inline-block;">No users found</span>');
+		    		}
+		        }
+			});
+		}
+</script>
+<style>
+.ui-dialog { z-index: 114 !important ;}
+input#search_users
+{
+	float:right;
+}
+label#master_select_checkbox_text
+{
+	display: inline-block;
+    margin: 8px 0 0;
+    padding: 3px;
+}
+table#user_list td 
+{
+	padding:3px;
+}
+input.master_select_user_cb
+{
+	margin: 10px 0 0 4px;
+    padding: 0;
+}
+</style>
+
+<div style="display:none; z-index: 115;" id="dialog_user_list" title="ilook users">
+	<span>
+	<input type = "checkbox" name = "master_select_checkbox" class = "master_select_user_cb">
+	<label id="master_select_checkbox_text"> Select All</label>
+	</span>
+	<input type="text" value="" maxlength="60" placeholder="Filter users" id="search_users" name="search"> 
+	
+	
+	<div style="width: 341px;max-height:300px; min-height:100px;overflow-y:auto;border:2px solid #6C518F;" class="searched_users">
+	<table id="user_list"></table>
+	</div>
+</div>

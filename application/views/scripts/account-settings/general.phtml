@@ -1,0 +1,106 @@
+<?php
+$this->headTitle()->prepend('General settings');
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/account_settings_general.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php 
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/account_settings_general.css" );
+echo $this->render("partials/settings_menu.phtml");
+echo $this->render("partials/add_experience_popup.phtml");
+echo $this->render("partials/add_education_popup.phtml");
+?>
+<style>
+
+form#formChgPassword label.error {
+    margin: 0 0 0 31%;
+    padding: 0 !important;
+    width: 60% !important;
+	line-height: 16px;
+}
+</style>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Jobs Header Starts -->
+	<div class="job-hdr">
+		<div class="job-hdr-top">
+			<h2>General Settings</h2>
+		</div>
+		<!-- Settings Content Starts -->
+		<div class="general_settings bdr-btm-none">
+			<div class="outer_gen_settings">
+				<div class="innner_gen_settings" id="change_pswrd">
+					<label>
+						Password
+					</label>
+					<a  class="edit_icon_pencile chgPswdPencile" href="javascript:;">
+						<img class="edit-new-icon" src="<?php echo PUBLIC_PATH;?>/images/edit-pencil.png">
+					</a>
+				</div>
+				<!-- Change password div starts -->
+				<div id="chg_pswd" class="chg_pswd setting_forms" style="display:none">
+					<form id="formChgPassword" name="formChgPassword">
+						<div id="crnt_pswd_div" class="pswd_div">
+							<span id="crnt_pswd_span"  class="pswd_details_span">CURRENT PASSWORD</span>
+							<input id="current_pswd" class="pswd_details_inpt" type="password" name="current_pswd">
+						</div>
+						<div id="new_pswd_div" class="pswd_div">
+							<span id="new_pswd_span"  class="pswd_details_span">NEW PASSWORD</span>
+							<input id="new_pswd" class="pswd_details_inpt" type="password" name="new_pswd">
+						</div>
+						<div id="cnfrm_pswd_div" class="pswd_div">
+							<span id="cnfrm_pswd_span" class="pswd_details_span" >CONFIRM PASSWORD</span>
+							<input id="cnfrm_pswd" class="pswd_details_inpt" type="password" name="cnfrm_pswd">
+						</div>
+						<div class="set_new_pswd">
+							<input type="button" name="save_pswd" id="btn_change_pswd" value="Submit" class="new-save-btn" onclick="saveNewPassword(this);"/>
+							<a class="text-dark-purple cancel_chg_pswd" style="margin: 0 0 0 4px !important;" onclick="cancelChgPswd(this);"> Cancel </a>
+						</div>
+					</form>
+				</div>
+				<!--  Change password div ends -->
+				<div class="innner_gen_settings" id="change_status">
+					<label>
+						Current Status
+					</label>
+					<a class="edit_status edit_icon_pencile"  href="javascript:;">
+						<img class="edit-new-icon" src="<?php echo PUBLIC_PATH;?>/images/edit-pencil.png">
+					</a>
+				</div>
+				<div class="change_user_type change_setting setting_forms" id="change_user_type">
+					<span>Select Current Status</span>
+					<div class="select_type">
+						<select name="work_status" id="work_status" class="dropdown">
+							<option value="<?php echo \Extended\ilook_user::USER_TYPE_EMPLOYED;?>" <?php echo \Extended\ilook_user::USER_TYPE_EMPLOYED == $this->user_current_type ? "selected":"";?>>Employed</option>
+							<option value="<?php echo \Extended\ilook_user::USER_TYPE_JOB_SEEKER;?>" <?php echo \Extended\ilook_user::USER_TYPE_JOB_SEEKER == $this->user_current_type ? 'selected':'';?>>Job Seeker</option>
+							<option value="<?php echo \Extended\ilook_user::USER_TYPE_STUDENT;?>" <?php echo \Extended\ilook_user::USER_TYPE_STUDENT == $this->user_current_type ? 'selected':'';?>>Student</option>
+							<option value="<?php echo \Extended\ilook_user::USER_TYPE_RECRUITER;?>" <?php echo \Extended\ilook_user::USER_TYPE_RECRUITER == $this->user_current_type ? 'selected':'';?>>Recruiter</option>
+							<option value="<?php echo \Extended\ilook_user::USER_TYPE_HOME_MAKER;?>" <?php echo \Extended\ilook_user::USER_TYPE_HOME_MAKER == $this->user_current_type ? 'selected':'';?>>Home Maker</option>
+						</select>
+					</div>
+					<div class="set_new_type">
+						<input type="button" name="save_status" value="Save" class="new-save-btn" onclick="saveNewUserType(this);"/>
+						<a class="text-dark-purple cancel_edit_user_type" style="margin: 0 0 0 4px !important;" onclick="cancelEditingUserType(this,<?php echo $this->user_current_type ?>);"> Cancel </a>
+					</div>
+				</div>
+<!-- 				<div class="innner_gen_settings" id="close_account_dd" onclick="openCloseRemoveUserDD(this)">  -->
+				<div class="innner_gen_settings" id="close_account_dd" onclick="">
+					<label>
+						Close Account
+					</label>
+					<a  class="edit_status edit_icon_pencile"  href="javascript:;">
+						<img class="edit-new-icon" src="<?php echo PUBLIC_PATH;?>/images/edit-pencil.png">
+					</a>
+				</div>
+				<div class="change_user_type change_setting setting_forms" id="close_account" style="text-align: center;">
+					<input type="button" name="Close_my_account" value="Delete My Account" class="new-save-btn" onclick="closeAccount(this);"/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

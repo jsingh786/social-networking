@@ -1,0 +1,419 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Jobs posted detail' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/short_profile.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/job_posted_detail.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/download_pdf.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/myjob.css" );
+
+// Partial file(side menu)
+if(Auth_UserAdapter::getIdentity())
+{
+	echo $this->partial ( 'partials/jobs_menu.phtml' );
+}
+echo $this->partial("partials/add_contacts_popup.phtml");
+?>
+<style>
+</style>
+<style type="text/css">
+.status-outer-feb{
+	float:right !important;
+}
+.status-right{
+	width:85px !important;
+}
+.mail-grey-hdr-col1 .mid{
+	float:left !important;
+}
+
+.mail-grey-hdr-col1 .chkbx-img.img {
+    margin-left: 20px;
+    margin-right: 15px;
+    width: 11%;
+}
+
+
+.text-purple2-link {
+    color: #6C518F;
+    font-size: 13px;
+    font-weight:normal;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+
+.bookmarks-profile-img {
+    float: left;
+    font-size: 11px;
+    margin: 0 3px 2px 0;
+    padding: 0;
+   /* text-align: center; */
+    width: 40px;
+}
+
+
+.bookmarks-profile-img2 {
+    border: 2px solid #B084E9;
+    float: left;
+    font-size: 11px;
+    height: 36px;
+    margin: 0 3px 2px 0;
+    padding: 0;
+    text-align: center;
+    width: 36px;
+}
+.content{
+	min-height:0;
+}
+.quickview-outer {
+    left: -247px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 48px;
+    width: 547px;
+    z-index: 9999;
+}
+.openClose2Cls{
+	background: url("../../images/arrow-down-blue.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #DEDEDE;
+    color: #48545E;
+    float: left;
+    margin: 0;
+    padding: 1% 0;
+    text-decoration: none;
+    width: 100%;
+}
+.openCloseLinks{
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 0;
+    padding: 0 4% 1%;
+    width: 92%;
+}
+.jobs-text1{
+	float:right;
+}
+.job-collapse{
+	float:right;
+	height:3px;
+	width:13px;
+	border:none;
+	margin-top:2px;
+	cursor:pointer;
+}
+.job-content{
+	margin-bottom:20px;
+}
+.downArrow {
+	/* position:absolute; */
+	float:right;
+	margin-top:6px;
+	top:13px;
+	width:14px;
+	height:9px;
+	background: url('<?php echo IMAGE_PATH; ?>/arrow-down-blue.png');
+}
+.upArrow{
+	position:absolute;
+	right:0;
+	top:13px;
+	width:14px;
+	height:9px;
+	background: url('<?php echo IMAGE_PATH; ?>/arrow-up-blue.png');
+}
+div.saved_job_img_inner{
+	   display: table-cell;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px !important;
+	
+}
+div.chkbx-img{
+	border: 1px solid #C0C0C0 !important;
+    display: inline-block !important;
+    float: left !important;
+    height: 60px !important;
+    margin: 0 0 0 23px !important;
+    padding: 0 !important;
+    width: 60px !important;
+}
+</style>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+<input type="hidden" value="0" id="recordInitialPoint" name="recordInitialPoint">
+<input type="hidden" value="0" id="recordCandidateInitialPoint" name="recordCandidateInitialPoint">
+	<!-- Bookmarks Header Starts -->
+	<div class="mail-hdr">
+		<h2>Jobs Posted</h2>
+		<!-- <div class="need-help">
+			<div class="need-help-text">
+				<a href="/<?php //echo PROJECT_NAME?>job/create-job" class="text-purple-link">Post a Job</a>
+				<img width="16" align="bottom" height="13" src="<?php //echo IMAGE_PATH; ?>/icon-reference-hover.png">
+			</div>
+		</div>-->
+
+		<div class="bookmarks-add-new bdr-btm-none">
+            <div class="jobs-text1 text-grey2">
+<?php 
+            if($this->jobsListing[0]->getJobStatus()->getId() == '1')
+            {
+?>
+                <h3> 
+                	<font  class="text-purple" style="color:#6C518F !important;" ><?php echo $this->countActiveJobs;?> <a href="/<?php echo PROJECT_NAME?>job/active-jobs" class="text-purple"  style="text-decoration:none;color:#6C518F !important;">Active</a></font> &nbsp;  | &nbsp; <font style="color:black;"><?php echo $this->countExpiredJobs;?> <a href="/<?php echo PROJECT_NAME?>job/expired-jobs" style="text-decoration:none;color:black;" >Expired</a></font>  &nbsp; | &nbsp; <font style="color:black;">  <?php echo $this->countClosedJobs;?> <a href="/<?php echo PROJECT_NAME?>job/closed-jobs" style="text-decoration:none;color:black;">Closed</a></font>
+                </h3>
+<?php 
+            }
+?>
+<?php 
+            if($this->jobsListing[0]->getJobStatus()->getId() == '2')
+            {
+?>
+                <h3> 
+                	<font  style="color:black;"><?php echo $this->countActiveJobs;?> <a href="/<?php echo PROJECT_NAME?>job/active-jobs" style="text-decoration:none;color:black">Active</a></font> &nbsp;  | &nbsp; <font class="text-purple"  style="color:#6C518F !important;"><?php echo $this->countExpiredJobs;?> <a href="/<?php echo PROJECT_NAME?>job/expired-jobs" class="text-purple" style="text-decoration:none;color:#6C518F !important" >Expired</a></font>  &nbsp; | &nbsp;  <font style="color:black;"> <?php echo $this->countClosedJobs;?> <a href="/<?php echo PROJECT_NAME?>job/closed-jobs" style="text-decoration:none;color:black;">Closed</a></font>
+                </h3>
+<?php 
+            }
+?>
+<?php 
+            if($this->jobsListing[0]->getJobStatus()->getId() == '4')
+            {
+?>
+                <h3> 
+                	<font  style="color:black;" ><?php echo $this->countActiveJobs;?> <a href="/<?php echo PROJECT_NAME?>job/active-jobs" style="text-decoration:none;color:black">Active</a></font> &nbsp;  | &nbsp; <font style="color:black;"><?php echo $this->countExpiredJobs;?> <a href="/<?php echo PROJECT_NAME?>job/expired-jobs" style="text-decoration:none;color:black;" >Expired</a></font>  &nbsp; | &nbsp;  <font  style="color:#6C518F !important;" class="text-purple"><?php echo $this->countClosedJobs;?> <a href="/<?php echo PROJECT_NAME?>job/closed-jobs" class="text-purple" style="text-decoration:none;color:#6C518F !important;">Closed</a></font> 
+                </h3>
+<?php 
+            }
+?>
+             </div>
+        </div>
+   </div>
+	<!-- Bookmarks Header Ends -->
+
+	
+	<!-- Jobs Right Content Starts -->
+
+	<?php 
+	if($this->jobsListing)
+	{
+	foreach ( $this->jobsListing as $jobs )
+	{
+		if($jobs->getJob_image()!=null)
+		{
+			
+			$imgPath = IMAGE_PATH.'/jobs/'.$jobs->getJob_image().'_'.$jobs->getCreated_at()->getTimestamp();
+		}
+		else 
+		{
+			$imgPath = IMAGE_PATH.'/job_default_image.png';
+		}
+		$job_status = $jobs->getJobStatus()->getId();
+	?>
+	<!-- Col1 -->
+	<input type="hidden" id="jobId" name="jobId" value="<?php echo $jobs->getId();?>" />
+	<div class="mail-grey-hdr-col1">
+		<div class="chkbx-img img">
+			<a href = "<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>/job/job-detail/job_id/<?php echo $jobs->getId();?>">
+				<div class="saved_job_img_inner">
+					<img style="width:60px" src="<?php echo PUBLIC_PATH; ?>/Imagehandler/GenerateImage.php?image=<?php echo $imgPath;?>&h=60&w=60">
+				</div>
+			</a>
+		</div>
+		<div class="mid text-grey2">
+
+			<h4>
+			<a title="<?php echo $jobs->getJob_title();?>" class="text-purple-link" style="text-decoration:none !important;color:#6C518F !important" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>/job/job-detail/job_id/<?php echo $jobs->getId();?>">	<?php if(strlen($jobs->getJob_title())>30){ echo substr($jobs->getJob_title(),0,30)."...";} else { echo $jobs->getJob_title();} ?> | <font class="text-purple2"><?php echo $jobs->getJob_reference(); ?></font></a>
+			</h4>
+			<p class="text-purple2" title="<?php echo $jobs->getCompany()->getName()?>"><?php if(strlen($jobs->getCompany()->getName())>30){ echo substr($jobs->getCompany()->getName(),0,30)."...";} else { echo $jobs->getCompany()->getName();}?></p>
+			<p><?php echo $jobs->getIndustryRef()->getTitle().", ".$jobs->getCountryRef()->getName();?></p>
+<?php 
+			if( $jobs->getSalaryRange() )
+			{		
+?>
+			<p><?php echo $jobs->getSalaryRange()->getCountryRef()->getCurrency_symbol()." ".$jobs->getSalaryRange()->getMin_salary()." - ".$jobs->getSalaryRange()->getMax_salary();?>| <?php echo $jobs->getJobType()->getName();?> 
+			<?php if($jobs->getExperieneceLevel()){?>
+			| <?php echo  $jobs->getExperieneceLevel()->getDescription();?>
+			<?php } ?>
+			</p>
+<?php 
+			}
+?>			
+		</div>
+
+
+		<div class="status-outer-feb">
+
+			<!--  <div class="status-left">
+				<a class="text-purple2-link" href="javascript:;">EDIT JOB</a>
+			</div>
+			<div class="status-right">
+				<img src="<?php //echo IMAGE_PATH; ?>/icon-pencil3.png" width="17" height="17" align="absmiddle" />
+			</div>-->
+
+			<div class="status-left">POSTED:</div>
+			<div class="status-right"><?php echo $jobs->getCreated_at()->format("d-m-Y");?></div>
+
+			<div class="status-left">EXPIRES:</div>
+			<div class="status-right"><?php echo $jobs->getExpiry_date()->format("d-m-Y");?></div>
+
+			<div class="status-left">Action:</div>
+			<div class="status-right text-purple2">
+<?php
+		if ($jobs->getJobStatus ()->getStatus () == "Active")
+		{
+?>
+				<select style="font-size: 12px;" class="statuss" onchange = "performAction(this)" id ="<?php echo $jobs->getId ();?>" id="<?php echo $jobs->getId ();?>" rel="<?php echo $jobs->getId ();?>">
+					<option value="0" >Select</option>
+					<option value="1" >Close</option>
+					<option value="2">Renew</option>
+					<option value="3">Share</option>
+				</select>
+<?php
+		}
+		elseif ($jobs->getJobStatus ()->getStatus () == "Expired") 
+		{
+?>
+				<select style="font-size: 12px;" class="statuss" onchange = "performAction(this)" id ="<?php echo $jobs->getId ();?>" id="<?php echo $jobs->getId ();?>" rel="<?php echo $jobs->getId ();?>">
+					<option value="0">Select</option>
+					<option value="4">Close</option>
+					<option value="5">Renew</option>
+					<option value="6">Share</option>
+				</select>
+<?php
+		} 
+		elseif ($jobs->getJobStatus ()->getStatus () == "Closed") 
+		{
+?>
+				<select style="font-size: 12px;" class="statuss" onchange = "performAction(this)" id ="<?php echo $jobs->getId ();?>" id="<?php echo $jobs->getId ();?>" rel="<?php echo $jobs->getId ();?>">
+						<option value="0" >Select</option>
+						<option value="7" >Delete</option>
+				</select>
+<?php
+		}
+
+
+?>
+			</div>
+		</div>
+
+		<div class="job-content">
+			<div class="text-purple" style="border-bottom:1px solid #000000;padding-bottom:10px;">
+				<a href="/<?php echo PROJECT_NAME?>job/job-detail/job_id/<?php echo $jobs->getId();?>" class="text-purple-link" >More Details</a> 
+				<span class="apply-2-job job-collapse jobDetail" rel="<?php echo $jobs->getId();?>"></span>
+			</div>
+			
+		</div>
+
+	</div>
+	<!-- Col1 -->
+	<!-- hide area start.. -->
+<div id="detail_<?php echo $jobs->getId();?>" style="display:block; min-height: 817px !important; background: none repeat scroll 0 0 #FFFFFF;">	
+	<div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="jobDesc openClose2Cls" rel="<?php echo $jobs->getId();?>">job description<div class="downArrow"></div></a>
+		</h4>
+		<div style="margin-top:5px;float:left;display:block;border-bottom: 1px solid #2E3840;padding-bottom: 6px;width: 100%;" id="desc_<?php echo $jobs->getId();?>"><?php echo $jobs->getJob_description();?> </div>
+	</div>
+	
+	<!-- <div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="jobPosting openClose2Cls" rel="<?php // echo $jobs->getId();?>">JOB POSTING</a>
+		</h4>
+		<div style="margin-top:5px;float:left;display:none;border-bottom: 1px solid #2E3840;padding-bottom: 6px;width: 100%;" id="postedBy_<?php // echo $jobs->getId();?>"><?php //echo "Posted By: ".$jobs->getJob_posted_by();?> </div>
+	</div>-->
+
+	<div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="applicants openClose2Cls" rel="<?php echo $jobs->getId();?>" style="position:relative;">Applicants<div class="downArrow"></div></a>
+		</h4>
+		<div class="bdr-btm applicants_<?php echo $jobs->getId();?>" style="display:none;" >
+
+		
+		</div>
+	</div>
+	
+	<div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="candidates openClose2Cls" rel="<?php echo $jobs->getId();?>" style="position:relative;">candidate shortlist<div class="downArrow"></div></a>
+		</h4>
+		<div class="bdr-btm candidates_<?php echo $jobs->getId();?>" style="display:none;" >
+
+		</div>
+	</div>
+	
+
+
+</div>
+<!-- end of the hide div... -->
+<?php 
+		}
+	}
+	else{
+		echo "No Record Found!";
+	}
+?>
+
+	
+	<!-- Col1 -->
+
+	<!-- Jobs Right Content Ends -->
+</div>
+<!-- Content Right Right Ends -->
+<!-- Dialog Box -->
+<div id="close_job_dialog_confirm_active" title="Close Job" style = "display:none;">
+  <p>
+  	Please confirm that you want to close the selected job(s)?
+  	<br>
+  	<br>
+ 	Your confirmation will remove the job from iLook database.
+	Job Candidates will no longer be able to view and apply
+	for the (se) jobs. But you will still be able to &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;review your
+ 	job status and any applications you have received.
+ 	<br>	
+ 	<br>	
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do you want to close this job listing?
+  </p>
+</div>
+<div id="close_job_dialog_confirm_expire" title="Close Job" style = "display:none;">
+  <p>
+  	Please confirm that you want to close the selected job(s)?
+  	<br>
+  	<br>
+ 	Your confirmation will remove the job from iLook database.
+	Job Candidates will no longer be able to view and apply
+	for the (se) jobs. But you will still be able to &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;review your
+ 	job status and any applications you have received.
+ 	<br>	
+ 	<br>	
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do you want to close this job listing?
+  </p>
+</div>
+<div id="renew_job_dialog_box_active" class="renew_job" title="Select a new expiry date" style = "display:none;height:300px">
+  <p>
+<input id="job_expiry_date" class="job_expiry_date" type="text" readonly="" style="width:97%; margin-left:1px;" name="job_expiry_date">
+  </p>
+  <div></div>
+</div>
+<div id="renew_job_dialog_box_expire" class="renew_job" title="Select a new expiry date" style = "display:none;height:300px">
+  <p>
+<input id="job_expiry_date" class="job_expiry_date" type="text" readonly="" style="width:97%; margin-left:1px;" name="job_expiry_date">
+  </p>
+  <div></div>
+</div>
+<div id="delete_job_dialog_confirm1" title="Delete Job" style = "display:none;">
+  <p>
+  	Please confirm that you want to delete the selected job(s)?
+  	<br>
+  	<br>
+	Your confirmation will remove the job from your profile and  &quot;delete &quot; the job completely and you will not be able to view the details of this &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;job anymore.
+	<br>
+  	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do you want to remove this job from your profile?	
+  </p>
+</div>

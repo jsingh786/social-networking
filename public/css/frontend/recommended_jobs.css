@@ -1,0 +1,332 @@
+.mail-grey-hdr-col1 .right
+{
+	float: right !important;
+    margin: 0 23px 0 0 !important;
+    padding: 0 !important;
+    text-align: right !important;
+    width: 18.5% !important;
+}
+
+.mail-grey-hdr-col1 
+{
+    border-left: 3px solid #F0F0F0 !important;
+    float: left !important;
+    margin: 0 !important;
+    padding: 1.5% !important;
+    position: relative !important;
+    width: 96% !important;
+}
+.mail-grey-hdr-col1-no-records
+{
+    background: none repeat scroll 0 0 #FFFFFF !important;
+/*     border-right: 4px solid #C4C4C4 !important; */
+    float: left !important;
+/*     margin: 2px 0 0 2px !important; */
+    padding: 10px 0 !important;
+    position: relative !important;
+    width: 261.5% !important;
+}
+
+.apply-2-job 
+{
+    background: url("../images/arrow-down-blue.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+/*     border-bottom: 1px solid #2E3840 !important; */
+    float: left !important;
+    margin: 0 0 15px !important;
+    padding: 0 0 10px !important;
+    width: 100% !important;
+}
+
+
+.text-purple {
+    color: #B084E9;
+}
+
+.job-hdr {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    float: left !important;
+    margin: 0 0 0 0px !important;
+    padding: 30px 4% 0 !important;
+    width: 92.1% !important;
+}
+.mail-grey-hdr-col1 .right .bot a {
+    text-decoration: none;
+}
+.text-purple-link {
+    color: #B084E9;
+    text-decoration: none;
+}
+a {
+    outline: medium none;
+}
+p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+h1, h2, h3, h4, h5 {
+    font-family: oswaldlight;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+a.applied
+{
+	cursor:default;
+	color:#A0A0A0;
+}
+a.applied:hover
+{
+	text-decoration:none !important;
+	color:#A0A0A0 !important;
+}
+/* .mail-grey-hdr-col1:hover {
+    border-right: 4px solid #6C518F !important;
+} */
+div.job_detail_img_inner{
+	   display: table-cell;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+	
+}
+div.job_detail_img_outer{
+	     border: 1px solid #C0C0C0;
+    display: inline-block;
+    float: left;
+    height: 60px;
+    margin: 0 0 0 18px;
+    padding: 0;
+    width: 60px;
+	
+}
+/* div.highlight_on_hover:hover */
+/* { */
+/* 	background-color:#6C518F !important; */
+/* 	color:white !important; */
+/* } */
+.job-content{
+	margin:0 0 2px 0px !important;
+}
+.applicant-col1
+{
+	margin: 8px 0 10px !important;
+}
+.icon-text{
+ 	width:auto;
+	margin:0;
+}
+.icon-text img{
+ 	width:auto;
+	margin:1px 5px 0 0;
+	float:left;
+}
+.icon-text-text{
+ 	width:auto;
+	margin:0 0 0 0;
+	float:left;
+}
+.icon-text-text a{
+	color:#B084E9;
+	text-decoration:none;
+}
+.img-align{
+	vertical-align:middle;
+}
+.apply-2-job a {
+    float: left;
+    margin: 0 20px -9px 0 !important;
+	text-decoration: none;
+	color : #66696a !important;
+}
+.job-bg-white{
+	background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 0;
+    padding: 0 0 2px;
+}
+.apply-from-company{
+	  background: none repeat scroll 0 0 #6C518F;
+    float: none !important;
+    margin: 10px auto;
+    padding: 5px 8px;
+    width: 165px;
+}
+.apply-from-company a{
+	color:#fff;
+   text-decoration: none;
+}
+.apply-from-company a:hover{
+   text-decoration: none;
+}
+.mail-grey-hdr-col1 .right .top{
+}
+	font-size: 12px;
+.mail-grey-hdr-col1 .chkbx-img.img {
+    margin-left: 20px;
+    width: 12%;
+}
+
+.mail-grey-hdr-col1 .mid {
+    float: left;
+    padding: 0 0 0 2% !important;
+    width: 63% !important;
+}
+
+.mail-grey-hdr-col1 .right .top {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 129px;
+}
+.applicant-col1-left {
+    float: left;
+    width: 200px;
+}
+.black-bold{
+	color:#000;
+	font-weight:bold;
+}
+
+.changed-h3-font{
+    font-size: 17px !important;
+	font-family: arial !important;
+}
+.highlight_on_hover{
+	font-family: arial !important;
+}
+.remove-bg-gray{
+	
+}
+.btn-purple-lt{
+	background: none repeat scroll 0 0 #6C518F !important;
+}
+.job-active-bdr
+{
+    width: 99.2%;
+}
+.no-border-mail-grey-hdr-col1
+{
+ 	background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 2px 0 0 2px;
+    overflow: hidden;
+    padding: 10px 0;
+    position: relative;
+    width: 99.5%;
+	margin-top: 0 !important;
+}
+.rcmnded-job-title
+{
+	font-size:16px;
+}
+p.rcmnded-job-cmpny-name , p.rcmnded-job-industry-name
+{
+	font-size:14px;
+	
+}
+p.rcmnded-job-cmpny-name 
+{
+	font-weight:bold;
+	
+}
+p.rcmnded-job-salary-exp
+{
+	font-size:13px;
+}
+
+div.no_messages {
+     background-color: #ffffff;
+    float: left;
+    font-size: 19px;
+    height: 447px;
+    padding: 100px 0;
+    text-align: center;
+    width: 100%;
+}
+
+div.no_messages .no_messages-img {
+    margin:0 auto 30px;
+	width:70px;
+}
+div.no_messages .no_messages-img img{width: 100%;}
+div.no_messages .no_messages-data {
+    color: #797979;
+}
+
+p.no_feedbacks {
+    color: #a0a0a0;
+    font-family: opensansregular;
+    font-size: 13px;
+    left: 222px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+}
+div.no_more_records {
+    background: none repeat scroll 0 0 white;
+    clear: both;
+    display: block;
+    padding: 5px 3px;
+    text-align: center;
+}
+
+div#jobslisting 
+{
+    background: none repeat scroll 0 0 white;
+    float: left;
+    min-height: 747px;
+    width: 100%;
+}
+
+
+.apply-2-job-lt{
+	width:auto;
+	margin:0;
+	padding:0;
+}
+.apply-2-job-lt a.save-icon{
+	margin:0;
+	padding:0;
+	background: url("../../images/save-icon.png") no-repeat;
+}
+.apply-2-job-lt a.save-icon:hover{
+	background: url("../../images/save-hover.png") no-repeat;
+}
+.apply-2-job-lt a span{ width:auto; color:#a0a0a0;}
+.apply-2-job-lt a:hover span{ width:auto; color:#b084e9;}
+
+.apply-2-job-rt{
+	width:auto;
+	margin:0;
+	padding:0;
+}
+.apply-2-job-rt a{
+	margin:0;
+	/* padding:0; */
+	background: url("../../images/hand-icon.png") no-repeat;
+	padding:3px 0 4px 20px;
+}
+.apply-2-job-rt a:hover{
+	background: url("../../images/hand-icon-hover.png") no-repeat;
+}
+.apply-2-job-rt a span{ width:auto; color:#a0a0a0;}
+.apply-2-job-rt a:hover span{ width:auto; color:#b084e9; text-decoration: none;}
+
+.save-icon > span{
+	margin-left: 18px;
+	color : #a0a0a0;
+}
+
+
+div.single-joblisting{
+	background: #fff none repeat scroll 0 0;
+    display: block;
+	float:left;
+	width : 100%;
+}
+div.single-joblisting:hover{
+	background: #f3f3f3 !important;
+    display: block;
+	float:left;
+}

@@ -1,0 +1,152 @@
+.mail-grey-hdr-col1-new {
+    background: none repeat scroll 0 0 #fff;
+    float: left;
+    margin: 0 0 0 -1px;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+}
+p.no_feedbacks {
+    color: #a0a0a0;
+    font-family: opensansregular;
+    font-size: 13px;
+    left: 222px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+}
+.col3 {
+ 	width:92% !important;
+	margin:0px;
+	padding:10px 4%;
+	float:left;
+	background:#fff;
+}
+
+.text-grey3 {
+    color: #A0A0A0 !important;
+}
+
+
+.prof-img
+{
+ 	border: 1px solid #808080;
+    display: table-cell;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    width: 50px;
+}
+ul.token-input-list-facebook {
+
+    width: 367px !important;
+   
+}
+div.token-input-dropdown-facebook {
+
+	 width: 367px !important ; 
+}
+.mail-grey-hdr-col1 .chkbx-img {
+    width: auto !important;
+}
+
+.mail-all-hdr .fr .col1 img {
+    margin: 0 0 0 0px !important;
+}
+.mail-grey-hdr-col1 .mid {
+	float:left;
+/* 	width: 470px !important; */
+}
+.photoalbum-hdr h2 
+{
+	border-bottom:none !important;
+}
+/* .mail-grey-hdr-col1 .right { */
+/*     width: 126px !important; */
+/* } */
+div.mid p.for_position
+{
+	padding-bottom : 12px !important;
+}
+p.full_note
+{
+	word-wrap:break-word;
+	display:inline;
+	cursor:default;
+}
+p.clickable_note
+{
+	word-wrap:break-word;
+	display:inline;
+	cursor:default;
+}
+p.p_all_note_text
+{
+	word-wrap:break-word;
+}
+div.full_text
+{
+	display:none;
+}
+span.show_less , span.show_more
+{
+	cursor: pointer;
+	font-weight : bold;
+}
+.quotes-outer
+{
+ 	float: left;
+    padding: 0;
+    width: 98%;
+}
+.quotes-lt
+{
+	float: left;
+    padding: 0;
+    width: 30px;
+}
+.quotes-mid
+{
+	float: left;
+    margin: 10px 0 0;
+    max-width: 94%;
+}
+.quotes-rt
+{
+	width:7%;
+	margin:0;
+	padding:0;
+	float:left;
+	height:100%;
+}
+div.fdbck_postion
+{
+   	color: #a0a0a0;
+    float: left;
+    font-size: 13px;
+    padding: 0 2% 40px;
+    text-align: right;
+    width: 96%;
+}
+div.mid h4 { text-transform: capitalize !important;}
+.photoalbum-hdr h2 {
+    border-bottom: 1px solid #c4c4c4 !important;
+}
+div.no_messages {
+    background-color: #ffffff;
+    float: left;
+    font-size: 29px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+	min-height:437px;
+}
+div.no_messages {
+    font-size: 29px;
+    text-align: center;
+}
+.no_messages-data {
+    color: #808080;
+    font-size: 17px;
+    margin: 10px 0 0;
+}

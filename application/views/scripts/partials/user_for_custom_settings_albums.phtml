@@ -1,0 +1,30 @@
+<!-- Including CSS -->
+<div id="gmail_popup" class = "popup" style = "display: none;">
+	<div class="forgot-password-outer">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr">
+			<div id="forgot-password" class="left text-white">
+				<h2>Links</h2>
+			</div>
+
+			<div class="right">
+				<img class="close_popup"
+					src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+					title="Close" width="21" height="20" />
+			</div>
+		</div>
+		<!-- Forgot Password Header -->
+		<form id="email_contacts_form">
+			<!-- Forgot Password Content -->
+			<div class="forgot-password-content">
+				<div class="contact-list" id="modal_contacts">
+				</div>
+				<span id="gmail_import" class="fr">
+					<input type = "hidden" name = "selected_album_id" id = "selected_album_id" value = ""/>
+					<input id="gmail_import_btn" class = "custom_privacy_popup_ok_btn" type="button" value="OK" name="send_invitation_gmail">
+				</span>
+			</div>
+			<!-- Forgot Password Content -->
+		</form>
+	</div>
+</div>

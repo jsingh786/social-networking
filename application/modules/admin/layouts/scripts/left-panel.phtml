@@ -1,0 +1,173 @@
+<?php
+$controller = $this->controllerName;
+$action = $this->action;
+$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+//Zend_Debug::dump($params); die;
+?>
+<div id="adminmenuback" class="content-left">
+	<div id="adminmenuwrap">
+		<div class="logo">
+			<a href="/<?php echo PROJECT_NAME?>admin"> <img alt=""
+				src="<?php echo PUBLIC_PATH;?>/images/logo.png" width="" height="">
+			</a>
+		</div>
+		<div class="admin-sidebar-headings">
+			<h2>Administration</h2>
+		</div>
+		<ul id="adminmenu" role="navigation">
+<?php 
+			// you need to add each of the request parameters to url
+			$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+			// remove the system parameters, $this->url will put them back
+			
+			$actionn = $params ['action'];
+			$controllerr = $params ['controller'];
+
+			if(Auth_AdminAdapter::getIdentity()->getRole()->getId() != 2)
+			{ 
+?>
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'sub-admins' )
+			{	
+?>
+<?php 
+			echo 'active';
+			}
+?>				
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/sub-admins/"
+				class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				tabindex="1" title="Sub admins">
+				Sub admin
+				</a>
+			</li>
+<?php 
+			}
+?>
+			<!--Manage users-->
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'manage-users' )
+			{	
+?>
+<?php 
+			echo 'active';
+			}
+?>				
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/manage-users/"
+				class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				tabindex="1" title="">
+				User Management
+				</a>
+			</li>
+			
+			<!--Activities-->
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'activities' )
+			{	
+?>
+<?php 
+			echo 'active';
+			}
+?>				
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/activities/"
+				class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				tabindex="1" title="">
+				Activity Log
+				</a>
+			</li>
+						<!-- Sub admin -->
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'reported' )
+			{	
+?>
+<?php 
+				echo 'active';
+			}
+?>				
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/reported/"
+				class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				tabindex="1">
+				Reported Abuse
+				</a>
+			</li>
+			
+			<!--  Jobs -->
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'jobs' )
+			{	
+?>
+<?php 
+				echo 'active';
+			}
+?>				
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/jobs/"
+				class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				tabindex="1">
+				Jobs
+				</a>
+			</li>
+			
+			<!--  Enquiry -->
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'enquiry' )
+			{	
+?>
+<?php 
+				echo 'active';
+			}
+?>				
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/enquiry/"
+				class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				tabindex="1">
+				Enquiry
+				</a>
+			</li>
+			
+				<!--  Analytics -->
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'analytics' )
+			{	
+?>
+<?php 
+				echo 'active';
+			}
+?>				
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/analytics/"
+				class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				tabindex="1">
+				Analytics
+				</a>
+			</li>
+			<!--  TrackEmails-->
+			<li class="imbull-has-submenu  imbull-not-current-submenu imbull-menu-open menu-top menu-icon-categories
+<?php
+			if( $controllerr == 'track' )
+			{
+				?>
+<?php
+				echo 'active';
+			}
+			?>
+				" id="menu-article">
+				<a href="/<?php echo PROJECT_NAME;?>admin/track/"
+				   class="imbull-has-submenu imbull-has-current-submenu imbull-menu-open menu-top menu-icon-shop"
+				   tabindex="1">
+					Track Emails
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>

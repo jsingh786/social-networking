@@ -1,0 +1,10 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Jobs' );
+// Javascript
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/jobs_listing.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/jobs_listing.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+?>

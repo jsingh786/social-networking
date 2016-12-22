@@ -1,0 +1,113 @@
+
+.text-white {
+    color: #FFFFFF;
+}
+.fr {
+    float: right !important;
+}
+.forgot-password-content span 
+{
+    margin: 0 !important;
+}
+
+ul.token-input-list-facebook 
+{
+	width: 91.5% !important;
+	background-color:#F2F2F2 !important;
+	border:1px solid #F2F2F2 !important;
+ 	margin-bottom: 16px;
+   
+}
+.mail-sendmsg-col2 span input[type="text"] 
+{
+	background-color:#F2F2F2 !important;
+	border: 1px solid #F2F2F2 !important;
+	height: 33px!important;
+	font-family:arial;
+}
+div.token-input-dropdown-facebook 
+{
+	 width: 367px !important ; 
+}
+div.fr_btn
+{
+	margin:10px 10px 0 0;
+}
+.mail-save-draft 
+{
+    width: 96% !important;
+	border-bottom: none !important;
+	border-top: none !important;
+}
+textarea.textarea
+{
+	background-color:#F2F2F2 !important;
+	border: 1px solid #F2F2F2 !important;
+		margin-top: 6px;
+}
+.mail-sendmsg-col2-content
+{
+	margin:0 !important;
+	width:96.5% !important;
+}
+.photoalbum-outer
+{
+	height:818px !important;
+	background-color:white !important;
+}
+.mail-sendmsg-col2 span {
+    float: left;
+    margin: 0;
+    min-height: 45px;
+    padding: 0;
+    width: 105%;
+}
+
+.mail-sendmsg-col2 span img {
+    margin: 10px 0 0 10px;
+}
+div.fr_cancel
+{
+	  margin: 10px 0 0 0 !important;
+}
+
+.photoalbum-hdr 
+{
+	height: 66px;
+}
+/*Ckeditor CSS*/
+span#cke_1_top , span#cke_1_bottom
+{
+	display:none !important;
+}
+div#cke_provider_msg span#cke_1_top , span#cke_1_bottom
+{
+	display:block !important;
+}
+
+.cke_1.cke_chrome , .cke_1.cke_chrome 
+{
+	border:none !important;
+}
+a#feedback_contacts_popup
+{
+	display: inline-block;
+    margin-top: -5px;
+}
+a#reference_contacts_popup
+{
+	display: inline-block;
+    margin-top: -5px;
+}
+select.dropdown
+{
+	width:91.5% !important;
+}
+div.no_messages {
+    background-color: #ffffff;
+    float: left;
+    font-size: 29px;
+    padding: 150px 0;
+    text-align: center;
+    width: 100%;
+}

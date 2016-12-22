@@ -1,0 +1,36 @@
+@CHARSET "ISO-8859-1";
+
+.admin-form-lt span input{ margin-bottom:0 !important;}
+.admin-form-rt span input{ margin-bottom:0 !important;}
+
+.cross_image_icon {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    left: 85px;
+    position: absolute;
+    top: 3px;
+}
+
+input#admins-cancel{
+	padding : 9px 10px !important;
+}
+
+span#admin_profile_image{
+	position : relative
+}
+
+input#expiry_date {
+	background-color : #fff !important;
+	cursor : text !important;
+}
+
+
+div.admin-form div.error {
+    color: #ff5b5b;
+}
+
+div.pswd_text {
+    color: #b94a48;
+    margin-bottom: 6px;
+}
+

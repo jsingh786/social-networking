@@ -1,0 +1,8 @@
+/*****20may *****/
+.tracker-img{width:100%; text-align:center; float:left;}
+.tracker-data{width:100%; text-align:center; float:left;}
+.tracker-data p{ font-weight: bold; text-align:left; font-size:14px;}
+.tracker-data ul{ margin:0; padding:10px 0 0 0px;}
+.tracker-data ul li{ margin:0; padding:15px 0 0 0px; text-align:left; list-style-type: none; line-height: 25px;}
+.tracker-hdrlink{ color:#6c518f; text-align:left; font-weight:bold; font-size: 15px;}
+.bot-link-content{font-family: Arial;}

@@ -1,0 +1,108 @@
+body {
+   margin-top: 30px;
+}
+
+.logout {
+   display: none;
+}
+
+#content form .alert {
+   display: none;
+}
+
+#content h3 {
+   border-bottom: 1px solid #e5e5e5;
+   margin-bottom: 20px;
+}
+
+#content .form {
+   min-height: 180px;
+}
+
+#content .row:first-child {
+   margin-bottom: 30px;
+}
+
+#content .col-md-4 > p {
+   margin-bottom: 30px;
+}
+div.jsxc_window div.jsxc_textarea div.jsxc_chatmessage div a
+{
+   font-weight: bold;
+   color: #404040;
+   text-decoration: none;
+}
+div.jsxc_window div.jsxc_textarea div.jsxc_chatmessage div a:hover
+{
+   color: #404040;
+}
+div.jsxc_window div.jsxc_textarea div.jsxc_chatmessage span.preview {
+   border-radius: 7px;
+   display: inline-block;
+   margin-bottom: 1px;
+   overflow: hidden;
+   position: relative;
+}
+div.jsxc_window div.jsxc_textarea div.jsxc_chatmessage a.download {
+   background: rgba(0, 0, 0, 0) url("../../../images/icon-download2.png") no-repeat scroll 0 0 / 20px 20px;
+   border: 1px solid silver;
+   border-radius: 5px;
+   height: 20px;
+   opacity: 0.5;
+   position: absolute;
+   right: 5px;
+   top: 5px;
+   width: 20px;
+}
+div.jsxc_window div.jsxc_textarea div.jsxc_chatmessage a.download:hover{
+   opacity: 1;
+   border: 2px solid silver;
+   right: 4px;
+   top: 4px;
+}
+div#jsxc_windowList {
+   z-index: 112!important;
+}
+/************* Dropzone css *******************/
+
+
+div#chat_attachment_form .chat-pop-outer{ right:0; left:0; background:#fff; display:table;}
+.chat-pop-hdr{box-sizing: border-box; width: 100% !important; background:#f5f6f7; height: 40px;
+   line-height: 40px; padding: 0 15px;}
+.chat-pop-hdr h2{font-size: 17px !important; margin-top: 0 !important; font-weight:bold; width:97%; float:left;}
+.chat-labelspan-outer{ width:100%; float:left; min-height:50px;   color: #000;}
+.chat-labelspan-outer label{ width:30%; float:left; text-align:right; line-height:30px;}
+.chat-labelspan-outer span.inputfield .error{text-align:left; }
+.chat-labelspan-outer span.inputfield { width:68%; float:left; text-align:left; margin-left:2%;}
+.chat-labelspan-outer span.inputfield input[type="text"]{ padding:8px; width:72%; background: #f2f2f2; border:none; box-sizing: border-box;}
+.chat-labelspan-outer span.inputfield select{ padding:8px; width:72%; background: #f2f2f2;  border:none; box-sizing: border-box;}
+.chat-labelspan-outer span.inputfield select.enquiry{  margin-right: 10px;}
+.chat-labelspan-outer span.inputfield textarea{ width:70%; min-height:200px;}
+.pb20{ padding-bottom:20px !important;}
+
+div#chat_attachment_form .close_bpopup {
+   cursor: pointer;
+   float: right;
+   height: 12px;
+   margin: 14px 0 0;
+   width: 12px;
+}
+
+div#chat_attachment_form .chat-pop-outer{
+   background: none repeat scroll 0 0 #fff;
+   float: left;
+   width:190px;
+}
+div#chat_attachment_form .border-helights {
+   border: 2px dashed grey;
+   margin-top: 2%;
+   width: 96% !important;
+}
+
+div#chat_attachment_form .chat-labelspan-outer span.inputfield .dropzone-form {
+   width:600px;
+   float:left;
+}
+form#myAwesomeDropzone.dropzone{min-height: 472px !important;margin-bottom:10px;}
+form#myAwesomeDropzone.dropzone .dz-message{ font-size: 18px!important;margin-top: 35%!important;}
+#send_attachment{ margin-top:2%; margin-left:11px; width:96.5%;}

@@ -1,0 +1,34 @@
+<div id="chat_attachment_form" class = "popup transparent_border" style = "display: none;">
+	<div class="chat-pop-outer">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1 chat-pop-hdr">
+			<div id="forgot-password" class="left ">
+				<h2>Share File(s)</h2>
+			<img class="close_bpopup"
+			src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+			title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		<input type="button" id="send_attachment" class="new-save-btn" value="Send">
+
+		<div class = "content" >
+			<input type="hidden" id="receiver_id" value="">
+				<div class="chat-labelspan-outer">
+					
+					<span class="inputfield">
+						<div id ='temp_uploads_info'></div>
+						<div class="dropzone-form">
+							<form id="myAwesomeDropzone" class = "dropzone border-helights" action="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>ChatAttachment/move-uploaded-files-to-temp-location">
+							
+							</form>	
+						</div>
+					</span>
+				</div>
+
+		</div>
+	</div>
+</div>
+<div style="display:none;" id="chat_attachment_dialog_file_size_enq" title="File Size">
+	Total Attachment size should not exceed 20 MB
+</div>

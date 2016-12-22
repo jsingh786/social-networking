@@ -1,0 +1,72 @@
+<div>
+<textarea cols="80" class="editor1" name="editor1" rows="10"></textarea>
+</div>
+<div>
+	<input type ="button" value="save" id="save" onclick="saveNote();"style="float:right; margin-top:9px;" class="btn-purple save" />
+</div>
+<div id="display_note" class="display_note" style="width:500px;height:200px;margin-top:20px;background-color:white;border:2px solid #4D356F">
+<input type ="button" value="Get Notes" id="get" onclick="getNote();"style="float:right; margin-top:9px;" class="btn-purple save" />
+</div>
+<script>
+
+	// Replace the <textarea id="editor1"> with an CKEditor
+	// instance, using default configurations.
+	CKEDITOR.replace( 'editor1', {
+		uiColor: '#6C518F',
+		toolbar: [
+			[ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ],
+			[ 'FontSize', 'TextColor', 'BGColor' ]
+		]
+	});
+
+function saveNote(){
+	var ids = addLoadingImage($("[name=editor1]"), "before");
+		var txt=CKEDITOR.instances.editor1.getData();
+
+		jQuery.ajax({
+	        url: "/" + PROJECT_NAME + "development/save-binary-note",
+	        type: "POST",
+	        dataType: "json",
+	        data: { "current_user_id" :122,"user_id" : 19, "note" : txt },
+	        timeout: 50000,
+	        success: function(jsonData) {
+	        	if(jsonData.msg=="success"){
+	        		$("span#"+ids).remove();
+	            		$(".alert-box").remove();
+	            		$(".alert-box1").remove();
+	        			$(".alert-box2").remove();
+	        			showDefaultMsg( "Congrats! Note saved successfully.", 1 );
+	            		$("#save").removeAttr('disabled');
+	            		$("#displayNotes").fadeToggle('slow');
+	            	}
+	            	else{
+	            		$("#save").removeAttr('disabled');
+	            		$("#save").before('<span class="spanmsg" id="note-msg" style="color:red;">Server Error</span>');
+	            	}
+	            },
+	        error: function(xhr, ajaxOptions, thrownError) {
+				//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		 });
+	}
+
+
+	function getNote(){
+				jQuery.ajax({
+			        url: "/" + PROJECT_NAME + "development/get-note",
+			        type: "POST",
+			        dataType: "json",
+			        data: { "user_id" : 122 },
+			        timeout: 50000,
+			        success: function(jsonData) {
+			        	
+			        },
+			        error: function(xhr, ajaxOptions, thrownError) {
+						//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				 });
+			
+	}
+
+
+</script>

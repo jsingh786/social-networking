@@ -1,0 +1,279 @@
+<!-- Title -->
+<?php
+$this->headTitle ()->prepend ( 'Reference Provided' );
+?>
+<!-- Including CSS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/reference_provided.js" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/provided_reference.css" );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<script>
+$(document).ready(function(){
+$('input#withdraw_ref').click(function(){
+	var thissss = $(this);
+	var iddd = addLoadingImage( $(this), "before");
+	$.ajax({
+		url : "/" + PROJECT_NAME + "reference-request/withdrawal-reference",
+		method : "POST",
+		data : { 'reference_req_id' : $(this).attr("rel") },
+		type : "post",
+		dataType : "json",
+		success : function(jsonData){
+			
+			if(jsonData == 1)
+				{
+				$("span#"+iddd).remove();
+				 $("div.alert-box").remove();
+					showDefaultMsg( "You have Withdrawn your Reference.", 1 );
+		
+					 $(thissss).parents("div.mail-grey-hdr-col1").remove();
+				}
+			}
+	});
+});
+});
+</script>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Photo Album Starts -->
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2>Reference Provided</h2>
+		</div>
+			<!-- Col3 Starts -->
+<?php 
+				if( $this->paginator )
+				{	
+					if( $this->paginator->getTotalItemCount() )
+					{
+?>				
+					<div class="col3">
+					
+						<div class="fl text-grey3">
+<?php 
+						$query_str = "";
+						foreach( $this->prms as $key=>$p )
+						{
+							if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+							{
+								continue;
+							}
+							
+							
+							 $query_str .= $key."=".$p."&amp;"; 
+							
+						}
+?>
+						VIEWS <a class="text-grey3-link" style="margin-left: 5px"
+							href="<?php echo "/".PROJECT_NAME."reference-request/provided?".$query_str."list_len=10";?>"><?php echo $this->prms["list_len"] == 10 ? "<b>10</b>" : '10'?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."reference-request/provided?".$query_str."list_len=20";?>"><?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."reference-request/provided?".$query_str."list_len=30";?>"><?php echo $this->prms["list_len"] == 30 ? "<b>30 </b>" : '30 '?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."reference-request/provided?".$query_str."list_len=all";?>"><?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?></a>
+						</div>
+						<div class="fr  text-grey3">
+<?php
+							echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+						</div>
+					</div>
+<?php
+					}
+				}
+?>					
+				<!-- Col3 Ends -->
+		
+<?php 
+		if( $this->reference_provided == true )
+		{
+?>
+
+
+		<!-- Mail Hdr  -->
+		<div class="mail-all-hdr">
+			<div class="fl">
+				<a href="javascript:;" class="text-purple-link">&nbsp;</a>
+			</div>
+			<div class="fr ">
+				<div class="col1">
+<?php 
+		
+			if(isset($this->prms["id"]) && isset($this->prms["list_len"])){
+				$pagingParameters="?id=".$this->prms["id"]."&list_len=".$this->prms["list_len"];
+			}
+			else{
+				$pagingParameters="";
+			}
+
+			
+			if( $this->order == 'asc' )
+			{
+?>				
+				<a  class="text-purple-link" style="color:white !important;" href="<?php echo "/".PROJECT_NAME."reference-request/provided/order/desc".$pagingParameters; ?>">BY DATE <img width="15" height="15" align="absmiddle"
+					src="<?php echo PUBLIC_PATH;?>/images/arrow1.png"></a>
+<?php
+			}
+			else
+			{
+?>				 
+				<a  class="text-purple-link" style="color:white !important;"  href="<?php echo "/".PROJECT_NAME."reference-request/provided/order/asc".$pagingParameters; ?>">BY DATE <img width="15" height="15" align="absmiddle"
+					src="<?php echo PUBLIC_PATH;?>/images/arrow2.png"></a>
+<?php				
+			}
+?>
+				
+				</div>
+			</div>
+		</div>
+		<!-- Mail Hdr -->
+
+		<!-- Mail Hdr col1 -->
+		<?php 
+if( $this->paginator )
+{					
+	if( $this->paginator->getTotalItemCount() )
+	{
+		$i=0;
+		foreach ( $this->paginator as $ref_prvd )
+		{
+			$i++;
+			$mod_clas=$i%3;
+		
+			if($mod_clas==1)
+			{
+				$arrow_class="arrow-first";
+				$quickview_class="quickview-outer";
+			}
+			else if($mod_clas==2)
+			{
+				$arrow_class="arrow-second";
+				$quickview_class="quickview-outer-second";
+			}
+			else if($mod_clas==0)
+			{
+				$arrow_class="arrow-third";
+				$quickview_class="quickview-outer-third";
+			}
+?>			
+		<div class="mail-grey-hdr-col1">
+			<div class="chkbx-img">
+				<div class = "prof-img" >
+					<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_prvd->getReference_requestRequester_user()->getId();?>">
+						<img style="max-width:50px; max-height:50px;"  src = "<?php echo Helper_common::getUserProfessionalPhoto($ref_prvd->getReference_requestRequester_user()->getId(), 3 );?>" />
+					</a>
+				</div>	
+			</div>
+			<div class="mid">
+				<h4 class="font-arial" ><a class="text-purple" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_prvd->getReference_requestRequester_user()->getId();?>"style="color:#6C518F!important;text-decoration: none;"><?php echo $ref_prvd->getReference_requestRequester_user()->getFirstName();?></a></h4>
+				<?php 
+				if($ref_prvd->getProvided_as())
+				{
+					echo"<p class='ref_as'>";
+					echo $ref_prvd->getProvided_as();
+					echo"</p>";
+				}
+				else
+				{
+					//Nothing.
+				}
+				if( $ref_prvd->getProvide_for_the_position())
+				{
+					echo"<p class='ref_position'>";
+					echo $ref_prvd->getProvide_for_the_position();
+					echo"</p>";
+				}
+				else
+				{
+					//Nothing.
+				}
+
+?>
+
+			</div>
+			<div class="right">
+
+				<div class="top"><?php echo $ref_prvd->getProvided_at()->format('F j, Y'); ?></div>
+				<div class="bot"></div>
+
+			</div>
+			<div class="quotes-outer">
+				<div class="quotes-lt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-start.jpg"/>
+				</div>
+				<div class="quotes-mid">
+<?php 
+				
+				if( strlen( $ref_prvd->getProvider_msg() ) <= 300 )
+				{
+?>
+					<p  class="p_all_note_text">	
+<?php 
+						echo nl2br($ref_prvd->getProvider_msg());
+?>
+					</p>
+<?php 
+				}
+				else
+				{
+?>
+					<div id="full_text_<?php echo $ref_prvd->getId(); ?>" class="full_text">
+						<p id = "p_all_note_text_<?php echo $ref_prvd->getId(); ?>" class = "full_note">
+<?php 
+							echo nl2br($ref_prvd->getProvider_msg());
+?>
+						</p>
+						<span title="show less" rel ="<?php echo $ref_prvd->getId() ?>" class="show_less">less</span>
+					</div>
+					<div id="clickable_text_div_<?php echo $ref_prvd->getId(); ?>" class="clickable_text">
+						<p class = "clickable_note" rel = "<?php echo $ref_prvd->getId(); ?>">
+<?php 
+							echo Helper_common::showCroppedText( $ref_prvd->getProvider_msg(), 300 );
+?>
+						</p>
+						<span title="show more" rel ="<?php echo $ref_prvd->getId(); ?>" class="show_more">more</span>
+					</div>
+			
+<?php 
+				}
+?>
+				</div>
+				<!--  <div class="quotes-rt"><img class="starting_quotes" src="<?php echo PUBLIC_PATH;?>/images/quote-end.jpg"/></div>-->
+				</div>
+			   <div class="btn-long-bot">
+				   
+				   <input name="withdraw_ref" id="withdraw_ref" class="btn-purple" value="Withdraw The Reference" alt="Withdraw The Reference" title="Withdraw The Reference" type="button" rel = "<?php echo $ref_prvd->getId();?>"/></div>
+		</div>
+
+<?php 
+			}
+?>
+	</div>
+<?php 
+	}
+		}
+		}
+
+		else 
+		{
+?>
+		
+					
+			
+			
+			<div class="mail-grey-hdr-col1-new">
+			<div class="no_messages">
+				<div class="no_messages-img"><img src="<?php echo IMAGE_PATH; ?>/folder-empty.png"></div>
+				<div class="no_messages-data">This folder is empty.</div>
+			</div> 
+			</div>
+
+		
+		
+<?php 
+		}
+?>
+	<!-- Photo Album Ends -->
+
+
+
+</div>
+<!-- Content Right Right Ends -->

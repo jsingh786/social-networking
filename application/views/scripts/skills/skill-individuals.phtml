@@ -1,0 +1,265 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Skill supporters' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/skills_my_skills.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/short_profile.js" );
+
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/skill_individual.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/links-common.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/skills_menu.phtml' );
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+if($this->params['user'] == "within_ilook")
+{
+	?>
+<style>
+div.within-ilook-info-accord-content
+	{
+		display: block;
+	}
+
+</style>	
+<?php 
+}
+	
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+<!-- Summary Outer Starts -->
+	<div class="summary-outer">
+		<?php
+			//get skill_ref_id 
+			$skill_ref_id = $this->params['skillId'];
+			//get skill object
+			$skill_object = \Extended\skill_ref::getRowObject($skill_ref_id);
+			$skill_name  = $skill_object->getSkill();
+			$first_letter_of_skill = $skill_name[0];
+		?>	
+		<div class="logo-img">
+		<img src="<?php echo Helper_common::getImageAccToAlphabet($first_letter_of_skill);?>" width="60" height="60" alt=""/>
+		</div>
+		<div class="back-icon">
+		<img src="<?php echo IMAGE_PATH; ?>/left-arrow2.png" onclick="history.go(-1);" alt=""/>
+		</div>
+		<div class="skill-outer-col1-rt">
+<?php 
+			$current_user_id = Auth_UserAdapter::getIdentity()->getId();
+			$checkIfSkillIsFollowed = \Extended\user_skills::checkIfSkillIsFollowed( $skill_ref_id, $current_user_id);
+			if($checkIfSkillIsFollowed) 
+			{
+?>
+			<!-- input value="Following" class="btn-green following" type="button" /-->
+			<div class="following">
+			<a href="#" class ="tooltip" data-tooltip="You can unfollow by deleting the skill in your profile.">Following</a>
+			</div>
+<?php 
+			} 
+			else 
+			{
+?>
+			<input value="Follow" class="btn-green skill_<?php echo $skill_ref_id; ?>" type="button" onclick="followSomeSkill(<?php echo  $skill_ref_id;?>, <?php echo $current_user_id;?>, this );"/>
+<?php 
+			} 
+?>
+		</div>
+		<form id = "skill-form">
+			<div class="summary-edit text-grey3">
+				<h3 class="text-purple2 skill"><?php echo $skill_name;?></h3>
+			</div>
+			
+			<div class="summary-hdr2 skill"> 
+			<div class="skill_heading">Individuals following this skill</div>
+			<div class="sub_tabs">
+			<ul>
+				<li>
+				<!--  sent an extra parameter 'user' to differentiate within_links and within_ilook -->
+			   	<a id="within_links" class="<?php echo $this->params['user'] == 'within_links' 
+				? 'selected_within_links':''?>" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME."skills/skill-individuals/skillId/".$this->skill_ref_id."/user/within_links"; ?>">Within Your Links</a>
+				</li>
+			
+				<li>
+			    <a id="within_ilook" class="<?php echo $this->params['user'] == 'within_ilook' 
+				? 'selected_within_links':''?>" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME."skills/skill-individuals/skillId/".$this->skill_ref_id."/user/within_ilook"; ?>">Within iLook</a>
+			    </li>
+			</ul>
+			</div>
+			</div>
+			<!--  start within links accord content -->
+<?php 
+			if($this->params['user'] == "within_links")
+			{
+?>
+			<div class="within-links-info-accord-content">   
+			<!--  pagination starts here -->
+<?php 
+				if( $this->paginator_within_links )
+				{	
+				
+				if( $this->paginator_within_links->getTotalItemCount() )
+				{		
+?>	
+				<div class="accord-content">
+				<div class="bsr-box">
+				<div class="bookmark-search-right">	
+				<div class="col3">
+				<div class="fl text-grey3">
+<?php 
+					$query_str = "";
+					foreach( $this->params as $key=>$p )
+					{
+						if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+						{
+							continue;
+						}
+						$query_str .= $key."=".$p."&amp;";
+					}
+?>
+					VIEWS 
+					<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."skills/skill-recruiters?".$query_str."list_len=20";?>">
+						<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+					</a> | 
+					<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-recruiters?".$query_str."list_len=50";?>">
+						<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+					</a> | 
+					<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-recruiters?".$query_str."list_len=100";?>">
+						<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+					</a> | 
+					<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-recruiters?".$query_str."list_len=all";?>">
+						<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+					</a>
+				</div>
+				<div class="fr  text-grey3">
+<?php
+				echo $this->paginationControl($this->paginator_within_links, 'Sliding', 'partials/pagination.phtml');
+?>							
+				</div>
+				</div>
+				</div>
+				</div>
+<?php
+			}
+			}
+?>
+			<!--  pagination ends here -->
+			
+			<div class="linkprofile-container">
+			<!-- Link Profile Outer Starts -->
+			
+				<div class="linkoutercols">
+				<div class="linkprofile-outer">
+<?php			
+				if($this->paginator_within_links)
+				{
+				$skills_individuals = $this->paginator_within_links->getCurrentItems();
+				}
+				echo Helper_common::displayUsersGridView( Auth_UserAdapter::getIdentity()->getId(), $skills_individuals,null, null,null,"No Individual for this skill"  ); ?>
+				</div>
+				</div>
+		
+			</div>
+			</div>
+<?php 
+				if($skills_individuals) 
+				{
+?>
+				</div> 
+				 <!--  end within links accord content -->
+<?php 
+				} 
+			}
+?>
+			 <!--  start within ilook accord content -->
+<?php 
+			if($this->params['user'] == "within_ilook")
+			{
+?>
+			<div class="within-ilook-info-accord-content"> 
+			<!--  pagination starts here -->
+<?php 
+				if( $this->paginator )
+				{	
+				
+				if( $this->paginator->getTotalItemCount() )
+				{
+?>	
+				<div class="accord-content">
+				<div class="bsr-box">
+				<div class="bookmark-search-right">	
+				<div class="col3">
+				<div class="fl text-grey3">
+<?php 
+				$query_str = "";
+				foreach( $this->params as $key=>$p )
+				{
+					if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+					{
+						continue;
+					}
+					$query_str .= $key."=".$p."&amp;";
+				}
+?>
+				VIEWS 
+				<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."skills/skill-individuals?".$query_str."list_len=20";?>">
+					<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-individuals?".$query_str."list_len=50";?>">
+					<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-individuals?".$query_str."list_len=100";?>">
+					<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-individuals?".$query_str."list_len=all";?>">
+					<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+				</a>
+			</div>
+			<div class="fr  text-grey3">
+<?php
+				echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+				</div>
+				</div>
+				</div>
+				</div>
+<?php
+				}
+				}
+?>
+			<!--  pagination ends here -->
+			
+			<div class="linkprofile-container">
+			<!-- Link Profile Outer Starts -->
+				<div class="linkoutercols">
+				<div class="linkprofile-outer">
+<?php
+				if($this->paginator)
+				{
+				$get_supporters = $this->paginator->getCurrentItems();
+				}
+				echo Helper_common::displayUsersGridView( Auth_UserAdapter::getIdentity()->getId(), $get_supporters,null, null,null,"No Individual for this skill",$this->my_blocked_users  ); ?>
+				</div>
+				</div>
+			</div>
+			</div>
+			</div> 
+<?php 
+			}
+?>
+			<!--  end within ilook accord content -->
+	
+			</form>
+	</div>
+		
+</div>
+			
+			
+			
+			
+			
+			
+			
+			
+	

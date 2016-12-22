@@ -1,0 +1,430 @@
+<?php
+$htmlView=$this->htmlView;
+
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/new-link-request.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/import_contacts.css" );
+
+//JS
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links_menu.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.stylish-select.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/import_contacts.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/new_link_request.js" );
+
+echo $this->partial ( 'partials/link_menu.phtml' );
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+
+?>
+<style>
+.photoalbum-addnew {
+    border-bottom: 1px solid #DDDDDD;
+    float: left;
+    margin: 0;
+    width: 100%;
+}
+.photoalbum-hdr {
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 0;
+    padding: 0 4% 2%;
+    width: 92%;
+}
+.photoalbum-hdr h2{
+	margin:0;
+	border-bottom:0;
+}
+.emptyRecordOuter {
+    margin:0;
+    width: 100%;
+    float:left; background:#fff;
+}
+.emptyRecordInner{
+	margin:40px 0 60px;
+	padding:0;
+}
+.content-right-right .col3 {
+    margin:0;
+}
+.photoalbum-hdr2 {
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 0;
+    padding: 0 4%;
+    width: 92%;
+}
+</style>
+<?php 
+// if no link request present, 
+// then people you may know section become appear..
+if($htmlView=="peopleYouMayKnow"){
+	if( $this->youMayKnowUsers )
+	{
+			foreach ( $this->youMayKnowUsers as $users )
+			{
+				$people_you_may_know[] = $users->getId();
+			}
+	}
+	?>
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Photo Album Starts -->
+		<!-- Photo Album Starts -->
+		<div class="photoalbum-outer">
+			<div class="photoalbum-hdr">
+	       		<div class="photoalbum-addnew">
+					<h2 class="text-purple2 new-style-headings">New Link Request</h2>
+					<div class="addnew-links new-style-addnew-links">
+						<a class="text-purple-link" href="/<?php echo PROJECT_NAME?>links/import">
+						Add New Links
+						</a> 
+						<img src="<?php echo IMAGE_PATH;?>/icon-connection-hover.png" width="16" height="15" align="absmiddle" />
+					</div>
+				</div>
+	
+			</div>
+			<?php
+			$text = '<span class="no_links_img"><img src="'.IMAGE_PATH.'/invitation-icon.png" width="25" height="20"/></span>No New Link Request';
+			echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(), null, null, null, null, $text);
+
+ 				if(isset($people_you_may_know))
+ 				{ 
+			?>
+		            <div class="photoalbum-hdr2">
+		            <div class="photoalbum-addnew new-style-photoalbum-addnew">
+		            	<h3 class="text-purple2">People You May Know</h3>
+		            </div>
+		            </div>
+<?php 
+ 				}
+?>
+		</div>
+		
+		<!-- Photo Album Ends -->
+		<div class="bookmark-search-right">
+		<!-- Col3 Starts -->
+		<?php 
+			if( count($this->youMayKnowUsers) > 0 ) 
+			{
+?>
+				<div style="margin-top: 0px; display : none;" class="bookmarks-hdr-text1">
+					<div class="mail-hdr-search">
+						<form name="search-form" id="search-form" method="get" action="">
+							<a href="javascript:;" id="you_may_know_search" class="fr srchBtn" onclick="searchUserByJS()" style="float:right;">
+							Search
+							</a>
+							<input type="text" placeholder="Search" style="float:right;">
+						</form>
+					</div>
+				</div>
+<?php 
+			}
+?>					
+	<!-- Col3 Ends -->
+		</div>
+		
+		<?php 
+		if(isset($people_you_may_know))
+		{
+			echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(),$people_you_may_know);
+			//echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(), null, null, null, null, "No records found!");
+			if($this->is_more_records )
+			{
+				echo '<input type="hidden" id = "offsett" value="9" />';
+				echo '<input type="hidden" name="recordLimit" id="recordLimit" value="9" />';
+			}
+			echo '<div = id="user_records" class="people_you_may_know_records">';
+			if( $this->is_more_records)
+			{
+			
+				echo'<div class="see_more_you_may_know job-content view_more">';
+				echo'<p>';
+				echo'<a href="javascript:;" onclick="loadMorePeopleYouMayKnow(this);" class="see_more_you_may_know_text text-dark-purple">';
+				echo'View More';
+				echo'</a>';
+				echo'</p>';
+				echo'</div>';
+			}
+			echo'</div>';
+		}
+		else 
+		{
+?>
+			<div class="add-new-event">
+			<div class="link-invite-connect">
+			<h3>Invite your contacts to iLook and increase your network
+			</h3>
+			<div class="box1" id = "gmail">
+			<div class="box1-img">
+			<img src="<?php echo IMAGE_PATH; ?>/gmail-icon.png" width="65" height="47"/>
+			</div>
+			<p>
+			<a class="text-purple2-link" href="javascript:;">Gmail</a>
+			</p>
+			</div>
+			<!--div class="box1">
+			<div class="box1-img">
+			<img style="opacity :0.2" src="<?php echo IMAGE_PATH; ?>/hotmail-icon.png" width="76" height="53" />
+			</div>
+			<p>
+			<a class="text-purple2-link" href="javascript:;">Hotmail</a>
+			</p>
+			</div-->
+			<!--div class="box1" id = "yahoo">
+			<div class="box1-img">
+			<img src="<?php echo IMAGE_PATH; ?>/yahoo-icon.png" width="54" height="54" />
+			</div>
+			<p>
+			<a class="text-purple2-link" href="javascript:;">Yahoo!</a>
+			</p>
+			</div-->
+			<!--div class="box1 mr-none">
+			<div class="box1-img">
+			<img style="opacity :0.2" src="<?php echo IMAGE_PATH; ?>/outlook-icon.png" width="52" height="56" />
+			</div>
+			<p>
+			<a class="text-purple2-link" href="javascript:;">Outlook</a>
+			</p>
+			</div-->
+			<!-- Col1 Starts -->
+			<div class="col1">
+			<h3>More ways to Connect</h3>
+			<div class="col1-bot">
+			<p>Invite by individual email</p>
+			<p>
+			<form action="#" id = "more_ways_to_connect_frm" onsubmit="return false">
+			<div class="more-ways-textbox">
+			<input id = "more_ways_to_connect" name="more_ways_to_connect" type="text" value="" placeholder="Type email addresses, separated by semi-colons.." style="font-weight: bold;"/>
+			</div>
+			<div class="more-ways-btn">
+			<input name="more_ways_to_connect_btn" id = "more_ways_to_connect_btn" type="button" class="btn-purple" value="Send Invitations" alt="Send Invitations" title="Send Invitations" style = "float:left;" />
+			</div>
+			</form>
+			</p>
+			</div>
+			</div>
+			<!-- Col1 Ends -->
+			</div>
+			</div>
+<?php 		
+		}
+		?>		
+		</div>
+		<?php 	
+}
+// if links request present,
+// then new link request section become appear..
+else if ($htmlView=="newLinkRequest") 
+{
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links.js" );
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/new-linkRequest.js" );
+	
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Bookmarks Header Starts -->
+	<div class="photoalbum-hdr">
+		<div class="new-style2-photoalbum-addnew photoalbum-addnew">
+			<h3 class="text-purple2 new-style-headings">New Link Request</h3>
+			<div class="addnew-links new-style-addnew-links">
+				<a class="text-purple-link" href="/<?php echo PROJECT_NAME?>links/import">
+				Add New Links
+				</a> 
+				<img src="<?php echo IMAGE_PATH;?>/icon-connection-hover.png" width="16" height="15" align="absmiddle" />
+			</div>
+		</div>
+		<div style="margin-top:0px" class="bookmarks-hdr-text1">
+			<div class="mail-hdr-search">
+				<form name="search-form" id="search-form" method="get" action="">
+				<a href="javascript:;" class="fr srchBtn" onclick="searchUser()"  style="float:right;">Search</a>
+					<input type="text" name="linkSearch" id="linkSearch" placeholder="Search" value="<?php echo $this->searchText;?>" style="float:right;">
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Bookmarks Header Ends -->
+	<!-- Col3 Starts -->
+	<div class="bookmark-search-right">
+	<!-- Col3 Starts -->
+	<?php 
+		if( $this->paginator->getTotalItemCount() )
+		{
+	?>				
+		<div class="col3">
+			<div class="fl text-grey3">
+			<?php 
+				$query_str = "";
+				foreach( $this->prms as $key=>$p )
+				{
+					if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+					{
+						continue;
+					}
+					$query_str .= $key."=".$p."&amp;";
+				}
+			?>
+				VIEWS 
+				<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."links/new-link-request?".$query_str."list_len=20";?>">
+					<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/new-link-request?".$query_str."list_len=50";?>">
+					<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/new-link-request?".$query_str."list_len=100";?>">
+					<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/new-link-request?".$query_str."list_len=all";?>">
+					<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+				</a>
+			</div>
+			<div class="fr  text-grey3">
+			<?php
+				echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+			?>							
+			</div>
+		</div>
+		<?php
+			}
+		?>					
+	</div>
+	<!-- Col4 Starts -->
+	<div class="col4">
+<?php 
+	if( $this->paginator->getTotalItemCount() )
+	{
+		$i=0;
+		foreach ( $this->paginator as $u_details )
+		{
+			$friendRequestState=\Extended\link_requests::getFriendRequestState($u_details->getId());
+?>
+			<div class="mail-sendmsg-col2" id = invitation_<?php echo $u_details->getId();?> >
+				<div class="left">
+					<input name="hidden" type="hidden" value="<?php echo $u_details->getId();?>">
+					<div class="image">
+						<div class="img-align-center" style="display: inherit !important;">
+<?php 
+							$jsonArr = array(
+											"user_id"=>$u_details->getLink_requestsSenderUser()->getId(),
+											"showTags"=>"",
+											"showBookmark"=>"true",
+											"showReportAbuse"=>"",
+											"showlinkStatus"=>"",
+											"showGroups"=>"",
+											"showRemoveFromBookmark"=>""
+											);
+							$finalJson = Zend_Json::encode($jsonArr);
+							
+							//Added by hkau5 {parameter_json}
+							//Refer dashboard.js
+							$parameter_json = "{'user_id':".$u_details->getLink_requestsSenderUser()->getId()."}";
+?>
+							
+							<a href="javascript:;" id="<?php echo $u_details->getLink_requestsSenderUser()->getId();?>" 
+							onclick="getShortProfile(this,<?php echo $parameter_json;?>)" disable-border="1">							 
+<?php 
+							$filename="images/profile/big_thumbnails/thumbnail_".$u_details->getLink_requestsSenderUser()->getProfessional_image();
+							if($u_details->getLink_requestsSenderUser()->getProfessional_image()!="" && file_exists($filename))
+							{
+								$img_name=IMAGE_PATH."/profile/big_thumbnails/thumbnail_".$u_details->getLink_requestsSenderUser()->getProfessional_image();
+							}
+							else
+							{
+								if($u_details->getLink_requestsSenderUser()->getGender()==Extended\ilook_user::USER_GENDER_MALE)
+								{
+									$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+								}
+								else
+								{
+									$img_name=IMAGE_PATH."/profile/default_profile_image_female_big.png";
+								}
+							}
+?>	
+							<img src="<?php echo $img_name;?>" style="max-height: 83px;max-width:83px;"/>
+							</a>
+							<!-- Short profile view popup starts -->
+							<div id="view-outer_<?php echo $u_details->getLink_requestsSenderUser()->getId();?>" class="quickview-outer" popup-state="off" style="display:none;">
+								<div class="popupArrow">
+									<img width="36" height="22" src="<?php echo IMAGE_PATH;?>/arrow-purple2.png">
+								</div>
+								<div id="view_<?php echo $u_details->getLink_requestsSenderUser()->getId();?>" class="quickview"> </div>
+							</div>
+							<!-- Short profile view popup ends -->
+						</div>
+						
+
+					</div> 
+					<div style="margin-top:5px;width:230px;" class="text text-grey2">
+						<h4 class="font-arial link_name" title="<?php echo $u_details->getLink_requestsSenderUser()->getFirstname()." ".$u_details->getLink_requestsSenderUser()->getLastname();?>">
+							<a class="text-dark-purple" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.$u_details->getLink_requestsSenderUser()->getUsername();?>" target="_blank">
+<?php 
+								echo Helper_common::showCroppedText($u_details->getLink_requestsSenderUser()->getFirstname()." ".$u_details->getLink_requestsSenderUser()->getLastname(), 20);
+?>
+							</a>
+						</h4>
+<?php
+							$user_prof_info = Helper_common::getUserProfessionalInfo( $u_details->getLink_requestsSenderUser()->getId() );
+							if($user_prof_info)
+							{
+								if(isset($user_prof_info[0]))
+								{
+									echo '<p class="user_prof_info_job_title">'.$user_prof_info[0].'</p>';
+								}
+							
+								if(isset($user_prof_info[1]))
+								{
+	
+									echo '<p class="user_prof_info_comp_name" >'.$user_prof_info[1].'</p>';
+								}
+							}
+							
+							//Get link list of user who have sent you link req.
+							//Comma seprated string
+							$link_list_of_link_req_sendr = $u_details->getLink_requestsSenderUser()->getLink_list();
+							//Converting into an array.
+							$link_list_arr = explode(",", $link_list_of_link_req_sendr);
+							//Num of links
+							$count_of_links = count($link_list_arr);
+							
+							echo'<p class="num_of_links">'.$count_of_links.' Links</p>';
+?>							
+						
+					</div>
+				</div>
+				<?php $id = $u_details->getId(); ?> 
+				<div class="right text-purple">
+				<div class="accept-decline">
+					<span class="acc-dec_<?php echo $u_details->getId();?>" style="margin-right:3px;float:none;">
+					</span>
+					<a href="javascript:;"  id="<?php echo $u_details->getLink_requestsSenderUser()->getId();?>" class="text-purple-link accept_invitation" onclick="acceptRequest(this);" rel="<?php echo $u_details->getId();?>" >Accept</a> / <a href="javascript:;" class="text-purple-link decline_invitation" id="invitation" onclick="cancelRequest(<?php echo $u_details->getId();?>);">Decline</a>
+    			</div>
+				</div>	
+			</div>
+            <?php 
+            }
+		}
+        else 
+        {
+			?>
+ 			<div class="emptyRecordOuter">
+ 				<div class="emptyRecordInner text-grey3"> 
+ 					<p>No result found!</p> 
+ 				</div>
+ 			</div>	 
+			<?php 
+            }
+        }
+		else 
+		{
+			?>
+			<div class="emptyRecordOuter">
+ 				<div class="emptyRecordInner text-grey3"> 
+ 					<p>No result found!</p> 
+ 				</div>
+ 			</div>
+		<?php 
+		}
+		?>
+		</div>
+	</div>

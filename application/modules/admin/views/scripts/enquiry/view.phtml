@@ -1,0 +1,60 @@
+<?php
+$this->headTitle()->prepend('Enquiry');
+/* Including JS */
+$this->headScript()->appendFile( PUBLIC_PATH."/js/admin/enquiry.js" );
+/* Including CSS */
+// $this->headLink()->appendStylesheet( "//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/dataTables.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/enquiry.css" );
+?>
+<style>
+.sub-admin-form{ width:96%; float:left; margin:0; padding:0 2%;}
+.view-form-lt{ width:50%; float:left; margin:0; padding:0;}
+.view-form-lt label{  float: left; font-weight: bold; margin: 0; padding: 0; width: 30%;}
+.view-form-lt span{ float: left;margin: 0; min-height: 40px; padding: 0; width: 50%;}
+.sub-admin-btn-outer{ width:100%; float:left; text-align:center;}
+.sub-admin-btn-outer input[type="button"]{ width:auto; padding:5px 10px;}
+
+}
+</style>
+<?php 
+	$enquiry_details = $this->enquiry_details;
+	
+?>
+	<div id='heading'>
+	     <h2><a href = '/<?php echo PROJECT_NAME?>admin/enquiry'>
+	     Enquiry
+	     </a> -> 
+	View
+	</h2>
+	</div>
+	
+<div class="sub-admin-form">
+		<div class="view-form">
+			<label>Phone Number</label>
+			<span><?php echo $enquiry_details?$enquiry_details->getPhone_number():'';  ?></span>
+			<label>Email</label>
+			<span><?php echo $enquiry_details?$enquiry_details->getEmail_id():'';  ?></span>
+			<label>Subject</label>
+			<span><?php echo $enquiry_details?$enquiry_details->getSubject():'';  ?></span>
+			<label>Description</label>
+			<span><?php echo $enquiry_details?$enquiry_details->getBody():'';  ?></span>
+			<label>Attachment</label>
+			<span>
+<?php 
+			foreach($enquiry_details->getEnquiryAttachment()  as $attachment)
+			{
+?>
+			<a href="<?php echo PUBLIC_PATH.'/enquiry/enquiry_'.$enquiry_details->getId().'/'.$attachment->getName(); ?>"
+			  download="<?php echo $attachment->getActual_name(); ?>"><?php echo $attachment->getName();?></a>		  
+<?php 
+			} 
+			
+?>
+			</span>
+			</div>
+		
+	
+	
+</div>
+

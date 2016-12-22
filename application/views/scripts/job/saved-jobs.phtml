@@ -1,0 +1,285 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Saved Job' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jquery.form.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/jobs_saved.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/saved_job.css" );
+
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+?>
+<style>
+
+.no_apply-2-job {
+    display: inline-block;
+    float: right;
+    margin: 0 4px 0 0 !important;
+    padding: 0 0 12px !important;
+    width: 100px;
+}
+.apply-2-job {
+	margin: 0 !important;
+    width: auto !important;
+    float:right;
+}
+
+</style>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Bookmarks Header Starts -->
+	<div style="" class="job-hdr">
+			<?php
+			if($this->paginator)
+			{ 
+			?>
+			<div class="job-hdr-top no-border">
+			<?php 
+			} 
+			else 
+			{
+			?>
+			<div class="job-hdr-top">
+			<?php 
+			} 
+			?>
+			<h2>Saved Jobs</h2>
+			<!-- <div class="need-help">
+				<div class="need-help-text">
+					<a href="javascript:;" class="text-grey3-link">Need Help?</a>
+					<img width="20" height="20" align="absmiddle" src="<?php //echo IMAGE_PATH?>/help-icon.png">
+				</div>
+			</div>-->
+		</div>
+	</div>
+	<!-- Bookmarks Header Ends -->
+<?php
+if($this->paginator)
+{ 
+?>
+<!-- Pagination Starts -->
+<div class="saved_jobs_outer">
+		<div class="col3">
+			<div class="new-border-space" style="margin:0 0 13px 23px !important;"></div>
+<!-- 			<div style="float: left;" class="mail_select_all">
+				<input type="checkbox" id="mail_list_main_cb"/> <span name="delete_all" onclick="deleteSelectedJobs();" id ="delete_all" >Delete</span><span style="margin-left: 8px;" id="select_all">Select all</span>
+ 			</div> -->
+<?php
+			echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>	
+			<div class="new-border-space" style="margin:13px 0 0 23px !important;"></div>
+		</div>	
+	
+	<!-- Pagination Ends -->
+                
+	<!--Mail-grey-hdr-col1 Starts -->
+<!-- 	<div class="saved_jobs_outer"> -->
+<?php              	 
+	foreach ($this->paginator as $savedJob)
+	{
+		if($savedJob['job_image']!=null)
+		{
+			$imgPath = IMAGE_PATH.'/jobs/'.$savedJob['job_image'];
+		}
+		else
+		{
+			$imgPath= IMAGE_PATH.'/job_default_image.png';
+		}
+?>
+<div class="saved-job-single">
+<div class=""  id="outerDiv_<?php echo $savedJob['job_id'];?>">
+	<div id = "saved_job_desc_<?php echo $savedJob['job_id']; ?>" class="mail-grey-hdr-col1 remove-bg-gray">
+		<div id="mail_holder">
+		<!-- 	<input type="checkbox" name="job_id[]" id="job_id" value="<?php echo $savedJob['job_id']; ?>" style="float:left;" class="mail_list_cb"/> -->
+		</div>
+		<div class = "saved_job_img_outer">
+			<a class=" text-purple-link" href="/<?php  echo PROJECT_NAME?>job/job-detail/job_id/<?php echo $savedJob['job_id'] ;?>">
+				<div class="saved_job_img_inner">
+					<img style="width:60px;" src="<?php echo PUBLIC_PATH; ?>/Imagehandler/GenerateImage.php?image=<?php echo $imgPath;?>&h=60&w=60">
+				</div>
+			</a>	
+		</div>
+		<div class="mid">
+			<h4 class="job-title-arial" style="cursor: default;" ><a style="color:#6C518F !important;"class="job_listing_job_title text-purple-link" href="/<?php  echo PROJECT_NAME?>job/job-detail/job_id/<?php echo $savedJob['job_id'] ;?>"><?php echo $savedJob['job_title']; ?> </a></h4>
+			<p class="job_listing_company_name"><?php echo $savedJob['company']; ?></p>
+			<p class="job_listing_industry_location"><?php echo $savedJob['industry']; ?>, <?php echo $savedJob['city'].', '.$savedJob['state'].', '.$savedJob['country']; ?></p>
+			<p class="job_listing_salary_exp"><?php echo $savedJob['job_type']; ?> <?php if($savedJob['experience_level']!=""){echo "| ".$savedJob['experience_level'];} ?></p>
+		</div>	
+		<div class="right">
+			<div class="top">
+				Saved on <br/><?php echo $savedJob['created_at']; ?>
+				<br/>
+				
+			</div>
+			<div class="mid">
+			</div>
+		</div>
+	</div>
+	<div id = "more_detail_<?php echo $savedJob['job_id']; ?>" class="job-content remove-bg-gray" style="width: 97% !important;">
+	<div class="unsave">
+				<label title = "Unsave job" id="unsave_job_<?php echo $savedJob['job_id']; ?>" class ="unsave_job text-purple-link " onclick = "UnsaveJob(this, <?php echo $savedJob['job_id']; ?>);" > Unsave </label>
+				</div>
+<?php 
+		if( !$savedJob['is_applied_by_me'] && $savedJob['job_status'] == 1 )
+		{
+		echo'<div class="apply-2-job text-purple" id="quick_apply_bar_'.$savedJob['job_id'].'">';
+		}
+		else
+		{
+			echo'<div class="no_apply-2-job text-purple" id="quick_apply_bar_'.$savedJob['job_id'].'">';
+		}	
+?>	
+			<span id="quick_apply_<?php echo $savedJob['job_id'] ; ?>" > 
+<?php 
+			//If job is not applied by me but job is active.
+			if( !$savedJob['is_applied_by_me'] && $savedJob['job_status'] == 1 )
+			{
+				echo'<div class="apply-2-job-rt"><a class="quick-apply-btn text-purple-link"  onclick = "showQuickApplyView('.$savedJob['job_id'].' )" id = "quick_apply_'.$savedJob['job_id'].'">';
+				//echo '<img class="img-align" width="20" height="20" src="'.IMAGE_PATH.'/quick-apply-icon.png" alt="" style="margin-right:5px; vertical-align: middle;">';
+				echo '<span>Quick Apply</span></a></div>';
+			}
+			//If job is applied by me but active.
+			elseif( $savedJob['is_applied_by_me'] &&  $savedJob['job_status'] == 1 )
+			{
+				echo'<a style="margin-right: 4px ! important;" class ="applied quick-apply-btn text-purple-link"> Applied </a>';
+			}
+			//If job is expired.
+			elseif( $savedJob['job_status'] == 2 )
+			{
+				echo'<a style="margin-right: 4px ! important;" class ="applied quick-apply-btn text-purple-link "> Expired </a>';
+			}
+			//If job is closed
+			elseif( $savedJob['job_status'] == 4 )
+			{
+				echo'<a style="margin-right: 4px ! important;" class ="applied quick-apply-btn text-purple-link "> Closed </a>';
+			}
+?>
+			</span>
+<?php 		
+			echo'</div>';
+?>
+	</div>
+		<div style=" margin: 0 0 0 26px !important;width: 96% !important;" class="new-border-space"></div>
+	</div>
+	
+	<div class="job-content job-content-border" id="saved-job-<?php echo $savedJob['job_id'] ;?>" style="display: none;">	
+<?php 
+	if( $savedJob['apply_from'] == 1)
+	{
+?>	
+		<div id="jobForm_<?php echo $savedJob['job_id'] ;?>" class="quick_apply apply-from-company" >
+			<a target = "_blank" href="<?php echo $savedJob['company_job_apply_url'];?>">Apply</a>
+		</div>
+<?php		
+	}
+	else
+	{
+?>	
+		<div class="job-content quick_apply" id="jobForm_<?php echo $savedJob['job_id'] ;?>">
+		<!-- Applicant Col Starts -->
+			<form name="applicant_form_<?php echo $savedJob['job_id'] ;?>" id="applicant_form_<?php echo $savedJob['job_id'] ;?>" method="POST" enctype="multipart/form-data" action="<?php echo '/'.PROJECT_NAME ; ?>job/apply-job"  >
+				<div class="applicant-col1 form-bg-grey">
+					<div class="applicant-col1-left">
+						<h3  class="applicant-cv text-grey2 recommended-hdr">applicant CV</h3>
+					</div>
+					<div class="applicant-col1-left">
+						<input name="applicant_cv" type="file" value="Upload from computer" alt="Upload from computer" style="max-width: 360px;overflow:hidden" />
+					</div>
+				</div>
+	                <!-- Applicant Col Ends -->
+	                        
+	               <!-- Applicant Col Starts -->
+				<div class="applicant-col1 form-bg-grey">
+					<div class="applicant-col1-left">
+						<h3  class=" applicant-cv text-grey2 recommended-hdr">applicant Cover letter</h3>
+					</div>
+					<div class="applicant-col1-left">
+						<input name="application_cl" type="file" value="Upload from computer" alt="Upload from computer" style="max-width: 360px;overflow:hidden" />
+					</div>
+				</div>
+				<!-- Applicant Col Ends -->
+	                <!-- Applicant Col Starts -->
+				<div class="applicant-col1 form-bg-grey">
+					<textarea maxlength="1000" name="applicant_msg" cols="" rows="10" placeholder="">Hi, I am interested in this position and would like to apply for the same. Please have a look into my profile for more details.</textarea>
+				</div>
+				<!-- Applicant Col Ends -->
+				<input type="hidden" name="job_id" id="job_id" value="<?php echo $savedJob['job_id'] ;?>" />
+				
+				
+			<!-- Applicant Col Ends -->
+	        <!-- Applicant Col Starts -->
+			<div class="applicant-col1 text-grey2">
+				<h3 class="sub-heading-arial-narrow" style="font-weight: bold;">job description </h3>
+			</div>
+			<!-- Applicant Col Ends -->
+			<!-- Applicant Col Starts -->
+			<div class="applicant-col1 text-grey2">
+				<?php echo $savedJob['description'] ;?>
+			</div>
+			
+			<!-- Applicant Col Starts -->
+				<div class="applicant-col1">
+					<div class="bdr-btm_<?php echo $savedJob['job_id'] ;?>" style="text-align:right;">
+						<input type="button" class="btn-purple-lt fr" name="apply_job_btn_<?php echo $savedJob['job_id'] ;?>" id="apply_job_btn_<?php echo $savedJob['job_id'] ;?>" onclick="applyFormValidate(<?php echo $savedJob['job_id'] ;?>)" value="Apply" alt="Apply" title="Apply" />
+					</div>
+				</div>
+			</form>
+			
+			<!-- Applicant Col Ends -->
+			
+			
+		</div>
+
+<?php
+	} //if ends
+?>
+	</div>
+	</div>
+<?php	
+	} //loop ends
+	?>
+	</div>
+	<?php 
+}
+else
+{
+	echo '<div class="mail-grey-hdr-col1-no-records" style="text-align:center;"><div class="no_messages">
+				<div class="no_messages-img"><img src="'.PUBLIC_PATH.'/images/folder-empty.png"></div>
+				<div class="no_messages-data">This folder is empty.</div>
+			</div>';
+}
+?>
+<!--Mail-grey-hdr-col1 Ends -->
+</div>
+<!-- successfully appllied to job Dialog -->
+<div id="dialog_success_job_apply" title="Job Saved" style = "display:none; ">
+  <p>
+  	Job applied successfully.
+  </p>
+</div>
+
+<!-- select job dialog box -->
+<div id="select_checkbox" title="Select Job" style = "display:none; ">
+  <p>
+  	Please select at least one job.
+  </p>
+</div>
+
+<!-- delete job dialog box -->
+<div id="close_job_dialog_confirm" title="Close Job" style = "display:none; ">
+  <p>
+  Please confire that you want to delete this job(s)?
+  </p>
+</div>
+
+<!-- job apply error message popup start -->
+<div id="dialog_error_job_apply"  style="display:none;"  title="Apply Job">
+	<p>
+  		Error occured, Please try again.
+  	</p>
+</div>
+<!-- job apply error message popup end -->
+<!-- Content Right Right Ends -->

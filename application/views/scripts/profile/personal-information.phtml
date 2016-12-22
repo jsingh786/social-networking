@@ -1,0 +1,256 @@
+<!-- Title -->
+<?php
+	$this->headTitle()->prepend('Personal Info');
+	$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/personal_info.js" );
+	$personalinfo=$this->personalInfo;
+	if($personalinfo["phone"]!="" || $personalinfo["address"]!="" || $personalinfo["birthday"]!="" || $personalinfo["martial_status"]!="" || $personalinfo["im_type"]!="" || $personalinfo["instant_messenger"]!="" || $personalinfo["nationality"]!="" || $personalinfo["website_url"]!="" || $personalinfo["linkedin_url"]!="" || $personalinfo["facebook_url"]!="" || $personalinfo["twitter_url"]!=""){
+		?>
+		<style type="text/css">
+			#view-personal-info{
+				display:block;
+			}
+			#edit-personal-info{
+				display:none;
+			}	
+			input[name="cancel"]{
+				display:inline;
+			}
+		</style>
+		<?php 
+	}
+	else{
+		?>
+		<style type="text/css">
+			#view-personal-info{
+				display:none;
+			}
+			#edit-personal-info{
+				display:block;
+			}
+			input[name="cancel"]{
+				display:none;
+			}
+		</style>
+		<?php
+	}
+
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer" id="view-personal-info">
+			<!-- Summary Edit Starts -->
+			<div class="summary-edit text-grey2">
+				<h3 class="text-purple2">Personal Info</h3>
+				<font style="float: right;"> 
+				<span id="personalinfo">
+					<img src="<?php echo IMAGE_PATH;?>/edit-pencil.png" class="edit-new-icon" />
+				</span>
+				</font>
+			</div>
+			<!-- Summary Edit Ends -->
+			<!-- Contact Details Starts -->
+			<div class="contact-details">
+				<div class="contact-label-span">
+				<label>Phone Number</label>
+				<span class=" text-grey2" id="sphone"><?php if($personalinfo["phone"]){echo $personalinfo["phone"];}else{echo "None";}?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Address 1</label>
+				<span class=" text-grey2" id="saddr"><?php if($personalinfo["address"]){echo $personalinfo["address"];}else{echo "None";}?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Address 2</label>
+				<span class=" text-grey2" id="saddr_sec"><?php if($personalinfo["address_second"]){echo $personalinfo["address_second"];}else{echo "None";}?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Website</label>
+				<span class=" text-grey2" id="swebsite"><?php if($personalinfo["website_url"]){echo $personalinfo["website_url"];}else{echo "None";}?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Linkedin</label>
+				<span class=" text-grey2" id="slinkedin"><?php if($personalinfo["linkedin_url"]){echo $personalinfo["linkedin_url"];}else{echo "None";}?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Facebook</label>
+				<span class=" text-grey2" id="sfacebook"><?php if($personalinfo["facebook_url"]){echo $personalinfo["facebook_url"];}else{echo "None";}?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Twitter</label>
+				<span class=" text-grey2" id="stwitter"><?php if($personalinfo["twitter_url"]){echo $personalinfo["twitter_url"];}else{echo "None";}?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>IM</label>
+				<span class=" text-grey2" id="sim"><?php if($personalinfo["instant_messenger"]){echo $personalinfo["instant_messenger"];}else{echo "None";}?></span>
+				<label>Messenger Type</label>
+				<span class=" text-grey2" id="smtype"><?php 
+				if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_GMAIL){
+					echo "Gmail";
+				}
+				else if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_YAHOO){
+					echo "Yahoo";
+				}
+				else if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_SKYPE){
+					echo "Skype";
+				}
+				else if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_PIDGIN){
+					echo "Pidgin";
+				}else{
+					echo "None";
+				}
+				?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Birthday</label>
+				<span class=" text-grey2" id="sbday">
+				<?php 
+				
+				
+				if(isset($personalinfo["birthday"]) && $personalinfo["birthday"]!="" && $personalinfo["birthday"]!="01/01/1970"){
+				 echo date("j F, Y", strtotime($personalinfo["birthday"]));
+				}else{
+					echo "Not Shared";
+					}
+				
+					
+					?></span>
+					</div>
+					<div class="contact-label-span">
+				<label>Marital Status</label>
+				<span class=" text-grey2" id="smstatus"><?php 
+				if($personalinfo["martial_status"]==Extended\ilook_user::STATUS_MARRIED){
+					echo "Married";
+				}
+				else if($personalinfo["martial_status"]==Extended\ilook_user::STATUS_UNMARRIED){
+					echo "Unmarried";
+				}
+				else{
+					echo "Not Specified";
+				}
+				?></span>
+				</div>
+				<div class="contact-label-span">
+				<label>Nationality</label>
+				<span class=" text-grey2" id="snationality"><?php if($personalinfo["nationality"]){echo $personalinfo["nationality"];}else{echo "None";}?></span>
+				</div>
+				<div class="basic-info-bdr"></div>
+			</div>
+			<!-- Contact Details Ends -->
+		</div>
+		<!-- Summary Outer Ends -->
+	
+	
+		
+		<!-- Summary Outer Starts -->
+		<div class="summary-outer" id="edit-personal-info" >
+		<form name="personalinfo_form" id="personalinfo_form" method="post" action="">
+		<!-- Summary Edit Starts -->
+		<div class="summary-edit text-grey3">
+			<h3 class="text-purple2">Personal Info</h3>
+		</div>
+		<!-- Summary Edit Ends -->
+		<!-- Contact Details Starts -->
+		<div class="contact-details">
+			<div class="contact-label-span2">
+				<label>Phone Number</label> 
+				<span>
+					<input type="text" name="phoneno" id="phone_no" class="search-one-textbox group-required" value="">
+				</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>Address 1</label> 
+				<span> 
+					<input type="text"	name="addr" id="addrs" class="search-one-textbox group-required"	value="">
+				</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>Address 2</label> 
+				<span> 
+					<input type="text"	name="addr_sec" id="addrs_sec" class="search-one-textbox group-required"	value="">
+				</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>Website</label>
+				<span>
+					<input type="text" name="website" id="web_site" class="search-one-textbox group-required" value="">
+					<sub style="float: left; margin: 3px 0;"><strong>Tip:</strong>There should be http:// before url</sub>
+				</span>
+			</div>
+			<div class="contact-label-span2"> 
+			<label>Linkedin</label>
+			<span>
+				<input type="text" name="linked" id="link_ed" class="search-one-textbox group-required" value="">
+				<sub style="float: left; margin: 3px 0;"><strong>Tip:</strong>There should be http:// before url</sub>
+			</span>
+			</div>
+			<div class="contact-label-span2">
+			<label>Facebook</label>
+			<span>
+				<input type="text" name="facebook" id="face_book" class="search-one-textbox group-required" value="">
+				<sub style="float: left; margin: 3px 0;"><strong>Tip:</strong>There should be http:// before url</sub>
+			</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>Twitter</label>
+				<span>
+					<input type="text" name="twitter" id="twitterr" class="search-one-textbox group-required" value="">
+					<sub style="float: left; margin: 3px 0;"><strong>Tip:</strong>There should be http:// before url</sub>
+				</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>IM</label>
+				<span>
+					<input type="text" name="im" id="i_m" class="search-one-textbox group-required" value="">
+				</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>Messenger Type</label>
+				<span>
+					<select name="mtype" id="m_type" class="dropdown group-required">
+						<option value="" selected >Select Messenger Type</option>
+						<option value="<?php echo Extended\ilook_user::MESSENGER_GMAIL;?>">Gmail</option>
+						<option value="<?php echo Extended\ilook_user::MESSENGER_YAHOO;?>">Yahoo</option>
+						<option value="<?php echo Extended\ilook_user::MESSENGER_SKYPE;?>">Skype</option>
+						<option value="<?php echo Extended\ilook_user::MESSENGER_PIDGIN;?>">Pidgin</option>
+					</select>
+				</span>
+			</div>
+			<div class="contact-label-span2">
+			<label>Birthday</label>
+			<span>
+				<input readonly type="text" name="bday" id="b_day" class="search-one-textbox group-required" value="">
+			</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>Martial Status</label>
+				<span>
+					<select name="martial" id="martial_status" class="dropdown group-required">
+						<option value="" selected>Select</option>
+						<option value="<?php echo Extended\ilook_user::STATUS_MARRIED;?>">Married</option>
+						<option value="<?php echo Extended\ilook_user::STATUS_UNMARRIED;?>">Unmarried</option>
+					</select>
+				</span>
+			</div>
+			<div class="contact-label-span2">
+				<label>Nationality</label>
+				<span>
+					<input type="text" name="nationality" id="nationalityy" class="search-one-textbox group-required" value="">
+				</span>
+			</div>
+			<div class="basic-info-bdr"></div>
+		</div>
+		<!-- Contact Details Ends -->
+		<div class=" summary-btn-outer">
+		
+			<input name="save-personalinfo" id="save-personalinfo" type="button" alt="Save" title="Save" class="new-save-btn" value="Save" /> 
+			<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+		<div id="erroemsg" style=" margin:-25px 165px;"></div>
+		</div>
+		
+		</form>	
+		</div>
+		<!-- Summary Outer Ends -->
+	
+	</div>
+	<!-- Content Right Right Ends -->

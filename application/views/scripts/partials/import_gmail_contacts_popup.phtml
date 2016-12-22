@@ -1,0 +1,51 @@
+<style>
+
+</style>
+<div id="gmail_popup" class = "popup transparent_border" style = "display: none;">
+	<div class="forgot-password-outer">
+		<!-- Forgot Password Header -->
+		<div class="forgot-password-hdr_1">
+			<div id="forgot-password" class="left text-white">
+				<h2>Import contact list</h2>
+			</div>
+
+			<div class="right">
+				<img class="close_bpopup"
+					src="<?php echo PUBLIC_PATH;?>./images/cross2.png" alt="Close"
+					title="Close" width="21" height="20" />
+			</div>
+
+		</div>
+		<!-- Forgot Password Header -->
+			<!-- Forgot Password Content -->
+			<div class="forgot-password-content">
+				<div class="contact-list" id="modal_contacts">
+					<div id = "tabs">
+					 	<ul>
+							<li><a href="#tabs-1">Your email contacts not in ilook</a></li>
+							<li><a href="#tabs-2">Your email contacts in ilook</a></li>
+						</ul>
+						<div id="tabs-1">
+							<form id="email_contacts_form">
+								<div id = "contacts">
+								</div>
+								<span id="gmail_import" class="fr">
+									<input id="gmail_import_btn" type="button" value="Send Invitation" name="send_invitation_gmail">
+								</span>
+							</form>	
+						</div>
+						<div id="tabs-2">
+							<form id="user_contacts_form_2">
+								<div id = "contacts_n_ilook_users">
+								</div>
+								<span id="gmail_import" class="fr">
+									<input id="gmail_import_btn_2" type="button" value="Send Invitation" name="send_invitation_gmail_2">
+								</span>
+							</form>	
+						</div>
+					</div>					
+				</div>
+			</div>
+			<!-- Forgot Password Content -->
+	</div>
+</div>

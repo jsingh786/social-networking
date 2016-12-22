@@ -1,0 +1,130 @@
+
+<?php
+/* Including JS */
+$this->headScript()->appendFile( PUBLIC_PATH."/js/admin/sub_admins.js" );
+
+
+/* Including CSS */
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/dataTables.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/sub_admins.css" );
+?>
+
+<style>
+.sub-admin-form{ width:96%; float:left; margin:0; padding:0 2%;}
+.sub-admin-form-lt{ width:50%; float:left; margin:0; padding:0;}
+.sub-admin-form-rt{ width:50%; float:left; margin:0; padding:0;}
+.sub-admin-form-lt label{ width:50%; float:left; margin:0; padding:0;}
+.sub-admin-form-lt span{ width:50%; float:left; margin:0; padding:0; min-height:60px;}
+.sub-admin-form-rt label{ width:50%; float:left; margin:0; padding:0;}
+.sub-admin-form-rt span{ width:50%; float:left; margin:0; padding:0; min-height:60px;}
+.sub-admin-btn-outer{ width:100%; float:left; text-align:center;}
+.sub-admin-btn-outer input[type="button"]{ width:auto; padding:5px 10px;}
+
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) {	
+.sub-admin-form-lt{ width:100%;}
+.sub-admin-form-rt{ width:100%; }
+.sub-admin-form-lt label{ width:100%; }
+.sub-admin-form-lt span{ width:100%;}
+.sub-admin-form-lt span input{width:75%;}
+.sub-admin-form-rt span input{width:75%;}
+.sub-admin-form-rt label{ width:100%;}
+.sub-admin-form-rt span{ width:100%;}
+}
+</style>
+<?php 
+	$subadmin_details = $this->subadmin_details;
+
+?>
+	<div id='heading'>
+	     <h2><a href = '/<?php echo PROJECT_NAME?>admin/sub-admins/index'>
+	     Sub admins
+	     </a> -> 
+<?php 
+	if($subadmin_details)
+	{
+?>
+	Edit Sub Admin
+	</h2>
+	</div>
+	<form name="edit-subadmin" id="edit-subadmin"  enctype="multipart/form-data" method="POST" action="/<?php echo PROJECT_NAME; ?>admin/sub-admins/edit/id/<?php echo $subadmin_details[0]->getId(); ?>" >
+	
+<?php 
+	}
+	else
+	{
+?>
+	Create Sub Admin
+	</h2>
+	</div>
+	<form name="edit-subadmin" id="edit-subadmin" method="POST" action="/<?php echo PROJECT_NAME; ?>admin/sub-admins/edit" enctype="multipart/form-data" >
+<?php 
+	}
+?>
+	<div class="sub-admin-form">
+		<div class="sub-admin-form-lt">
+			<label>First Name</label>
+			<span><input type="text" tabindex="1" name="first_name" value="<?php echo $subadmin_details[0]?$subadmin_details[0]->getFirstname():'';  ?>"/></span>
+		
+			<label>Email ID</label>
+			<span><input type="text" tabindex="3" name="email_id"  id="email_id" value ="<?php echo $subadmin_details[0]?$subadmin_details[0]->getEmail_id():''; ?>"/></span>
+			
+			<label>Upload Profile Pic</label>
+			<span>
+			<input type="file" title= "<?php echo $subadmin_details[0]?$subadmin_details[0]->getProfile_picture():'' ?>" name="profile_pic" id="profile_pic" value="<?php echo $subadmin_details[0]?$subadmin_details[0]->getProfile_picture():''; ?>"/>
+			<div class="image_text">
+			Upload new image
+			</div>
+			</span>
+			<span></span>
+<?php if($subadmin_details[0] && $subadmin_details[0]->getProfile_picture())
+		{
+?>
+			<span class="admin_profile_image" id="admin_profile_image"><img width="100px" height="100px" src='<?php echo IMAGE_PATH; ?>/admin_profile/<?php echo $subadmin_details[0]->getProfile_picture(); ?>'>
+			<a href="javascript:;" class="cross_image_icon" onclick="removeSubAdminProfilePicture(<?php echo $subadmin_details[0]->getId() ?>);" >
+			<img width="12px" height="12px" src="<?php echo IMAGE_PATH; ?>/cross-white2.png"></a></span>
+			<?php 
+		}
+?>
+			<span><input type="hidden" id= "current_email_id" name="current_email_id"  value ="<?php echo  $subadmin_details[0]?$subadmin_details[0]->getEmail_id():''; ?>"/></span>
+			</div>
+		
+		<div class="sub-admin-form-rt">
+		
+		    <label>Last Name</label>
+			<span><input type="text" tabindex="2" name="last_name" value="<?php echo $subadmin_details[0]?$subadmin_details[0]->getLastname():''; ?>"/></span>
+			
+			<label>Expiry date</label>
+			<span><input type="text" tabindex="4" readonly="readonly" name="expiry_date" id="expiry_date" value="<?php 
+			 if( $subadmin_details[0] )
+			{
+				echo $subadmin_details[0]->getExpiry_date()?$subadmin_details[0]->getExpiry_date()->format('Y-m-d'):'';
+			} 
+?>			"/></span>
+<?php 		if( $subadmin_details[0] )
+			{
+?>
+			<label>Password</label>
+			<span>
+			<input type="password" tabindex="5" name="password" value="" id="password"/>
+			<div class="pswd_text">only if changing</div>
+			</span>
+			<label>Confirm Password</label>
+			<span>
+			<input type="password" tabindex="6" name="cpassword" value="" id="cpassword"/>
+			<div class="pswd_text">only if changing</div>
+			</span>
+<?php  
+			}
+?>
+			
+	  </div>
+		
+	  <div class="sub-admin-btn-outer">
+			<input value="Save" class="btn btn-large" type="submit"/>
+			<a href="<?php echo PROJECT_URL."/".PROJECT_NAME."admin/sub-admins/" ?>" >
+			<input value="Cancel" class="btn btn-large" id="sub-admins-cancel" type="button"/>
+			</a>
+	  </div>
+	
+</div>
+</form>

@@ -1,0 +1,111 @@
+<?php
+/* Including JS */
+//$this->headScript()->appendFile( PUBLIC_PATH."/js/backend/jquery.dataTables.js" );
+$this->headScript()->appendFile( "//code.jquery.com/jquery-1.11.1.min.js" );
+$this->headScript()->appendFile( "//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" );
+//$this->headScript()->appendFile( PUBLIC_PATH."/js/backend/data_tables.js" );
+/* Including CSS */
+$this->headLink()->appendStylesheet( "//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" );
+//$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/backend/dataTables.css" );
+?>
+<div id='heading'>
+	<h2>Reported Abuse</h2>
+</div>
+
+<script>
+$(document).ready(function() {
+	var oAllLinksTable  = $('#example').dataTable( {
+		"bProcessing": true,
+		"bServerSide": true,
+		"sAjaxSource": "/" + PROJECT_NAME + "admin/report-abuse/get-reported-users",
+		"aoColumns" : [
+					{
+		       			"mDataProp" : "id",
+		       			"bSearchable" : false,
+		       			"bSortable": true
+					},
+					{
+		       			"mDataProp" : "reporter_name",
+		       			"bSearchable" : true,
+		       			"bSortable": true
+					},
+					{
+		       			"mDataProp" : "reporter_email",
+		       			"bSearchable" : true,
+		       			"bSortable": true
+					},
+		       		{
+		       			"mDataProp" : "type",
+		       			"bSearchable" : false,
+		       			"bSortable": true
+		       		},
+		       		{
+		       			"mDataProp" : "reported",
+		       			"bSearchable" : false,
+		       			"bSortable": false
+		       		}
+		       	],
+		       	"fnServerData" : function(sSource, aoData, fnCallback) {
+		    		var url = sSource;
+		    		var data = aoData;
+		    		var success = fnCallback;
+					AJAXCaller(url,data,success);
+		    	},
+		    	"fnRowCallback" : function(nRow, aData, iDisplayIndex){
+					var oSettings = oAllLinksTable.fnSettings();
+		            $("td:First", nRow).html(oSettings._iDisplayStart+iDisplayIndex +1);
+		            return nRow;
+				}
+/*		    	"fnDrawCallback": function(oSettings, json)
+				{
+					$("div#tableDiv input.datatableCB").click(function(){
+						isallChecked();
+					});	
+					isallChecked();
+				}*/
+		
+	} );
+} );
+
+/**
+ * Function used to check/uncheck all the checkboxes !
+ * 
+ * @author Jaskaran Singh
+ * @since ''
+ * @version 1.0
+ */
+function isallChecked() {
+    if (!$('div#tableDiv input.datatableCB:not(:checked)').length == true) // Is all checked
+    {
+        $("div#tableDiv input#checkAll").prop('checked', true);
+    } else {
+        $("div#tableDiv input#checkAll").prop('checked', false);
+    }
+}
+</script>
+
+
+<div class="content">
+	<table id="example" width="100%" cellspacing="0" cellpadding="0"
+		border="0" class="display">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Reporter Name</th>
+				<th>Reporter Email</th>
+				<th>Type</th>
+				<th>Reported</th>
+			</tr>
+		</thead>
+
+		<tfoot>
+			<tr>
+				<th></th>
+				<th>Reporter Name</th>
+				<th>Reporter Email</th>
+				<th>Type</th>
+				<th>Reported</th>
+			</tr>
+		</tfoot>
+	</table>
+</div>

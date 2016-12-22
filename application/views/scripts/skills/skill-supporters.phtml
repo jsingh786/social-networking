@@ -1,0 +1,127 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Skill supporters' );
+// Javascript
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/skills_my_skills.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/short_profile.js" );
+
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/skills_my_skills.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/links-common.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/skills_menu.phtml' );
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+if( $this->skills_info )
+{
+	?>
+<style>
+	div#skills-form
+	{
+		display: none;
+	}
+</style>	
+<?php
+}
+else
+{
+?>
+<style>
+	div#skills-form
+	{
+		display: block;
+	}
+</style>	
+<?php	
+}	
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+<!-- Summary Outer Starts -->
+	<div class="summary-outer">
+	
+		<form id = "skill-form">
+			<div class="summary-edit text-grey3">
+				<h3 class="text-purple2">Supporters following this skill</h3>
+			</div>
+			<!--  pagination starts here -->
+			<?php 
+		if( $this->paginator )
+	{	
+		
+		if( $this->paginator->getTotalItemCount() )
+		{
+			
+?>	
+		<div class="bsr-box">
+		<div class="bookmark-search-right">	
+		<div class="col3">
+			<div class="fl text-grey3">
+<?php 
+				$query_str = "";
+				foreach( $this->params as $key=>$p )
+				{
+					if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+					{
+						continue;
+					}
+					$query_str .= $key."=".$p."&amp;";
+				}
+?>
+				VIEWS 
+				<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."skills/skill-supporters?".$query_str."list_len=20";?>">
+					<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-supporters?".$query_str."list_len=50";?>">
+					<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-supporters?".$query_str."list_len=100";?>">
+					<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."skills/skill-supporters?".$query_str."list_len=all";?>">
+					<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+				</a>
+			</div>
+			<div class="fr  text-grey3">
+<?php
+				echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+			</div>
+		</div>
+		</div>
+		</div>
+<?php
+			}
+		}
+?>
+			<!--  pagination ends here -->
+			
+			<div class="linkprofile-container">
+			<!-- Link Profile Outer Starts -->
+			<form name="link-form" id="link-form" method="post" action="">
+				<div class="linkoutercols">
+				<div class="linkprofile-outer">
+			<?php
+			/* @author ssharma4[Myblockedusers are addded as when these users are blocked current user still can view their profile pic.]*/
+			$get_supporters = $this->paginator->getCurrentItems();
+
+			echo Helper_common::displayUsersGridView(
+														Auth_UserAdapter::getIdentity()->getId(),
+														$get_supporters,
+														NULL,
+														NULL,
+														NULL,
+														NULL,
+														$this->my_blocked_users
+
+			);
+
+
+			?>
+			</div>
+				</div>
+		</form>
+	</div>
+		
+</div>

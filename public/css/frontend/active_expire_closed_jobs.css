@@ -1,0 +1,252 @@
+.text-purple2-link {
+    color: #6C518F !important;
+    text-decoration: none !important;
+    font-size:11px !important;
+    font-weight:lighter !important;
+}
+.grid-outer{
+	width:100% !important;
+	 overflow-x: auto !important;
+}
+.btn-grey {
+    background: none repeat scroll 0 0 #EEEEEE !important;
+    border: 1px solid #DADADA !important;
+    color: #48545E !important;
+    cursor: pointer !important;
+    font-size: 11px !important;
+    height: 25px !important;
+    margin: 0 !important;
+    text-align: center !important;
+    width: 100px !important;
+}
+.jobs-text1 {
+    float: right !important;
+}
+.btn-blue{
+	width:80px !important;
+}
+.updateComment-content_1 {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    border: 5px solid #FFFFFF !important;
+    float: left !important;
+    font-family: oswaldlight !important;
+    font-size: 20px !important;
+    margin: 0 !important;
+    max-height: 400px !important;
+    min-height: 70px !important;
+    overflow-y: auto !important;
+    padding: 13px !important;
+    width: 400px !important;
+}
+.updateComment-hdr_1 {
+    background: none repeat scroll 0 0 #141C23 !important;
+    float: left !important;
+    margin: 0 !important;
+    padding: 10px 20px !important;
+    
+}
+.updateComment-hdr_1 h2{
+	float: left !important;
+    width: 375px !important;
+}
+.updateComment-outer_1 {
+    width: 560px !important;
+}
+.btn-purple2 {
+    background: url("../../images/btn-purple.png") repeat-x scroll 0 0 #5F477E;
+    border: medium none !important;
+    color: #FFFFFF !important;
+    cursor: pointer !important;
+    padding: 7px 28px !important;
+    width: auto !important;
+}
+.job-detail-col1 p label {
+    float: left !important;
+    font-size: 11px !important;
+    margin: 10px 0 0 !important;
+    padding: 0 !important;
+    text-transform: uppercase !important;
+    width: 250px !important;
+}
+.job-detail-col1 p span {
+    float: left;
+    font-size: 11px;
+    margin: 10px 0 0;
+    padding: 0;
+    text-transform: uppercase;
+    width: 250px;
+}
+
+.job-detail-col1 {
+    float: left !important;
+    margin: 0 0 15px !important;
+    padding: 0 0 10px !important;
+    width: 100% !important;
+}
+.job-detail-btn-outer {
+    float: left !important;
+    margin: 30px 0 15px !important;
+    padding: 0 0 10px !important;
+    width: 100% !important;
+	text-align:right;
+}
+
+.job-detail-btn-outer input {
+    margin-right: 3px !important;
+}
+
+.job-detail-col1-img {
+    border: 1px solid #E8E8E8;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+.job-detail-col1-detail {
+    float: left;
+    margin: 5px 0 0 10px;
+    padding: 0;
+    width: 300px;
+}
+input#saved_job{
+	background-color:#B3B3B3;
+	cursor:auto;
+}
+.forgot-password-outer {
+    margin: 0 auto;
+    padding: 10% 0 0;
+    width: 450px;
+}
+.forgot-password-hdr {
+    background: none repeat scroll 0 0 #141C23;
+    float: left;
+    margin: 0;
+    padding: 10px 20px;
+    width: 422px;
+}
+.forgot-password-content {
+    background-color: #FFFFFF;
+    float: left;
+    margin: 0;
+    min-height: 197px;
+    padding: 25px 20px;
+    width: 420px;
+}
+div#modal_contacts.contact-list {
+    min-height: 163px;
+}
+
+div#modal_contacts ul {
+    list-style: none outside none;
+    margin: 0;
+    max-height: 191px;
+    overflow-y: auto;
+    padding: 0 10px;
+}
+.forgot-password-content label {
+    color: #BDC5CB;
+    float: left;
+    line-height: 35px;
+    margin: 0;
+    width: 105px;
+}
+.forgot-password-content span {
+    color: #BDC5CB;
+    font-size: 12px;
+    margin: 0 4px;
+}
+.forgot-password-content span {
+    margin: 0 !important;
+}
+.forgot-password-content span {
+    color: #BDC5CB;
+    font-size: 12px;
+}
+input[type="checkbox"] {
+    margin-top: 1px;
+}
+.forgot-password-content label {
+    color: #BDC5CB;
+    line-height: 35px;
+}
+.forgot-password-content span input[type="button"] {
+    background: none repeat scroll 0 0 #6B508E;
+    border: 0 none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: oswaldlight;
+    font-size: 16px;
+    height: 32px;
+    padding: 0 5px;
+    width: 94px;
+}
+
+ul li.mail_contacts span.import_cb input.gmail_cb {
+    bottom: 20px;
+    margin: 0 7px 0 3px;
+    position: relative;
+    vertical-align: middle;
+}
+#gmail_import_btn
+{
+	display:none;
+}
+#gmail_popup
+{
+    display: block;
+    left: 415px;
+    opacity: 1;
+    position: absolute;
+    top: 506px;
+    z-index: 9999;
+}
+
+.forgot-password-hdr .left {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+.forgot-password-hdr .right {
+    float: right;
+    margin: 8px 0 0;
+    padding: 0;
+    width: auto;
+}
+/* start renew pop up css*/
+.ui-dialog{
+	width:460px !important;
+}
+.ui-dialog .ui-dialog-content{
+	height:auto !important;
+}
+.job_expiry_date{
+	width:57% !important;
+	margin:0 !important;
+}
+.hasDatepicker{
+	text-align:center !important;
+}
+.ui-datepicker-inline{
+	margin:auto !important;
+}
+/* end renew pop up css*/
+ 
+ .job-content{
+	min-height : 663px
+ }
+ .bookmarks-add-new{
+	margin-bottom:12px !important;
+ }
+ 
+
+div.jobs-rt-hdr {
+    background-color: #422b64;
+    color: #fff;
+    float: left;
+    margin: 2px 0 0;
+    padding: 0 4%;
+    width: 92%;
+} 

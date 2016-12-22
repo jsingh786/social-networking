@@ -1,0 +1,111 @@
+<!-- Title -->
+<?php
+$this->headTitle()->prepend('Honors & Awards');
+if($this->honours_awards['honors_n_awards']!=""){
+	?>
+	<style type="text/css">
+		#honours-detail{
+		display:block;
+		}
+		#edit-honours{
+			display:none;
+		}
+		#honors-awards{
+			display:inline;
+		}
+		#cancel{
+			display:inline;
+		}
+	</style>
+	<?php 
+}
+else{
+	?>
+	<style type="text/css">
+		#honours-detail{
+		display:none;
+		}
+		#edit-honours{
+			display:block;
+		}
+		#honors-awards{
+			display:none;
+		}
+		#cancel{
+			display:none;
+		}
+	</style>
+	<?php 
+}
+?>
+<!-- Including JS -->
+<?php
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/honors-awards.js" );
+?>
+
+<!-- Content Right Left Starts -->
+<?php
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+	<!-- Content Right Left Ends -->
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<form name="honors-awards-form" id="honors-awards-form" method="post" action="">
+			<input type="hidden" name="skill_id" id="skill_id" value="" />
+			<input type="hidden" name="user_skills_id" id="user_skills_id" value="" />
+				<!-- Summary Outer Starts -->
+				<div class="summary-outer">
+					<!-- Summary Edit Starts -->
+					<div class="summary-edit text-grey3">
+						<h3 class="text-purple2">honours &amp; awards</h3>
+						<font style="margin-top:5px; float:right;">
+						<span id="honors-awards">
+							<img src="<?php echo IMAGE_PATH;?>/icon-pencil.png" width="16" height="16" align="absmiddle" /> 
+							<a class="text-purple2-link" href="javascript:;">Edit</a>
+							</span>
+						</font>
+					</div>
+					<!-- Summary Edit Ends -->
+					<!-- Contact Details Starts -->
+				<div id="edit-honours" >
+				<div class="contact-details">
+				<div class="contact-label-span2">
+					<label>Honours and Awards</label>
+					<span>
+						<textarea name="honours" id="honours"  class="textarea"  style="width:95%;" cols="" rows="5"><?php echo @$this->honours_awards['honors_n_awards'];?></textarea>
+					</span>
+				</div>
+				<div class="contact-label-span2">
+					<label>&nbsp;</label>
+					<span>
+						<font style="font-size:11px; margin-top:5px; float:left; width:100%;">
+							<strong>Tip:</strong> Use commas to separate multiple activities
+						</font>
+						<br />
+						<font style="font-size:11px; margin-top:2px; float:left; width:100%;">
+							<strong>Example:</strong> Management Training, New Technology, Investing
+						</font>
+					</span>
+				</div>
+				</div>
+				<!-- Contact Details Ends -->
+				<div class=" summary-btn-outer">
+					<input name="save-honors-awards" id="save-honors-awards" type="button"  alt="Save" title="Save" class="new-save-btn" value="Save" />
+					<input name="cancel" id="cancel" type="button"  alt="Cancel" title="Cancel" class="summary-btn" value="Cancel" />
+					<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+				</div>
+				</div>
+				<!-- Contact Details Starts -->
+				<div class="contact-details" id="honours-detail">
+					<label>Honours and Awards</label>
+					<span class="text-grey3" id="honors-awardstext">
+					<?php echo @$this->honours_awards['honors_n_awards'];?>
+					</span>
+				</div>
+				<!-- Contact Details Ends -->
+				</div>
+				<!-- Summary Outer Ends -->
+			<!-- Summary Outer Ends -->
+		</form>
+	</div>
+	<!-- Content Right Right Ends -->

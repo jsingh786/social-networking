@@ -1,0 +1,48 @@
+<span style = "width: 150px; display: inline-block;">Email :</span> <input type = "text" name = "user" id = "user" value = ""><br>
+<span style = "width: 150px; display: inline-block;">Password :</span> <input type = "password" name = "pass" id = "pass" value = ""><br>
+<span style = "width: 150px; display: inline-block;">No. of http requests :</span> <input type = "text" name = "number_of_users" id = "number_of_users" value = "1"><br>
+<input type = "button" name = "Test_login" id = "test_login" value = "Start">
+<br>
+Total Success : <div id = "total_success" style = "height: 15px; width: 200px; border: 2px dashed green; overflow:auto;">0
+</div>
+<br/>
+Total Fail : <div id = "total_fail" style = "height: 15px; width: 200px; border: 2px dashed red; overflow:auto;">0
+</div>
+<br/>
+<div id = "results" style = "height: 300px; width: 200px; border: 2px dashed black; overflow:auto;">
+</div>
+
+
+<script>
+
+	$("input#test_login").click( function(){
+		var total_success = 0;
+		var total_fail = 0;
+		var count = parseInt($("input#number_of_users").val());
+   		$("div#results").html("");
+		for( var i = 1; i <= count; i++ )
+		{
+			jQuery.ajax({
+			    url: "/" + PROJECT_NAME + "authenticate/login-test-with-ajax",
+			    type: "POST",
+			    dataType: "json",
+			    data: { user : $("input#user").val(), pass : $("input#pass").val() },
+			    success: function(jsonData) {
+			    		if( jsonData == 1 )
+			    		{
+			    			$("div#results").append("Login successfull.<br>");
+			    			total_success++;
+							$("div#total_success").html(total_success);
+			    		}
+			    		else
+			    		{
+			    			$("div#results").append("Login failed.<br>");
+			    			total_fail++;
+							$("div#total_success").html(total_fail);
+			    		}	
+			    	}
+				});
+		}
+	});
+
+</script>

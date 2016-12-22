@@ -1,0 +1,168 @@
+<!-- Content Right Left Starts -->
+<?php
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/skills_common.js" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/skills_common.css" );
+
+$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+
+$current_user = Auth_UserAdapter::getIdentity()->getId();
+$saved_searches = \Extended\saved_search::getAllSavedSearchesForAUser( $current_user);
+$UserType  = Auth_UserAdapter::getIdentity()->getUser_type();
+
+if(count($saved_searches)>0)
+{
+?>
+<style type="text/css">
+	.group-popup-top span
+	{
+		background: none repeat scroll 0 0 transparent !important;
+	    float: left !important;
+	    margin-left: 7px;
+	    margin-top: 7px;
+	    width: 32px !important;
+	}
+	.group-popup-btn span
+	{
+		background: none repeat scroll 0 0 transparent !important;
+	    float: left !important;
+	    margin-left: 7px;
+	    margin-top: 7px;
+	    width: 65px !important;
+	}
+	.grouplist
+	{
+			display:block;
+			float:left;
+			width:100% !important;
+	}
+	.group-popup-mid
+	{
+			height:auto !important;
+			max-height:170px !important;
+	}
+	.update_save_search {
+		float:right !important;
+	}
+}
+	</style>
+<?php 
+}
+else
+{
+?>
+	<style type="text/css">
+	.update_save_search {
+		float:right !important;
+	}
+	.grouplist
+	{
+		display:none;
+		float:left;
+		width:100% !important;
+	}
+	.group-popup-mid
+	{
+		height:auto !important;
+		max-height:87px !important;
+	}
+	</style>
+<?php 
+}
+?>
+<!-- Content Right Left Ends -->
+<div class="content-right-left">
+	<div id="grp-pop" class="nav-popup-outer main-group-popup" style="display:none">
+		<div class="tag-popup-arrow">
+			<img width="26" height="16" src="<?php echo IMAGE_PATH; ?>/arrow-popup.png">
+		</div>
+	    <div class="groupdiv">
+	    	
+	    </div>
+	</div>
+	<div class="heading">
+		<h1>SKILLS</h1>
+	</div>
+	<!-- Slide Nav Starts -->
+	<!--  check if usertype is not recruiter(ie. employed, job seeker or student) -->
+	<?php 
+	if($UserType != \Extended\ilook_user::USER_TYPE_RECRUITER) 
+		{
+	?>
+		<div class="sdmenu" id="my_menu" style="float: left; margin-top:50px;">
+		<h3 class = "menuSepratorHeading">
+      	INDIVIDUALS
+      	</h3>
+	      <div class = "" >
+		       	<span style = "display:none;"></span><!-- hidden -->
+		       	<?php 
+		       	if( $params['controller'] == "skills" && $params['action'] == "my-skills" || $params['action'] == "skill-supporters" )
+					echo '<a id = "mimic_parent" class="current" href="/'.PROJECT_NAME.'skills/my-skills">My Skills</a>';
+				else
+					echo '<a id = "mimic_parent" href="/'.PROJECT_NAME.'skills/my-skills">My Skills</a>';
+				?>
+	     </div>
+
+		 <div  class = "" >
+	        <span style = "display:none;"></span><!-- hidden -->
+	       	<?php 
+	       	if( $params['controller'] == "skills" && $params['action'] == "search-skills" || $params['action'] == "skill-recruiters")
+	       		echo '<a id = "mimic_parent" class="current" href="/'.PROJECT_NAME.'skills/search-skills">Search Recruiters following skills</a>';
+	       	else
+	       		echo '<a id = "mimic_parent" href="/'.PROJECT_NAME.'skills/search-skills">Search Recruiters following skills </a>';
+	       	?>
+	  	</div>
+	
+	   
+    </div>
+    <?php }?>
+    	
+    <?php 
+    if($UserType == \Extended\ilook_user::USER_TYPE_RECRUITER)
+     {
+     ?>
+    	<div class="sdmenu" id="my_menu" style="float: left; margin-top:40px;">
+		<h3 class = "menuSepratorHeading">
+      	RECRUITERS
+      	</h3>
+      	 <div  class = "" >
+	       	<span style = "display:none;"></span><!-- hidden -->
+	       	<?php 
+	       	if( $params['controller'] == "skills" && $params['action'] == "my-skills" || $params['action'] == "skill-supporters" )
+				echo '<a id = "mimic_parent" class="current" href="/'.PROJECT_NAME.'skills/my-skills">My Skills</a>';
+			else
+				echo '<a id = "mimic_parent" href="/'.PROJECT_NAME.'skills/my-skills">My Skills</a>';
+			?>
+			
+      	</div>
+	    <div  class = "" >
+	        <span style = "display:none;"></span><!-- hidden -->
+	       	<?php 
+	       	if( $params['controller'] == "skills" && $params['action'] == "search-skills" || $params['action'] == "skill-individuals" )
+	       		echo '<a id = "mimic_parent" class="current" href="/'.PROJECT_NAME.'skills/search-skills">Search Individuals following skills</a>';
+	       	else
+	       		echo '<a id = "mimic_parent" href="/'.PROJECT_NAME.'skills/search-skills">Search Individuals following skills</a>';
+	       	?>
+	  	</div>
+	  	
+    </div>
+    <?php 
+     } 
+     ?>
+    	<?php 
+			if( \Extended\bookmark_profile::countProfilesBookmarkedByMe(Auth_UserAdapter::getIdentity()->getId()))
+			{
+		?>
+    	<div class="sdmenu" id="my_menu" style="float: left; margin-top:40px;">
+		<h3 class = "menuSepratorHeading">
+      	Bookmarks
+      	</h3>
+	    <div  class = "" >
+	        <span style = "display:none;"></span><!-- hidden -->
+	         <a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."bookmarks/index" ?>">Bookmarks</a>			
+	  	</div>
+    </div>
+    <?php 
+    }
+	?>
+   
+</div>

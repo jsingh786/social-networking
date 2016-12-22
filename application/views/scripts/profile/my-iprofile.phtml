@@ -1,0 +1,2286 @@
+<?php
+$this->headTitle()->prepend('i-Profile');
+
+//Js
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/fb.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/iprofile.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/download_pdf.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/import_contacts.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/jQuery.bPopup.js" );
+
+//CSS
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/import_contacts.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/my_profile.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/add_new_album.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+$personalinfo = $this->personalInfo; 
+echo $this->partial ( 'partials/fb.phtml' );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+echo $this->partial('partials/import_gmail_contacts_popup.phtml');
+echo $this->partial('partials/import_gmail_contacts_popup.phtml');
+echo $this->partial('partials/yahoo_login_popup.phtml');
+echo $this->partial('partials/yahoo_login_popup.phtml');
+?>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var profile_link = $('#profile_url').attr('href');
+    
+    // We bind a new event to our link
+    $('a.tweet').click(function(e)
+	{
+	    //We tell our browser not to follow that link
+	    e.preventDefault();
+	    //We get the URL of the link
+	    var loc = profile_link;
+	    //We get the title of the link
+		var title = "";
+	    if($("#sharetxt").val()!="" && $("#sharetxt").val()!="Enter your text here..")
+	    {
+    		title = escape($("#sharetxt").val());
+		}
+	    //We trigger a new window with the Twitter dialog, in the middle of the page
+	    window.open('http://twitter.com/share?url=' + loc + '&text=' + title + '&', 'twitterwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+$(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+    });
+
+    $('a.linkedin').click(function(e){
+        //We tell our browser not to follow that link
+        e.preventDefault();
+        //We get the URL of the link
+        var loc = profile_link;
+        //We get the title of the link
+    	var title = "";
+        if($("#sharetxt").val()!="" && $("#sharetxt").val()!="Enter your text here..")
+		{
+        	title = escape($("#sharetxt").val());
+        }
+        var title2 = $("#fbname").val()+' profile';
+        window.open('https://www.linkedin.com/shareArticle?summary='+title+'&title=View my profile&mini=true&url='+loc+'&source=ilook.com', 'linkedinwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+$(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+     });
+});    
+</script>
+
+<!-- Content Right Left Starts -->
+<style type="text/css">
+#shareurl {
+	float: left;
+	background: none !important;
+}
+
+.invite-connect-pop-arrow {
+	margin: 0 1px 0 50px;
+}
+
+.invite-connect-pop-outer {
+	width: 530px;
+	right: 28px !important; 
+	position:absolute;
+	left:auto !important;
+}
+
+.invite-connect-pop {
+	width: 528px;
+}
+
+.notes-popup-outer2 {
+	float: left;
+	left: 5px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 160px;
+	z-index: 9999;
+}
+
+#upload_big label {
+	float: left;
+}
+
+.showskills {
+	cursor: pointer;
+}
+
+.ui-widget .quickview-outer .text-grey2-link, .ui-widget .quickview-outer .notes_icon,
+	.ui-widget .textWidth3 {
+	font-size: 13px !important;
+	line-height: 13px !important;
+}
+
+.ui-widget .quickview-outer input, .ui-widget .quickview-outer select,
+	.ui-widget .quickview-outer textarea, .ui-widget .quickview-outer button
+	{
+	font-size: 12px !important;
+}
+
+.quickview-top-right .left p img {
+	margin: 4px 0px 0px 0px;
+}
+
+.notesPop {
+	float: left;
+	padding-left: 13px;
+}
+
+.notes-popup-outer {
+	float: left;
+	left: 19px;
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	top: 165px;
+	z-index: 9999;
+}
+</style>
+<?php 
+//If cover photo exist give it style(top) saved in database.
+if($this->my_cover_photo && 
+	file_exists(REL_IMAGE_PATH.'\\cover_photo\\user_'.$this->userId.'\\'.$this->my_cover_photo_name))
+{
+
+echo'<style>';
+echo'img.my_cover_photo';
+echo'{';
+	echo'display:block;';
+	echo'position:relative;';
+	echo'top:'.$this->my_cover_photo_y_position.'px;';
+echo'}';
+echo'</style>';
+
+}
+?>
+
+<input type="hidden" id='album_page' value="1" />
+
+<!-- Content Right Right Starts -->
+<form name="iprofile_<?php echo $this->profileId;?>"
+	class="profile_form" id="iprofile_<?php echo $this->profileId;?>"
+	enctype="multipart/form-data" action="" action="" method="post">
+
+	<input type="hidden" name="fbname" id="fbname"
+		value="<?php echo $this->user_obj->getFirstname().' '.$this->user_obj->getLastname();?>" />
+	<input type="hidden" name="summary-desc" id="summary-desc"
+		value="<?php echo $this->user_obj->getProfessional_exp();?>" /> <input
+		type="hidden" name="req_id" id="req_id"
+		value="<?php echo @$this->userId;?>" />
+	<div class="content-right-right">
+		<!-- Invite Connect Starts -->
+		<div class="invite-connect-outer">
+			<!--Cover Photo section -->
+			<div class="cover-photo-cam-outer">
+				<div class="cover_photo_cam" title="upload cover photo">
+					<img style="display: none"
+						src="<?php echo IMAGE_PATH ?>/cam-icon.png">
+				</div>
+				<ul class="cover_photo_menu">
+					<div class="cover-photo-menu-arrow">
+						<img src="<?php echo IMAGE_PATH ?>/arrow-up-white.png">
+					</div>
+				</ul>
+			</div>
+			<input type="file" name="upload_cover_photo"
+				class="upload_cover_photo" id="upld_cvr_photo"
+				rel="<?php echo $this->userId;?>" />
+			<div class="timeline-header-wrapper">
+				<div id="cover_photo" class="cover-wrapper">
+					<div class="instructionWrap">
+						<div class="instructions">Drag to Reposition Cover</div>
+					</div>
+<?php 
+				if($this->my_cover_photo && 
+						file_exists(REL_IMAGE_PATH.'\\cover_photo\\user_'.$this->userId.'\\'.$this->my_cover_photo_name))
+				{
+					echo '<img id="cvr_photo_img" class="cvr_img my_cover_photo" rel1="'.$this->my_cover_photo_name.'" rel2="cvr_photo_'.$this->userId.'"  src="'.$this->my_cover_photo.'"/>';
+				}
+				else 
+				{
+					
+					echo '<img id="cvr_photo_img" rel1 = "" class="cvr_img my_default_cover_photo" rel2="cvr_photo_'.$this->userId.'" src="'.$this->default_cover_photo.'"/>';
+				}
+?>
+				<input type="hidden" value="0" name="pos" class="cover-position">
+				</div>
+				<div id="update_cover_outer" class="update_cover_photo_outer">
+					<input class="cvr_btn btn-purple" value="Save" id="save_cover"
+						onclick="saveCoverPhoto(this);" /> <a
+						class="cancel_cvr text-dark-purple" id="cancel_cover"
+						onclick="cancelCoverPhotoChanges(this);">Cancel</a>
+				</div>
+				<input type="hidden" name="cover_photo_editing_mode"
+					id="cover_photo_editing_mode" value="0" />
+			</div>
+			<!-- 			Cover Photo section ends -->
+
+			<div class="invite-connect-footer">
+				<div class="invite-connect-header">
+					<div class="fr">
+						<div class="right">
+							<a href="javascript:;" title="Download"> <img
+								id="showDownload_<?php echo $this->profileId;?>"
+								uid="<?php echo $this->profileId;?>"
+								src="<?php echo IMAGE_PATH;?>/icon-download.png" width="21"
+								height="27" onclick="downloadProfile(this)" alt="Download" />
+							</a>
+							<!-- download popup -->
+							<div id="download-pop_<?php echo $this->profileId;?>"
+								class="download-pop" style="display: None;">
+								<div  class="tag-popup-outer">
+									<div class="tag-popup-arrow2"
+										style="margin: 0 0 0 90px !important;">
+										<img src="<?php echo IMAGE_PATH;?>/arrow-popup.png" width="26"
+											height="16" />
+										<div
+											style="position: absolute; margin: 4px 0px 0px; right: -57px;">
+											<!--  									<img style="cursor:pointer" src="<?php //echo IMAGE_PATH;?>/cross-grey.png" class="closeDownloadPopup">-->
+										</div>
+									</div>
+									<div class="tag-popup" style="width: 186px;">
+										<div class="tag-popup-top2">
+											<h4>Download Profile</h4>
+										</div>
+										<input type="hidden" name="id" id="id"
+											value="<?php echo $this->profileId;?>">
+										<div class="tag-popup-mid">
+											<div class="tag-popup-col1">
+												<input name="all" id="all" type="checkbox" value="1"
+													class="chk_all_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">All</div>
+											</div>
+<?php 
+										if($this->user_obj->getProfessional_exp()!="" || $this->user_obj->getProfessional_goals()!="")
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="summary" id="summary" type="checkbox" value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Summary</div>
+											</div>
+<?php 
+										}
+										if($this->myExps)
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="exp" id="exp" type="checkbox" value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Experience</div>
+											</div>
+<?php 
+										}
+										if($this->eduInfoList)
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="educ" id="educ" type="checkbox" value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Education</div>
+											</div>
+<?php 
+										}
+										if($this->myProj)
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="projects" id="projects" type="checkbox"
+													value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Projects</div>
+											</div>
+<?php 
+											}
+										if($this->languages)
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="language" id="language" type="checkbox"
+													value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Languages</div>
+											</div>
+<?php 
+										}
+										if( @$this->mypublications )
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="public" id="public" type="checkbox" value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Publications</div>
+											</div>
+<?php 
+										}
+										if($personalinfo["honors_n_awards"]!="")
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="honors" id="honors" type="checkbox" value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Honors & Awards</div>
+											</div>
+<?php
+										} 
+										if($this->certificationInfoList)
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="certification" id="certification"
+													type="checkbox" value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Certification</div>
+											</div>
+<?php
+										} 
+										if($this->volunteeringInfoList)
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="volunteer" id="volunteer" type="checkbox"
+													value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Volunteering & Causes</div>
+											</div>
+<?php 
+										}
+?>
+											<div class="tag-popup-col1">
+												<input name="personal" id="personal" type="checkbox"
+													value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Personal Information</div>
+											</div>
+<?php 
+										if($personalinfo["hobbies"]!="")
+										{
+?>
+											<div class="tag-popup-col1">
+												<input name="hobby" id="hobby" type="checkbox" value="1"
+													class="chk_options_<?php echo $this->profileId;?>" />
+												<div class="tag-popup-col1-text">Additional Information</div>
+											</div>
+<?php 
+										}
+?>
+										</div>
+										<div class="tag-popup-btn_<?php echo $this->profileId;?>"
+											style="display: none; float: right;">
+											<input type="button"
+												style="float: right; margin-top: 5px; padding: 0 5px;"
+												title="Download" alt="Download"
+												onclick="downloadDetail(this)" class="btn-blue mt5"
+												value="Download" uid="<?php echo $this->profileId;?>"
+												id="download" name="download">
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- download popup end-->
+						</div>
+
+					</div>
+				</div>
+				<div class="left">
+				
+<?php 
+						$filename="images/profile/big_thumbnails/thumbnail_".$this->user_obj->getProfessional_image();
+						if($this->user_obj->getProfessional_image()!="" && file_exists($filename))
+						{
+							$img_name=IMAGE_PATH."/profile/big_thumbnails/thumbnail_".$this->user_obj->getProfessional_image();
+							$share_img=IMAGE_PATH."/profile/small_thumbnails/thumbnail_".$this->user_obj->getProfessional_image();
+							echo '<div class="fl profileImg myprofileImg" rel="'.$this->user_obj->getId().'" style="display: table-cell; text-align: center; vertical-align: middle;">';
+						}
+						else
+						{
+							if($this->user_obj->getGender()==Extended\ilook_user::USER_GENDER_MALE){
+								$img_name=IMAGE_PATH."/profile/default_profile_image_male_big.png";
+								$share_img=IMAGE_PATH."/profile/default_profile_image_male_small.png";
+							}
+							else
+							{
+								$img_name=IMAGE_PATH."/profile/default_profile_image_female_big.png";
+								$share_img=IMAGE_PATH."/profile/default_profile_image_female_small.png";
+							}
+							echo '<div class="fl myprofileImg" rel="'.$this->user_obj->getId().'" style="cursor:default !important;display:table-cell;text-align: center; vertical-align: middle;">';
+						}
+?>			
+						<input type="hidden" name="OtherProfileImg" id="OtherProfileImg"
+						value="<?php echo $share_img;?>" /> <img
+						src="<?php echo $img_name;?>" />
+				</div>
+<?php
+					if($this->userId!=$this->current_user_id)
+					{
+?>
+							<div class="notess">
+					<img src="<?php echo IMAGE_PATH;?>/icon-notes.png" width="18"
+						height="18" align="absmiddle" /> <a
+						class="text-purple2-link notess" href="javascript:;"
+						id="<?php echo $this->userId;?>"
+						onclick="getNotesForProfile(this);">Notes </a>
+				</div>
+<?php 
+					} 
+?>
+					<div class="notes-popup-outer2" id="displayNotes"
+					style="display: None;">
+					<div class="notes-popup-top">
+						<img src="<?php echo IMAGE_PATH;?>/arrow-popup.png" width="26"
+							height="16" />
+					</div>
+					<div class="notes-popup-bot">
+						<h4>ADD NOTE</h4>
+
+						<!-- <img src="<?php //echo IMAGE_PATH;?>/notok-icon-grey.png" id="closeNote" alt="Close" title="Close"  align="absmiddle" style="float: right; cursor:pointer;margin: -36px -19px; width: 16px; height: 16px;"/> -->
+						<textarea name="note_<?php echo $this->userId;?>"
+							id="note_<?php echo $this->userId;?>" cols="" rows="8"><?php echo $this->userNote;?></textarea>
+						<div class="common-div">
+							<div class="fl"></div>
+							<div class="fr">
+								<a class="text-purple-link" href="javascript:;"
+									id="<?php echo $this->userId;?>"
+									name="saveNote_<?php echo $this->userId;?>"
+									onclick="saveNote(this)">Save Changes</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="right">
+				<?php 
+					$profession = Helper_common::getUserProfessionalInfo($this->user_obj->getId());
+				?>
+				<h2 style="color: #000000;" text-purple2" class="text-purple2"><?php echo $this->user_obj->getFirstname()." ".$this->user_obj->getLastname(); ?></h2>
+				<?php if(isset($profession[0])) { ?>
+					<p style="margin: 0; font-size: 14px;"><?php echo $profession[0];?></p>
+				<?php } ?>
+
+				<?php if(isset($profession[1])) { ?>
+				<p style="margin: 0; font-size: 14px;"><?php echo $profession[1];?></p>
+				<?php } ?>
+
+				<?php if(isset($profession[2])) { ?>
+				<p style="margin: 0; font-size: 14px;"><?php echo $profession[2]; ?></p>
+				<?php } ?>
+
+				<p style=" width: 120% !important;margin: 0; font-size: 14px;"><?php echo $this->user_obj->getProfessional_headline(); ?></p>
+			</div>
+					
+<?php 
+  				$loggedInUsersJobSeekerFlagCounter = $this->user_obj->getJobseeker_display_flag();
+  				switch($loggedInUsersJobSeekerFlagCounter)
+  				{
+  					case 1:
+   						$jobSeekerLebel = "Not Seeking Job";
+  						break;
+  					
+  					case 3:
+   						$jobSeekerLebel = "Seeking Job on Hold";
+  						break;
+  					
+  					case 2:
+   						$jobSeekerLebel = "Seeking for Job";
+  						break;
+  					case 4:
+  						$jobSeekerLebel = "Not Seeking Job";
+  						break;
+  					default:
+  						$iconFlagForLoggedInUser = 1;
+  				}
+				if($this->userId == $this->current_user_id)
+				{
+					$jobSeekerLebel = "Seeking for Job";
+					
+					switch($loggedInUsersJobSeekerFlagCounter)
+					{
+						case 1:
+						$iconFlagForLoggedInUser = "icon-flag-grey.png";
+						$jobSeekerLebel = "Not Seeking Job";
+						$titleText = "Off";
+						break;
+								
+						case 3:
+						$iconFlagForLoggedInUser = "icon-flag-on-hidden.png";
+						$jobSeekerLebel = "Job Seeker- Invisible";
+						$titleText = "On But Hidden";
+						break;
+						
+						case 2:
+						$iconFlagForLoggedInUser = "icon-flag.png";
+						$jobSeekerLebel = "Seeking for Job";
+						$titleText = "On";
+						break;
+
+						case 4:
+					    $iconFlagForLoggedInUser = "icon-flag-grey.png";
+					    $loggedInUsersJobSeekerFlagCounter=1;
+					    $jobSeekerLebel = "Not Seeking Job";
+					    $titleText = "Off";
+						break;
+								
+						default:
+						$iconFlagForLoggedInUser = "icon-flag-grey.png";
+						$titleText = "Off";
+						$loggedInUsersJobSeekerFlagCounter=1;
+					}
+?>
+            <div class="cover-photo-share">
+				<div class="fl" style="margin: 0px 0px 0px 25px;">
+					<img id="flagstatus"
+						src="<?php echo IMAGE_PATH;?>/<?php echo $iconFlagForLoggedInUser;?>"
+						width="15" height="16" align="absmiddle"
+						title="<?php echo $titleText;?>"
+						flag="<?php echo $loggedInUsersJobSeekerFlagCounter;?>"
+						onclick="jobSeekerFlagStatus(this)" style="cursor: pointer;" />&nbsp;<span
+						id="jobSeekerLebel"><?php echo $jobSeekerLebel;?></span>
+				</div> 
+<?php 				
+					 
+				}
+				else
+				{
+
+					$jobSeekerFlagCounter = $this->user_obj->getJobseeker_display_flag();
+					switch($jobSeekerFlagCounter)
+					{
+						case 1:
+						$iconFlag = "icon-flag-grey.png";
+						$titleText = "Off";
+						break;
+						
+						case 3:
+						$iconFlag = "icon-flag-on-hidden.png";
+						$titleText = "On But Hidden";
+						break;
+						
+						case 2:
+						$iconFlag = "icon-flag.png";
+						$titleText = "On";
+						break;
+						
+						default:
+						$iconFlag = "icon-flag-grey.png";
+						$titleText = "Off";
+					}
+					if( $jobSeekerFlagCounter == 2 )
+					{
+?>
+
+
+						<div class="fl" style="margin: 6px 0px 0px !important;">
+					<img src="<?php echo IMAGE_PATH;?>/<?php echo $iconFlag;?>"
+						width="15" height="16" align="absmiddle"
+						title="<?php echo $titleText;?>" />&nbsp;<?php echo $jobSeekerLebel;?>
+						</div>
+						
+						
+                  
+<?php 
+					}
+				}		
+?>
+						
+					<div class="fr">
+					<div class="link500 totallinks link-tab" onclick="showLinks(this);">
+                           <div class="link500-lt"><?php echo count(array_filter( explode(",",$this->user_obj->getLink_list() ) ) );?></div>
+                              <div class="link500-rt linkstxt">Links</div>
+                          </div>
+					<div class="share-profile-btn">
+					<a id="shareurl" href="javascript:;"><span>Share</span></a></div>
+					
+						<!-- Invite-popup-Outer -->
+					<div id="share" class="invite-connect-pop-outer"
+						style="display: None; position: absolute">
+						<div class="invite-connect-pop-arrow">&nbsp;</div>
+						<div class="invite-connect-heading">
+							<div class="fl">
+								<h3>SHARE</h3>
+							</div>
+						</div>
+						<div class="invite-connect-pop">
+							<input type="hidden" name="sharetxt" id="sharetxt"
+								value="Check out my professional Profile and Connect with me on iLook.">
+							<textarea class="textarea" name="sharetxt2" id="sharetxt2"
+								cols="" rows="1" disabled="disabled">Check out my professional Profile and Connect with me on iLook.</textarea>
+
+							<p>
+								<?php 
+									if($this->userId == $this->current_user_id)
+									{
+								?>
+								<a href="javascript:;" id="fbshare_btn"><img
+									src="<?php echo IMAGE_PATH;?>/fb.png" alt="Share with Facebook"
+									title="Share with Facebook" width="100" height="23" hspace="5" /></a>
+								<a href="javascript:;" class="tweet"><img
+									src="<?php echo IMAGE_PATH;?>/twitter.png"
+									alt="Share with Twitter" title="Share with Twitter" width="89"
+									height="23" /></a> <a style="margin-left: 7px;"
+									class="linkedin" href="javascript:;"><img
+									src="<?php echo IMAGE_PATH;?>/btn-linkedin.png" width="99"
+									alt="Share with LinkedIn" title="Share with LinkedIn"
+									height="23" /></a>
+                                <?php 
+									}
+									else{
+								?>
+								<a style="margin-left: 7px;" href="javascript:;"><img
+									src="<?php echo IMAGE_PATH;?>/ilook-btn.png"
+									alt="Share with ilook" title="Share with ilook" width="82"
+									height="23" /></a> <a style="margin-left: 7px;"
+									href="/<?php  echo PROJECT_NAME;?>mail/compose#share_profile_of_user:<?php  echo $this->userId; ?>"><img
+									src="<?php echo IMAGE_PATH;?>/btn-send-mail.png"
+									alt="Send as a Mail" title="Send as a Mail" width="107"
+									height="23" /></a>
+							</p>	
+								<?php 
+									}
+                                ?>
+
+ 							<!-- 	</p>  -->
+						</div>
+					</div>
+					<!-- Invite-popup-Ends -->
+				</div>
+			</div>
+		</div>
+	</div>
+				<!-- Horizontal menu bar starts -->
+			<div class="new-nav">
+				<ul>
+					<li class="personal-info-tab" onclick="showPersonalInfo(this);">
+						<a class="selected" href="javascript:;">
+							Profile Info
+						</a>
+					</li>
+					<li class="skill-tab" onclick="showSkills(this);">
+						<a href="javascript:;">
+							Skills
+						</a>
+					</li>
+<?php
+					 if( $this->public_view)
+					 {
+?>
+					<li class="link500 totallinks link-tab fr"> 
+  						<font class="link-count-lt-logout">
+  						<?php echo count(array_filter( explode(",",$this->user_obj->getLink_list() ) ) );?>
+  						</font> 
+  						<font class="link-count-rt-logout">Links</font>
+					</li>
+<?php 
+					 }
+?>
+<?php 
+					if(!$this->public_view)
+					{
+
+						echo'<li class="feedback-tab" onclick="showFeedbacks(this);">';
+						echo'<a href="javascript:;">';
+						echo'Feedbacks';
+						echo'</a>';
+						echo'</li>';
+	
+						echo'<li class="reference-tab" onclick="showReferences(this);">';
+						echo'<a href="javascript:;">'; 
+						echo'References';
+						echo'</a>';
+						echo'</li>';
+						
+						echo'<li class="photo-album-tab" onclick="showPhotoAlbums(this);">';
+						echo'<a href="javascript:;">';
+						echo'Photos & Portfolios';
+						echo'</a>';
+						echo'</li>';
+						echo'<li class="link-tab" onclick="showLinks(this);">';
+						echo'<a class="links_tab_child_link" href="javascript:;">';
+						echo'Links';
+						echo'</a>';
+						echo'</li>';
+					}
+					?>
+					</ul>
+				</div>
+		<!-- Horizontal menu bar ends -->
+	<!-- Invite Connect Ends -->
+	<div class="accord-content purple-header-bot personal-info-accord-content" >
+
+			<!-- Contact section start -->
+			<div style="float: left; width: 100%;">
+				<div
+					style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+					<h3 class="bolder-title ">Contact</h3>
+				</div>
+				<div class="accord-content purple-header-bot">
+					<div class="left">
+<?php 
+				if($this->user_obj->getPhone()!="")
+				{
+?>
+					<div class="col1-btm-mrg">
+							<img src="<?php echo IMAGE_PATH;?>/icon-phone.png"
+								align="absmiddle" /><?php echo $this->user_obj->getPhone(); ?> 
+					</div>
+<?php 	
+				} 
+				if($this->user_obj->getPhone_second()!=""){
+?>
+					<div class="col1-btm-mrg">
+							<img src="<?php echo IMAGE_PATH;?>/icon-phone.png"
+								align="absmiddle" /><?php echo $this->user_obj->getPhone_second(); ?>
+					</div>
+<?php 	
+				} 
+				if($this->user_obj->getEmail()!=""){
+?>
+					<div class="col1-btm-mrg">
+						<img src="<?php echo IMAGE_PATH;?>/mail.png" align="absmiddle" />
+						<a style="float: none !important;" class="text-dark-purple"
+							href="mailto:<?php echo $this->user_obj->getEmail(); ?>"
+							target="_top">
+							<?php echo $this->user_obj->getEmail(); ?>
+						</a>
+					</div>
+<?php 	
+				} 
+				if($this->user_obj->getUsername()!=""){
+?>	
+					<div class="col1-btm-mrg">
+							<img src="<?php echo IMAGE_PATH;?>/icon-profile.png"
+								align="absmiddle" />
+							<a style="float: none !important;" class="text-dark-purple" id="profile_url"
+							href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.$this->user_obj->getUsername(); ?>">
+							<?php echo PROJECT_URL.'/'.PROJECT_NAME.$this->user_obj->getUsername(); ?>
+							</a>
+					</div>
+<?php 
+				}
+?>	
+				</div>
+				</div>
+				<div class="new-border-space"></div>
+			</div>
+			<!-- End Contact section start -->
+
+			<!-- Summary section start -->
+		<?php 
+			if($this->user_obj->getProfessional_exp()!="" || $this->user_obj->getProfessional_goals()!="")
+			{
+?>
+			<div style="float: left; width: 100%;">
+				<!-- Purple Header Starts -->
+				<div
+					style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+					<h3 class="bolder-title">Summary</h3>
+				</div>
+				<div class="accord-content purple-header-bot"
+					style="padding-top: 0 !important">
+
+					<div class="left">
+						<div class="col1-arial">
+<?php 
+				if($this->user_obj->getProfessional_exp()!=""){
+					echo nl2br($this->user_obj->getProfessional_exp());
+				}
+?>
+				<br>
+<?php 
+				if($this->user_obj->getProfessional_goals()!=""){
+				echo $this->user_obj->getProfessional_goals();
+				}
+?>
+</div>
+					</div>
+
+				</div>
+				<!-- Purple Header Ends -->
+				<div class="new-border-space"></div>
+			</div>
+<?php 
+			}?>
+		<!-- End Summary section start -->
+
+			<!-- Experience section start -->
+		<?php 
+			if($this->myExps)
+			{
+?>
+			<div style="float: left; width: 100%;">
+				<!-- Purple Header Starts -->
+				<div
+					style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+					<h3 class="bolder-title">Experience</h3>
+				</div>
+				<div class="accord-content purple-header-bot"
+					style="padding-top: 0px !important">
+<?php
+				if( $this->myExps )
+				{	
+					foreach ( $this->myExps as $exp )
+					{
+					
+?>
+					<div class="un-editable-outer bdr-btm-None mt-None">
+						<h3>
+<?php 
+							echo "<span class = 'bold-blk-arial'><b>".$exp->getJob_title()."</b></span>";
+	?> 						<a href="javascript:;"></a>
+						</h3>
+
+						<div class="left">
+							<div class="col1-arial">
+
+								<p class=' profile_subheadings exp_company'>
+									<span class="color-blk ">
+<?php				
+						echo $exp->getExperiencesCompany()->getName();
+?>				
+						</span>
+								</p>
+								<p class='exp_dates color-ltgraey'>
+<?php					$currentlyWorkingStatus = $exp->getCurrently_work();
+ 
+                      if($exp->getJob_startdate())
+                      {
+                        $from = $exp->getJob_startdate()->format('F-Y');
+                        if($currentlyWorkingStatus != '1')
+                        {
+                        	if($exp->getJob_enddate()!='')
+                        	{
+                        		 $to = $exp->getJob_enddate()->format('F-Y');
+                        	}
+                        	else
+                        	{
+                        		$to = $exp->getJob_enddate();
+                        	}
+                        		 
+                        }
+                        else
+                        {
+                        	$to = '<span class="notSet">Present<span>';
+                        }		  
+                          
+						//echo $exp->getJob_startdate()->format('F-Y')." - ".if($exp->getJob_enddate()==''){ $exp->getJob_enddate()->format('F-Y');}else { echo 'Currently Working.'}
+                        echo $from." - ".$to;
+                     if($currentlyWorkingStatus != '1')
+                     {
+                     	if($exp->getJob_enddate()!='')
+                     	{
+                        $days = intVal( $exp->getJob_startdate()->diff( $exp->getJob_enddate() )->d );
+						$months = intVal( $exp->getJob_startdate()->diff($exp->getJob_enddate())->m );
+						$year = intVal( $exp->getJob_startdate()->diff($exp->getJob_enddate())->y );
+                        
+						// for years, months and days
+
+						if($months == 0 && $year == 0 && $days >= 1)  
+							$diff = $days. ' day(s)';
+						elseif($months == 0 && $year >= 1 && $days == 0)  
+							$diff = $year.' year(s)';
+						elseif($months == 0 && $year >= 1 && $days >= 1)
+							$diff = $year.' year(s) '. $days.' day(s)';
+						elseif($months >= 1 && $year == 0 && $days == 0)
+							$diff = $months.' month(s)';
+						elseif($months >= 1 && $year == 0 && $days >= 1)
+							$diff = $months.' month(s) '.$days.' day(s)';
+						elseif($months >= 1 && $year >= 1 && $days == 0)
+							$diff = $year. ' year(s) '.$months.' month(s) ';
+						elseif($months >= 1 && $year >= 1 && $days >= 1)
+							$diff = $year.' year(s) '.$months.' month(s) '.$days.' day(s)';
+                        
+						else
+						{	
+							$diff = $year.' year(s) '.$months.' month(s) ';
+						}
+						echo ' (' . $diff . ')';
+						
+						}
+						else
+						{
+							echo "Not Set";
+						}
+                     }	
+				   }
+				   else
+				   {
+				     echo $exp->getJob_startdate()->format('F-Y')." - <span class='notSet'>Currently Working</span>";
+				   }
+?>
+						</p>
+								<p class='exp_location '>
+<?php 
+						echo $exp->getLocation();
+?>				
+						</p>
+								<p class='exp_notes'>
+<?php                           if($exp->getDescription())
+ 								{ 
+?>
+								Notes: <br>
+<?php 
+								echo nl2br($exp->getDescription());
+ 								}
+?>				
+						</p>
+							</div>
+						</div>
+					</div>
+<?php 
+					}
+				}
+?>
+				</div>
+				<!-- Purple Header Ends -->
+			</div>
+<?php 
+			}?>
+		<!-- End experience section start -->
+
+			<!-- Education section start -->
+		<?php 
+			if($this->eduInfoList)
+			{
+?>
+			<div style="float: left; width: 100%;">
+				<div
+					style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+					<h3 class="bolder-title">Education</h3>
+				</div>
+				<div class="accord-content purple-header-bot"
+					style="padding-top: 0 !important">
+<?php 
+			$educationListing=$this->eduInfoList;
+			$listing_numbere=count($educationListing);
+				if($listing_numbere>0)
+				{
+					for($i=0;$i<$listing_numbere;$i++)
+					{
+?>	
+					<div class="un-editable-outer mt-None">
+						<h3 class="bold-blk-arial">
+							<b><?php echo strtoupper($educationListing[$i]['school_title']);?></b>
+						</h3>
+						<div class="left">
+							<div class="col1-arial">
+<?php 
+			if($educationListing[$i]['degreetitle']!= "" &&  $educationListing[$i]['fieldofstudy_title']!= "")
+			{
+?>
+				<p class="color-blk"><?php echo $educationListing[$i]['degreetitle'];?> (<?php echo $educationListing[$i]['fieldofstudy_title'];?>)</p>
+<?php 
+			}
+			else if($educationListing[$i]['degreetitle']== "" && $educationListing[$i]['fieldofstudy_title']!="")
+			{
+?>
+				<p style='font-weight: bold;'>(<?php echo $educationListing[$i]['fieldofstudy_title'];?>)</p>
+<?php 
+			}
+			else if($educationListing[$i]['fieldofstudy_title']== "" && $educationListing[$i]['degreetitle']!="")
+			{
+?>
+				<p style='font-weight: bold;'><?php echo $educationListing[$i]['degreetitle'];?> </p>
+<?php
+			}
+			else if($educationListing[$i]['degreetitle']== "" &&  $educationListing[$i]['fieldofstudy_title']== "")
+			{
+?>
+				<p style='font-weight: bold;'>None</p>
+<?php 	
+			}
+?>
+							<p>
+								<?php echo $educationListing[$i]['degree_name'];?>
+							</p>
+
+								<p class="color-ltgraey"><?php echo date("F, Y", strtotime($educationListing[$i]['duration_from']))." - ".date("F, Y", strtotime($educationListing[$i]['duration_to']));?></p>
+								<p><?php if($educationListing[$i]['grade']) {?>Grade-<?php echo nl2br( $educationListing[$i]['grade'] ); } ?></p>
+								<p><?php if($educationListing[$i]['acitivities']) {?>Activities:<?php echo nl2br( $educationListing[$i]['acitivities'] ); } ?></p>
+								<p><?php if($educationListing[$i]['notes']) {?>Notes:<br><?php echo nl2br( $educationListing[$i]['notes'] ); }?></p>
+								
+							</div>
+						</div>
+					</div>
+						
+<?php 
+					}
+?>	
+			</div>
+<?php 
+				
+				}
+?>
+			</div>
+			<!-- Purple Header Ends -->
+<?php 
+			}?>
+		<!-- End education section start -->
+			<!-- Skills section starts  -->
+			<div
+				style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+				<h3 class="bolder-title">Skills</h3>
+			</div>
+			<div id="" style="float: left; width: 100%;">
+				<div class="accord-content purple-header-bot" id="">
+
+					<!-- content get from ajax call -->
+					<!-- Skills section start -->
+		<?php 
+			if($this->skillInfoList)
+			{
+?>
+				<!-- Purple Header Starts -->
+					<div style="float: left; width: 100%;">
+						<div
+							style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+							<h3 class="min-accord-open text-white"
+								style="border-bottom: medium none;"></h3>
+						</div>
+						<div class="accord-content">
+
+							<!-- Slide Down Content Starts -->
+
+					<?php 
+					$skillListing = $this->skillInfoList;
+					$skill_count  = count($skillListing);
+					$deleted_users = array();
+					$filtered_supporters = array();
+					if( $skill_count > 0 )
+					{
+						for( $i = 0; $i < $skill_count; $i++ )
+						{
+							$all_skills_supporter_arr = explode(",",$skillListing[$i]['supported_ids']);
+							$supporter = array();
+							
+							//This array is used to display supporter count.
+							for( $k=0; $k < count($all_skills_supporter_arr); $k++)
+							{
+								if($all_skills_supporter_arr[$k]!="")
+								{
+									$supporter[] = $all_skills_supporter_arr[$k];
+								}
+							}
+							//------------Eliminating account_closed users-----------//
+
+							foreach($supporter as $supporter_user_id)
+							{
+								$user_obj =  \Extended\ilook_user::getRowObject($supporter_user_id);
+		
+								// If supporter_user's account is closed i.e acoount_closed_on is an object.
+								if(is_object($user_obj))
+								{
+									if( $user_obj->getAccount_closed_on() )
+									{
+										$account_closed_users[] = $supporter_user_id;
+									}
+								}
+							}
+							if(isset($account_closed_users))
+							{
+								$supporter =  array_diff( $supporter, $account_closed_users );
+							}
+							//------------End Eliminating account_closed users-----------//
+?>
+	
+					<div class="slide-down-content">
+				
+<?php 
+					//This array is used to display supporter info.
+					$supporterArray = explode(",", $skillListing[$i]['supported_ids']);
+					
+					//------------Eliminating account_closed users-----------//
+					foreach($supporterArray as $supporter_user_id)
+					{
+						$user_obj =  \Extended\ilook_user::getRowObject($supporter_user_id);
+					
+						// If supporter_user's account is closed i.e acoount_closed_on is an object.
+						if($user_obj)
+						{
+							if(is_object($user_obj->getAccount_closed_on()))
+							{
+								$account_closed_users[] = $supporter_user_id;
+							}
+						}
+					}
+					
+					if(isset($account_closed_users))
+					{
+						$supporterArray =  array_diff( $supporter, $account_closed_users );
+					}
+					//------------End - Eliminating account_closed users-----------//
+					// Not in use anywhere on page.
+					$arrayElementCurrent = array();
+ 					
+ 					for( $counterArray=0; $counterArray < sizeof($supporterArray); $counterArray++ )
+					{
+						
+					 	  $arrayElementCurrent[] = $supporterArray[$counterArray];
+					}
+					
+					
+					
+?>
+<?php 
+					if( $this->userId == $this->current_user_id && count($supporter) == 0 )
+					{
+?>
+					<div class="slide-down-content-left"
+									style="margin-left: 0px; margin-top: 6px;">
+									<span
+										id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>'
+										onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>');"
+										style="cursor: pointer;"
+										title="Supported by <?php  echo count($supporter); ?> link">
+						<?php  echo count($supporter); ?>
+						</span> <span>&nbsp;&nbsp; <img
+										onclick="javascript:alert('You cant support your own skill')"
+										src="<?php echo IMAGE_PATH ; ?>/icon-support.png" alt="thumb"
+										title="Your own skill">
+									</span>
+								</div>
+<?php						
+						
+					}
+					else
+					{		
+ 
+				    if( $this->userId == $this->current_user_id && count($supporter) )
+					{
+?>
+					<div class="slide-down-content-left"
+									style="margin-left: 0px; margin-top: 6px;">
+									<span
+										id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>'
+										onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>');"
+										style="cursor: pointer;"
+										title="Supported by <?php  echo count($supporter); ?> link"><?php  echo count($supporter); ?></span>
+
+									<span>&nbsp;&nbsp; <img
+										onclick="javascript:alert('You cant support your own skill')"
+										src="<?php echo IMAGE_PATH ;?>/icon-support-hover.png"
+										alt="thumb" title="Your own skill">
+									</span>
+								</div>							
+<?php 
+					}
+					else
+					{
+							
+					if( in_array($this->current_user_id, explode(",", $skillListing[$i]['supported_ids']))  && count($supporter) != 0 )
+					{
+?>
+						<div class="slide-down-content-left"
+									style="margin-left: 0px; margin-top: 6px;">
+									<span
+										id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>'
+										onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>')"
+										style="cursor: pointer"
+										title="Supported by <?php  echo count($supporter); ?> link"><?php  echo count($supporter); ?></span>
+									<span style="cursor: pointer;">&nbsp; <img
+										src="<?php  echo IMAGE_PATH ; ?>/icon-support-hover.png"
+										onclick="supportSomeSkill(<?php echo $skillListing[$i]['skill_id'];?>, <?php echo $this->current_user_id;?>, <?php echo $this->userId;?>, this );"
+										alt="thumb" title="Unsupport" style="cursor: pointer;" /></span>
+								</div>
+<?php 
+					}
+					else
+					{
+?>
+						<div class="slide-down-content-left"
+									style="margin-left: 0px; margin-top: 6px;">
+									<span
+										id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>'
+										onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>');"
+										style="cursor: pointer;"
+										title="Supported by <?php  echo count($supporter); ?> link"><?php  echo count($supporter); ?>
+							</span> <span style="cursor: pointer;">&nbsp;&nbsp; <img
+										src="<?php  echo IMAGE_PATH ; ?>/icon-support.png" alt="thumb"
+										onclick="supportSomeSkill(<?php echo $skillListing[$i]['skill_id'];?>, <?php echo $this->current_user_id;?>, <?php echo $this->userId;?>, this );"
+										title="Support" style="cursor: pointer;">
+									</span>
+
+								</div>							
+<?php 
+				 	}// else
+				} //outer else
+			}//fist else			
+ ?>
+				<div class="slide-down-content-right">
+
+									<!-- Slide Down Inner Starts -->
+									<div class="font-arial slide-down-inner showskills"
+										skill="<?php echo $skillListing[$i]['user_skill_id'];?>">
+
+							<?php echo $skillListing[$i]['user_skill'];?>
+							<img id="img_<?php echo $skillListing[$i]['user_skill_id'];?>"
+											style="float: right;"
+											src="<?php echo IMAGE_PATH;?>/plus_grey.png">
+									</div>
+
+									<!-- Slide Down Inner Ends -->
+<?php
+
+						if(count($supporter)>0)
+						{
+?>
+						<div id="skills<?php echo $skillListing[$i]['user_skill_id'];?>"
+										class="slide-down-inner-container" style="display: None;">
+ 
+<?php 
+							foreach($supporterArray as $suporter )
+							{
+								$u_detail=Extended\ilook_user::getRowObject($suporter);
+								
+								
+								$numberOfCharsInName = strlen( $u_detail->getFirstname() );
+								
+								if( $numberOfCharsInName > 7  ) 
+								{
+									$nameOfSupportr = substr( $u_detail->getFirstname() , 0, 5);
+									$dots = "...";
+									$nameOfSupportr = $nameOfSupportr.$dots;
+								}
+								
+								   
+								else
+								{
+									$nameOfSupportr = $u_detail->getFirstname();
+								}
+								
+								// showing default profile picture for skill supporters whom
+								// I have blocked or those who have blocked me.
+								if($this->usersblockedNBlocked_by)
+								{
+									$blocked_blocker_users = $this->usersblockedNBlocked_by;
+									if(in_array($u_detail->getId(), $blocked_blocker_users))
+									{
+										if($u_detail->getGender() == \Extended\ilook_user::USER_GENDER_FEMALE )
+										{
+											$img_path = IMAGE_PATH.'/profile/default_profile_image_female_big.png';
+											echo'<div class="col1 "user-"'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+											echo'<a style="cursor:default" href="javascript:void(0);" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link supporter_blocked">';
+											echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+											echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+											echo'</a>';
+											echo'</div>';
+										}
+										else
+										{
+											$img_path = IMAGE_PATH.'/profile/default_profile_image_male_big.png';
+											echo'<div class="col1 "user-"'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+											echo'<a style="cursor:default" href="javascript:void(0);" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link supporter_blocked">';
+											echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+											echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+											echo'</a>';
+											echo'</div>';
+										}
+									}
+									else
+									{
+										$img_path = Helper_common::getUserProfessionalPhoto($u_detail->getId());
+										echo'<div class="col1 "user-"'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+										echo'<a href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/id/'.$suporter.'" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link" target="_blank">';
+										echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+										echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+										echo'</a>';
+										echo'</div>';
+									}
+									
+								}
+								else
+								{
+									$img_path = Helper_common::getUserProfessionalPhoto($u_detail->getId());
+									echo'<div class="col1 "user-"'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+									echo'<a href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/id/'.$suporter.'" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link" target="_blank">';
+									echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+									echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+									echo'</a>';
+									echo'</div>';
+								}
+								//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+								// END showing default profile picture for skill supporters whom
+								// I have blocked or those who have blocked me.
+								//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+									
+?>
+
+							
+			
+<?php 
+								//}//if ends
+							}// for ends
+?>
+
+ 
+						</div>
+<?php 
+						}
+						else
+						{
+?>
+							<div id="skills<?php echo $skillListing[$i]['user_skill_id'];?>"
+										class="slide-down-inner-container"
+										style="display: None; text-align: center;">
+										<span id="no_skills">Skill not supported!</span>
+									</div>
+<?php 
+						}
+?>
+				</div>
+							</div>
+<?php 
+				}
+			}
+?>	
+				<!-- Slide Down Content Ends -->
+						</div>
+						<!-- Purple Header Ends -->
+					</div>
+<?php 
+			}
+			else
+			{
+				?>
+										<div class="mail-grey-hdr-col1"
+						style="text-align: center; border-right: 4px solid white;">No
+						Skill Supporter Found!</div>
+			<?php
+									}
+			?>
+		<!-- End skill section start -->
+
+				</div>
+				<div class="new-border-space"></div>
+			</div>
+			<!-- skills section ends -->
+			<!-- Languages section start -->
+		<?php 
+			if($this->languages)
+			{
+		?>
+			<div style="float: left; width: 100%;">
+				<div
+					style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+					<!-- Purple Header Starts -->
+					<h3 class="bolder-title">languages</h3>
+				</div>
+				<div class="accord-content purple-header-bot"
+					style="padding-top: 0px !important">
+					<div class="left">
+						<div class="col1-arial">
+
+
+							<!-- Un Editable Outer Starts -->
+							<div class="table-language">
+					
+							
+<?php
+				if( $this->languages )
+				{
+					foreach ( $this->languages as $lang )
+					{	
+?>						<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label><?php echo $lang->getLanguage();?></label>
+									</div>
+									<div class="tl-cells">
+										<span> <?php echo $lang->getProficiency();?> </span>
+									</div>
+								</div>
+						 <?php 
+					}
+				}
+?>					</div>
+							<!-- Un Editable Outer Ends -->
+
+						</div>
+					</div>
+
+				</div>
+				<!-- Purple Header Ends -->
+				<div class="new-border-space"></div>
+			</div>
+		<?php 
+			}
+		?>
+		<!-- End languages section start -->
+
+			<!--  Start Personal info section -->
+			<div style="float: left; width: 100%;">
+				<div
+					style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+					<h3 class="bolder-title">personal Info</h3>
+				</div>
+				<div class="accord-content purple-header-bot"
+					style="padding-top: 0px !important">
+					<div class="left">
+						<div class="col1-arial">
+							<div class="table-pi">
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Phone Number</label>
+									</div>
+									<div class="tl-cells">
+										<span id="sphone"><?php if($personalinfo["phone"]){echo $personalinfo["phone"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Address 1</label>
+									</div>
+									<div class="tl-cells">
+										<span id="saddr"><?php if($personalinfo["address"]){echo $personalinfo["address"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Address 2</label>
+									</div>
+									<div class="tl-cells">
+										<span id="saddr_sec"><?php if($personalinfo["address_second"]){echo $personalinfo["address_second"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Website</label>
+									</div>
+									<div class="tl-cells">
+										<span id="swebsite"><?php if($personalinfo["website_url"]){echo $personalinfo["website_url"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Linkedin</label>
+									</div>
+									<div class="tl-cells">
+										<span id="slinkedin"><?php if($personalinfo["linkedin_url"]){echo $personalinfo["linkedin_url"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Facebook</label>
+									</div>
+									<div class="tl-cells">
+										<span id="sfacebook"><?php if($personalinfo["facebook_url"]){echo $personalinfo["facebook_url"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Twitter</label>
+									</div>
+									<div class="tl-cells">
+										<span id="stwitter"><?php if($personalinfo["twitter_url"]){echo $personalinfo["twitter_url"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>IM</label>
+									</div>
+									<div class="tl-cells">
+										<span id="sim"><?php if($personalinfo["instant_messenger"]){echo $personalinfo["instant_messenger"];}else{echo "None";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Messenger Type</label>
+									</div>
+									<div class="tl-cells">
+										<span id="smtype">
+<?php 
+					if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_GMAIL){
+						echo "Gmail";
+					}
+					else if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_YAHOO){
+						echo "Yahoo";
+					}
+					else if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_SKYPE){
+						echo "Skype";
+					}
+					else if($personalinfo["im_type"]==Extended\ilook_user::MESSENGER_PIDGIN){
+						echo "Pidgin";
+					}else{
+						echo "None";
+					}
+?>
+					</span>
+									</div>
+
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Birthday</label>
+									</div>
+									<div class="tl-cells">
+										<span id="sbday">
+<?php
+					if(isset($personalinfo["birthday"]) && $personalinfo["birthday"]!="" && $personalinfo["birthday"]!="01/01/1970")
+					{
+						echo date("j F, Y", strtotime($personalinfo["birthday"]));
+					}
+					else
+					{
+						echo "Not Shared";
+					}
+?>
+					</span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Gender</label>
+									</div>
+									<div class="tl-cells">
+										<span id="sim"><?php if($personalinfo["gender"]==\Extended\ilook_user::USER_GENDER_MALE){ echo "Male";}else{echo "Female";}?></span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Marital Status</label>
+									</div>
+									<div class="tl-cells">
+										<span id="smstatus">
+<?php 
+					if($personalinfo["martial_status"]==Extended\ilook_user::STATUS_MARRIED){
+						echo "Married";
+					}
+					else if($personalinfo["martial_status"]==Extended\ilook_user::STATUS_UNMARRIED){
+						echo "Unmarried";
+					}else{
+						echo "Not Specified";
+					}
+?>
+					</span>
+									</div>
+								</div>
+
+								<div class="row-tl-cells">
+									<div class="tl-cells">
+										<label>Nationality</label>
+									</div>
+									<div class="tl-cells">
+										<span id="snationality"><?php if($personalinfo["nationality"]){ echo $personalinfo["nationality"];}else{echo "None";}?>
+					</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="new-border-space"></div>
+				</div>
+
+			</div>
+			<!-- End Personal info section -->
+
+			<!--  Start Additional info section -->
+		<?php 
+			if($personalinfo["hobbies"]!="")
+			{
+?>
+		<!-- Purple Header Starts -->
+			<div style="float: left; width: 100%;">
+				<div
+					style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+					<h3 class="bolder-title">additional info</h3>
+				</div>
+				<div class="accord-content purple-header-bot"
+					style="padding-top: 0 !important;">
+
+					<div class="left">
+						<div class="col1-arial">
+							<span> <?php echo nl2br( $personalinfo["hobbies"] );?> </span>
+
+						</div>
+					</div>
+
+				</div>
+				<!-- Purple Header Ends -->
+
+			</div>
+<?php 
+			}
+?>
+			<!-- End Additional info section -->
+
+			<!-- Purple Header Ends -->
+	</div>
+				<div class="accord-content purple-header-bot skills-accord-content" style="min-height:200px;">
+				<div id="" style="float: left; width: 100%;">
+					<div class="accord-content purple-header-bot" id="">
+<?php 
+			if($this->skillInfoList)
+			{
+?>
+				<!-- Purple Header Starts -->
+				<div style="float: left; width: 100%;">
+					<div
+						style="float: left; width: 100%; text-align: center; margin: 5px 0px;">
+						<h3 class="min-accord-open text-white" style="border-bottom: medium none;"></h3>
+					</div>
+					<div class="accord-content">
+
+						<!-- Slide Down Content Starts -->
+
+<?php 
+			$skillListing = $this->skillInfoList;
+			$listing_number = count($skillListing);
+			if($listing_number > 0)
+			{
+				for( $i=0; $i<$listing_number; $i++ )
+				{
+					$skills = explode( ",",$skillListing[$i]['supported_ids'] );
+					
+					//This array will be used to count supporters.
+					$skl = array();
+					for( $k = 0; $k < count( $skills ); $k++ )
+					{
+						if( $skills[$k] != "" )
+						{
+								$skl[] = $skills[$k];
+						}
+					}
+ 
+?>
+	
+					<div class="slide-down-content">
+				
+<?php 
+					// Supporters array used to display supporters of skills.
+					$supporterArray = explode(",", $skillListing[$i]['supported_ids']);
+					// Array fetched through following code is not used any where in page.
+ 					for( $counterArray = 0; $counterArray < sizeof($supporterArray); $counterArray++ )
+					{
+					 	  $arrayElementCurrent = $supporterArray[$counterArray];
+					 	
+ 							
+						if( $arrayElementCurrent == $this->current_user_id )
+						{
+							
+							$userAlreadyExistInSuppoerterList = "true";
+							 
+						}
+					
+					}
+?>
+<?php 
+					if( $this->userId == $this->current_user_id && count($skl) == 0 )
+					{
+?>
+					<div class="slide-down-content-left" style="margin-left: 0px; margin-top: 6px;">
+						<span id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>'onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>');" style="cursor: pointer;" title="Supported by <?php  echo count($skl); ?> link"><?php  echo count($skl); ?></span>
+						 <span>&nbsp;&nbsp;
+
+							<img  onclick="javascript:alert('You cant support your own skill')" src="<?php echo IMAGE_PATH ?>/icon-support.png" alt="thumb"  title="Your own skill"  >
+						</span>
+					</div>
+<?php						
+						
+					}
+					else
+					{
+ 
+				    if( $this->userId == $this->current_user_id && count($skl) )
+					{
+?>
+					<div class="slide-down-content-left"
+								style="margin-left: 0px; margin-top: 6px;">
+								<span id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>' onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>');" style="cursor: pointer;" title="Supported by <?php  echo count($skl); ?> link"><?php  echo count($skl); ?></span>
+								<span>&nbsp;&nbsp;
+									<img  onclick="javascript:alert('You cant support your own skill')" src="<?php echo IMAGE_PATH ?>/icon-support-hover.png" alt="thumb"  title="Your own skill"  >
+								</span>
+							</div>							
+<?php 
+					}
+					else
+					{
+							
+					if( in_array($this->current_user_id, explode(",", $skillListing[$i]['supported_ids']))  && count($skl) != 0 )
+					{
+?>
+					<div class="slide-down-content-left" style="margin-left: 0px; margin-top: 6px;">
+								<span id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>'
+									onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>')"
+									style="cursor: pointer;" title="Supported by <?php  echo count($skl); ?> link"><?php  echo count($skl); ?></span>
+								<span style="cursor:pointer;">&nbsp;
+									<img src="<?php echo IMAGE_PATH ?>/icon-support-hover.png" onclick="supportSomeSkill(<?php echo $skillListing[$i]['skill_id'];?>, <?php echo $this->current_user_id;?>, <?php echo $this->userId;?>, this );"
+									  alt="thumb" title="Unsupport" style="cursor:pointer;"  />
+								</span>
+							</div>
+<?php 
+					}
+					else
+					{
+?>
+					<div class="slide-down-content-left"
+								style="margin-left: 0px; margin-top: 6px;">
+								<span id='<?php echo $skillListing[$i]['skill_id']."-".$this->current_user_id."-".$this->userId?>'
+									onclick="displayss('<?php echo $skillListing[$i]['user_skill_id'];?>');"
+									style="cursor: pointer;" title="Supported by <?php  echo count($skl); ?> link"><?php  echo count($skl); ?></span>
+								  <span  style="cursor:pointer;" >&nbsp;&nbsp;
+									<img src="<?php echo IMAGE_PATH ?>/icon-support.png" alt="thumb"
+									onclick="supportSomeSkill(<?php echo $skillListing[$i]['skill_id'];?>, <?php echo $this->current_user_id;?>, <?php echo $this->userId;?>, this );" title="Support" style="cursor:pointer;">
+								</span>
+								
+							</div>							
+<?php 
+						}// else
+					} //outer else
+				}//fist else			
+ ?>
+					<div class="slide-down-content-right">
+								<!-- Slide Down Inner Starts -->
+
+								<div class="font-arial slide-down-inner showskills" skill = "<?php echo $skillListing[$i]['user_skill_id'];?>">
+
+									<?php echo $skillListing[$i]['user_skill'];?>
+								<img id="img_<?php echo $skillListing[$i]['user_skill_id'];?>" style="float:right;" src="<?php echo IMAGE_PATH;?>/plus_grey.png">
+								</div>
+
+								<!-- Slide Down Inner Ends -->
+<?php
+
+						if(count($skl)>0)
+						{
+?>
+						<div id="skills<?php echo $skillListing[$i]['user_skill_id'];?>"
+									class="slide-down-inner-container" style="display: None;">
+ 
+<?php 
+							if(!empty($supporterArray))
+							{
+								for($k=0;$k<count($skl);$k++)
+								{
+									$u_detail=Extended\ilook_user::getRowObject($supporterArray[$k]);
+										if($u_detail)
+										{
+										
+											$numberOfCharsInName = strlen( $u_detail->getFirstname() );
+											
+											if( $numberOfCharsInName > 7  ) 
+											{
+												$nameOfSupportr = substr( $u_detail->getFirstname() , 0, 5);
+												$dots = "...";
+												$nameOfSupportr = $nameOfSupportr.$dots;
+											}
+									
+									   
+											else
+											{
+												$nameOfSupportr = $u_detail->getFirstname();
+											}
+											// showing default profile picture for skill supporters whom
+											// I have blocked or those who have blocked me.
+											if($this->usersblockedNBlocked_by)
+											{
+												$blocked_blocker_users = $this->usersblockedNBlocked_by;
+												if(in_array($u_detail->getId(), $blocked_blocker_users))
+												{
+													if($u_detail->getGender() == \Extended\ilook_user::USER_GENDER_FEMALE )
+													{
+														$img_path = IMAGE_PATH.'/profile/default_profile_image_female_big.png';
+														echo'<div class="col1 user-'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+														echo'<a style="cursor:default" href="javascript:void(0);" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link supporter_blocked">';
+														echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+														echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+														echo'</a>';
+														echo'</div>';
+													}
+													else
+													{
+														$img_path = IMAGE_PATH.'/profile/default_profile_image_male_big.png';
+														echo'<div class="col1 user-'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+														echo'<a style="cursor:default" href="javascript:void(0);" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link supporter_blocked">';
+														echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+														echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+														echo'</a>';
+														echo'</div>';
+													}
+												}
+												else
+												{
+													$img_path = Helper_common::getUserProfessionalPhoto($u_detail->getId());
+													echo'<div class="col1 user-'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+													echo'<a href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/id/'.$supporterArray[$k].'" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link" target="_blank">';
+													echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+											echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+											echo'</a>';
+											echo'</div>';
+										}
+											
+									}
+									else
+									{
+										$img_path = Helper_common::getUserProfessionalPhoto($u_detail->getId());
+										echo'<div class="col1 user-'.$u_detail->getId().'" style="float:left!important;width:66px!important;">';
+										echo'<a href="'.PROJECT_URL.'/'.PROJECT_NAME.'profile/iprofile/id/'.$supporterArray[$k].'" title="'.$u_detail->getFirstname().'" "'.$u_detail->getLastname().'" class="text-purple2-link" target="_blank">';
+										echo'<img src="'.$img_path.'" style="height: 50px; width: 50px;">';
+										echo Helper_common::showCroppedText( $u_detail->getFirstname()." ".$u_detail->getLastname(), 5 );
+										echo'</a>';
+										echo'</div>';
+									}
+									//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+									// END showing default profile picture for skill supporters whom
+									// I have blocked or those who have blocked me.
+									//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+								}
+										
+?>
+				
+<?php 
+									//}//if ends
+								}// for ends
+							}
+?>
+
+						</div>
+<?php 
+						}
+						else
+						{
+?>
+							<div id="skills<?php echo $skillListing[$i]['user_skill_id'];?>"
+									class="slide-down-inner-container"
+									style="display: None; text-align: center;">
+									<span id="no_skills" >Skill not supported!</span></div>
+<?php 
+						}
+?>
+					</div>
+						</div>
+<?php 
+					}
+				}
+?>	
+				<!-- Slide Down Content Ends -->
+					</div>
+					<!-- Purple Header Ends -->
+				</div>
+<?php 
+			}
+			else
+			{
+?>
+					<div class="mail-grey-hdr-col1 no-album-text" style="text-align: center;
+					border-right: 4px solid white;">No Skills Added
+					</div>
+<?php
+			}
+?>
+		<!-- End skill section start -->
+						
+					</div>
+				</div>
+			</div>
+</form>
+	<div class="accord-content purple-header-bot feedback-accord-content">
+			<div class="purple-header-outer <?php echo !($this->feedback_received)?'purple-header-center':"";?>">
+<?php 
+				if( $this->feedback_received == true )
+				{ 
+?>
+							
+					<div class=" font-arial feedback-btn-outer">
+					<a style="float: none !important;" class="text-grey2-link"
+						id="provide-feedback"
+						href="/<?php echo PROJECT_NAME;?>feedback/provide-feedback">Give
+						Feedback </a> | <a style="float: none !important;"
+						class="text-grey2-link"
+						href="/<?php echo PROJECT_NAME;?>feedback/request">Request
+						Feedback </a>
+				</div>
+<?php 
+				}
+?>
+					
+<?php 
+							if( $this->feedback_received == true )
+							{                
+								foreach ( $this->feedback_received as $fdbk_rcvd )
+								{
+?>
+									<div class="mail-grey-hdr-col1 feedback_content"
+					style="border-top: 2px solid #F7F6F5;">
+					<div class="chkbx-img">
+						<a
+							href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $fdbk_rcvd->getfeedback_requestProvider_user()->getId()?>">
+							<div class="prof-img">
+								<img width="" height=""
+									src="<?php echo Helper_common::getUserProfessionalPhoto($fdbk_rcvd->getFeedback_requestProvider_user()->getId(), 3 );?>"
+									width="" height="">
+							</div>
+						</a>
+					</div>
+					<div class="mid">
+						<h4 class='font-arial'>
+							<a
+								title="<?php echo $fdbk_rcvd->getFeedback_requestProvider_user()->getFirstName(). " " .$fdbk_rcvd->getFeedback_requestProvider_user()->getLastName(); ?>"
+								class="text-purple-link"
+								style="text-transform: capitalize !important; text-decoration: none !important; color: #6C518F !important"
+								href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $fdbk_rcvd->getfeedback_requestProvider_user()->getId()?>">
+											<?php echo Helper_common::showCroppedText( $fdbk_rcvd->getFeedback_requestProvider_user()->getFirstName(). " " .$fdbk_rcvd->getFeedback_requestProvider_user()->getLastName(), 35 );?>
+											</a>
+						</h4>
+<?php 
+											if($fdbk_rcvd->getProvided_as())
+											{
+												echo"<p class='font-arial'>";
+												echo $fdbk_rcvd->getProvided_as();
+												echo"</p>";
+											}
+											else
+											{
+												//Nothing.
+											}
+?>
+                      					</div>
+					<div class="right" STYLE="background: None;">
+						<div class="text-light-grey-arial top"><?php echo $fdbk_rcvd->getProvided_at()->format('F j, Y'); ?></div>
+					</div>
+										<?php 
+										echo'<div class="quotes-outer">';
+										echo'<div class="quotes-lt"><img class="starting_quotes" src="'.PUBLIC_PATH.'/images/quote-start.jpg"/></div>';
+										echo'<div class="quotes-mid">';
+										if( strlen( $fdbk_rcvd->getProvider_msg() ) <= 300 )
+										{
+?>
+										<p class="p_all_text font-arial">	
+<?php 
+											echo nl2br($fdbk_rcvd->getProvider_msg());
+?>
+										</p>
+<?php 
+										}
+										else
+										{
+?>
+											<div id="full_text_<?php echo $fdbk_rcvd->getId(); ?>"
+						class="full_text">
+						<p id="p_all_text_<?php echo $fdbk_rcvd->getId(); ?>"
+							class="font-arial full_text">
+<?php 
+													echo nl2br($fdbk_rcvd->getProvider_msg());
+?>
+												</p>
+						<span title="show less" rel="<?php echo $fdbk_rcvd->getId(); ?>"
+							class="show_less">less</span>
+					</div>
+					<div id="clickable_text_div_<?php echo $fdbk_rcvd->getId(); ?>"
+						class="clickable_text">
+						<p class="font-arial clickable_text"
+							rel="<?php echo $fdbk_rcvd->getId(); ?>">
+<?php 
+													echo Helper_common::showCroppedText( $fdbk_rcvd->getProvider_msg(), 300 );
+?>
+												</p>
+						<span title="show more" rel="<?php echo $fdbk_rcvd->getId(); ?>"
+							class="show_more">more</span>
+					</div>
+					
+<?php 
+											}
+											echo'</div>';
+											echo'</div>';
+											
+											echo '<div class="fdbck_postion">- Feedback for ';
+											if($fdbk_rcvd->getProvide_for_the_position())
+											{
+												echo $fdbk_rcvd->getProvide_for_the_position();
+											}
+											else
+											{
+												//Nothing.
+											}
+											echo'</div>';	
+											if( $fdbk_rcvd->getIs_accepted() == 0 && $fdbk_rcvd->getVisibility_criteria() == 0 )
+											{
+?>
+						                        <div class="bot-right feedback_accept">
+						<span name="accept_display" onclick="acceptFeedbackReceived(this)"
+							class="text-dark-purple accept_display"
+							rel="<?php echo $fdbk_rcvd->getId();?>">Accept & Display</span>
+					</div>
+<?php 
+											}
+?>
+									</div>
+<?php 
+									}
+								}
+								else
+								{
+?>
+									<div class="no-albums">
+					<img src="<?php echo IMAGE_PATH;?>/feedback.png" />
+					<div class="no-album-text">No Feedbacks to be displayed</div>
+					<div>
+						<a
+							href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>feedback/request/id/<?php echo $this->profileId;?>"
+							class="create-album">Request Feedbacks from your Links</a>
+					</div>
+				</div>
+<?php  
+								}
+?>
+				</div>
+	</div>
+
+	<div class="accord-content purple-header-bot reference-accord-content">
+			<div class="purple-header-outer <?php echo !($this->reference_received)?'purple-header-center':"";?>">
+<?php 	
+						if( $this->reference_received)
+						{   
+?>
+						<div class="font-arial feedback-btn-outer">
+					<a style="float: none !important;" class="text-grey2-link"
+						href="/<?php echo PROJECT_NAME;?>reference-request/provide-reference">Give
+						Reference </a> | <a style="float: none !important;"
+						class="text-grey2-link"
+						href="/<?php echo PROJECT_NAME;?>reference-request/request">Request
+						Reference </a>
+				</div>
+<?php 
+						}
+?>
+					
+<?php 
+						if( $this->reference_received)
+						{                
+							foreach ( $this->reference_received as $ref_rcvd )
+							{
+?>
+		                   
+								<div class="mail-grey-hdr-col1 reference_content"
+					style="border-top: 2px solid #F7F6F5;">
+					<div class="chkbx-img">
+						<a
+							href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_rcvd->getReference_requestProvider_user()->getId()?>">
+							<div class="prof-img">
+								<img width="" height=""
+									src="<?php echo Helper_common::getUserProfessionalPhoto($ref_rcvd->getReference_requestProvider_user()->getId(), 3 );?>"
+									width="" height="">
+							</div>
+						</a>
+					</div>
+					<div class="mid">
+					
+						<h4 class='font-arial'>
+							<a
+								title="<?php echo $ref_rcvd->getReference_requestProvider_user()->getFirstName(). " " .$ref_rcvd->getReference_requestProvider_user()->getLastName();?>"
+								class="text-purple-link"
+								style="text-transform: capitalize !important; text-decoration: none !important; color: #6C518F !important"
+								href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>profile/iprofile/id/<?php echo $ref_rcvd->getReference_requestProvider_user()->getId()?>">
+											<?php echo Helper_common::showCroppedText( $ref_rcvd->getReference_requestProvider_user()->getFirstName(). " " .$ref_rcvd->getReference_requestProvider_user()->getLastName(), 35 );?>
+										</a>
+						</h4>
+<?php 
+										if($ref_rcvd->getProvided_as())
+										{
+											echo"<p class='ref_as font-arial'>";
+											echo $ref_rcvd->getProvided_as();
+											echo"</p>";
+										}
+										else
+										{
+											//Nothing.
+										}
+									
+									
+										
+?>
+		                      		</div>
+					<div class="right" STYLE="background: None;">
+						<div class="text-light-grey-arial top"><?php echo $ref_rcvd->getProvided_at()->format('F j, Y'); ?>
+										</div>
+					</div>
+<?php 
+										echo'<div class="quotes-outer">';
+										echo'<div class="quotes-lt"><img class="starting_quotes" src="'.PUBLIC_PATH.'/images/quote-start.jpg"/></div>';
+										echo'<div class="quotes-mid">';
+										if( strlen( $ref_rcvd->getProvider_msg() ) <= 300 )
+										{
+?>
+											<p class="font-arial p_all_text">	
+<?php 
+												echo nl2br($ref_rcvd->getProvider_msg());
+?>
+											</p>
+<?php 
+										}
+										else
+										{
+?>
+											<div id="full_text_<?php echo $ref_rcvd->getId(); ?>"
+						class="full_text">
+						<p id="p_all_text_<?php echo $ref_rcvd->getId(); ?>"
+							class="font-arial full_text">
+<?php 
+													echo nl2br($ref_rcvd->getProvider_msg());
+?>
+												</p>
+						<span title="show less" rel="<?php echo $ref_rcvd->getId(); ?>"
+							class="show_less">less</span>
+					</div>
+					<div id="clickable_text_div_<?php echo $ref_rcvd->getId(); ?>"
+						class="clickable_text">
+						<p class="font-arial clickable_text"
+							rel="<?php echo $ref_rcvd->getId(); ?>">
+<?php 
+													echo Helper_common::showCroppedText( $ref_rcvd->getProvider_msg(), 300 );
+?>
+												</p>
+						<span title="show more" rel="<?php echo $ref_rcvd->getId(); ?>"
+							class="show_more">more</span>
+					</div>
+					
+<?php 
+										}
+										echo'</div>';
+										echo'</div>';
+										
+										echo '<div class="ref_postion">- Reference for ';
+										if($ref_rcvd->getProvide_for_the_position())
+										{
+											echo $ref_rcvd->getProvide_for_the_position();
+										}
+										else
+										{
+											//Nothing.
+										}
+										
+										echo '</div>';
+										if( $ref_rcvd->getIs_accepted() == 0 && $ref_rcvd->getVisibility_criteria() == 0 )
+										{
+?>
+					                        <div class="feedback_accept bot-right">
+						<span onclick="acceptReferenceReceived(this)"
+							name="accept_display" class="text-dark-purple accept_display"
+							rel="<?php echo $ref_rcvd->getId();?>">Accept & Display</span>
+					</div>
+<?php 
+				                        }
+?>
+								</div>
+				<!-- Reference -->
+<?php
+							}
+						} 
+						else 
+						{
+?>
+							<div class="no-albums">
+					<img src="<?php echo IMAGE_PATH;?>/reference-icon.png" />
+					<div class="no-album-text">No References to be displayed</div>
+					<div>
+						<a
+							href="/<?php echo PROJECT_NAME;?>reference-request/request/id/<?php echo $this->profileId;?>"
+							class="create-album">Request your Links to be your Reference</a>
+					</div>
+				</div>
+<?php
+						}
+?>
+				</div>
+	</div>
+	<input type="hidden" name="userId" id="userId"
+		value="<?php echo $this->userId ?>" />
+	<!-- accordian end -->
+	<!-- accordian start for photos albums -->
+			<div class="accord-content purple-header-bot photos-accord-content">
+				<div id="album" style="float: left; width: 100%;">
+					<div class="accord-content purple-header-bot" id="detail">
+						<!-- content get from ajax call -->
+					</div>
+				</div>
+				<div class="loading_albums" style = "display:none;">
+              <div>
+			  <img src = "<?php echo IMAGE_PATH ?>/loading_medium_purple.gif"><label>Loading...</label></div>
+              </div>
+			</div>
+	
+	</form>
+	<!-- accordian end -->
+	<!-- accordian start for links -->
+	<div class="accord-content purple-header-bot links-accord-content" style="text-align:center;overflow:visible !important;">
+		<div class="accord-content purple-header-bot linkprofile-outer" id="links-profie">
+					<!-- content get from ajax call -->
+                    <div id = "no_links_div" style = "display:none;">
+    					<p>
+    						<span class="no_links_img"> <img height="20" width="25"
+    							src="<?php echo IMAGE_PATH; ?>/invitation-icon.png">
+    						</span>
+    					</p>
+    					<p class="no-links">No Links to be displayed</p>
+    					<div class="add-new-event" style="min-height: 0px !important">
+    						<div class="link-invite-connect">
+    							<h3 style="border-bottom: medium none;">
+    								Invite your contacts to iLook and increase<br> your network for
+    								more activities
+    							</h3>
+    							<div class="mail-option">
+    								<div class="box1" id="gmail">
+    									<div class="box1-img"
+    										style="height: 30px !important; margin: 16px 13px 0 !important;">
+    										<img src="<?php echo IMAGE_PATH; ?>/gmail-icon2.png" />
+    									</div>
+    									<p>
+    										<a class="text-purple2-link" href="javascript:;">Gmail</a>
+    									</p>
+    								</div>
+    								<!--div class="box1" id="yahoo">
+    									<div class="box1-img"
+    										style="height: 30px !important; margin: 16px 13px 0 !important;">
+    										<img src="<?php echo IMAGE_PATH; ?>/yahoo-icon2.png" />
+    									</div>
+    									<p>
+    										<a class="text-purple2-link" href="javascript:;">Yahoo!</a>
+    									</p>
+    								</div-->
+    							</div>
+<!--     							Col1 Starts -->
+    							<div class="col1" style="border: none !important; background: none !important">
+    								<div class="col1-bot">
+    									<p style="width: 153px !important;">Invite by individual email</p>
+    								    <p>
+        									<form action="#" id = "more_ways_to_connect_frm" onsubmit="return false">
+        										<div class="more-ways-textbox" style="text-align: left;">
+        											<input id="more_ways_to_connect" name="more_ways_to_connect"
+        												type="text" value=""
+        												placeholder="Type email addresses, separated by semi-colons.."
+        												style="font-weight: bold;" />
+        										</div>
+        										<div class="more-ways-btn">
+        											<input name="more_ways_to_connect_btn"
+        												id="more_ways_to_connect_btn" type="button"
+        												class="btn-purple" value="Send Invitations"
+        												alt="Send Invitations" title="Send Invitations"
+        												style="float: left;" />
+        										</div>
+        									</form>
+    								    </p>
+    								</div>
+    							</div>
+<!--     							Col1 Ends -->
+    						</div>
+    					</div>
+                    </div>
+				</div>
+	</div>
+	<!-- accordian end -->
+<!-- Content Right Right Ends -->
+<div id="dialog_skill_supported" style="display: none;"
+	title="Skill supported">
+	<p>skill supported successfully.</p>
+</div>
+<div id="dialog_skill_unsupported" style="display: none;"
+	title="Skill unsupported">
+	<p>skill unsupported successfully.</p>
+</div>

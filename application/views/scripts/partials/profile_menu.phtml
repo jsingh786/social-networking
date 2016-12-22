@@ -1,0 +1,546 @@
+<?php
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/sdmenu.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/reference_n_feedback_counts.js" );
+$this->headStyle()->appendStyle( PUBLIC_PATH."/css/frontend/sdmenu_feedback.css" );
+?>
+
+<!-- Content Right Left Starts -->
+<?php
+if( Auth_UserAdapter::hasIdentity() )
+{
+	$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+	$current_user = Auth_UserAdapter::getIdentity()->getId();
+	$current_user_username = Auth_UserAdapter::getIdentity()->getUsername();
+	$usr_groups = \Extended\user_bookmark_groups::getEditGroups($current_user);
+	$assign_groups = \Extended\user_bookmark_groups::getCountAssignGroups($current_user);
+	$requests_id = array ();
+	foreach ( $assign_groups as $res )
+	{
+		$requests_id [] = $res ['group_id'];
+	}
+	
+	$a = array_count_values($requests_id);
+	
+	
+	//Zend_Debug::dump($c);die;
+	if(count($usr_groups)>0){
+?>
+		<style type="text/css">
+		.group-popup-top span{
+			background: none repeat scroll 0 0 transparent !important;
+		    float: left !important;
+		    margin-left: 7px;
+		    margin-top: 7px;
+		    width: 32px !important;
+		}
+		.group-popup-btn span{
+			background: none repeat scroll 0 0 transparent !important;
+		    float: left !important;
+		    margin-left: 7px;
+		    margin-top: 7px;
+		    width: 65px !important;
+		}
+		.grouplist{
+				display:block;
+				float:left;
+				width:100% !important;
+			}
+			.group-popup-mid{
+				height:auto !important;
+				max-height:87px !important;
+			}
+			.groupdiv{
+				max-height:189px !important;
+				background: none repeat scroll 0 0 #FFFFFF;
+			    border: 2px solid #3B4A54;
+			    float: left;
+			    margin: 1px 0 0;
+			    padding: 10px;
+			    width: 170px;
+				color:black !important;
+			}
+		</style>
+<?php 
+	}
+	else
+	{
+?>
+		<style type="text/css">
+			.grouplist{
+				display:none;
+				float:left;
+				width:100% !important;
+			}
+			.group-popup-mid{
+				height:auto !important;
+				max-height:87px !important;
+			}
+			.groupdiv{
+				max-height:189px !important;
+				height:189px;
+				background: none repeat scroll 0 0 #FFFFFF;
+			    border: 2px solid #3B4A54;
+			    float: left;
+			    margin: 1px 0 0;
+			    padding: 10px;
+			    width: 170px;
+				color:black !important;
+			}
+		</style>
+<?php 	
+	}
+?>
+	<style type="text/css">
+	.main-group-popup{
+		right:-15px; 
+		top:366px; 
+		overflow:inherit;
+		left:347px;
+		display:none;
+		width:194px;
+	}
+	.group-popup-mid{
+		float: left;
+	    height: 93px;
+	    margin: 10px 0 0;
+	    overflow-y: scroll;
+	    padding: 0;
+	    width: 100%;
+	}
+	.group-popup-col1 {
+	    float: left;
+	    margin: 0 0 5px;
+	    padding: 0;
+	    width: 100%;
+	}
+	.group-popup-col1-text {
+	    float: left;
+	    margin: 0 0 0 3%;
+	    padding: 0;
+	    width: 80%;
+	}
+	.group-popup-btn {
+	    float: left;
+	    margin: 10px 0 0;
+	    padding: 0;
+	    text-align: right;
+	    width: 100%;
+	}
+	.group-popup-top {
+	    float: left;
+	    margin: 0;
+	    padding: 0;
+	    text-align: right;
+	    width: 100%;
+	}
+	.menu-span{
+				color:black !important;
+			}	
+	.menu-span:hover {
+				color:black !important;
+				background:none;
+			}
+	.menu-span2{
+		color:black !important;
+	}		
+	.view-anchor {
+	    background: none repeat scroll 0 0 transparent !important;
+	    color: #FFFFFF !important;
+	    padding: 0 !important;
+	}
+	.txt-purple a{
+		padding:0 !important;
+	}
+	
+		.nav-popup-outer
+		{
+			margin: 0;
+		    padding: 0;
+		    position: absolute !important;
+		    right: 0px;
+		    top:355px;
+			left:16px !important;
+		    width: 194px;
+		    z-index: 9999;
+		}
+		
+
+	.tag-popup-arrow {
+	    float: left;
+	    margin: 0 0 0 152px;
+	    padding: 0;
+	    width: 40px;
+	}
+	.editpop-cross img{
+		cursor:pointer !important;
+	}
+	.number-of-links:hover
+	{
+		text-decoration:none;
+		
+	}
+
+	</style>
+	
+	<div class="content-right-left">
+<?php 
+ 		if(( $params['controller'] == "profile" && ($params['action'] == "my-iprofile" )))
+ 		{
+?>
+ 		<div class="profile-menu">
+		<ul>
+		<!--View Profile -->
+			<li class="always_show">
+				<span class="menu_large_item" style="display: none;">
+					<a href="/<?php echo  PROJECT_NAME.$current_user_username;?>">
+						<div class="ribbon-body-prof-menu">View Profile</div>
+					</a>
+				</span>
+				<a class="menu_small_item" href="/<?php echo PROJECT_NAME.$current_user_username;?>">	
+				 V					
+				</a>
+			</li>
+			
+			<!--Edit Profiles -->
+			<li class="always_show" id="profile_menu_item">  
+				<span class="menu_large_item" style="display: none;">
+					<a href="/<?php echo PROJECT_NAME;?>profile/contact-details">
+						<div class="ribbon-body-prof-menu">
+						Edit Profile
+						</div>
+					</a>
+				</span>
+				<a class="menu_small_item" class="selected" href="/<?php echo PROJECT_NAME;?>profile/contact-details">
+					E
+				</a>
+			</li>
+			
+			<!-- Notes -->
+			<li class="always_show">
+				<span class="menu_large_item" style="display: none;">
+					<a href="/<?php echo PROJECT_NAME;?>profile/notes">
+						<div class="ribbon-body-prof-menu">
+						Notes
+						</div>
+					</a>
+				</span>
+				<a class="menu_small_item" href="/<?php echo PROJECT_NAME;?>profile/notes">
+				N
+				</a>
+			</li>
+			<!-- Bookmark -->
+<?php 
+			if( \Extended\bookmark_profile::countProfilesBookmarkedByMe(Auth_UserAdapter::getIdentity()->getId()))
+			{
+?>
+				<li class="always_show">
+					<span class="menu_large_item" style="display: none;">
+						<a href="/<?php echo PROJECT_NAME;?>bookmarks/index">
+							<div class="ribbon-body-prof-menu">
+							Bookmarks
+							</div>
+						</a>
+					</span>
+					<a class="menu_small_item" href="/<?php echo PROJECT_NAME;?>bookmarks/index">
+					B
+					</a>
+				</li>
+<?php 
+			}
+?>
+			<!-- Feedback  -->
+			<li class="always_show">
+				<span class="menu_large_item" style="display: none;">
+					<a href="/<?php echo PROJECT_NAME;?>feedback/received">
+						<div class="ribbon-body-prof-menu">
+						Feedback
+						</div>
+					</a>
+				</span>
+				<a class="menu_small_item" href="/<?php echo PROJECT_NAME;?>feedback/received">
+				F
+				</a>
+			</li>
+			
+			
+			<!--Reference -->			
+			<li class="always_show">
+				<span class="menu_large_item" style="display: none;">
+					<a href="/<?php echo PROJECT_NAME;?>reference-request/received">
+						<div class="ribbon-body-prof-menu">Reference</div>
+					</a>
+				</span>
+				<a class="menu_small_item" href="/<?php echo PROJECT_NAME;?>reference-request/received">
+				R
+				</a>
+			</li>
+			
+			<!-- Photos and portfolios -->			
+			<li class="always_show">
+				<span class="menu_large_item" style="display: none;">
+					<a href="/<?php echo PROJECT_NAME;?>profile/photo-albums">
+						<div class="ribbon-body-prof-menu skill_ribbon">Photos...</div>
+					</a>
+				</span>
+				<a class="menu_small_item" href="/<?php echo PROJECT_NAME;?>profile/photo-albums">
+				P
+				</a>
+			</li>
+		</ul>
+	</div>
+<?php 
+	}
+	
+	if( $params['action'] != "my-iprofile")
+	{
+?>
+		<div class="heading">
+			<h1>PROFILE</h1> 
+ 		</div> 
+		<div class="connections"> 
+ 				<div class="connections-left text-white"> 
+ 					<h3 style=" color: #B084E9;line-height:27px;font-size:25px !important;"><a class="number-of-links" style="color:#B084E9;" href="/<?php echo PROJECT_NAME;?>links/"><?php echo Helper_common::getLinksCount();?></h3></a>
+				</div> 
+				<div class="connections-right"></div>
+ 		</div> 
+		<!-- Slide Nav Starts -->
+		<div style="float: left" id="my_menu" class="sdmenu">
+
+		
+			<div class="collapsed" > 
+				<span style = "display:none;">
+<!-- 			View Profile -->
+			</span> 
+				<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME.$current_user_username?>">View Profile</a>		
+			</div>
+		
+ 			<div class="collapsed">
+			<span 
+ <?php 
+				if(
+						($params['controller'] == "profile" && $params['action'] == "contact-details")||
+						($params['controller'] == "profile" && $params['action'] == "basic-information")||
+						($params['controller'] == "profile" && $params['action'] == "summary") ||
+						($params['controller'] == "profile" && $params['action'] == "experience")||
+						($params['controller'] == "profile" && $params['action'] == "education")||
+						($params['controller'] == "profile" && $params['action'] =="skills") ||
+						($params['controller'] == "profile" && $params['action'] == "projects")||
+						($params['controller'] == "profile" && $params['action'] == "languages")||
+						($params['controller'] == "profile" && $params['action'] == "publications") ||
+						($params['controller'] == "profile" && $params['action'] == "honours-n-awards")||
+						($params['controller'] == "profile" && $params['action'] == "certifications")||
+						($params['controller'] == "profile" && $params['action'] == "volunteering")||
+						($params['controller'] == "profile" && $params['action'] == "personal-information")||
+						($params['controller'] == "profile" && $params['action'] == "additional-info")
+					)	
+				echo "class='selected'";
+?>			
+				>Edit Profile
+				</span>
+			
+				
+<?php
+	
+				if( $params['controller'] == "profile" && $params['action'] == "contact-details" )
+					echo '<a class="current" href="#">Contact Details</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/contact-details">Contact Details</a>';
+	
+				if( $params['controller'] == "profile" && $params['action'] == "basic-information" )
+					echo '<a class="current" href="#">Basic Information</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/basic-information">Basic Information</a>';
+	
+				if( $params['controller'] == "profile" && $params['action'] == "summary" )
+					echo '<a class="current" href="#">Summary</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/summary">Summary</a>';
+	
+				if( $params['controller'] == "profile" && $params['action'] == "experience" )
+					echo '<a class="current" href="#">Experience</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/experience">Experience</a>';
+				
+				if( $params['controller'] == "profile" && $params['action'] == "education" )
+					echo '<a class="current" href="#">Education</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/education">Education</a>';
+				
+				if( $params['controller'] == "profile" && $params['action'] == "skills" )
+					echo '<a class="current" href="#">Skills</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/skills">Skills</a>';
+
+// 				-----------Some menus are commented but functionality exist.--------------
+// 				if( $params['controller'] == "profile" && $params['action'] == "projects" )
+// 					echo '<a class="current" href="#">Projects</a>';
+// 				else
+// 					echo '<a href="/'.PROJECT_NAME.'profile/projects">Projects</a>';
+				
+				if( $params['controller'] == "profile" && $params['action'] == "languages" )
+					echo '<a class="current" href="#">Languages</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/languages">Languages</a>';
+				
+// 				if( $params['controller'] == "profile" && $params['action'] == "publications" )
+// 					echo '<a class="current" href="#">Publications</a>';
+// 				else
+// 					echo '<a href="/'.PROJECT_NAME.'profile/publications">Publications</a>';
+
+// 				if( $params['controller'] == "profile" && $params['action'] == "honours-n-awards" )
+// 					echo '<a class="current" href="#">Honours &amp; Awards</a>';
+// 				else
+// 					echo '<a href="/'.PROJECT_NAME.'profile/honours-n-awards">Honours &amp; Awards</a>';
+				
+// 				if( $params['controller'] == "profile" && $params['action'] == "certifications" )
+// 					echo '<a class="current" href="#">Certifications</a>';
+// 				else
+// 					echo '<a href="/'.PROJECT_NAME.'profile/certifications">Certifications</a>';
+				
+// 				if( $params['controller'] == "profile" && $params['action'] == "volunteering" )
+// 					echo '<a class="current" href="#">Volunteering &amp; Causes</a>';
+// 				else
+// 					echo '<a href="/'.PROJECT_NAME.'profile/volunteering">Volunteering &amp; Causes</a>';
+				
+				if( $params['controller'] == "profile" && $params['action'] == "personal-information" )
+					echo '<a class="current" href="#">Personal Info</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/personal-information">Personal Info</a>';
+				if( $params['controller'] == "profile" && $params['action'] == "additional-info" )
+					echo '<a class="current" href="#">Additional Info</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'profile/additional-info">Additional Info</a>';
+					
+?>
+			</div>
+
+			<div class="collapsed" >
+				<span style = "display:none;">
+				Notes
+				</span>
+				<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."profile/notes" ?>">Notes</a>		
+		
+			</div>
+<?php 
+			if( \Extended\bookmark_profile::countProfilesBookmarkedByMe(Auth_UserAdapter::getIdentity()->getId()))
+			{
+?>
+				<div class="collapsed" >
+					<span style = "display:none;">
+					Bookmarks
+					</span>
+					<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."bookmarks/index" ?>">Bookmarks</a>		
+				</div>
+ <?php 
+			}
+?>
+			<div class="collapsed" >
+				<span 
+<?php 
+				if( 
+					($params['controller'] == "feedback" && $params['action'] == "pending-request") ||
+					($params['controller'] == "feedback" && $params['action'] == "received")||
+					($params['controller'] == "feedback" && $params['action'] == "provided")||
+					($params['controller'] == "feedback" && $params['action'] == "request")||
+					($params['controller'] == "feedback" && $params['action'] == "provide-feedback")
+					)	
+				echo "class='selected'";
+?>			
+				>
+				Feedback
+				</span>
+<?php
+				if( $params['controller'] == "feedback" && $params['action'] == "pending-request" )
+				{
+					echo '<a class="current" href="#"><label style = "color: #B084E9; float:right;margin-bottom:0 !important;" class = "pending_fdbk_unread_count" ></label>Pending Feedback</a>';
+				
+				}
+				else
+				{
+					echo '<a href="/'.PROJECT_NAME.'feedback/pending-request/id/'.$current_user.'"><label style = "color: #B084E9; float:right;margin-bottom:0 !important;" class = "pending_fdbk_unread_count" ></label>Pending Feedback</a>';
+				}
+				
+				
+				if( $params['controller'] == "feedback" && $params['action'] == "received" )
+					echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right" class = "received_fdbk_unread_count" ></label>Received Feedback</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'feedback/received/id/'.$current_user.'"><label style = "margin-bottom:0 !important;color: #B084E9; float:right" class = "received_fdbk_unread_count" ></label>Received feedback</a>';
+	
+				
+				if( $params['controller'] == "feedback" && $params['action'] == "provided" )
+					echo '<a class="current" href="#">Feedback Provided</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'feedback/provided/id/'.$current_user.'">Feedback Provided</a>';
+?>		
+<?php
+	
+				if( $params['controller'] == "feedback" && $params['action'] == "request" )
+					echo '<a class="current" href="#">Request Feedback</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'feedback/request/id/'.$current_user.'">Request Feedback</a>';
+	
+	
+				if( $params['controller'] == "feedback" && $params['action'] == "provide-feedback" )
+					echo '<a class="current" href="#">Provide Feedback</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'feedback/provide-feedback/id/'.$current_user.'">Provide Feedback</a>';
+?>	
+			</div>
+				<div class="collapsed" >
+					<span 
+<?php 
+						if( 
+							($params['controller'] == "reference-request" && $params['action'] == "pending-request") ||
+							($params['controller'] == "reference-request" && $params['action'] == "received")||
+							($params['controller'] == "reference-request" && $params['action'] == "provided")||
+							($params['controller'] == "reference-request" && $params['action'] == "request")||
+							($params['controller'] == "reference-request" && $params['action'] == "provide-reference")
+							)	
+						echo "class='selected'";
+?>			
+					>Reference
+					</span>
+ <?php
+				if( $params['controller'] == "reference-request" && $params['action'] == "pending-request" )
+					echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right" class = "pending_ref_uread_count" ></label>Pending References</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'reference-request/pending-request/id/'.$current_user.'"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "pending_ref_uread_count" ></label>Pending References</a>';
+				
+				if( $params['controller'] == "reference-request" && $params['action'] == "received" )
+					echo '<a class="current" href="#"><label style = "margin-bottom:0 !important;color: #B084E9; float:right" class = "received_ref_unread_count" ></label>Received References</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'reference-request/received/id/'.$current_user.'"><label style = "margin-bottom: 0 !important;color: #B084E9; float:right" class = "received_ref_unread_count" ></label>Received References</a>';
+				if( $params['controller'] == "reference-request" && $params['action'] == "provided" )
+					echo '<a class="current" href="#">References Provided</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'reference-request/provided/id/'.$current_user.'">References Provided</a>';
+?>
+ <?php
+	
+				if( $params['controller'] == "reference-request" && $params['action'] == "request" )
+					echo '<a class="current" href="#">Request Reference</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'reference-request/request/id/'.$current_user.'">Request Reference</a>';
+				if( $params['controller'] == "reference-request" && $params['action'] == "provide-reference" )
+					echo '<a class="current" href="#">Provide Reference</a>';
+				else
+					echo '<a href="/'.PROJECT_NAME.'reference-request/provide-reference/id/'.$current_user.'">Provide Reference</a>';
+?>	
+			</div>
+			<div class="collapsed" >
+				<span style = "display:none;">
+				Photos & Portfolios
+ 				</span>
+				<a id = "mimic_parent" href='<?php echo "/".PROJECT_NAME."profile/photo-albums";?>'>Photos & Portfolios</a>	
+ 			</div>
+		</div> 
+	<?php 
+	}
+	?>
+	</div>
+<!-- Content Right Left Ends -->
+	
+<?php 
+}
+?>
+<?php 

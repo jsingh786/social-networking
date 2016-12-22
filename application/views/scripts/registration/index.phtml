@@ -1,0 +1,273 @@
+<style>
+div.registration-outer span label.error
+{
+	margin: 0;
+}
+div.content-right-left .heading h1
+{
+	font-size:28px !important;
+}
+</style>
+<?php 
+	
+	$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/registeration.js" );
+
+	$first_name 		= @$this->first_name;
+	$last_name 			= @$this->last_name;
+	$email 				= @$this->email;
+	$password 			= @$this->password;
+	$created_from 		= Extended\ilook_user::CREATED_FROM_WEB;
+	$search_profile_id 	= @$this->search_profile_id;
+
+
+    ?>
+<form name="registeration_step2" id="registeration_step2" method="POST" action="/<?php echo PROJECT_NAME; ?>registration/signup"> 
+	<!-- Content Starts -->
+	<div class="registration-outer">
+		<!-- Content Right Starts -->
+		<div class="content-right-left">
+			<div class="heading">
+				<h1>Registration</h1>
+			</div>
+		<!-- Content Right Left Ends -->
+      	</div>
+        <!-- Content Right Ends -->
+        
+        <!-- Registration Right Starts -->
+		<div class="registration-rt">
+			<!-- Col1 Starts -->
+				<div class="col1">
+				<h3 class="text-purple2">Profile Detail</h3>
+				<label>First Name</label>
+				<span>
+					<input name="first_name" id="first_name" type="text" value="<?php echo @$first_name;?>" />
+				</span>
+                      
+				<label>Last Name</label>
+				<span>
+					<input name="last_name" id="last_name" type="text" value="<?php echo @$last_name;?>" />
+				</span>
+                      
+				<label>Gender</label>
+				<span>
+					<select style="width: 80%; font-weight: bold;" name="genderlist" id="genderlist">
+						<option value="">Select</option>
+						<option value="<?php echo \Extended\ilook_user::USER_GENDER_MALE;?>">Male</option>
+						<option value="<?php echo \Extended\ilook_user::USER_GENDER_FEMALE;?>">Female</option>
+					</select>
+				</span>
+                      
+				<label>Country</label>
+				<span>
+				<select name="country" id="country" style="width: 80%; font-weight: bold;" >
+					<option value="" >Select</option>
+<?php					
+						$country_list = $this->country;
+						
+						for($i=0; $i<count(@$country_list); $i++)
+						{ 
+						$cValues=$country_list[$i]['id'].",".$country_list[$i]['have_states'];
+?>
+							<option value="<?php echo $cValues; ?>"><?php echo $country_list[$i]['name']; ?></option>
+<?php 					
+						}
+?>                     
+				</select>
+				</span>
+			
+				<div class="state_list" id = "simple_state_div">
+				<label>State</label>
+					<span>
+				<select name="state" id="simple_state" style="width: 80%; font-weight: bold;" >
+					<option value="" >Select</option>
+<?php					
+?>                     
+				</select>
+				</div>
+				</span>
+				<div class="city_list" id = "simple_city_div" >
+				<label>City</label>
+					<span>
+				<select name="city" id="simple_city" style="width: 80%; font-weight: bold;" >
+					<option value="" >Select</option>
+<?php					
+?>                     
+				</select>
+				</div>
+				</span>
+			
+                      
+				<label>Zip Code</label>
+				<span>
+					<input name="zipcode" id="zipcode" type="text"  />
+				</span>
+				<label>Birthday</label>
+				<span>
+					<input name="bday" type="text"  id="b_day" readonly="readonly"/>
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+			
+			<!-- Col1 Starts -->
+			<div class="col1">
+				<div id="email-available" style=" right: 150px; top: 44px;" class="tick-box2">
+				</div>
+				<h3 class="text-purple2">Account Detail</h3>
+                      
+				<label>Email Address</label>
+				<span>
+					<input name="email" id="email" type="text" value="<?php echo @$email;?>" />
+                
+				</span>
+                      
+				<label>Choose Password</label>
+				<span>
+					<input name="password" id="password" type="password" value="<?php echo @$password;?>"  />
+				</span>
+                      
+				<label>Confirm Password</label>
+				<span>
+					<input name="confirm_password" id="confirm_password" type="password"  />
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+                
+			<!-- Col1 Starts -->
+			<div class="col1" id="current_status">
+				<h3 style="margin-bottom: 30px;" class="text-purple2">Current Status <span style = "text-transform: unset!important;"><i>(Status field is just for a seggregation and this can be changed at any </br>time later to any status after registration.)</i></span></h3>
+				<label>Current Status</label>
+				<span class="current-status-options" >
+					<input class="cstatus" id="Employed" name="role[]" type="radio" value="<?php echo \Extended\ilook_user::USER_TYPE_EMPLOYED;?>"  checked="checked" /> Employed 
+					<input class="cstatus" id="JobSeeker" name="role[]" type="radio" value="<?php echo \Extended\ilook_user::USER_TYPE_JOB_SEEKER;?>" />Job Seeker 
+					<input class="cstatus" id="recruiter" name="role[]" type="radio" value="<?php echo \Extended\ilook_user::USER_TYPE_RECRUITER;?>" />Recruiter
+					<input class="cstatus" id="Student" name="role[]" type="radio" value="<?php echo \Extended\ilook_user::USER_TYPE_STUDENT;?>" /> Student 
+					<!-- HomeMaker option by ssharma4-->
+					<input class="cstatus" id="HomeMaker" name="role[]" type="radio" value="<?php echo \Extended\ilook_user::USER_TYPE_HOME_MAKER;?>" /> Home Maker
+				</span>
+                      
+				<div class="col1" id="employed">
+					<label>&nbsp;</label>
+					<span style="min-height:65px;">
+						<font style="padding-bottom:5px; float:left;">Job Title (Required)</font>
+						<font id="self" class="fr">
+						<label><input name="is_self_employed" id="is_self_employed" type="checkbox"  />I am Self Employed</font></label><br/>
+						<input class="fl clr" name="employed_jobTitle" type="text" id="employed_jobTitle"/>
+					</span>
+
+					<label>&nbsp;</label>
+					<span style="min-height:65px;">
+						<font style="padding-bottom:5px; float:left;">Company (Required)</font>
+						<br/>
+						<input class="fl clr" name="employed_company" type="text" id="employed_company" />
+					</span>
+
+					<label>&nbsp;</label>
+					<span style="min-height:65px;">
+						<font style="padding-bottom:5px; float:left;">Industry (Required)</font>
+						<br />
+						<select name="employed_industry" id="employed_industry" style="width: 80%; font-weight: bold;">
+							<option value="" >Select</option>
+<?php					
+								$industry_list = $this->industry;
+								for($i=0; $i<count(@$industry_list); $i++)
+								{ 
+?>						
+									<option value="<?php echo @$industry_list[$i]['id'] ?>"><?php echo @$industry_list[$i]['title']; ?></option>
+						
+<?php 					
+								}
+
+?>                     
+						</select>
+					</span>
+					<label>&nbsp;</label>
+					<span style="min-height:65px;">
+						<font style="padding-bottom:5px; float:left;">From (required)</font>
+						<br />
+						<input name="employed_from" id="employed_from" type="text" readonly="readonly"/>
+					</span>
+					<label>&nbsp;</label>
+					
+					<span style="min-height:65px;">
+						<font style="padding-bottom:5px; float:left;">To (required)</font>
+						<font id="self" class="fr">
+						<label>
+							<input name="currently_working" id="currently_working" type="checkbox" value = '1'/>Currently working</font>
+						</label>
+						<br/>
+						<input class="fl clr" name="employed_to" id="employed_to" type="text" readonly="readonly"/>
+					</span>
+				</div>
+				
+				<!-- Col1 Starts -->
+				<div class="col1" id="jobseeker">
+				<label>&nbsp;</label>
+				<span style="min-height:65px;">
+					<font style="padding-bottom:5px; float:left;">Recent Job Title (required)</font>
+					<br />
+					<input name="jobseeker_jobTitle" id="jobseeker_jobTitle" type="text" />
+				</span>
+
+				<label>&nbsp;</label>
+         
+				<span style="min-height:65px;">
+					<font style="padding-bottom:5px; float:left;">Recent Company (required)</font>
+					<br />
+					<input name="jobseeker_company" id="jobseeker_company" type="text" />
+				</span>
+                      
+				<label>&nbsp;</label>
+				<span style="min-height:25px;">
+					<font style="padding-bottom:5px; float:left;">Time Period (required)</font>
+					<br />
+				</span>
+				<label>&nbsp;</label>
+				<span style="min-height:65px;"><font style="padding-bottom:5px; float:left;">From (required)</font><br />
+					<input name="experience_from" id="experience_from" type="text" /></span>
+				<label>&nbsp;</label>
+				<span style="min-height:65px;"><font style="padding-bottom:5px; float:left;">To (required)&nbsp;&nbsp;&nbsp;&nbsp;</font><br />
+					<input name="experience_to" id="experience_to" type="text" />
+				</span>
+			</div>
+			<!-- Col1 Ends -->
+			<!-- Col1 Starts -->
+			<div class="col1" id="student">
+                      
+				<label>&nbsp;</label>
+				<span style="min-height:65px;">
+					<font style="padding-bottom:5px; float:left;">College/University (required)</font>
+					<br />
+					<input name="college" type="text" id="college" />
+				</span>
+				<label>&nbsp;</label>
+				<span style="min-height:25px;"><font style="padding-bottom:5px; float:left;">Dates Attended (required)</font><br />
+				</span>
+				<label>&nbsp;</label>
+				<span style="min-height:65px;"><font style="padding-bottom:5px; float:left;">From (required)</font><br />
+					<input name="student_from" id="student_from" type="text" />
+				</span>
+				<label>&nbsp;</label>
+				<span style="min-height:65px;">
+					<font style="padding-bottom:5px; float:left;">To (required)&nbsp;&nbsp;&nbsp;&nbsp;</font>
+					<br />
+					<input name="student_to" id="student_to" type="text" />
+				</span>
+                   
+			</div>
+		</div>
+<!-- Col1 Ends -->
+		<input type="hidden" name="created_from" value="<?php echo @$created_from; ?>">
+		<input type="hidden" name="search_profile_id" value="<?php echo @$search_profile_id; ?>">
+		<div class="registration-btns">
+			<input id ="save_dtls" name="submitt" type="submit" alt="Submit" title="Submit"  class="summary-btn" value="Submit" />
+			<input id="cancel" name="cancel" type="button" alt="Cancel" title="Cancel"  class="summary-btn" value="Cancel" />
+                    
+		</div>
+                
+	</div>
+<!-- Registration Right Ends -->
+</div>
+<!-- Content Ends -->
+<div id="time"></div>
+   
+</form>       

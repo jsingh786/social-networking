@@ -1,0 +1,133 @@
+@CHARSET "ISO-8859-1";
+#errmsg h1 span {
+     font-size: 12px;
+}
+label.error
+{
+	color: #FF5B5B !important;
+    display: inline-block;
+    font-size: 12px !important;
+/*     margin: -2px 0 0 0; */
+    text-transform: none !important;
+    width: 100% !important;
+	heigt:auto;
+}
+input.error,
+select.error,
+textarea.error {
+	border: 1px solid #FF5B5B !important;
+}
+span.loading img
+{
+	margin: 0px !important;
+}
+span.loading
+{
+	color: #402168 !important;
+    font-family: opensansregular !important;
+    font-size: 10px !important;
+    height: auto !important;
+    text-transform: none !important;
+    width: auto !important;
+	
+}
+span.loading table tr td
+{
+	text-align: center;
+    vertical-align: middle;
+}
+span.loading table
+{
+	display: inline;
+}
+div.ui-datepicker{
+ font-size:12px;
+}
+div.paginationControl
+{
+	font-weight: bold;
+}
+div.paginationControl a
+{
+	text-decoration: none;
+	color: #A0A0A0;
+	font-weight: normal;
+}
+div.paginationControl a:HOVER
+{
+	text-decoration: underline;
+}
+div.paginationControl span
+{
+	color: #A0A0A0;
+	font-weight: normal;
+}
+div.advance-search div.advance-search-right div.advance-search-dd ul.newList
+{
+	overflow: hidden !important;
+}
+form#advance-search-form div.advance-search-textbox input#search.error
+{
+	border: none !important;
+}
+.settings-outer-links a{
+	text-decoration:none !important;
+}
+#show_more_view a .img, #show_less_view a .img {
+	  margin: 8px 0 0;
+}
+#show_more_view a span, #show_less_view a span {
+	padding: 0 0 0 75px;
+	line-height: 30px;
+    color: #DEDEDE;
+    font-family: arial;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+span.mail-count {
+    background: url("../../images/mail-grey.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    width: 19px;
+	height: 16px;	
+}
+div.notifi-count-outer:hover span.mail-count{
+    background: url("../../images/mail-purple.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+span.notification-count {
+    background: url("../../images/notification-grey.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    width: 19px;
+	height: 19px;
+}
+div.notifi-count-outer:hover span.notification-count{
+    background: url("../../images/notification-purple.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+
+div.mail_notifications {
+	cursor:pointer;
+}
+
+span.basic-info-loader 
+{
+   float: left;
+    margin: 2px 10px 0 0;
+    width: 30px;
+}
+a#advance_search_link:hover{
+    text-decoration: none;
+}
+
+/* Short profile view  */
+div.shortProfileData
+{
+	display:table-cell;
+	width:527px;
+	height:149px;
+	text-align:center;
+	vertical-align:middle;
+}
+
+

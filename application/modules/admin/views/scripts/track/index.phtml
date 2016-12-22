@@ -1,0 +1,70 @@
+<?php
+/* Including JS */
+$this->headScript()->appendFile( PUBLIC_PATH."/js/token-field/javascripts/jquery.token-field.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/token-field/stylesheets/token-field.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/email_tracker.css" );
+?>
+
+<script>
+
+	function getTrackerEmails() {
+		var emailToken = $(".token-field input").val();
+		if(emailToken!=""){
+
+			$("#track-btn").attr('value', 'Sending...'); //versions older than 1.6
+			jQuery.ajax({
+			url: "/" + PROJECT_NAME + "admin/track/send-track-mail-to-users",
+			type: "POST",
+			dataType: "json",
+			data: {'emailToken': emailToken},
+			timeout: 50000,
+			success: function (jsonData) {
+				if(jsonData == true)
+				{
+					//Remove all the tokens.
+					jQuery.each( $("a.token"), function( i, val ) {
+						token = $(this);
+
+						//Remove token;
+						var index = token.siblings('.token').andSelf().index(token);
+						var input = token.closest('.token-field').find('input:hidden');
+						var values = input.val().split(',');
+						values.splice(index, 1);
+						input.val(values.join(','));
+						token.remove();
+					});
+
+					$("#track-btn").attr('value', 'Send Tracker Email'); //versions older than 1.6
+
+					showDefaultMsg('Track Email has been sent successfully.', 1);
+				}
+				else
+				{
+					showDefaultMsg('Error while sending Email.', 2);
+				}
+			}
+		});
+		} else {
+			showDefaultMsg('Please enter atleast one tracker email.', 2);
+		}
+		
+	}
+
+</script>
+<div id='heading'>
+	<h2>Email Tracker</h2>
+</div>
+
+<div class="content">
+	<div id="token-content">
+	<input type='text' id='input-test' name='emails' value=''/>
+	<script>
+		$('#input-test').tokenField();
+	</script>
+	</div>
+	<br/>
+	<input type="button" id="track-btn" onclick="getTrackerEmails()" value="Send Tracker Email" class="btn btn-large"/>
+
+
+
+</div>

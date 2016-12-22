@@ -1,0 +1,103 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Recruiter for your Skills' );
+// Javascript
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/recruiter_for_your_skills.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/short_profile.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/recruiter_for_your_skills.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+// Partial file(side menu)
+echo $this->partial ( 'partials/skills_menu.phtml' );
+if( $this->skills_info )
+{
+?>
+<style>
+	div#skills-form
+	{
+		display: none;
+	}
+</style>	
+<?php
+}
+else
+{
+?>
+<style>
+	div#skills-form
+	{
+		display: block;
+	}
+</style>	
+<?php	
+}	
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Summary Outer Starts -->
+	<div class="summary-outer">
+	
+		<form id = "skill-form" action="" method="post" name="skill-form" onsubmit="return false;">
+			<div class="summary-edit text-grey3">
+				<h3 class="text-purple2">Recruiter for your skills</h3>
+				<input type="button" id="add" name="add" class="btn-to-link" value="+ Add more Skills to follow" alt="+ Add another Skill" title="+ Add another Skill" style = "float: right;"> 
+			</div>
+		
+			<div class="contact-details" id="skills-form">
+				<div class="contact-label-span2">
+					<label>Add Skill</label> 
+						<span> 
+							<input type="text" name="skill_name" id="skill_name" class="search-one-textbox" value="">
+						</span> 
+				</div>	
+				<div class="summary-btn-outer bdr-grey2">
+					<input name="save-skillinfo" type="button"  alt="Save" title="Save"  class="new-save-btn" value="Save" />
+					<a class="new-cancel-btn" id="cancel" href="javascript:;">Cancel</a>
+				</div>
+			</div>
+		</form>
+
+		<div class="accord-content">
+<?php 
+			foreach ( $this->skills_info as $key=>$skill_info )
+			{
+?>			
+			<div class="slide-down-content">
+				 						
+				<div class="slide-down-content-inner">
+					<!-- Slide Down Inner Starts -->
+					<div skill="<?php echo $skill_info['skill_id']; ?>" class="font-arial slide-down-inner showskills" id="showskill_<?php echo $skill_info['skill_id']; ?>">
+						<label title = "<?php echo $skill_info['skill_ref_name']; ?>"><?php echo Helper_common::showCroppedText($skill_info['skill_ref_name'], 70); ?></label>
+						<img src="<?php echo IMAGE_PATH; ?>/plus_grey.png" style="float:right;" class = "plus_minus" id="img_<?php echo $skill_info['skill_id']; ?>">
+					</div>
+						
+					<div class="delete-icon">
+						<img src="<?php echo IMAGE_PATH; ?>/remove.png" style="float:right; width: 16px; display: none;" class = "remove_skill" id="img_<?php echo $skill_info['skill_id']; ?>" rel = "<?php echo $skill_info['skill_id'];?>">
+					</div>
+					
+					
+					<!-- Slide Down Inner Ends -->
+					<div style="display: none;" class="slide-down-inner-container" id="skill_<?php echo $skill_info['skill_id']; ?>">
+					</div>
+				</div>
+			</div>
+
+<?php 
+			}
+?>
+					
+		</div>
+		<div id = "edit_controls" <?php echo !$this->skills_info ? "style='display: none;'":""; ?>>
+			<img id = "edit" src="<?php echo IMAGE_PATH; ?>/edit-pencil.png"/>
+			<label id = "done_edit">Done</label>
+		</div>
+	</div>	
+	<!-- Content Right Right Ends -->
+</div>
+<!-- Content Right Ends -->
+<!-- confirmation dialog box -->
+<div id="dialog-confirm" title="Remove skill" style="display:none;z-index:9999 !important;">
+  <p>
+	Do you really want to remove this skill ?
+  </p>
+</div>

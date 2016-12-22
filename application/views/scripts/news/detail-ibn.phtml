@@ -1,0 +1,61 @@
+<?php
+$this->headTitle()->prepend('News IBN live');
+
+?>
+<style type="text/css">
+.news-detail-outer {
+	text-align: justify;
+	width: 99%;
+}
+
+.news-detail-heading {
+	border: none;
+}
+
+p {
+	margin-top: 12px;
+	font-size: 14px;
+}
+</style>
+<!-- Content Right Right Starts -->
+<div class="socialise-content">
+	<!-- Col1 -->
+	<div class="news-content-outer">
+		<div class="news-detail-heading">
+			<h2 style="word-wrap:break-word;margin-bottom: 5px; font-weight: bold; border-bottom: 1px solid #C4C4C4;">
+<?php 
+            		echo $this->heading;
+?>
+            		<a class="text-purple2-link" style="float: right; font-size: 15px; margin-top: 8px; margin-right: 2px"
+					href="<?php echo PROJECT_URL.'/'.PROJECT_NAME;?>news/ibn"> &lt;&lt;
+					News </a>
+			</h2>
+			<p style="font-weight: bold; font-size: 13px;">
+<?php
+			echo $this->date ;
+?> 
+			</p>
+			<!--div class="tweet-outer" style="margin-top: 10px;"><img width="324" height="22" src="<?php echo IMAGE_PATH?>/twitter-fb-ilook.png"></div-->
+		</div>
+		<div class="news-detail-outer">
+			<img src="<?php echo $this->img[0];?>" />
+		
+			<b style="font-size: 14px;">
+			<?php 
+			echo $this->introduction;
+			?>
+			</b>
+			
+<?php
+			$paragraphNews = $this->paragNews;
+			foreach($paragraphNews as $para_news) 
+			{
+				echo "<p>" .$para_news. "</p>";
+			}
+?>
+		</div>
+	</div>
+	<!-- Col1 -->
+
+</div>
+<!-- Content Right Right Ends -->

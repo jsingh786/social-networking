@@ -1,0 +1,222 @@
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/tokenInput/token-input-facebook.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_detail.css" );
+// $this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_feed.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_album.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/edit_album.css" );
+
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/edit_album.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/photo_detail.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/view-popup-fullscreen.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.addphotos.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.js" );
+
+//	Partials
+echo $this->partial ( 'partials/photos-popup.phtml' );
+echo $this->render("partials/add_contacts_popup.phtml");
+echo $this->partial ( 'partials/who_liked_popup.phtml' );
+echo $this->partial ( 'partials/who_shared_popup.phtml' );
+echo $this->partial ( 'partials/share_photo_feed_popup.phtml' );
+echo $this->partial ( 'partials/move_photo_to_other_album.phtml' );
+   
+if( Auth_UserAdapter::getIdentity()->getId() == $this->uid )
+{
+	echo $this->partial ( 'partials/profile_menu.phtml' );
+}
+else
+{
+?>
+<style type="text/css">
+	.content-right-right 
+	{
+		margin: 0 !important;
+	}
+</style>
+<?php 
+}
+
+$menu_size = Auth_UserAdapter::getIdentity()->getMain_menu_size();
+?>
+<style type="text/css">
+.ui-corner-all
+{
+	z-index:9999 !important;
+}
+.photo-slider
+{
+	background:#FFFFFF;
+}
+.photo-slider-bot
+{
+	margin:0 0 10px;
+}
+
+<?php
+if($menu_size==Extended\ilook_user::MENU_SIZE_MAXIMISED || $menu_size==null )
+{	
+?>
+	.photo-slider-bot .col2{
+		margin:10px 0px 10px 34px;
+		position:relative;
+		height:176px;
+		border:1px solid #E3E3E1;
+		width:176px;
+	}
+<?php
+}
+else
+{
+?>
+	.photo-slider-bot .col2
+	{
+		margin:10px 0 10px 3px;
+		position:relative;
+		height:200px;
+		border:1px solid #E3E3E1;
+		width:176px;
+	}
+<?php
+}
+?>
+
+</style>
+<script>
+   /*
+ 	 $(function() {
+      $('a.full-img').fullsizable({
+        detach_id: 'photos-container'
+      });
+
+      $(document).on('fullsizable:opened', function(){
+        $("#jquery-fullsizable").swipe({
+          swipeLeft: function(){
+            $(document).trigger('fullsizable:next')
+          },
+          swipeRight: function(){
+            $(document).trigger('fullsizable:prev')
+          },
+          swipeUp: function(){
+            $(document).trigger('fullsizable:close')
+          }
+        });
+      });
+    });
+    */
+  </script>
+<!-- Content Right Right Starts -->
+        	<div class="content-right-right">
+            	<!-- Photo Album Starts -->
+           	  <div class="photoalbum-outer">
+              	<div class="photoalbum-hdr">
+              	<input type="hidden" id="offset_who_liked" value="0">
+				<input type="hidden" id="limit_who_liked" value="2">
+              	<input type="hidden" id="offset_who_shared" value="0">
+				<input type="hidden" id="limit_who_shared" value="2">
+              <input type="hidden" name="offsett" value="0" id="offsett"/>
+              <input type="hidden" name="custom_viewers_user_ids" value="" id="custom_viewers_user_ids"/>
+              
+              <input type="hidden" name="total_pictures" value="<?php echo count($this->photoListing); ?>" id="total_pictures"/>
+              
+<?php 
+//                if($this->albName!="")
+//                {
+               		echo '<input maxlength="30" name="edit_album_name" type="text" value="'.$this->albName.'" id="edit_album_name">';
+//                }
+//                else 
+//                {
+//                		echo '<input type="text" value="Untitled" id="edit_album_name">';
+//                }
+?>
+               <h2 class="add_border"></h2>
+
+		          		<div class="save_cancel_album_changes" id="save_cancel_album_changes">
+							<input rel = "<?php echo $this->albId ;?>" onclick="saveAlbumInfo(this);" id="save_album_changes" value="Save" class="save_album_btn btn-purple"> 
+							<!-- <a onclick="cancel_album_changes(this);" id="cancel_album_changes" class="text-dark-purple" >Cancel</a> -->
+						</div>
+                    	<div class="delete-album">
+	                    	<!-- <a style="position:relative;" rel = "<?php echo $this->albId ;?>" onclick = "confirmDeleteAlbum(this);" href="javascript:;" class="delete_album text-purple2-link">
+	                    	Delete Album
+                        	</a>-->
+                        	<img class="delete_album" style="width: 25px;cursor:pointer" src="<?php echo IMAGE_PATH;?>/recycle_bin_big.png" rel = "<?php echo $this->albId ;?>" onclick="confirmDeleteAlbum(this);"/>
+                   		</div>
+
+
+                    <div class="photoalbum-addnew">
+                    <div class="fl">
+                  
+                   <a id="back_to_photo_album" class="" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'profile/photos/uid/'.$this->uid.'/id/'.$this->albId;?>"><b>&lt;&lt;</b>&nbsp;Back To Album</a>
+           
+                    </div>
+                    
+                    <div class="fr">
+                    <div>
+                    	<select  rel = "<?php echo $this->albId ;?>" class="edit_album_privacy">
+                    	<option value="0">Select</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_PUBLIC; ?>">Public</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_LINKS; ?>">Links</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_LINKS_OF_LINKS; ?>">Links of links</option>
+							<option value="<?php echo Extended\socialise_album::VISIBILITY_CRITERIA_CUSTOM; ?>">Custom</option>
+                    	</select>
+                    </div>
+                    </div>
+                    
+                    </div>
+                </div>
+           	                    
+                <div class="photo-slider">
+                    <div class="photo-slider-bot" id="photos-container">
+                    <input type="hidden" name="albumID" id="albumID" value="<?php echo $this->albId;?>" />
+                     <input type="hidden" name="albumName" id="albumName" value="<?php echo 'album_'.$this->albName2;?>" />
+                     <input type="hidden" name="currentUserId" id="currentUserId" value="<?php echo Auth_UserAdapter::getIdentity()->getId();?>" />
+                     <input type="hidden" name="albumOwnerId" id="albumOwnerId" value="<?php echo $this->uid ;?>" />
+                  	
+                  </div>
+                  
+<?php   
+			  echo '<div class="loading_pictures">';
+              echo '<div><img src = "'.IMAGE_PATH.'/loading_medium_purple.gif"><label>Loading...</label></div>';
+              echo '</div>';
+?>
+                </div>
+   	          	
+
+                   
+		</div>
+	<!-- Photo Album Ends -->
+
+            
+   
+            
+          </div>
+          <div id="dialog-confirm" title="Delete Photo" style="display:none;z-index:9999 !important;height: 40px !important ;">
+	  <p>
+		Do you really want to remove this photo?
+	  </p>
+</div>
+
+	<div id="dialog_confirm_comment2" title="Delete Comment" style = "display:none;height:66px !important;">
+	<p>
+  		Are you sure you want to delete this comment?
+  	</p>
+	</div>
+	<div id="confirm_delete_album" title="Delete Album" style = "display:none;height:66px !important; ">
+	<p>
+  		Are you sure you want to delete this album?
+  		This will remove all your photos inside this album,
+  		including all the activities performed on them.
+  		
+  	</p>
+	</div>
+        <!-- Content Right Right Ends -->
+        <!-- Dialog Box -->
+<!-- Dialog Box -->
+<div id="dialog_delete_comment" title="Delete Comment" style="display:none">
+	<p>
+		want to delete this comment?
+	</p>
+</div>

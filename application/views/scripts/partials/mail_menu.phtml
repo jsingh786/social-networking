@@ -1,0 +1,135 @@
+<?php
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/sdmenu.js" );
+?>
+<!-- Content Right Left Starts -->
+<?php 
+$params = Zend_Controller_Front::getInstance ()->getRequest ()->getParams ();
+$actionn = $params ['action'];
+$controllerr = $params ['controller'];
+?>
+<!-- Content Right Left Starts -->
+<div class="content-right-left">
+	<div class="heading">
+		<h1>MAIL</h1>
+	</div>
+	<div class="connections">
+		<a href="#">
+			<div class="connections-left text-white">
+				<h3>&nbsp;</h3>
+			</div>
+			<div class="connections-mid text-purple"></div>
+			<div class="connections-right"></div>
+		</a>
+	</div>
+
+	<!-- Slide Nav Starts -->
+	<div style="float: left" id="my_menu" class="sdmenu">
+		
+		
+<!-- COMPOSE -->
+		<div class="" >
+			<span style="display:none;"></span>		
+			<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."mail/compose"; ?>">Compose Mail
+			</a> 
+		</div>
+		
+		
+<!-- 		<div class="mail-message"> -->
+<!-- 			<h3>Messages</h3> -->
+<!-- 		</div> -->
+		
+		
+<!-- INBOX		 -->
+		<div class="collapsed">
+			<span 
+<?php 
+			if( 
+					($controllerr == "mail" && $actionn == "inbox") ||
+					($controllerr == "mail" && $actionn == "link-requests") ||
+					($controllerr == "mail" && $actionn == "reference-request") ||
+					($controllerr == "mail" && $actionn == "job-invitation-requests") ||
+					($controllerr == "mail" && $actionn == "feedback-request")
+				)	
+			echo "class='selected'";
+?>			
+			>
+			Inbox
+			</span>
+			<a 
+<?php 
+			if( $controllerr == "mail" && $actionn == "inbox" )
+			echo "class='current'";
+?>			
+			href="<?php echo "/".PROJECT_NAME."mail/inbox"; ?>">
+				<label style = "color: #B084E9; float:right" class = "inbox_email_uread_count" ></label>&nbsp;Email Messages 
+			</a>
+			<a
+<?php 
+			if( $controllerr == "mail" && $actionn == "link-requests" )
+			echo "class='current'";
+?>			
+			href="<?php echo "/".PROJECT_NAME."mail/link-requests"; ?>">
+				<label style = "color: #B084E9; float:right;" class = "inbox_link_req_uread_count" ></label>&nbsp;Link Requests
+			</a>
+		
+			<a 
+			<?php 		if( $controllerr == "mail" && $actionn == "job-invitation-requests" )
+			echo "class='current'";
+?>	
+			href="<?php echo "/".PROJECT_NAME."mail/job-invitation-requests"; ?>">
+				<label style = "color: #B084E9;  float:right;" class = "inbox_job_invitation_uread_count" ></label>&nbsp;Job Invitation Requests
+			</a> 
+			
+			
+<!-- 			<a href="#"> -->
+<!--  				<label style = "color: #B084E9;  float:right;" class = "" ></label>&nbsp;Support Requests -->
+<!-- 			</a>  -->
+			<a 
+<?php 
+			if( $controllerr == "mail" && $actionn == "feedback-request" )
+			echo "class='current'";
+?>			
+			href="<?php echo "/".PROJECT_NAME."mail/feedback-request"; ?>">
+				<label style = "color: #B084E9; float:right;" class = "inbox_feedbk_req_uread_count" ></label>&nbsp;Feedback Requests
+			</a>
+			
+			<a <?php 
+			if( $controllerr == "mail" && $actionn == "reference-request" )
+			echo "class='current'";
+?>			
+			href="<?php echo "/".PROJECT_NAME."mail/reference-request"; ?>">
+				<label style = "color: #B084E9;  float:right;" class = "inbox_ref_req_uread_count" ></label>&nbsp;Reference Requests
+			</a>	
+		
+			
+
+		</div>
+		
+<!-- SENT ITEMS		 -->
+		<div class="collapsed">
+			<span style = "display:none">Sent Items</span>
+			<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."mail/sent-items"; ?>">
+				<label style = "color: #B084E9;" class = "" ></label>Sent Mails
+			</a>
+		</div>
+				
+		
+<!-- ARCHIVE		 -->
+		<div class="collapsed">
+			<span style = "display:none">Archive</span>
+			<a id = "mimic_parent" href="<?php echo "/".PROJECT_NAME."mail/archive"; ?>">
+				<label style = "color: #B084E9;" class = "" ></label>Archive Messages
+			</a>
+		</div>
+
+	<!-- Trash		 -->
+		<div class="collapsed">
+			<span style = "display:none">Trash</span>
+			<a id = "mimic_parent" style="background:none;"	href="<?php echo "/".PROJECT_NAME."mail/trash"; ?>">
+				<label style = "color: #B084E9;" class = "trash_email_uread_count" ></label>Trash Messages 
+			</a>
+		</div>
+	</div>
+	<!-- Slide Nav Starts -->
+</div>      
+<!-- Content Right Left Ends -->

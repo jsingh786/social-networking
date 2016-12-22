@@ -1,0 +1,245 @@
+@CHARSET "ISO-8859-1";
+div#gmail, div#yahoo
+{
+	cursor: pointer;
+}
+#gmail a, div#yahoo a
+{
+	text-decoration: none;
+}
+.view-anchor{
+	 background: none repeat scroll 0 0 transparent !important;
+    color: #FFFFFF !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+div#tabs ul.ui-tabs-nav
+{
+	height: 36px;
+}
+.ui-widget-content {
+   /*  background: none !important;
+	border: none !important; */
+}
+
+.ui-tabs .ui-tabs-nav li {
+    margin: 0 !important;
+}
+.ui-widget-header {
+    background: none repeat scroll 0 0 #F5F6F7 !important;
+	border: medium none !important;
+    color: #000000 !important;
+	/* border: none !important; */
+}
+div.contact_holder {
+    display: inline-block;
+    height: 50px;
+    width: 310px;
+}
+
+div.photo_holder {
+    height: inherit;
+    width: 50px;
+	float: left;
+}
+div.photo_holder div {
+	border : 1px solid #4D356F;
+	display: table-cell;
+    height: inherit;
+    width: 50px;
+	text-align: center;
+    vertical-align: middle;
+}
+span.import_cb {
+    float: left;
+}
+.forgot-password-content label, .yahoo_login_popup label {
+    margin: 0 0 5px !important;
+}
+div.label_holder
+{
+   float: right;
+   width: 250px;
+}
+.forgot-password-content span.import_cb, .yahoo_login_popup span.import_cb {
+    height: 15px;
+    margin: 0 4px;
+    width: 22px;
+}
+.forgot-password-outer{
+    margin: 0 auto;
+    padding:0;
+    width: 534px;
+}
+.forgot-password-hdr{
+
+    float: left;
+    margin: 0;
+    padding: 10px 20px;
+    width: inherit;
+}
+.forgot-password-hdr_1{
+    background:#f5f6f7;
+}
+.forgot-password-hdr .left{
+	width:auto;
+	margin:0;
+	padding:0;
+	float:left;
+}
+.forgot-password-hdr .right{
+	width:auto;
+	margin:8px 0 0 0;
+	padding:0;
+	float:right;
+}
+.forgot-password-content{
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 0;
+    min-height: 100px;
+    padding: 25px 20px;
+    width: 99.7%;
+box-sizing: border-box;
+border-top: 1px solid #dddddd;
+}
+/* .ui-widget-content{border:1px solid #ddd !important;} */
+div#gmail_popup div#modal_contacts #tabs.ui-widget-content
+{
+	border:1px solid #ddd !important;
+}
+div#modal_contacts div#tabs .ui-widget-header{background:#fff !important; padding:0 !important;}
+div#modal_contacts div#contacts:last-child
+{
+	border:1px solid #ddd !important;
+} 
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    padding: 6px 10px !important;
+}
+.ui-tabs .ui-tabs-panel{padding:1em 3px !important; border:none!important;}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {padding-bottom:0px !important}
+
+.yahoo_login_popup{
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 0;
+    min-height: 100px;
+    padding: 25px 20px;
+    width: 90%;
+}
+.forgot-password-content label, .yahoo_login_popup label{
+	margin:0;
+	color:grey;
+	width:105px;
+	float:left;
+	line-height:35px;
+}
+.forgot-password-content span, .yahoo_login_popup span{
+	color:grey;
+	margin: 0 4px;
+	color:#000000;
+	font-size:12px;
+}
+.forgot-password-content span input[type="text"], .yahoo_login_popup span input[type="text"]{
+	margin:0;
+	background:#8d70b3;
+	width:282px;
+	padding:0 5px;
+	border:0px;
+	color:#fff;
+	height:35px;
+	line-height:35px;
+}
+.forgot-password-content span input[type="button"], .yahoo_login_popup span input[type="button"]{
+    background: none repeat scroll 0 0 #6B508E;
+    border: 0 none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: oswaldlight;
+    font-size: 16px;
+    height: 32px;
+    padding: 0 5px;
+    width: 94px;
+}
+div.forgot-password-outer_1 {
+    width: 395px;
+}
+#gmail_popup {
+    display: none;
+}
+div#modal_contacts.contact-list {
+    min-height: 100px;
+}
+div#modal_contacts ul
+{
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	max-height: 191px;
+    overflow-y: auto;
+}
+.forgot-password-content span input[type="button"], .yahoo_login_popup span input[type="button"] {
+	margin: 5px 0 0 !important;
+}
+.forgot-password-content label, .yahoo_login_popup label {
+	line-height: 16px !important;
+	width: 370px !important;
+}
+span#gmail_import
+{
+    height: 43px;
+    margin-top: 20px;
+    width: 95px;
+}
+input#gmail_import_btn, input#gmail_import_btn_2
+{
+	display: none;
+}
+div.forgot-password-content table tbody tr td.top, div.yahoo_login_popup table tbody tr td.top
+{
+	vertical-align: top;
+}
+div.forgot-password-hdr_1 .close_popup {
+    float: right;
+    margin: 10px 0 0 0 !important;
+}
+div.forgot-password-hdr_1 h2
+{
+	float: left;
+    width: 243px;
+	text-transform:inherit !important;
+	color:#000;
+	font-weight:bold;
+}
+div.more-ways-textbox input#more_ways_to_connect
+{
+	font-size:10px !important
+}
+
+div#who_liked_listing_popup div.forgot-password-hdr_1,
+div#who_shared_listing_popup div.forgot-password-hdr_1
+
+{
+	width: 92.5%!important;
+}
+
+/** import contacts from yahoo **/
+.forgot-password-hdr_1 {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    padding: 0 15px;
+    width: 94%;
+}
+
+div#yahoo_login_popup div.forgot-password-hdr_1 {
+    width: 92.5% !important;
+}
+
+div.forgot-password-hdr_1 h2 {
+    font-size: 17px !important;
+    margin-top: 0 !important;
+}
+
+/** import contacts from yahoo ends**/

@@ -1,0 +1,69 @@
+<div id="fb-root"></div>
+	
+	<!-- USE 'Asynchronous Loading' version, for IE8 to work
+	http://developers.facebook.com/docs/reference/javascript/FB.init/ -->
+	
+	<script>
+	  window.fbAsyncInit = function() {
+		FB.init({
+//		  app_id  : '781761061969526',
+		  app_id  : '954501384563378',
+		  status : true, // check login status
+		  cookie : true, // enable cookies to allow the server to access the session
+		  xfbml  : true  // parse XFBML
+		});
+	  };
+	
+	  (function() {
+		var e = document.createElement('script');
+		e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+		e.async = true;
+		document.getElementById('fb-root').appendChild(e);
+	  }());
+
+	  
+	  
+	</script>
+	
+	
+	<!-- <img id = "share_button" src = "http://app.tabpress.com/fbui_share/share_button.png"> -->
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#fbshare_btn').click(function(e){
+			var profile_link = $('#profile_url').attr('href');
+			e.preventDefault();
+			var title = "";
+		    if($("#sharetxt").val()!="" && $("#sharetxt").val()!="Enter your text here.."){
+		    	title = $("#sharetxt").val();
+		    }
+		    
+			FB.ui(
+				{
+					method: 'feed',
+					name: "View my profile",
+					link: document.documentURI,
+					picture: $("#profileLogo").attr("src"),
+					//caption: $("#fbname").val()+' profile',
+					caption: title,
+					description: "View my profile",
+					message: profile_link
+			 }, function(response){
+				console.log(response);
+			});
+		});
+	});
+
+
+	/*FB.ui({
+		  method: 'share_open_graph',
+		  action_type: 'og.likes',
+		  action_properties: JSON.stringify({
+		    object:'https://developers.facebook.com/docs/',
+		  })
+		}, function(response){
+		  // Debug response (optional)
+		  console.log(response);
+		});*/
+	
+	</script>

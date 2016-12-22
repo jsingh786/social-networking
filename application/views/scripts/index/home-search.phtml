@@ -1,0 +1,282 @@
+<?php echo $this->doctype ();?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php
+$this->headLink()->headLink(array('rel' => 'icon', 'href' => PUBLIC_PATH.'/images/favicon.ico'), 'PREPEND');
+$this->headMeta()->setHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+
+$this->headTitle()->prepend('Home-Search');
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/home_search.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/home_search.css" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/registeration.js" );
+
+echo $this->headTitle();
+echo $this->headMeta();
+echo $this->headLink();
+echo $this->headScript();
+
+?>
+
+<script>
+$(document).ready(function(){
+	// Setting country filter dropdown-----
+	$('#my-dropdown3').getSetSSValue(<?php echo @$this->prms['country']; ?>);
+});
+</script>
+
+<!-- Wrapper Starts -->
+<div class="wrapper">
+	<!-- Header Starts -->
+	<!--  <div class="header-inner2">
+		<div class="logo" id="logo-inner" style="cursor:pointer;">
+		<span>Beta</span>
+			<img src="<?php //echo IMAGE_PATH;?>/logo.png" alt="iLook" title="iLook" width=""
+				height="67" />
+		</div>
+	</div>-->
+	<!-- Header Ends -->
+
+	<!-- Content Starts -->
+	<div class="content">
+		<div class="common-div">
+			<div class="home-search-left">
+				<div class="top">
+					<img src="<?php echo IMAGE_PATH;?>/banner1.png" width="390" height="267" />
+				</div>
+				<div class="mid">
+					<!-- Login Outer Starts -->
+					<form id="login" name="login" style = "margin: 0;" method="POST" action="<?php echo PROJECT_URL.'/'.PROJECT_NAME?>authenticate/login">
+					<div class="login-outer2">
+						<!-- Login Top Starts -->
+						<div class="login-top2">
+							<h4>SIGN IN</h4>
+							<div class="textbox">
+								<input type="text" placeholder="Enter email" value="" class="search-one-textbox" name="email">
+							</div>
+							<div class="textbox">
+								<input type="password" placeholder="Enter password" value="" class="search-one-textbox" name="password">
+							</div>
+							<div class="common-div">
+								<div class="separator-div">
+									<input style="width: auto" name="rememberMe" id="rememberMe" type="checkbox" value="1">
+									<span class="text-grey">Keep me Logged in</span>
+								</div>
+								<div class=".popup_box"></div>
+								<a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME; ?>authenticate/forgot-password" id="forgot" class="forgot-password text-purple" style="text-decoration:none;">Forgot your password</a>
+
+							</div>
+
+						</div>
+						<!-- Login Top Ends -->
+						<div class="login-bot">
+							<div class="login-btn-new ">
+								<input name="login_submit" type="submit" alt="LOGIN" title="LOGIN"
+									value="LOGIN" />
+							</div>
+						</div>
+						<div class="login-nav">
+							<ul>
+								<li class="none"><a href="/<?php echo PROJECT_NAME ?>page/privacy-policy">PRIVACY POLICY</a></li>
+								<li><a href="/<?php echo PROJECT_NAME ?>page/cookies">COOKIES</a></li>
+								<li><a href="/<?php echo PROJECT_NAME ?>page/terms">TERMS</a></li>
+								<li><a href="javascript:void(0)">HELP</a></li>
+							</ul>
+						</div>
+					</div>
+					</form>	
+					<!-- Login Outer Ends -->
+				</div>
+
+				<!-- Create Account Starts -->
+				<div class="create-account2">
+				<div class="tick-box2" id="tick-box-image">
+					<!-- <img src="<?php echo IMAGE_PATH; ?>/tick-white.png" alt="Ok" title="Ok" /> -->
+				</div>
+					<h3>Create Your Account</h3>
+					<form name="registeration_step1" id="registeration_step1" method="POST" action="/<?php echo PROJECT_NAME;?>registration">				
+					<label>First Name:</label> <span><input id="first_name" name="first_name" type="text" /></span>
+					<label>Last Name:</label> <span><input id="last_name" name="last_name" type="text" /></span>
+					<label>Email:</label> <span><input id="email" name="email" type="text" />
+					
+					</span>
+					<label>Password:</label><span><input id="password" name="password" type="password" /></span>
+					<p>
+						By clicking Join Now, you agree to our <a href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/terms';?>"
+							class="text-purple-link">Terms</a> and that you have read our <a
+							href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'page/privacy-policy';?>" class="text-purple-link">Data Use Policy</a>,
+						including our <a href="/<?php echo PROJECT_NAME ?>page/cookies" class="text-purple-link">Cookie
+							Use</a>.
+					</p>
+					<input type="hidden" name="created_from" value="ilook" id="created_from">
+					<div style="float: right; margin-top: 10px;" class="join-now-right">
+						<input type="submit" value="JOIN NOW" title="Join Now"
+							alt="Join Now" name="signup_submit">
+					</div>
+					</form>
+				</div>
+				<!-- Create Account Ends -->
+
+			</div>
+
+			<!-- HOME SEARCH RIGHT STARTS -->
+			<div class="home-search-right">
+
+				<!-- Col1 Starts -->
+				<div class="col1">
+					<form method="GET" action="/<?php echo PROJECT_NAME; ?>index/home-search" id = "home_search">
+						<h3 class="text-purple2">Search for someone by Name</h3>
+						<div class="namebox">
+						
+							<input type="hidden" name="list_len" value="20"/>
+							<input type="hidden" name="country" value="<?php echo @$this->prms['country']; ?>"/>
+							<div class="col1">
+							<input type="text" id="search_by_fname" name="first_name" class="fl search-one-textbox" value="<?php echo @$this->prms['first_name']; ?>" placeholder="First Name" id="search_by_fname">
+							</div>
+							
+							<div class="col2">
+							<input type="text"  id="search_by_lname" name="last_name" value="<?php echo @$this->prms['last_name']; ?>" class="fl search-one-textbox" placeholder="Last Name" id="search_by_lname"/>
+								</div>
+						
+						</div>
+						<div class="fr search-someone-btn">
+							<a id="home_search_btn" href="javascript:">
+								<strong>SEARCH</strong>
+								<img width="25" height="25" align="absmiddle" title="Search" alt="Search" src="<?php echo IMAGE_PATH; ?>/search-icon.png">
+							</a>
+						</div>
+					</form>
+				</div>
+				<!-- Col1 Ends -->
+
+				<!-- Col2 Starts -->
+				<div class="col2">
+					<h3 class="fl">
+						<font class="text-purple2">Search:</font> 
+			<?php 		
+						echo @$this->prms['first_name']." ".@$this->prms['last_name'];
+				 		if( $this->country )
+				 		{
+				 			echo "in ".$this->country;
+				 		}
+			?>
+					</h3>
+
+					<div class="filter-location">
+						<p>Filter by Location</p>
+						<div id="win-xp5">
+							<select name="my-dropdown" id="my-dropdown3" >
+							<?php 
+							
+								foreach ( $this->countries as $con )
+								{
+									echo "<option value = '".$con->getId()."'>".$con->getName()."</option>";
+								}	
+?>							
+							</select>
+						</div>
+
+					</div>
+
+				</div>
+				<!-- Col2 Ends -->
+				<!-- Col3 Starts -->
+<?php 
+				if( $this->paginator->getTotalItemCount() )
+				{
+?>				
+				<div class="col3">
+					<div class="fl text-grey3">
+<?php 
+						$query_str = "";
+						foreach( $this->prms as $key=>$p )
+						{
+							if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+							{
+								continue;
+							}
+							$query_str .= $key."=".$p."&amp;";
+						}
+?>
+						VIEWS <a class="text-grey3-link" style="margin-left: 5px"
+							href="<?php echo "/".PROJECT_NAME."index/home-search?".$query_str."list_len=20";?>"><?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."index/home-search?".$query_str."list_len=50";?>"><?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."index/home-search?".$query_str."list_len=100";?>"><?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?></a> | <a class="text-grey3-link"
+							href="<?php echo "/".PROJECT_NAME."index/home-search?".$query_str."list_len=all";?>"><?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?></a>
+					</div>
+					<div class="fr  text-grey3">
+<?php
+						echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+					</div>
+				</div>
+<?php
+				}
+?>					
+				<!-- Col3 Ends -->
+
+				<!-- Col4 Starts -->
+				<div class="col4">
+				
+<?php
+				if( $this->paginator->getTotalItemCount() )
+				{	
+					foreach ( $this->paginator as $res )
+					{	
+?>				
+					<div class="mail-sendmsg-col2">
+						<div class="left">
+							<div class="image">
+								<div class = "image_inner">
+<?php 
+								$user_prof_img = Helper_common::getUserProfessionalPhoto($res->getId(),3);
+?>
+									<img src="<?php echo $user_prof_img; ?>">
+								</div>	
+							</div>
+							<div style="margin-top: 5px" class="text text-grey2">
+								<h3 class="text-purple2"><?php echo $res->getFirstname()." ".$res->getMiddle_name()." ".$res->getLastname(); ?></h3>
+								<?php
+									echo  Helper_common::getUserProfessionalInfo($res->getId(),true);
+								?>
+								<p>
+								<?php 
+								if( $res->getCity() )
+								{
+									echo $res->getCity()->getName().", ";
+								}
+								
+								if( $res->getUser_type() == Extended\ilook_user::USER_TYPE_JOB_SEEKER || $res->getUser_type() == Extended\ilook_user::USER_TYPE_EMPLOYED )
+								{
+									if($res->getUsersIndustry())
+									{
+										echo $res->getUsersIndustry()->getTitle()." industry";
+									}
+								}
+?>									
+								</p>
+							</div>
+						</div>
+						<div class="right">
+						<!-- 	<a href="/<?php echo PROJECT_NAME; ?>index/short-profile/id/<?php echo $res->getId(); ?>/first_name/<?php echo $this->prms['first_name']; ?>/last_name/<?php echo $this->prms['last_name'] ?>" class="text-purple-link">View Profile</a>  -->
+						<a target = "_blank" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.$res->getUsername();?>" class="text-purple-link">View Profile</a>
+						</div>
+					</div>
+<?php 
+					}
+				}
+				else
+				{
+					echo "<div class='no-rec-msg text-grey3'>No search results found!</div>";
+				}	
+?>					
+				</div>
+				<!-- Col4 Ends -->
+			</div> 
+			<!-- HOME SEARCH RIGHT ENDS -->
+
+		</div>
+
+	</div>
+	<!-- Content Ends -->
+	</div>
+<!-- Wrapper Ends -->

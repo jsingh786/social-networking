@@ -1,0 +1,50 @@
+@CHARSET "ISO-8859-1";
+.add_or_edit
+{
+	display: none;
+}
+a
+{
+	text-decoration: none;
+}
+
+.loader-col1{
+	width:auto;
+	margin:0 5px 0 0;
+	padding:0;
+	float:left;
+}
+.loader-col2{
+	width:100px;
+	margin:0 5px 0 0;
+	padding:0;
+	float:left;
+}
+div.un-editable-outer
+{
+	background: none repeat scroll 0 0 #F2F2F2;
+    border: medium none;
+    margin: 0 0 20px !important;
+    padding: 10px;
+    width: 90%;
+	color: #000 !important;
+	position:relative;
+}
+div.un-editable-outer label{
+	width:150px;
+	float:left;
+}
+.loader-col1{
+	color: #000 !important;
+	width:150px;
+}
+.loader-col2 {
+    position: absolute;
+    right: -36px;
+    top: 9px;
+    width: auto;
+}
+.abs
+{
+	position: absolute;
+}

@@ -1,0 +1,58 @@
+<?php
+$this->headTitle()->prepend('User Management');
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/admin/login.css" );
+$this->headScript()->appendFile(PUBLIC_PATH . "/js/admin/login.js");
+
+
+?>
+<script type='text/javascript'>
+$(document).ready(function(){
+	$('button.send_OTP').click(function(){
+		var btn = $(this);
+		btn.text('Sending OTP...');
+		btn.attr('disabled','disabled');
+		jQuery.ajax({
+	        url: "/" + PROJECT_NAME + "admin/manage-users/send-o-t-p",
+	        type: "POST",
+	        dataType: "json",
+	        data: {
+	              },
+	        timeout: 50000,
+	        success: function(jsonData) {
+	        	btn.text('Send OTP');
+	    		btn.removeAttr('disabled');
+	    		showDefaultMsg( 'An OTP has been send on your email address. You may use it to login as user.', 1 );
+	        }
+		});
+	});
+});
+</script>
+<div id='heading'>
+	<h2><a href = '/<?php echo PROJECT_NAME?>admin/manage-users/index'>User Management</a> -> Login As User
+		<span style = 'float:right; margin-right: 5px;' title = 'Total Users according to current criteria' id = 'num_of_users'></span>
+	</h2>
+</div>
+
+<form name="form1" action='/<?php echo PROJECT_NAME; ?>admin/manage-users/authenticate-admin-to-login-as-user' id="form1"  method="post" >
+	<div class="login-box-outer" >
+		<div class="login-box">
+	    	<div class="login-box-heading">LOGIN AS USER</div>
+	    	
+	    	<div class="input-prepend login-input">
+	    	
+	          	<span class="add-on"><i class="icon-user"></i></span><input type="text" maxlength="255" placeholder="Email ID of iLook user"
+	          	 name="email" id="email" value="<?php echo $this->email_id; ?>">
+	          	
+	        </div>
+	        <div class="input-prepend login-input1">
+	          <span class="add-on"><i class="icon-lock"></i></span><input type="password"  maxlength="6" placeholder="OTP" name="OTP" id="OTP">
+	        </div>
+	        <div class="button-outer">
+	
+	        <button type="submit" name="button" id="button" class="btn btn-large btn-default" title="Login">Login</button>
+	        <button type="button" name="button" id="button" class="btn btn-large btn-default send_OTP" title="Send One Time Password">Send OTP</button>
+					
+	        </div>
+	    </div>
+	</div>
+</form>

@@ -1,0 +1,323 @@
+<?php
+// Title
+$this->headTitle ()->prepend ( 'Create a Job' );
+// Javascript
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/short_profile.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/myjob.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/download_pdf.js" );
+// CSS
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/myjob.css" );
+
+// Partial file(side menu)
+echo $this->partial ( 'partials/jobs_menu.phtml' );
+?>
+<style>
+.job-hdr h2{
+	font-weight:bold;
+	font-size:22px;
+	color:#B084E9;
+}
+.mail-grey-hdr-col1 .mid{
+	float:left !important;
+}
+
+.mail-grey-hdr-col1 .chkbx-img.img {
+    margin-left: 20px;
+    margin-right: 0;
+    width: 14%;
+}
+
+
+.text-purple2-link {
+    color: #6C518F;
+    font-size: 13px;
+    font-weight:normal;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+
+.bookmarks-profile-img {
+    float: left;
+    font-size: 11px;
+    margin: 0 3px 2px 0;
+    padding: 0;
+   /* text-align: center; */
+    width: 40px;
+}
+
+
+.bookmarks-profile-img2 {
+    border: 2px solid #B084E9;
+    float: left;
+    font-size: 11px;
+    height: 36px;
+    margin: 0 3px 2px 0;
+    padding: 0;
+    text-align: center;
+    width: 36px;
+}
+.content{
+	min-height:0;
+}
+.quickview-outer {
+    left: -247px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 48px;
+    width: 547px;
+    z-index: 9999;
+}
+.openClose2Cls{
+	background: url("../../images/arrow-down-blue.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #DEDEDE;
+    color: #48545E;
+    float: left;
+    margin: 0;
+    padding: 1% 0;
+    text-decoration: none;
+    width: 100%;
+}
+.openCloseLinks{
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    margin: 0;
+    padding: 0 4% 1%;
+    width: 92%;
+}
+.jobs-text1{
+	float:right;
+}
+.job-collapse{
+	float:right;
+	height:3px;
+	width:13px;
+	border:none;
+	margin-top:2px;
+	cursor:pointer;
+}
+.job-content{
+	margin:0px;
+}
+</style>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+
+	<!-- Bookmarks Header Starts -->
+	<div class="mail-hdr">
+		<h2>Jobs Posted</h2>
+		<!-- <div class="need-help">
+			<div class="need-help-text">
+				<a href="/<?php //echo PROJECT_NAME?>job/create-job" class="text-purple-link">Post a Job</a>
+				<img width="16" align="bottom" height="13" src="<?php //echo IMAGE_PATH; ?>/icon-reference-hover.png">
+			</div>
+		</div>-->
+
+		<div class="bookmarks-add-new bdr-btm-none">
+            <div class="jobs-text1 text-grey2">
+                <h3> 
+                	<font class="text-purple"><?php echo $this->countActiveJobs;?> <a href="/<?php echo PROJECT_NAME?>job/my-jobs" class="text-purple" style="text-decoration:none;">Active</a></font> &nbsp;  | &nbsp; <font><?php echo $this->countExpiredJobs;?> <a href="/<?php echo PROJECT_NAME?>job/expired-jobs" style="text-decoration:none;">Expired</a></font>  &nbsp; | &nbsp;   <?php echo $this->countClosedJobs;?> <a href="/<?php echo PROJECT_NAME?>job/closed-jobs" style="text-decoration:none;">Closed</a></h3>
+             </div>
+        </div>
+        <div style="border-bottom:none; padding:10px 0 6px 0" class="bookmarks-add-new">
+        <?php 
+				if( $this->paginator )
+				{	
+					if( $this->paginator->getTotalItemCount() )
+					{
+?>				
+					<div class="col3" style="float:left;">
+						<div class="fr  text-grey3">
+<?php
+							echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+?>							
+						</div>
+					</div>
+<?php
+					}
+				}
+?>	
+           <div class="status-right text-purple2" style=" float:right; width:90px;">
+            	<?php 
+            	if($this->orderBy=="desc"){
+            	?>
+            	<a class="text-purple-link fl filter" href="/<?php  echo PROJECT_NAME?>job/my-jobs/order-by/asc">Ascending <img width="14" height="9" src="<?php echo IMAGE_PATH; ?>/arrow-down-grey.png" alt=""></a>
+           		<?php 
+            	}
+            	else{
+            	?>
+            		<a class="text-purple-link fl filter" href="/<?php  echo PROJECT_NAME?>job/my-jobs/order-by/desc">Descending <img width="14" height="9" src="<?php echo IMAGE_PATH; ?>/arrow-down-grey.png" alt=""></a>
+            		<?php 
+            		} 	
+           		  ?><!-- <div style="display:none;z-index:9999999;margin:20px 0 0 28px;width:158px;" class="manage-pop filteration">
+                       <div class="col1">
+                       		<a id="addBookmark" class="text-grey2-link" href="/<?php // echo PROJECT_NAME?>job/my-jobs/order-by/asc">Display in ascending</a>
+                       	</div>
+                       <div class="col1">
+                       		<a class="text-grey2-link" href="/<?php // echo PROJECT_NAME?>job/my-jobs/order-by/desc">Display in descending</a>
+                       	</div>
+                   </div> -->
+                
+            </div>
+        </div>
+	</div>
+	<!-- Bookmarks Header Ends -->
+
+	
+	<!-- Jobs Right Content Starts -->
+
+	<?php 
+	if( $this->paginator )
+	{
+		if( $this->paginator->getTotalItemCount() )
+		{
+			foreach ( $this->paginator as $v ){
+	?>
+	<!-- Col1 -->
+	<div class="mail-grey-hdr-col1">
+		<div class="chkbx-img img">
+			<img width="60" height="60" src="<?php echo IMAGE_PATH; ?>/profile-img60.png">
+		</div>
+		<div class="mid text-grey2">
+			<h4>
+				<?php echo $v->getJob_title(); ?> | <font class="text-purple2"><?php echo $v->getJob_reference(); ?></font>
+			</h4>
+			<p class="text-purple2"><?php echo $v->getCompany()->getName();?></p>
+			<p><?php echo $v->getIndustryRef()->getTitle().", ".$v->getCountryRef()->getName();?>, London</p>
+			<p><?php echo $v->getSalaryRange()->getCountryRef()->getCurrency_symbol()." ".$v->getSalaryRange()->getMin_salary()." - ".$v->getSalaryRange()->getMax_salary();?>| <?php echo $v->getJobType()->getName();?> | <?php echo  $v->getExperieneceLevel()->getMin_experience()." - ".$v->getExperieneceLevel()->getMax_experience()." Years";?></p>
+		</div>
+
+
+		<div class="status-outer-feb">
+
+			<!--  <div class="status-left">
+				<a class="text-purple2-link" href="javascript:;">EDIT JOB</a>
+			</div>
+			<div class="status-right">
+				<img src="<?php //echo IMAGE_PATH; ?>/icon-pencil3.png" width="17" height="17" align="absmiddle" />
+			</div>-->
+
+			<div class="status-left">POSTED:</div>
+			<div class="status-right"><?php echo $v->getCreated_at()->format("d-m-Y");?></div>
+
+			<div class="status-left">EXPIRES:</div>
+			<div class="status-right"><?php echo $v->getExpiry_date()->format("d-m-Y");?></div>
+
+			<div class="status-left">STATUS:</div>
+			<div class="status-right text-purple2">
+<?php
+		if ($v->getJobStatus ()->getStatus () == "Active")
+		{
+?>
+				<select style="font-size: 12px;" class="statuss" rel="<?php echo $v->getId ();?>">
+					<option value="1" >Active</option>
+					<option value="2">Expired</option>
+				</select>
+<?php
+		}
+		elseif ($v->getJobStatus ()->getStatus () == "Expired") 
+		{
+?>
+				<select style="font-size: 12px;" class="statuss" rel="<?php echo $v->getId ();?>">
+					<option value="2">Expired</option>
+					<option value="1">Active</option>
+					<option value="4">Closed</option>
+				</select>
+<?php
+		} 
+		elseif ($v->getJobStatus ()->getStatus () == "Closed") 
+		{
+?>
+				<select style="font-size: 12px;" class="statuss" rel="<?php echo $v->getId ();?>">
+						<option value="4" >Closed</option>
+						<option value="3">Delete</option>
+				</select>
+<?php
+		}
+
+
+?>
+			</div>
+		</div>
+
+		<div class="job-content">
+			<div class="text-purple">
+				<a target="_blank" href="/<?php echo PROJECT_NAME?>job/job-detail/job_id/<?php echo $v->getId();?>" class="text-purple-link" >More Details</a> 
+				<span class="apply-2-job job-collapse jobDetail" rel="<?php echo $v->getId();?>"></span>
+			</div>
+			
+		</div>
+
+	</div>
+	<!-- Col1 -->
+	<!-- hide area start.. -->
+<div id="detail_<?php echo $v->getId();?>" style="display:none;">	
+	<div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="jobDesc openClose2Cls" rel="<?php echo $v->getId();?>">job description</a>
+		</h4>
+		<div style="margin-top:5px;float:left;display:none;border-bottom: 1px solid #2E3840;padding-bottom: 6px;width: 100%;" id="desc_<?php echo $v->getId();?>"><?php echo $v->getJob_description();?> </div>
+	</div>
+	
+	<!-- <div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="jobPosting openClose2Cls" rel="<?php // echo $v->getId();?>">JOB POSTING</a>
+		</h4>
+		<div style="margin-top:5px;float:left;display:none;border-bottom: 1px solid #2E3840;padding-bottom: 6px;width: 100%;" id="postedBy_<?php // echo $v->getId();?>"><?php //echo "Posted By: ".$v->getJob_posted_by();?> </div>
+	</div>-->
+
+	<div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="applicants openClose2Cls" rel="<?php echo $v->getId();?>">Applicants</a>
+		</h4>
+		<div class="bdr-btm applicants_<?php echo $v->getId();?>" style="display:none;" >
+
+		
+		</div>
+	</div>
+	
+	<div class="openCloseLinks">
+		<h4>
+			<a href="javascript:;" class="candidates openClose2Cls" rel="<?php echo $v->getId();?>">candidate shortlist</a>
+		</h4>
+		<div class="bdr-btm candidates_<?php echo $v->getId();?>" style="display:none;" >
+
+		</div>
+	</div>
+	
+
+	<div class="job-content">
+		<div style="margin-top: 20px;" class="mail-content-bot">
+			<ul>
+				<li><a href="#">Archive</a><img width="16" height="13"
+					align="absmiddle" src="<?php echo IMAGE_PATH; ?>/folder-hover.png"></li>
+				<li><a href="#">&nbsp;</li>
+			</ul>
+		</div>
+
+	</div>
+</div>
+<!-- end of the hide div... -->
+<?php 
+	}
+		}
+	}
+	else{
+		echo "No Record Found!";
+	}
+?>
+
+	
+	<!-- Col1 -->
+
+	<!-- Jobs Right Content Ends -->
+</div>
+<!-- Content Right Right Ends -->
+<!-- Dialog Box -->
+<div id="dialog_status_active" title="Alert Box" style="display: none;">
+  <p>
+  	Are you sure you want change the status?
+  </p>
+</div>

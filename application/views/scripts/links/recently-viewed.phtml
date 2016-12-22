@@ -1,0 +1,224 @@
+<?php
+//Title
+$this->headTitle()->prepend('Recently viewed your profile');
+$htmlView=$this->htmlView;
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/people_you_may_know.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.stylish-select.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/links_menu.js" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/links-common.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/recently-viewed.css" );
+?>
+<style>
+.photoalbum-hdr2 {
+    background: none repeat scroll 0 0 #ffffff;
+    float: left;
+    margin: 0;
+    padding: 0 4%;
+    width: 92%;
+}
+
+.photoalbum-addnew {
+    border-bottom: 1px solid #dddddd;
+    float: left;
+    margin: 0;
+    width: 100%;
+}
+
+.content-right-right {
+    background: white none repeat scroll 0 0;
+    min-height: 817px !important;
+</style>
+<?php 
+if(!$this->htmlView)
+{
+?>
+	<!-- To show white overall background -->
+	<style>
+	
+	div.linkprofile-container
+	{
+		height:auto !important;
+		background:white;
+		min-height:675 !important;
+	}
+	
+	</style>
+<?php 
+}
+
+
+echo $this->partial ( 'partials/link_menu.phtml' );
+echo $this->partial ( 'partials/unlink-popup.phtml' );
+$menu_size = Auth_UserAdapter::getIdentity()->getMain_menu_size();
+
+// if no recent view profile present,
+// then people you may know section become appear..
+$listArr =array();
+if($htmlView=="peopleYouMayKnow"){
+if( count( $this->youMayKnowUsers ) )
+{
+	foreach ( $this->youMayKnowUsers as $youMayKnowUser )
+	{
+		$listArr[] = $youMayKnowUser->getId();
+	}
+}
+	?>
+	<!-- Content Right Right Starts -->
+	<div class="content-right-right">
+		<div class="photoalbum-outer">
+			<div class="photoalbum-hdr">
+	       		<div class="new-style2-photoalbum-addnew photoalbum-addnew">
+					<h3 class="text-purple2 new-style-headings">Recently Viewed My Profile</h3>
+					<div class="addnew-links new-style-addnew-links">
+						<a class="text-purple-link" href="/<?php echo PROJECT_NAME?>links/import">
+						Add New Links
+						</a> 
+						<img src="<?php echo IMAGE_PATH;?>/icon-connection-hover.png" width="16" height="15" align="absmiddle" />
+					</div>
+				</div>
+			</div>
+<?php
+		
+			echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(), null, null, null, null, "No recent visitors.");
+?>
+				<div class="photoalbum-hdr2">
+		            <div class="photoalbum-addnew new-style-photoalbum-addnew">
+		            	<h3 class="text-purple2">People You May Know</h3>
+		            </div>
+	            </div>
+		</div>
+		<div class="bookmark-search-right">
+		</div>
+<?php
+		if($this->is_more_records  )
+		{
+			echo '<input type="hidden" id = "offsett" value="9" />';
+			echo '<input type="hidden" name="recordLimit" id="recordLimit" value="10" />';
+		}
+		echo '<div = id="user_records" class="people_you_may_know_records">';
+		echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(),$listArr);
+		if( $this->is_more_records )
+		{
+		
+			echo'<div class="see_more_you_may_know job-content view_more">';
+			echo'<p>';
+			echo'<a href="javascript:;" onclick="loadMorePeopleYouMayKnow(this);" class="see_more_you_may_know_text text-dark-purple">';
+			echo'View More';
+			echo'</a>';
+			echo'</p>';
+			echo'</div>';
+		}
+		echo'</div>';
+?>
+			
+	</div>
+<?php 	
+}
+// if recently viewed users exist only then this section will appear
+
+
+
+else
+{
+
+	if( $this->paginator )
+	{
+		if( $this->paginator->getTotalItemCount() )
+		{
+			foreach ( $this->paginator as $v )
+			{
+				$listArr[] = $v->getId();
+			}
+		}
+	}
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<div class="photoalbum-addnew">
+				<h3 class="text-purple2 new-style-headings">Recently Viewed My Profile</h3>
+				<div class="addnew-links new-style-addnew-links">
+					<a class="text-purple-link" href="/<?php echo PROJECT_NAME?>links/import">
+					Add New Links
+					</a> 
+					<img src="<?php echo IMAGE_PATH;?>/icon-connection-hover.png" width="16" height="15" align="absmiddle" />
+				</div>
+			</div>
+			<?php 
+            	if(count($this->vistors)>0 || isset($_REQUEST['linkSearch'])) {
+            ?>
+			<div style="margin-top: 0px" class="bookmarks-hdr-text1">
+				<div class="mail-hdr-search">
+					<form name="search-form" id="search-form" method="get" action="">
+						<a href="javascript:;" id="link_search" class="fr srchBtn" onclick="searchUser()"  style="float:right;">
+						Search
+						</a>
+						<input type="text" name="linkSearch" id="linkSearch" value="<?php echo @$this->linkSearchText;?>" placeholder="Search" style="float:right;">
+					</form>
+				</div>
+			</div>
+			<?php 
+            	}
+			?>
+		</div>
+	</div>
+	<div class="bookmark-search-right">
+	<!-- Col3 Starts -->
+	<?php 
+	if( $this->paginator )
+	{	
+		if( $this->paginator->getTotalItemCount() )
+		{
+	?>				
+		<div class="col3">
+			<div class="fl text-grey3">
+	<?php 
+			$query_str = "";
+			foreach( $this->prms as $key=>$p )
+			{
+				if( $key == "controller" || $key == "action" || $key == "module" || $key == "list_len" )
+				{
+					continue;
+				}
+				$query_str .= $key."=".$p."&amp;";
+			}
+	?>
+				VIEWS 
+				<a class="text-grey3-link" style="margin-left: 5px" href="<?php echo "/".PROJECT_NAME."links/recently-viewed?".$query_str."list_len=20";?>">
+				<?php echo $this->prms["list_len"] == 20 ? "<b>20</b>" : '20'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/recently-viewed?".$query_str."list_len=50";?>">
+				<?php echo $this->prms["list_len"] == 50 ? "<b>50</b>" : '50'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/recently-viewed?".$query_str."list_len=100";?>">
+				<?php echo $this->prms["list_len"] == 100 ? "<b>100</b>" : '100'?>
+				</a> | 
+				<a class="text-grey3-link" href="<?php echo "/".PROJECT_NAME."links/recently-viewed?".$query_str."list_len=all";?>">
+				<?php echo $this->prms["list_len"] == 'all' ? "<b>All</b>" : 'All'?>
+				</a>
+			</div>
+			<div class="fr  text-grey3">
+			<?php
+				echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+			?>							
+			</div>
+		</div>
+		<?php
+		}
+	}
+		?>					
+	<!-- Col3 Ends -->
+	</div>
+	<!-- Link Profile Outer Starts -->
+		<form name="link-form" id="link-form" method="post" action="">
+			<?php 
+				echo Helper_common::displayUsersGridView(Auth_UserAdapter::getIdentity ()->getId(),$listArr);
+			?>
+		</form>
+</div>
+	<?php 
+}

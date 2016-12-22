@@ -1,0 +1,97 @@
+<!-- Title -->
+<?php
+$this->headTitle ()->prepend ( 'Provide Feedback' );
+?>
+<!--  Including js -->
+<?php 
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/provide_feedback.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/jQuery.bPopup.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/overlay/center.jquery.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/overlay/jquery.overlay.js" );
+
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/js/tokenInput/token-input-facebook.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/provide_feedback.css" );
+echo $this->render ( "partials/add_contacts_popup.phtml" );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+
+<?php 
+$links = Auth_UserAdapter::getIdentity()->getLink_list();
+?>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<!-- Photo Album Starts -->
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2>Provide Feedback</h2>
+		</div>
+		<div class="feedback-hdr-bot"></div>
+		<!-- Content -->
+		<div class="mail-sendmsg-outer">
+<?php 
+		if( $links )
+		{
+?>		
+		<form name="provide_feedback_form" id="provide_feedback_form" action="" method="post">
+			<!-- Col 2 Starts-->
+			<input type="hidden" value="<?php echo $this->feedback_id;?>" name="fdbk_id" id="fdbk_id"/>
+			<div style="display: none;" id="feedback_receiver_ids_holder"></div>
+			<div class="mail-sendmsg-col2">
+				<span>
+						<select class="font-arial dropdown" name="provider_links" id="provider_links">
+					<option value="">Select</option>
+<?php
+					//Logged in user i.e provider.
+					$current_user = Auth_UserAdapter::getIdentity()->getId();
+					$user_links = explode(",", $links);
+					foreach( $user_links as $user_link )
+					{
+						//Converting id to object.
+						$link_obj = \Extended\ilook_user::getRowObject( $user_link );
+						if($link_obj )
+						{
+								echo"<option rel=".$link_obj->getId()." value=".$link_obj->getId().">".$link_obj->getFirstname()." ".$link_obj->getLastname()."</option>";
+						}
+					}
+
+?>
+				</select>
+
+				</span> 
+				<span>
+					<select class="font-arial dropdown" name="requester_jobs" id="requester_jobs">
+						<option value="">Select</option>
+					</select>
+<!-- 					<input class="font-arial" placeholder="For the Position" type="text" name="feedback_for_position" id="feedback_for_position">  -->
+				</span> 
+			</div>
+			<div class="mail-sendmsg-col2-content">
+				<textarea  placeholder="Your feedback message here" style="font-size:13px;width: 98%; border: 1px solid rey; min-height: 170px; margin-bottom: 20px; resize: none;" class="font-arial textarea" name="provider_msg" id="provider_msg"></textarea>
+			</div>
+			<div class="mail-save-draft btm_btns">
+				<div class="fr fr_cancel">
+					<input type="button" title="Clear" value="Clear" class="btn-white" name="" id="cancel">
+				</div>
+				<div class="fr_btn fr">
+					<input type="button" title="Provide Feedback" value="Provide Feedback" class="btn-dark-purple" name="send_feedback" id="send_feedback"/>
+				</div>
+			</div>
+<?php 
+		}
+		else
+		{
+			echo '<div class="no_messages">You have no links to provide feedback.</div>';
+		}
+?>			
+			<!-- Col 2 Ends-->
+			</form>
+		</div>
+		<!-- Content -->
+	</div>
+	<!-- Photo Album Ends -->
+</div>
+<!-- Content Right Right Ends -->

@@ -1,0 +1,120 @@
+<!-- Title -->
+<?php
+$this->headTitle ()->prepend ( 'Request Reference' );
+?>
+<!-- Including JS -->
+<?php
+
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/request_reference.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/frontend/reference.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/jQuery.bPopup.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/overlay/center.jquery.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH . "/js/overlay/jquery.overlay.js" );
+?>
+<!-- Including CSS -->
+<?php
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/js/tokenInput/token-input-facebook.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/sdmenu_feedback.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH . "/css/frontend/request_feedback.css" );
+echo $this->render ( "partials/add_contacts_popup.phtml" );
+echo $this->partial ( 'partials/profile_menu.phtml' );
+?>
+<?php 
+$links_arr = Auth_UserAdapter::getIdentity()->getLink_list();
+?>
+<style type="text/css">
+.cke_editable {
+    background:black !important;
+}
+</style>
+<!-- Content Right Right Starts -->
+<div class="content-right-right">
+	<div class="photoalbum-outer">
+		<div class="photoalbum-hdr">
+			<h2>Request Reference</h2>
+		</div>
+		<div class="feedback-hdr-bot"></div>
+		<!-- Content -->
+		<div class="mail-sendmsg-outer">
+<?php 
+			if( $links_arr )
+			{	
+?>		
+			<form name="request_reference_form" id="request_reference_form" action=""
+				method="post">
+				<!-- Col 2 Starts-->
+				<div style="display: none;" id="request_receiver_ids_holder"></div>
+				<div class="mail-sendmsg-col2">
+<!-- 				<label>To</label>  -->
+					<span class="mail-span"> 
+					<select class="font-arial dropdown" name="requester_links" id="requester_links">
+						<option value="">Select</option>
+<?php
+						//Logged in user i.e provider.
+						$current_user = Auth_UserAdapter::getIdentity()->getId();
+						$user_links = explode(",", $links_arr);
+						foreach( $user_links as $link )
+						{
+							//Converting id to object.
+							$link_obj = \Extended\ilook_user::getRowObject( $link );
+							if($link_obj)
+							{
+									echo"<option rel=".$link_obj->getId()." value=".$link_obj->getId().">".$link_obj->getFirstname()." ".$link_obj->getLastname()."</option>";
+							}
+						}
+?>
+					</select>
+					</span>
+<!-- 					<label>FOR THE POSITION</label>  -->
+					<span class="mail-span">
+						<select class="font-arial dropdown" name="requester_jobs" id="requester_jobs">
+							<option value="">Select</option>
+							<?php
+							if( $this->student == 1 )
+							{
+								echo "<option value='student'>Student</option>";
+							}
+							if( $this->home_maker == 1 )
+							{
+								echo "<option value='student'>Home Maker</option>";
+							}
+							if( $this->jobs )
+							{
+								foreach( $this->jobs as $job )
+								{
+									echo "<option value='".$job." (Working Experience)'>".$job." (Working Experience)</option>";
+								}
+
+							}
+							?>
+						</select>
+					</span>
+
+				</div>
+<!-- 				<div class="mail-sendmsg-col2-msg bdr-btm-none">MESSAGE</div> -->
+				<div class="mail-sendmsg-col2-content">
+					<textarea class="textarea font-arial" name="requester_msg" id="requester_msg" style="width: 98%; border: 1px solid rey; min-height: 170px; margin-bottom: 20px; text-align:left; resize: none;">Please provide Reference</textarea>
+<!-- 				onblur="if(this.value=='')this.value='Please provide Reference';" onfocus="if(this.value='Please provide Reference')this.value='';" -->
+				</div>
+				<div class="mail-save-draft btm_btns">
+					<div class="fr fr_cancel">
+						<input type="button" title="Clear" value="Clear" class="btn-white" name="" id="cancel">
+					</div>
+					<div class="fr fr_btn">
+						<input type="button" title="Request Reference" value="Request Reference" class="btn-dark-purple" name="" id="send_request">
+					</div>
+				</div>
+				<!-- Col 2 Ends-->
+			</form>
+<?php 
+			}
+			else
+			{
+				echo '<div class="no_messages">You have no links to request reference.</div>';
+			}	
+?>			
+		</div>
+	 <!--Send feedback Request Ends -->
+	</div>
+</div>

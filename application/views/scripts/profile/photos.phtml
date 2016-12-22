@@ -1,0 +1,594 @@
+<?php
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/js/tokenInput/token-input-facebook.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_detail.css" );
+// $this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_feed.css" );
+$this->headLink ()->appendStylesheet ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.css" );
+$this->headLink()->appendStylesheet( PUBLIC_PATH."/css/frontend/photo_album.css" );
+
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/photos.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/photo_detail.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/view-popup-fullscreen.js" );
+$this->headScript()->prependFile( PUBLIC_PATH."/js/frontend/jquery.addphotos.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/tokenInput/jquery.tokeninput.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/center.jquery.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/overlay/jquery.overlay.js" );
+$this->headScript()->appendFile( PUBLIC_PATH."/js/frontend/short_profile.js" );
+$this->headScript ()->appendFile ( PUBLIC_PATH ."/js/nailthumb.1.1/nailthumb/jquery.nailthumb.1.1.js" );
+
+echo $this->partial ( 'partials/photos-popup.phtml' );
+echo $this->partial ( 'partials/who_liked_popup.phtml' );
+echo $this->partial ( 'partials/who_shared_popup.phtml' );
+echo $this->partial ( 'partials/share_photo_feed_popup.phtml' );
+echo $this->partial ( 'partials/move_photo_to_other_album.phtml' );
+   
+if( Auth_UserAdapter::getIdentity()->getId() == $this->uid )
+{
+	echo $this->partial ( 'partials/profile_menu.phtml' );
+}
+else
+{
+?>
+<style type="text/css">
+	.content-right-right 
+	{
+		margin: 0 !important;
+	}
+</style>
+<?php 
+}
+
+$menu_size = Auth_UserAdapter::getIdentity()->getMain_menu_size();
+?>
+<style type="text/css">
+.ui-corner-all
+{
+	z-index:9999 !important;
+}
+.photo-slider
+{
+	background:#FFFFFF;
+}
+.photo-slider-bot
+{
+	margin:0 0 10px;
+}
+
+<?php
+if($menu_size==Extended\ilook_user::MENU_SIZE_MAXIMISED || $menu_size==null )
+{	
+?>
+	.photo-slider-bot .col2{
+		margin:10px 0px 10px 34px;
+		position:relative;
+		height:176px;
+		border:1px solid #E3E3E1;
+		width:176px;
+	}
+<?php
+}
+else
+{
+?>
+	.photo-slider-bot .col2
+	{
+		margin:10px 0 10px 3px;
+		position:relative;
+		height:200px;
+		border:1px solid #E3E3E1;
+		width:176px;
+	}
+<?php
+}
+?>
+
+</style>
+<script>
+   /*
+ 	 $(function() {
+      $('a.full-img').fullsizable({
+        detach_id: 'photos-container'
+      });
+
+      $(document).on('fullsizable:opened', function(){
+        $("#jquery-fullsizable").swipe({
+          swipeLeft: function(){
+            $(document).trigger('fullsizable:next')
+          },
+          swipeRight: function(){
+            $(document).trigger('fullsizable:prev')
+          },
+          swipeUp: function(){
+            $(document).trigger('fullsizable:close')
+          }
+        });
+      });
+    });
+    */
+  </script>
+<!-- Content Right Right Starts -->
+        	<div class="content-right-right">
+            	<!-- Photo Album Starts -->
+           	  <div class="photoalbum-outer">
+              	<div class="photoalbum-hdr">
+              	<input type="hidden" id="offset_who_liked" value="0">
+				<input type="hidden" id="limit_who_liked" value="2">
+              	<input type="hidden" id="offset_who_shared" value="0">
+				<input type="hidden" id="limit_who_shared" value="2">
+              <input type="hidden" name="offsett" value="0" id="offsett"/>
+              <input type="hidden" name="total_pictures" value="<?php echo count($this->photoListing); ?>" id="total_pictures"/>
+              
+   
+              <h2 class="text-dark-purple album_title" style=" text-transform: none;">
+              <?php if($this->albName!=""){echo Helper_common::showCroppedText($this->albName,55);}else{ echo "Untitled";}?> 
+               </h2>
+               
+<?php
+                    //Delete option will come only on user's own albums and when album is not default album.
+                    //As user should not be able to delete default album.
+                    if( $this->loginUserAlbum && !$this->sys_albums) 
+                    {
+?>
+
+                    	<div class="delete-album">
+
+                    		<a style="position:relative;" rel = "" onclick = "" href="<?php echo PROJECT_URL.'/'.PROJECT_NAME.'/profile/edit-album/id/'.$this->albId;?>" class="edit_album text-purple2-link">
+	                    		Edit Album
+	                        </a>
+	                    	<!-- <a style="position:relative;" rel = "<?php echo $this->albId ;?>" onclick = "confirmDeleteAlbum(this);" href="javascript:;" class="delete_album text-purple2-link">
+	                    	Delete Album
+                        	</a>-->
+                        	<img class="delete_album" style="cursor:pointer; margin: 3px 0 0;" src="<?php echo IMAGE_PATH;?>/recycle_bin.png" rel = "<?php echo $this->albId ;?>" onclick="confirmDeleteAlbum(this);"/>
+                   		</div>
+<?php
+                    } 
+?>
+
+                    <div class="photoalbum-addnew">
+                    <div class="fl">
+                    <?php
+                    if( $this->loginUserAlbum )
+                    {
+                    	echo '<a id="back_to_photo_album" class="" href="/'.PROJECT_NAME.'profile/photo-albums"><b>&lt;&lt;</b>&nbsp;Back To Albums</a>';
+                    }
+                    else
+                    {
+                    	echo '<a id="back_to_photo_album" class="" href="/'.PROJECT_NAME.'profile/iprofile/id/'.$this->uid.'#photos"><b>&lt;&lt;</b>&nbsp;Back To Albums</a>';
+                    }
+                    ?>
+                    </div>
+                  
+                    <div class="fr">
+<?php
+                   if($this->loginUserAlbum && strtolower($this->alb_name)!=strtolower(\Extended\socialise_album::DEFAULT_ALBUM_NAME)
+                   		&& strtolower($this->alb_name)!=strtolower(\Extended\socialise_album::PROFILE_PHOTOS_ALBUM_NAME) 
+                   		&& strtolower($this->alb_name)!=strtolower(\Extended\socialise_album::COVER_PHOTOS_ALBUM_NAME)
+                   		)
+                   {
+?>
+                    <div class="add_photos" style="position: relative; float: right; width: 140px;">
+	                    <a class="text-purple2-link more-photos" href="javascript:;" style="position:relative;">Add Photos
+	                    </a> 
+                   		<!-- Quickview Outer Starts -->
+	                    <div id= "quickview-outer-photos" class="quickview-outer" style="top:20px; left:-410px;display:none;">
+	                   
+                         	<div style="margin:0 0 1px 424px;" class="arrow">
+                         		<img width="36" height="22" src="<?php echo IMAGE_PATH;?>/arrow-purple2.png">
+                         	</div>
+	                         <div style="width:432px;" class="quickview">
+	                         
+	                    	</div>
+	                    </div>
+	                    <!-- Quickview Outer Ends --> 
+	                     <img src="<?php echo IMAGE_PATH;?>/icon-new-album.png" width="23" height="17" />
+                    </div>
+                   
+<?php 
+                   }
+?>
+                    
+                    </div>
+                    </div>
+                </div>
+           	                    
+                <div class="photo-slider">
+                    <div class="photo-slider-bot" id="photos-container">
+                    <input type="hidden" name="albumID" id="albumID" value="<?php echo $this->albId;?>" />
+                     <input type="hidden" name="albumName" id="albumName" value="<?php echo $this->albName2;?>" />
+                     <input type="hidden" name="currentUserId" id="currentUserId" value="<?php echo Auth_UserAdapter::getIdentity()->getId();?>" />
+                     <input type="hidden" name="albumOwnerId" id="albumOwnerId" value="<?php echo $this->uid ;?>" />
+                  	
+                  </div>
+                  
+<?php   
+			  echo '<div class="loading_pictures">';
+              echo '<div><img src = "'.IMAGE_PATH.'/loading_medium_purple.gif"><label>Loading...</label></div>';
+              echo '</div>';
+?>
+                </div>
+   	          	
+				<!------------------------------------------------------------------------------- -->
+				<!------------------------------Ok comment share panel--------------------------- -->
+				<!------------------------------------------------------------------------------- -->
+<?php
+
+               // Getting this album's associated wallpost info.===========================================
+				$albumID = $this->albId;
+				$album_obj = \Extended\socialise_album::getRowObject($albumID);
+				if( strtolower($album_obj->getAlbum_name()) == strtolower(\Extended\socialise_album::DEFAULT_ALBUM_NAME) 
+               		||strtolower($album_obj->getAlbum_name()) == strtolower(\Extended\socialise_album::COVER_PHOTOS_ALBUM_NAME)
+               		||strtolower($album_obj->getAlbum_name()) == strtolower(\Extended\socialise_album::PROFILE_PHOTOS_ALBUM_NAME)
+               		)
+               	{
+               		$is_wallpost = 0;
+					$post_id = $albumID;
+					//Album id is required therefore using same value as different variable.
+					$socialize_album_id = $albumID;
+					$did_i_liked_this = \Extended\socialise_album::didUserLikedAlbum($this->current_user_id, $albumID);
+					$link_count = $album_obj->getSocialise_albumsLike()->count();
+					$likers_string = \Helper_common::getLikersStringByAlbumId( $albumID, $this->current_user_id );
+					$comment_count = $album_obj->getSocialise_albumsComment()->count();
+					$comments_arr = $album_obj->getSocialise_albumsComment();
+					$share_count = $album_obj->getShare()->count();
+               	}
+				else
+                {
+	               	
+					$wallpost_collec = $album_obj->getSocialise_albumsWall_post();
+					foreach( $wallpost_collec as $wp )
+					{
+						$post_id = $wp->getId();
+					}
+					
+					//In case when album is default album then we will use album_id as wallpost_id.
+					$is_wallpost = 1;
+					$wallpost_obj = \Extended\wall_post::getRowObject($post_id);
+					if($wallpost_obj->getWall_postsSocialise_album())
+					{
+						$socialize_album_id = $wallpost_obj->getWall_postsSocialise_album()->getId();
+					}
+					$did_i_liked_this = \Extended\wall_post::didUserLikedWallpost($this->current_user_id, $post_id);
+					$link_count = $wallpost_obj->getWall_postsLikes()->count();
+					$likers_string = \Helper_common::getLikersStringByWallpostId( $post_id, $this->current_user_id );
+					$comment_count = $wallpost_obj->getWall_postsComment()->count();
+					$comments_arr = $wallpost_obj->getWall_postsComment();
+					$share_count = $wallpost_obj->getWall_postsShare()->count();
+                }
+				//==========================================================================================
+?>
+					<div class="news-update-likes news-likes">
+						<div class="fl  text-purple">
+<?php
+						echo '<div class="ok">';
+						echo '<div style = "display:inline-block;">';
+			
+		 				if( $did_i_liked_this == 1 )
+						{
+				
+							echo '<a style = "" href="javascript:;" class = "not_ok" onclick = "notOkTheWallpostOrAlbum( '.$post_id.', this, '.$is_wallpost.' );" rel = "'.$post_id.'" ><span>&nbsp;</span>Unok</a>';
+							echo '<a style = "display:none;" href="javascript:;" class = "ok" onclick = "okTheWallpostOrAlbum( '.$post_id.', this, '.$is_wallpost.','.$socialize_album_id.' );" rel = "'.$post_id.'" ><span>&nbsp;</span>Ok</a>';
+					 	}
+						else
+						{
+								
+							echo '<a style = "" href="javascript:;" class = "ok" onclick = "okTheWallpostOrAlbum( '.$post_id.', this, '.$is_wallpost.','.$socialize_album_id.' );" rel = "'.$post_id.'" ><span>&nbsp;</span>Ok</a>';
+							echo '<a style = "display:none;" href="javascript:;" class = "not_ok" onclick = "notOkTheWallpostOrAlbum( '.$post_id.', this, '.$is_wallpost.' );" rel = "'.$post_id.'" ><span>&nbsp;</span>Unok</a>';
+						}
+			
+						echo '</div>';
+						echo '<div style = "display:inline-block; float: right;" class = "like_count" id = "'.$post_id.'">';
+						if( $link_count > 0 )
+						{
+							echo '<a href="javascript:;" onclick = "openWhoLikedPopupByWallpostIdOrAlbumId('.$post_id.', '.$is_wallpost.')" >('. $link_count .')</a>';
+						}
+						else
+						{
+							echo '<a href="javascript:;" style = "display : none;" onclick = "openWhoLikedPopupByWallpostIdOrAlbumId('.$post_id.', '.$is_wallpost.')" >('. 0 .')</a>';
+						}
+						echo '</div>';
+						echo '</div>';	
+?>
+						<div class="comments">
+<?php 
+						if($comment_count > 0)
+						{
+							echo'<a class="add_comment" href="javascript:;">Comment</a>';
+							echo'<span id="comment_count_'.$post_id.'">('.$comment_count.')';
+							echo'</span>';
+						}
+						else
+						{
+							echo'<a class="add_comment" href="javascript:;">Comment</a>';
+							echo'<span id="comment_count_'.$post_id.'">';
+							echo'</span>';
+						}
+?>
+						</div>
+						<div class="share">
+							<div style="display:inline-block;">
+								<a style="" href="javascript:;" class="share" onclick="shareThisAlbumByWallpostOrAlbumId( <?php echo $post_id; ?>, this, <?php echo $is_wallpost;?>,<?php echo $socialize_album_id;?> )" 
+								rel="">
+									<span>&nbsp;
+									</span>Share
+								</a>
+							</div>
+							
+							<div class="share_count" style="display:inline-block; float: right; margin-left:3px;">
+								<a onclick="openWhoSharedPopup(<?php echo $post_id; ?>,<?php echo $is_wallpost?>)" href="javascript:;">
+								<span class="bg-none" id="wallpost_<?php echo $post_id; ?>">
+<?php 
+								if($share_count > 0)
+								{
+									echo '('.$share_count.')';
+								}
+?>
+								</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+               <!------------------------------------------------------------------------------- -->
+               <!------------------------------End of Ok comment share panel--------------------------- -->
+               <!------------------------------------------------------------------------------- -->
+                
+                <!-- ----------------------------------------------------------------------------------- -->
+                <!-- ---------------------------------COMMENT PANEL Starts-------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------------------------- -->
+<?php              
+				//Comments Outer Box Starts Here.
+	
+				echo'<div class="comment-box-outer ">';
+	
+	
+				//Likers string.
+				
+	
+				if( $post_id )
+				{
+					if( $likers_string != null && $likers_string != "" )
+					{
+						if( $likers_string )
+						{	
+							echo'<div class="people-who-liked" id = "'.$post_id.'">';
+							echo'<img src="'.IMAGE_PATH.'/tick-grey.png" align="absmiddle" />';	
+							echo'<span>';
+							echo $likers_string;
+							echo'</span>';
+							echo'</div>';
+						} 
+						else
+						{
+							echo'<div class="people-who-liked" id = "'.$post_id.'" style = "display:none;">';
+							echo'<img src="'.IMAGE_PATH.'/tick-grey.png" align="absmiddle" />';	
+							echo'<span>';
+							echo'</span>';
+							echo'</div>';
+						}
+					}
+					else
+					{
+						echo'<div class="people-who-liked" id = "'.$post_id.'" style = "display:none;">';
+						echo'<img src="'.IMAGE_PATH.'/tick-grey.png" align="absmiddle" />';	
+						echo'<span>';
+						echo'</span>';
+						echo'</div>';
+					}
+				}
+	
+		//  Comments section starts here.
+			if( $comment_count >= 1 )
+			{
+				echo'<input type="hidden" name="offsettt_comm_'.$post_id.'" value="2" id="offsettt_comm_'.$post_id.'"/>';
+				echo'<div class="ok-comment-box" id = "comment_box_'.$post_id.'">';
+		    	echo'<div class="ok-comment-box-bot ">';
+		    
+			    if( $comment_count > 2 )
+			    {
+			    	echo'<div id = "load_more_comments_'.$post_id.'">';
+			    	echo'<div class="ok-comment-box-bot-left"><img src="'.IMAGE_PATH.'/comments--grey.png"  align="absmiddle" />';
+			    	echo'</div>';
+			    	echo'<div class="ok-comment-box-bot-right" style = "cursor:pointer;" onclick = "loadMoreComments('.$post_id.',this, '.$is_wallpost.')"> View more comments</div>';
+			    	echo'</div>';
+			    }
+	    
+				echo'<div id="comments_outer_'.$post_id.'">';
+				
+				$ii = 1;
+				$counter = 0;
+				$comm_arr = array();
+				foreach ( array_reverse($comments_arr->toArray()) as $keyy=>$comment )
+				{
+					$counter++;
+					
+					//=====================================Comment data==========================
+					$comments_arrr[$ii]['comment_id'] = $comment->getId();
+					$comments_arrr[$ii]['comment_text'] = $comment->getComment_text();
+					$comments_arrr[$ii]['comment_created_at'] = \Helper_common::nicetime($comment->getcreated_at()->format( "Y-m-d H:i:s" ));
+					$comments_arrr[$ii]['comment_user_id'] = $comment->getCommentsIlook_user()->getId();
+					$comments_arrr[$ii]['comment_user_name'] = $comment->getCommentsIlook_user()->getFirstname()." ".$comment->getCommentsIlook_user()->getLastname();
+					//Check if the commenter user exist in $blocked_user_ids_arr i.e if i have blocked him or he has blocked me?
+					if( $this->blocked_user_ids_arr )
+					{
+						$comment_user_photo_detail = \Extended\comments::getUsersPhotoForComment($comment->getCommentsIlook_user()->getId(), $this->blocked_user_ids_arr);
+					}
+						
+					else
+					{
+						$comment_user_photo_detail['photo_path'] = \Helper_common::getUserProfessionalPhoto($comment->getCommentsIlook_user()->getId(), 3);
+						$comment_user_photo_detail['is_photo_clickable'] = true;
+					}
+						
+					$comments_arrr[$ii]['photo_path'] = $comment_user_photo_detail['photo_path'];
+					$comments_arrr[$ii]['is_photo_clickable'] = $comment_user_photo_detail['is_photo_clickable'];
+						
+					if( $comment->getCommentsIlook_user()->getId() == $this->current_user_id ):
+					$comments_arrr[$ii]['comment_is_mine'] = 1;
+					else:
+					$comments_arrr[$ii]['comment_is_mine'] = 0;
+					endif;
+					
+// 					if(!\Extended\users_comments_visibility::IsCommentHiddenOnUserWall($comment->getId(), $this->current_user_id))
+// 					{
+// 						$comments_arrr[$ii]['comment_is_hidden'] = 0;
+						
+// 					}
+// 					else
+// 					{
+// 						$comments_arrr[$ii]['comment_is_hidden'] = 1;
+// 					}
+					$ii--;
+					if( $counter == 2 ):
+					break;
+					endif;
+				}
+				//=============================================================================================================================================
+ 				foreach ( array_reverse($comments_arrr) as $comm )
+ 				{
+ 					if(!\Extended\users_comments_visibility::IsCommentHiddenOnUserWall($comm['comment_id'], $this->current_user_id))
+ 					{
+						echo'<div class="comments-outer comments-outer_'.$comm['comment_id'].'" id="comments-outer_'.$comm['comment_id'].'" rel="'.$comm['comment_id'].'">';
+						 
+						 
+						$parameter_json = "{'user_id':".$comm['comment_user_id']."}";
+						if($comm['is_photo_clickable'])
+						{
+							echo'<a disable-border="1" id="'.$comm['comment_user_id'].'" title = "'.$comm['comment_user_name'].'" href = "javascript:" onclick="getShortProfile(this,'.$parameter_json.')" >';
+							echo'<div class="img img32 short_profile_border" title = "'.$comm['comment_user_name'].'">';
+							echo'<img src="'.$comm['photo_path'].'" width="" height="" /></div>';
+							echo'</a>';
+						}
+						else
+						{
+							echo'<div class="img img32 short_profile_border" title = "'.$comm['comment_user_name'].'"><img src="'.$comm['photo_path'].'" width="" height="" /></div>';
+						}
+						//Short profile view popup holder
+						echo'<div id="view-outer_'.$comm['comment_user_id'].'" class="quickview-outer" popup-state="off" style="display:none;">';
+						echo'<div class="popupArrow">';
+						echo'<img width="36" height="22" src="'.IMAGE_PATH.'/arrow-purple2.png">';
+						echo'</div>';
+						echo'<div id="view_'.$comm['comment_user_id'].'" class="quickview"> </div>';
+						echo'</div>';
+						 
+						//echo'<div class="text"><div class="comment-text1" id = "idd_'+comments_json[j]['id']+'" rel = "'+comments_json[j]['id']+'"><span>'+comments_json[j]['user_name']+'</span>';
+						echo'<div class="text"><div class="comment-text1" id = "idd_'.$comm['comment_id'].'" rel = "'.$comm['comment_id'].'">';
+						echo'<span><a href = "/'.PROJECT_NAME.'profile/iprofile/id/'.$comm['comment_user_id'].'">'.$comm['comment_user_name'].'</a></span>';
+						echo'<div class = "comment_text" id = "'.$comm['comment_id'].'">';
+						echo Helper_common::showCroppedText( $comm['comment_text'], 150, "...<label class = 'show_full_comment' onclick = 'showFullComment(this)'>>></label>");
+						echo'</div>';
+						echo'<div class = "full_comment_text" style = "display:none" id = "'.$comm['comment_id'].'">';
+						echo $comm['comment_text'];
+						echo'</div>';
+						 
+						echo'</div>';
+						echo'<textarea maxlength="255" cols="1" class="comment-textarea" rows="1" id = "id_'.$comm['comment_id'].'" rel = "'.$comm['comment_id'].'" style = "  resize: vertical; display:none;" >'.$comm['comment_text'].'</textarea>';
+						echo'<div class="comments-date">'.$comm['comment_created_at'].'</div>';
+						echo'</div>';
+						if($comm['comment_user_id'] == $this->current_user_id )
+						{
+							echo'<div class="edit_comment" onclick="activateCommentActions()">';
+							echo'<div class="edit-popup-outer" style="bottom:-85px; width:78px; padding:5px; right: -7px; text-align:left; z-index:99999">';
+							echo'<div class="edit-popup-arrow" style=" margin:0 0 0 55px"><img width="26" height="16" src="'.IMAGE_PATH.'/arrow-up-grey2.png"></div>';
+							echo'<div class="edit-popup" style="width: 65px; padding:5px;">';
+							echo'<div class="edit-popup-col1">';
+							echo'<h5 style="text-transform: none !important;"><a style="font-size:12px;" class="text-grey2-link edit_comment_link" href="javascript:;">Edit</a></h5>';
+							echo'</div>';
+							echo'<div class="edit-popup-col1">';
+							echo'<h5 style="text-transform: none !important;"><a onclick="clickDeleteComment(this);" style="font-size:12px;" class=" text-grey2-link delete_comment_link" href="javascript:;" rel = "'.$comm['comment_id'].'">Delete</a></h5>';
+							echo'</div>';
+							echo'</div>';
+							echo'</div>';
+							echo'</div>';
+						}
+						else
+						{
+							echo'<div onclick="hideComment(this);" style="text-align: right;" class="hide_comment"><img title="Hide comment" src="'.IMAGE_PATH.'/cross-grey.png"></div>';
+						}
+					
+						 
+						echo'</div>';
+				
+ 				}
+ 				else
+ 				{
+						echo'<div class="comments-outer comments-outer_'.$comm['comment_id'].' hidden_comment "  id="comments-outer_'.$comm['comment_id'].'"  rel="'.$comm['comment_id'].'">';
+						echo'<span rel="'.$comm['comment_id'].'" onclick="showComments(this);" class="unhide-comment" title = "Hidden Comment [Hidden on your album]">...</span></div>';
+ 				}
+			}		
+	    
+	    echo'</div>';
+	    echo'</div>';
+	    echo'</div>';
+	    
+    }
+	else
+	{
+			echo'<div class="ok-comment-box" id = "comment_box_'.$post_id.'" style = "display : none;">';
+	    	echo'<div class="ok-comment-box-bot ">';
+		    echo'<div id="comments_outer_'.$post_id.'">';
+		    //Append comments here.
+		    echo'</div>';
+		    echo'</div>';
+		    echo'</div>';
+	}
+	//  Comments section ends here.
+	
+	
+	//  write comment Starts-----------------------------------------------
+		echo'<div class="comment-write-outer">';
+		echo'<form id = "comment_box_'.$post_id.'">';
+		echo'<input type = "hidden" name = "wallpost_id" value = "'.$post_id.'"/>';
+		echo'<div class="comment-write-left ">';
+		echo'<img width="" height="" src="'.Helper_common::getUserProfessionalPhoto( Auth_UserAdapter::getIdentity()->getId(), 3 ).'">';
+		echo'</div>';
+		echo'<div class="comment-write-right ">';
+
+		echo'<textarea name="comment" maxlength="255" class="comment-textarea" placeholder = "Write a comment..."'; 
+		echo'onkeydown="javascript: if(event.keyCode == 13) addComment( '.$post_id.', this, event,'.$is_wallpost.','.$socialize_album_id.');">';
+		echo'</textarea>';
+		
+		echo'<div class="enter-post">';
+		echo'Press Enter to Post';
+		echo'</div>';
+		echo'</div>';
+		echo'</form>';
+		echo'</div>';
+		//  write comment Ends-----------------------------------------------
+?>           
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- -----------------------------------------COMMENT PANEL Ends----------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+                   
+		</div>
+	<!-- Photo Album Ends -->
+
+            
+   
+            
+          </div>
+          <div id="dialog-confirm" title="Delete Photo" style="display:none;z-index:9999 !important;height: 40px !important ;">
+	  <p>
+		Do you really want to remove this photo?
+	  </p>
+</div>
+
+	<div id="dialog_confirm_comment2" title="Delete Comment" style = "display:none;height:66px !important;">
+	<p>
+  		Are you sure you want to delete this comment?
+  	</p>
+	</div>
+	<div id="confirm_delete_album" title="Delete Album" style = "display:none;height:66px !important; ">
+	<p>
+  		Are you sure you want to delete this album?
+  		This will remove all your photos inside this album,
+  		including all the activities performed on them.
+  		
+  	</p>
+	</div>
+        <!-- Content Right Right Ends -->
+        <!-- Dialog Box -->
+<!-- Dialog Box -->
+<div id="dialog_delete_comment" title="Delete Comment" style="display:none">
+	<p>
+		want to delete this comment?
+	</p>
+</div>
